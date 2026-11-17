@@ -1,0 +1,3203 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "spells.c-d",
+      "text": "Spells C–D",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "spells.c-d.roll-drauf-note",
+      "text": "Spells C–D in alphabetical order. Under each name you find the spell level, school and the classes that can prepare it, followed by casting time, range, components and duration.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.call-lightning",
+      "text": "Call Lightning",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.call-lightning.p-1",
+      "text": "Level 3 Conjuration (Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.call-lightning.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.call-lightning.p-2",
+      "text": "A storm cloud appears at a point within range that you can see above yourself. It takes the shape of a Cylinder that is 10 feet tall with a 60-foot radius.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.call-lightning.p-3",
+      "text": "When you cast the spell, choose a point you can see under the cloud. A lightning bolt shoots from the cloud to that point. Each creature within 5 feet of that point makes a Dexterity saving throw, taking 3d10 Lightning damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.call-lightning.p-4",
+      "text": "Until the spell ends, you can take a Magic action to call down lightning in that way again, targeting the same point or a different one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.call-lightning.p-5",
+      "text": "If you’re outdoors in a storm when you cast this spell, the spell gives you control over that storm instead of creating a new one. Under such conditions, the spell’s damage increases by 1d10.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.call-lightning.p-6",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d10 for each spell slot level above 3.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.calm-emotions",
+      "text": "Calm Emotions",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.calm-emotions.p-1",
+      "text": "Level 2 Enchantment (Bard, Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.calm-emotions.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.calm-emotions.p-2",
+      "text": "Each Humanoid in a 20-foot-radius Sphere centered on a point you choose within range must succeed on a Charisma saving throw or be affected by one of the following effects (choose for each creature):",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "The creature has Immunity to the Charmed and Frightened conditions until the spell ends. If the creature was already Charmed or Frightened, those conditions are suppressed for the duration.",
+        "The creature becomes Indifferent about creatures of your choice that it’s Hostile toward. This indifference ends if the target takes damage or witnesses its allies taking damage. When the spell ends, the creature’s attitude returns to normal."
+      ],
+      "ruleId": "spells.c-d.calm-emotions.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.chain-lightning",
+      "text": "Chain Lightning",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.chain-lightning.p-1",
+      "text": "Level 6 Evocation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "150 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (three silver pins)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.chain-lightning.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.chain-lightning.p-2",
+      "text": "You launch a lightning bolt toward a target you can see within range. Three bolts then leap from that target to as many as three other targets of your choice, each of which must be within 30 feet of the first target. A target can be a creature or an object and can be targeted by only one of the bolts.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.chain-lightning.p-3",
+      "text": "Each target makes a Dexterity saving throw, taking 10d8 Lightning damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.chain-lightning.p-4",
+      "text": "Using a Higher-Level Spell Slot. One additional bolt leaps from the first target to another target for each spell slot level above 6.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.charm-monster",
+      "text": "Charm Monster",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.charm-monster.p-1",
+      "text": "Level 4 Enchantment (Bard, Druid, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.charm-monster.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.charm-monster.p-2",
+      "text": "One creature you can see within range makes a Wisdom saving throw. It does so with Advantage if you or your allies are fighting it. On a failed save, the target has the Charmed condition until the spell ends or until you or your allies damage it. The Charmed creature is Friendly to you. When the spell ends, the target knows it was Charmed by you.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.charm-monster.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 4.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.charm-person",
+      "text": "Charm Person",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.charm-person.p-1",
+      "text": "Level 1 Enchantment (Bard, Druid, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.charm-person.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.charm-person.p-2",
+      "text": "One Humanoid you can see within range makes a Wisdom saving throw. It does so with Advantage if you or your allies are fighting it. On a failed save, the target has the Charmed condition until the spell ends or until you or your allies damage it. The Charmed creature is Friendly to you. When the spell ends, the target knows it was Charmed by you.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.charm-person.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.chill-touch",
+      "text": "Chill Touch",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.chill-touch.p-1",
+      "text": "Necromancy Cantrip (Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.chill-touch.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.chill-touch.p-2",
+      "text": "Channeling the chill of the grave, make a melee spell attack against a target within reach. On a hit, the target takes 1d10 Necrotic damage, and it can’t regain Hit Points until the end of your next turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.chill-touch.p-3",
+      "text": "Cantrip Upgrade. The damage increases by 1d10 when you reach levels 5 (2d10), 11 (3d10), and 17 (4d10).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.chromatic-orb",
+      "text": "Chromatic Orb",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.chromatic-orb.p-1",
+      "text": "Level 1 Evocation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a diamond worth 50+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.chromatic-orb.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.chromatic-orb.p-2",
+      "text": "You hurl an orb of energy at a target within range. Choose Acid, Cold, Fire, Lightning, Poison, or Thunder for the type of orb you create, and then make a ranged spell attack against the target. On a hit, the target takes 3d8 damage of the chosen type.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.chromatic-orb.p-3",
+      "text": "If you roll the same number on two or more of the d8s, the orb leaps to a different target of your choice within 30 feet of the target. Make an attack roll against the new target, and make a new damage roll. The orb can’t leap again unless you cast the spell with a level 2+ spell slot.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.chromatic-orb.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 1. The orb can leap a maximum number of times equal to the level of the slot expended, and a creature can be targeted only once by each casting of this spell.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.circle-of-death",
+      "text": "Circle of Death",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.circle-of-death.p-1",
+      "text": "Level 6 Necromancy (Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "150 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (the powder of a crushed black pearl worth 500+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.circle-of-death.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.circle-of-death.p-2",
+      "text": "Negative energy ripples out in a 60-foot-radius Sphere from a point you choose within range. Each creature in that area makes a Constitution saving throw, taking 8d8 Necrotic damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.circle-of-death.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 2d8 for each spell slot level above 6.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.clairvoyance",
+      "text": "Clairvoyance",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.clairvoyance.p-1",
+      "text": "Level 3 Divination (Bard, Cleric, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "10 minutes",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "1 mile",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a focus worth 100+ GP, either a jeweled horn for hearing or a glass eye for seeing)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.clairvoyance.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.clairvoyance.p-2",
+      "text": "You create an Invisible sensor within range in a location familiar to you (a place you have visited or seen before) or in an obvious location that is unfamiliar to you (such as behind a door, around a corner, or in a grove of trees). The intangible, invulnerable sensor remains in place for the duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.clairvoyance.p-3",
+      "text": "When you cast the spell, choose seeing or hearing. You can use the chosen sense through the sensor as if you were in its space. As a Bonus Action, you can switch between seeing and hearing.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.clairvoyance.p-4",
+      "text": "A creature that sees the sensor (such as a creature benefiting from See Invisibility or Truesight) sees a luminous orb about the size of your fist.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.clone",
+      "text": "Clone",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.clone.p-1",
+      "text": "Level 8 Necromancy (Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 hour",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a diamond worth 1,000+ GP, which the spell consumes, and a sealable vessel worth 2,000+ GP that is large enough to hold the creature being cloned)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.clone.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.clone.p-2",
+      "text": "You touch a creature or at least 1 cubic inch of its flesh. An inert duplicate of that creature forms inside the vessel used in the spell’s casting and finishes growing after 120 days; you choose whether the finished clone is the same age as the creature or younger. The clone remains inert and endures indefinitely while its vessel remains undisturbed.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.clone.p-3",
+      "text": "If the original creature dies after the clone finishes forming, the creature’s soul transfers to the clone if the soul is free and willing to return. The clone is physically identical to the original and has the same personality, memories, and abilities, but none of the original’s equipment. The creature’s original remains, if any, become inert and can’t be revived, since the creature’s soul is elsewhere.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.cloudkill",
+      "text": "Cloudkill",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.cloudkill.p-1",
+      "text": "Level 5 Conjuration (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.cloudkill.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.cloudkill.p-2",
+      "text": "You create a 20-foot-radius Sphere of yellow-green fog centered on a point within range. The fog lasts for the duration or until strong wind (such as the one created by Gust of Wind) disperses it, ending the spell. Its area is Heavily Obscured.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.cloudkill.p-3",
+      "text": "Each creature in the Sphere makes a Constitution saving throw, taking 5d8 Poison damage on a failed save or half as much damage on a successful one. A creature must also make this save when the Sphere moves into its space and when it enters the Sphere or ends its turn there. A creature makes this save only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.cloudkill.p-4",
+      "text": "The Sphere moves 10 feet away from you at the start of each of your turns.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.cloudkill.p-5",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 5.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.color-spray",
+      "text": "Color Spray",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.color-spray.p-1",
+      "text": "Level 1 Illusion (Bard, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a pinch of colorful sand)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.color-spray.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.color-spray.p-2",
+      "text": "You launch a dazzling array of flashing, colorful light. Each creature in a 15-foot Cone originating from you must succeed on a Constitution saving throw or have the Blinded condition until the end of your next turn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.command",
+      "text": "Command",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.command.p-1",
+      "text": "Level 1 Enchantment (Bard, Cleric, Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.command.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.command.p-2",
+      "text": "You speak a one-word command to a creature you can see within range. The target must succeed on a Wisdom saving throw or follow the command on its next turn. Choose the command from these options: Approach. The target moves toward you by the shortest and most direct route, ending its turn if it moves within 5 feet of you. Drop. The target drops whatever it is holding and then ends its turn. Flee. The target spends its turn moving away from you by the fastest available means. Grovel. The target has the Prone condition and then ends its turn. Halt. On its turn, the target doesn’t move and takes no action or Bonus Action. Using a Higher-Level Spell Slot. You can affect one additional creature for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.commune",
+      "text": "Commune",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.commune.p-1",
+      "text": "Level 5 Divination (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (incense)",
+          "term": "Components"
+        },
+        {
+          "definition": "1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.commune.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.commune.p-2",
+      "text": "You contact a deity or a divine proxy and ask up to three questions that can be answered with yes or no. You must ask your questions before the spell ends. You receive a correct answer for each question.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.commune.p-3",
+      "text": "Divine beings aren’t necessarily omniscient, so you might receive “unclear” as an answer if a question pertains to information that lies beyond the deity’s knowledge. In a case where a one-word answer could be misleading or contrary to the deity’s interests, the GM might offer a short phrase as an answer instead.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.commune.p-4",
+      "text": "If you cast the spell more than once before finishing a Long Rest, there is a cumulative 25 percent chance for each casting after the first that you get no answer.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.commune-with-nature",
+      "text": "Commune with Nature",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.commune-with-nature.p-1",
+      "text": "Level 5 Divination (Druid, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.commune-with-nature.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.commune-with-nature.p-2",
+      "text": "You commune with nature spirits and gain knowledge of the surrounding area. In the outdoors, the spell gives you knowledge of the area within 3 miles of you. In caves and other natural underground settings, the radius is limited to 300 feet. The spell doesn’t function where nature has been replaced by construction, such as in castles and settlements.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.commune-with-nature.p-3",
+      "text": "Choose three of the following facts; you learn those facts as they pertain to the spell’s area:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Locations of settlements",
+        "Locations of portals to other planes of existence",
+        "Location of one Challenge Rating 10+ creature (GM’s choice) that is a Celestial, an Elemental, a Fey, a Fiend, or an Undead",
+        "The most prevalent kind of plant, mineral, or Beast (you choose which to learn)",
+        "Locations of bodies of water"
+      ],
+      "ruleId": "spells.c-d.commune-with-nature.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "ruleId": "spells.c-d.commune-with-nature.p-4",
+      "text": "For example, you could determine the location of a powerful monster in the area, the locations of bodies of water, and the locations of any towns.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.comprehend-languages",
+      "text": "Comprehend Languages",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.comprehend-languages.p-1",
+      "text": "Level 1 Divination (Bard, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a pinch of soot and salt)",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.comprehend-languages.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.comprehend-languages.p-2",
+      "text": "For the duration, you understand the literal meaning of any language that you hear or see signed. You also understand any written language that you see, but you must be touching the surface on which the words are written. It takes about 1 minute to read one page of text. This spell doesn’t decode symbols or secret messages.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.compulsion",
+      "text": "Compulsion",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.compulsion.p-1",
+      "text": "Level 4 Enchantment (Bard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.compulsion.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.compulsion.p-2",
+      "text": "Each creature of your choice that you can see within range must succeed on a Wisdom saving throw or have the Charmed condition until the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.compulsion.p-3",
+      "text": "For the duration, you can take a Bonus Action to designate a direction that is horizontal to you. Each Charmed target must use as much of its movement as possible to move in that direction on its next turn, taking the safest route. After moving in this way, a target repeats the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.cone-of-cold",
+      "text": "Cone of Cold",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.cone-of-cold.p-1",
+      "text": "Level 5 Evocation (Druid, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a small crystal or glass cone)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.cone-of-cold.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.cone-of-cold.p-2",
+      "text": "You unleash a blast of cold air. Each creature in a 60-foot Cone originating from you makes a Constitution saving throw, taking 8d8 Cold damage on a failed save or half as much damage on a successful one. A creature killed by this spell becomes a frozen statue until it thaws.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.cone-of-cold.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 5.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.confusion",
+      "text": "Confusion",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.confusion.p-1",
+      "text": "Level 4 Enchantment (Bard, Druid, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (three nut shells)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.confusion.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.confusion.p-2",
+      "text": "Each creature in a 10-foot-radius Sphere centered on a point you choose within range must succeed on a Wisdom saving throw, or that target can’t take Bonus Actions or Reactions and must roll 1d10 at the start of each of its turns to determine its behavior for that turn, consulting the table below. 1d10 Behavior for the Turn",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "1",
+        "The target doesn’t take an action, and it uses all"
+      ],
+      "rows": [
+        [
+          "",
+          "its movement to move. Roll 1d4 for the direction: 1, north; 2, east; 3, south; or 4, west."
+        ],
+        [
+          "2–6",
+          "The target doesn’t move or take actions."
+        ],
+        [
+          "7–8",
+          "The target doesn’t move, and it takes the Attack action to make one melee attack against a random creature within reach. If none are within reach, the target takes no action."
+        ]
+      ],
+      "ruleId": "spells.c-d.confusion.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "spells.c-d.confusion.p-3",
+      "text": "9–10 The target chooses its behavior. At the end of each of its turns, an affected target repeats the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.confusion.p-4",
+      "text": "Using a Higher-Level Spell Slot. The Sphere’s radius increases by 5 feet for each spell slot level above 4.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.conjure-animals",
+      "text": "Conjure Animals",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-animals.p-1",
+      "text": "Level 3 Conjuration (Druid, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.conjure-animals.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-animals.p-2",
+      "text": "You conjure nature spirits that appear as a Large pack of spectral, intangible animals in an unoccupied space you can see within range. The pack lasts for the duration, and you choose the spirits’ animal form, such as wolves, serpents, or birds.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-animals.p-3",
+      "text": "You have Advantage on Strength saving throws while you’re within 5 feet of the pack, and when you move on your turn, you can also move the pack up to 30 feet to an unoccupied space you can see.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-animals.p-4",
+      "text": "Whenever the pack moves within 10 feet of a creature you can see and whenever a creature you can see enters a space within 10 feet of the pack or ends its turn there, you can force that creature to make a Dexterity saving throw. On a failed save, the creature takes 3d10 Slashing damage. A creature makes this save only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-animals.p-5",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d10 for each spell slot level above 3.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.conjure-celestial",
+      "text": "Conjure Celestial",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-celestial.p-1",
+      "text": "Level 7 Conjuration (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.conjure-celestial.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-celestial.p-2",
+      "text": "You conjure a spirit from the Upper Planes, which manifests as a pillar of light in a 10-foot-radius, 40-foot-high Cylinder centered on a point within range. For each creature you can see in the Cylinder, choose which of these lights shines on it: Healing Light. The target regains Hit Points equal to 4d12 plus your spellcasting ability modifier. Searing Light. The target makes a Dexterity saving throw, taking 6d12 Radiant damage on a failed save or half as much damage on a successful one. Until the spell ends, Bright Light fills the Cylinder, and when you move on your turn, you can also move the Cylinder up to 30 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-celestial.p-3",
+      "text": "Whenever the Cylinder moves into the space of a creature you can see and whenever a creature you can see enters the Cylinder or ends its turn there, you can bathe it in one of the lights. A creature can be affected by this spell only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-celestial.p-4",
+      "text": "Using a Higher-Level Spell Slot. The healing and damage increase by 1d12 for each spell slot level above 7.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.conjure-elemental",
+      "text": "Conjure Elemental",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-elemental.p-1",
+      "text": "Level 5 Conjuration (Druid, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.conjure-elemental.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-elemental.p-2",
+      "text": "You conjure a Large, intangible spirit from the Elemental Planes that appears in an unoccupied space within range. Choose the spirit’s element, which determines its damage type: air (Lightning), earth (Thunder), fire (Fire), or water (Cold). The spirit lasts for the duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-elemental.p-3",
+      "text": "Whenever a creature you can see enters the spirit’s space or starts its turn within 5 feet of the spirit, you can force that creature to make a Dexterity saving throw if the spirit has no creature Restrained. On failed save, the target takes 8d8 damage of the spirit’s type, and the target has the Restrained condition until the spell ends. At the start of each of its turns, the Restrained target repeats the save. On a failed save, the target takes 4d8 damage of the spirit’s type. On a successful save, the target isn’t Restrained by the spirit.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-elemental.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 5.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.conjure-fey",
+      "text": "Conjure Fey",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-fey.p-1",
+      "text": "Level 6 Conjuration (Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.conjure-fey.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-fey.p-2",
+      "text": "You conjure a Medium spirit from the Feywild in an unoccupied space you can see within range. The spirit lasts for the duration, and it looks like a Fey creature of your choice. When the spirit appears, you can make one melee spell attack against a creature within 5 feet of it. On a hit, the target takes Psychic damage equal to 3d12 plus your spellcasting ability modifier, and the target has the Frightened condition until the start of your next turn, with both you and the spirit as the source of the fear.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-fey.p-3",
+      "text": "As a Bonus Action on your later turns, you can teleport the spirit to an unoccupied space you can see within 30 feet of the space it left and make the attack against a creature within 5 feet of it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-fey.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d12 for each spell slot level above 6.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.conjure-minor-elementals",
+      "text": "Conjure Minor Elementals",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-minor-elementals.p-1",
+      "text": "Level 4 Conjuration (Druid, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.conjure-minor-elementals.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-minor-elementals.p-2",
+      "text": "You conjure spirits from the Elemental Planes that flit around you in a 15-foot Emanation for the duration. Until the spell ends, any attack you make deals an extra 2d8 damage when you hit a creature in the Emanation. This damage is Acid, Cold, Fire, or Lightning (your choice when you make the attack).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-minor-elementals.p-3",
+      "text": "In addition, the ground in the Emanation is Difficult Terrain for your enemies.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-minor-elementals.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 4.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.conjure-woodland-beings",
+      "text": "Conjure Woodland Beings",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-woodland-beings.p-1",
+      "text": "Level 4 Conjuration (Druid, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.conjure-woodland-beings.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-woodland-beings.p-2",
+      "text": "You conjure nature spirits that flit around you in a 10-foot Emanation for the duration. Whenever the Emanation enters the space of a creature you can see and whenever a creature you can see enters the Emanation or ends its turn there, you can force that creature to make a Wisdom saving throw. The creature takes 5d8 Force damage on a failed save or half as much damage on a successful one. A creature makes this save only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-woodland-beings.p-3",
+      "text": "In addition, you can take the Disengage action as a Bonus Action for the spell’s duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.conjure-woodland-beings.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 4.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.contact-other-plane",
+      "text": "Contact Other Plane",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.contact-other-plane.p-1",
+      "text": "Level 5 Divination (Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.contact-other-plane.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.contact-other-plane.p-2",
+      "text": "You mentally contact a demigod, the spirit of a longdead sage, or some other knowledgeable entity from another plane. Contacting this otherworldly intelligence can break your mind. When you cast this spell, make a DC 15 Intelligence saving throw. On a successful save, you can ask the entity up to five questions. You must ask your questions before the spell ends. The GM answers each question with one word, such as “yes,” “no,” “maybe,” “never,” “irrelevant,” or “unclear” (if the entity doesn’t know the answer to the question). If a one-word answer would be misleading, the GM might instead offer a short phrase as an answer.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.contact-other-plane.p-3",
+      "text": "On a failed save, you take 6d6 Psychic damage and have the Incapacitated condition until you finish a Long Rest. A Greater Restoration spell cast on you ends this effect.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.contagion",
+      "text": "Contagion",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.contagion.p-1",
+      "text": "Level 5 Necromancy (Cleric, Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "7 days",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.contagion.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.contagion.p-2",
+      "text": "Your touch inflicts a magical contagion. The target must succeed on a Constitution saving throw or take 11d8 Necrotic damage and have the Poisoned condition. Also, choose one ability when you cast the spell. While Poisoned, the target has Disadvantage on saving throws made with the chosen ability.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.contagion.p-3",
+      "text": "The target must repeat the saving throw at the end of each of its turns until it gets three successes or failures. If the target succeeds on three of these saves, the spell ends on the target. If the target fails three of the saves, the spell lasts for 7 days on it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.contagion.p-4",
+      "text": "Whenever the Poisoned target receives an effect that would end the Poisoned condition, the target must succeed on a Constitution saving throw, or the Poisoned condition doesn’t end on it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.contingency",
+      "text": "Contingency",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.contingency.p-1",
+      "text": "Level 6 Abjuration (Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "10 minutes",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a gem-encrusted statuette of yourself worth 1,500+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "10 days",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.contingency.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.contingency.p-2",
+      "text": "Choose a spell of level 5 or lower that you can cast, that has a casting time of an action, and that can target you. You cast that spell—called the contingent spell—as part of casting Contingency, expending spell slots for both, but the contingent spell doesn’t come into effect. Instead, it takes effect when a certain trigger occurs. You describe that trigger when you cast the two spells. For example, a Contingency cast with Water Breathing might stipulate that Water Breathing comes into effect when you are engulfed in water or a similar liquid.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.contingency.p-3",
+      "text": "The contingent spell takes effect immediately after the trigger occurs for the first time, whether or not you want it to, and then Contingency ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.contingency.p-4",
+      "text": "The contingent spell takes effect only on you, even if it can normally target others. You can use only one Contingency spell at a time. If you cast this spell again, the effect of another Contingency spell on you ends. Also, Contingency ends on you if its material component is ever not on your person.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.continual-flame",
+      "text": "Continual Flame",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.continual-flame.p-1",
+      "text": "Level 2 Evocation (Cleric, Druid, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (ruby dust worth 50+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Until dispelled",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.continual-flame.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.continual-flame.p-2",
+      "text": "A flame springs from an object that you touch. The effect casts Bright Light in a 20-foot radius and Dim Light for an additional 20 feet. It looks like a regular flame, but it creates no heat and consumes no fuel. The flame can be covered or hidden but not smothered or quenched.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.control-water",
+      "text": "Control Water",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.control-water.p-1",
+      "text": "Level 4 Transmutation (Cleric, Druid, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "300 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a mixture of water and dust)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.control-water.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.control-water.p-2",
+      "text": "Until the spell ends, you control any water inside an area you choose that is a Cube up to 100 feet on a side, using one of the following effects. As a Magic action on your later turns, you can repeat the same effect or choose a different one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.control-water.p-3",
+      "text": "Flood. You cause the water level of all standing water in the area to rise by as much as 20 feet. If you choose an area in a large body of water, you instead create a 20-foot tall wave that travels from one side of the area to the other and then crashes. Any Huge or smaller vehicles in the wave’s path are carried with it to the other side. Any Huge or smaller vehicles struck by the wave have a 25 percent chance of capsizing.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.control-water.p-4",
+      "text": "The water level remains elevated until the spell ends or you choose a different effect. If this effect produced a wave, the wave repeats on the start of your next turn while the flood effect lasts.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.control-water.p-5",
+      "text": "Part Water. You part water in the area and create a trench. The trench extends across the spell’s area, and the separated water forms a wall to either side. The trench remains until the spell ends or you choose a different effect. The water then slowly fills in the trench over the course of the next round until the normal water level is restored.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.control-water.p-6",
+      "text": "Redirect Flow. You cause flowing water in the area to move in a direction you choose, even if the water has to flow over obstacles, up walls, or in other unlikely directions. The water in the area moves as you direct it, but once it moves beyond the spell’s area, it resumes its flow based on the terrain. The water continues to move in the direction you chose until the spell ends or you choose a different effect.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.control-water.p-7",
+      "text": "Whirlpool. You cause a whirlpool to form in the center of the area, which must be at least 50 feet square and 25 feet deep. The whirlpool lasts until you choose a different effect or the spell ends. The whirlpool is 5 feet wide at the base, up to 50 feet wide at the top, and 25 feet tall. Any creature in the water and within 25 feet of the whirlpool is pulled 10 feet toward it. When a creature enters the whirlpool for the first time on a turn or ends its turn there, it makes a Strength saving throw. On a failed save, the creature takes 2d8 Bludgeoning damage. On a successful save, the creature takes half as much damage. A creature can swim away from the whirlpool only if it first takes an action to pull away and succeeds on a Strength (Athletics) check against your spell save DC.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.control-weather",
+      "text": "Control Weather",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.control-weather.p-1",
+      "text": "Level 8 Transmutation (Cleric, Druid, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "10 minutes",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (burning incense)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 8 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.control-weather.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.control-weather.p-2",
+      "text": "You take control of the weather within 5 miles of you for the duration. You must be outdoors to cast this spell, and it ends early if you go indoors.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.control-weather.p-3",
+      "text": "When you cast the spell, you change the current weather conditions, which are determined by the GM. You can change precipitation, temperature, and wind. It takes 1d4 × 10 minutes for the new conditions to take effect. Once they do so, you can change the conditions again. When the spell ends, the weather gradually returns to normal.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.control-weather.p-4",
+      "text": "When you change the weather conditions, find a current condition on the following tables and change its stage by one, up or down. When changing the wind, you can change its direction.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Precipitation",
+      "columns": [
+        "Stage",
+        "Condition",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "1",
+          "Clear",
+          "",
+          ""
+        ],
+        [
+          "2",
+          "Light clouds",
+          "",
+          ""
+        ],
+        [
+          "3",
+          "Overcast or ground fog",
+          "",
+          ""
+        ],
+        [
+          "4",
+          "Rain, hail, or snow",
+          "",
+          ""
+        ],
+        [
+          "5",
+          "Torrential rain, driving hail, or blizzard",
+          "",
+          ""
+        ],
+        [
+          "Temperature",
+          "",
+          "Wind",
+          ""
+        ],
+        [
+          "Stage",
+          "Condition",
+          "Stage",
+          "Condition"
+        ],
+        [
+          "1",
+          "Heat wave",
+          "1",
+          "Calm"
+        ],
+        [
+          "2",
+          "Hot",
+          "2",
+          "Moderate wind"
+        ],
+        [
+          "3",
+          "Warm",
+          "3",
+          "Strong wind"
+        ],
+        [
+          "4",
+          "Cool",
+          "4",
+          "Gale"
+        ],
+        [
+          "5",
+          "Cold",
+          "5",
+          "Storm"
+        ],
+        [
+          "6",
+          "Freezing",
+          "",
+          ""
+        ]
+      ],
+      "ruleId": "spells.c-d.control-weather.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.counterspell",
+      "text": "Counterspell",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.counterspell.p-1",
+      "text": "Level 3 Abjuration (Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Reaction, which you take when you see a creature within 60 feet of yourself casting a spell with Verbal, Somatic, or Material components",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.counterspell.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.counterspell.p-2",
+      "text": "You attempt to interrupt a creature in the process of casting a spell. The creature makes a Constitution saving throw. On a failed save, the spell dissipates with no effect, and the action, Bonus Action, or Reaction used to cast it is wasted. If that spell was cast with a spell slot, the slot isn’t expended.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.create-food-and-water",
+      "text": "Create Food and Water",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.create-food-and-water.p-1",
+      "text": "Level 3 Conjuration (Cleric, Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.create-food-and-water.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.create-food-and-water.p-2",
+      "text": "You create 45 pounds of food and 30 gallons of fresh water on the ground or in containers within range—both useful in fending off the hazards of malnutrition and dehydration. The food is bland but nourishing and looks like a food of your choice, and the water is clean. The food spoils after 24 hours if uneaten.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.create-or-destroy-water",
+      "text": "Create or Destroy Water",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.create-or-destroy-water.p-1",
+      "text": "Level 1 Transmutation (Cleric, Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a mix of water and sand)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.create-or-destroy-water.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.create-or-destroy-water.p-2",
+      "text": "You do one of the following: Create Water. You create up to 10 gallons of clean water within range in an open container. Alternatively, the water falls as rain in a 30-foot Cube within range, extinguishing exposed flames there. Destroy Water. You destroy up to 10 gallons of water in an open container within range. Alternatively, you destroy fog in a 30-foot Cube within range. Using a Higher-Level Spell Slot. You create or destroy 10 additional gallons of water, or the size of the Cube increases by 5 feet, for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.create-undead",
+      "text": "Create Undead",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.create-undead.p-1",
+      "text": "Level 6 Necromancy (Cleric, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "10 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (one 150+ GP black onyx stone for each corpse)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.create-undead.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.create-undead.p-2",
+      "text": "You can cast this spell only at night. Choose up to three corpses of Medium or Small Humanoids within range. Each one becomes a Ghoul under your control (see “Monsters” for its stat block).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.create-undead.p-3",
+      "text": "As a Bonus Action on each of your turns, you can mentally command any creature you animated with this spell if the creature is within 120 feet of you (if you control multiple creatures, you can command any of them at the same time, issuing the same command to them). You decide what action the creature will take and where it will move on its next turn, or you can issue a general command, such as to guard a particular place. If you issue no commands, the creature takes the Dodge action and moves only to avoid harm. Once given an order, the creature continues to follow the order until its task is complete.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.create-undead.p-4",
+      "text": "The creature is under your control for 24 hours, after which it stops obeying any command you’ve given it. To maintain control of the creature for another 24 hours, you must cast this spell on the creature before the current 24-hour period ends. This use of the spell reasserts your control over up to three creatures you have animated with this spell rather than animating new ones.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.create-undead.p-5",
+      "text": "Using a Higher-Level Spell Slot. If you use a level 7 spell slot, you can animate or reassert control over four Ghouls. If you use a level 8 spell slot, you can animate or reassert control over five Ghouls or two Ghasts or Wights. If you use a level 9 spell slot, you can animate or reassert control over six Ghouls, three Ghasts or Wights, or two Mummies. See “Monsters” for these stat blocks.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.creation",
+      "text": "Creation",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.creation.p-1",
+      "text": "Level 5 Illusion (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a paintbrush)",
+          "term": "Components"
+        },
+        {
+          "definition": "Special",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.creation.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.creation.p-2",
+      "text": "You pull wisps of shadow material from the Shadowfell to create an object within range. It is either an object of vegetable matter (soft goods, rope, wood, and the like) or mineral matter (stone, crystal, metal, and the like). The object must be no larger than a 5-foot Cube, and the object must be of a form and material that you have seen.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.creation.p-3",
+      "text": "The spell’s duration depends on the object’s material, as shown in the Materials table. If the object is composed of multiple materials, use the shortest duration. Using any object created by this spell as another spell’s Material component causes the other spell to fail.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Materials",
+      "columns": [
+        "Material",
+        "Duration"
+      ],
+      "rows": [
+        [
+          "Vegetable matter",
+          "24 hours"
+        ],
+        [
+          "Stone or crystal",
+          "12 hours"
+        ],
+        [
+          "Precious metals",
+          "1 hour"
+        ],
+        [
+          "Gems",
+          "10 minutes"
+        ],
+        [
+          "Adamantine or mithral",
+          "1 minute"
+        ]
+      ],
+      "ruleId": "spells.c-d.creation.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "spells.c-d.creation.p-4",
+      "text": "Using a Higher-Level Spell Slot. The Cube increases by 5 feet for each spell slot level above 5.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.cure-wounds",
+      "text": "Cure Wounds",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.cure-wounds.p-1",
+      "text": "Level 1 Abjuration (Bard, Cleric, Druid, Paladin, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.cure-wounds.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.cure-wounds.p-2",
+      "text": "A creature you touch regains a number of Hit Points equal to 2d8 plus your spellcasting ability modifier.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.cure-wounds.p-3",
+      "text": "Using a Higher-Level Spell Slot. The healing increases by 2d8 for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dancing-lights",
+      "text": "Dancing Lights",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dancing-lights.p-1",
+      "text": "Illusion Cantrip (Bard, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a bit of phosphorus)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dancing-lights.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dancing-lights.p-2",
+      "text": "You create up to four torch-size lights within range, making them appear as torches, lanterns, or glowing orbs that hover for the duration. Alternatively, you combine the four lights into one glowing Medium form that is vaguely humanlike. Whichever form you choose, each light sheds Dim Light in a 10- foot radius.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dancing-lights.p-3",
+      "text": "As a Bonus Action, you can move the lights up to 60 feet to a space within range. A light must be within 20 feet of another light created by this spell, and a light vanishes if it exceeds the spell’s range.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.darkness",
+      "text": "Darkness",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.darkness.p-1",
+      "text": "Level 2 Evocation (Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, M (bat fur and a piece of coal)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.darkness.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.darkness.p-2",
+      "text": "For the duration, magical Darkness spreads from a point within range and fills a 15-foot-radius Sphere. Darkvision can’t see through it, and nonmagical light can’t illuminate it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.darkness.p-3",
+      "text": "Alternatively, you cast the spell on an object that isn’t being worn or carried, causing the Darkness to fill a 15-foot Emanation originating from that object. Covering that object with something opaque, such as a bowl or helm, blocks the Darkness.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.darkness.p-4",
+      "text": "If any of this spell’s area overlaps with an area of Bright Light or Dim Light created by a spell of level 2 or lower, that other spell is dispelled.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.darkvision",
+      "text": "Darkvision",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.darkvision.p-1",
+      "text": "Level 2 Transmutation (Druid, Ranger, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a dried carrot)",
+          "term": "Components"
+        },
+        {
+          "definition": "8 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.darkvision.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.darkvision.p-2",
+      "text": "For the duration, a willing creature you touch has Darkvision with a range of 150 feet.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.daylight",
+      "text": "Daylight",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.daylight.p-1",
+      "text": "Level 3 Evocation (Cleric, Druid, Paladin, Ranger, Sorcerer)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.daylight.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.daylight.p-2",
+      "text": "For the duration, sunlight spreads from a point within range and fills a 60-foot-radius Sphere. The sunlight’s area is Bright Light and sheds Dim Light for an additional 60 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.daylight.p-3",
+      "text": "Alternatively, you cast the spell on an object that isn’t being worn or carried, causing the sunlight to fill a 60-foot Emanation originating from that object. Covering that object with something opaque, such as a bowl or helm, blocks the sunlight.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.daylight.p-4",
+      "text": "If any of this spell’s area overlaps with an area of Darkness created by a spell of level 3 or lower, that other spell is dispelled.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.death-ward",
+      "text": "Death Ward",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.death-ward.p-1",
+      "text": "Level 4 Abjuration (Cleric, Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "8 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.death-ward.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.death-ward.p-2",
+      "text": "You touch a creature and grant it a measure of protection from death. The first time the target would drop to 0 Hit Points before the spell ends, the target instead drops to 1 Hit Point, and the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.death-ward.p-3",
+      "text": "If the spell is still in effect when the target is subjected to an effect that would kill it instantly without dealing damage, that effect is negated against the target, and the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.delayed-blast-fireball",
+      "text": "Delayed Blast Fireball",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.delayed-blast-fireball.p-1",
+      "text": "Level 7 Evocation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "150 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a ball of bat guano and sulfur)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.delayed-blast-fireball.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.delayed-blast-fireball.p-2",
+      "text": "A beam of yellow light flashes from you, then condenses at a chosen point within range as a glowing bead for the duration. When the spell ends, the bead explodes, and each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw. A creature takes Fire damage equal to the total accumulated damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.delayed-blast-fireball.p-3",
+      "text": "The spell’s base damage is 12d6, and the damage increases by 1d6 whenever your turn ends and the spell hasn’t ended.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.delayed-blast-fireball.p-4",
+      "text": "If a creature touches the glowing bead before the spell ends, that creature makes a Dexterity saving throw. On a failed save, the spell ends, causing the bead to explode. On a successful save, the creature can throw the bead up to 40 feet. If the thrown bead enters a creature’s space or collides with a solid object, the spell ends, and the bead explodes.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.delayed-blast-fireball.p-5",
+      "text": "When the bead explodes, flammable objects in the explosion that aren’t being worn or carried start burning.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.delayed-blast-fireball.p-6",
+      "text": "Using a Higher-Level Spell Slot. The base damage increases by 1d6 for each spell slot level above 7.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.demiplane",
+      "text": "Demiplane",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.demiplane.p-1",
+      "text": "Level 8 Conjuration (Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "S",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.demiplane.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.demiplane.p-2",
+      "text": "You create a shadowy Medium door on a flat solid surface that you can see within range. This door can be opened and closed, and it leads to a demiplane that is an empty room 30 feet in each dimension, made of wood or stone (your choice).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.demiplane.p-3",
+      "text": "When the spell ends, the door vanishes, and any objects inside the demiplane remain there. Any creatures inside also remain unless they opt to be shunted through the door as it vanishes, landing with the Prone condition in the unoccupied spaces closest to the door’s former space.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.demiplane.p-4",
+      "text": "Each time you cast this spell, you can create a new demiplane or connect the shadowy door to a demiplane you created with a previous casting of this spell. Additionally, if you know the nature and contents of a demiplane created by a casting of this spell by another creature, you can connect the shadowy door to that demiplane instead.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.detect-evil-and-good",
+      "text": "Detect Evil and Good",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.detect-evil-and-good.p-1",
+      "text": "Level 1 Divination (Cleric, Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.detect-evil-and-good.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.detect-evil-and-good.p-2",
+      "text": "For the duration, you sense the location of any Aberration, Celestial, Elemental, Fey, Fiend, or Undead within 30 feet of yourself. You also sense whether the Hallow spell is active there and, if so, where.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.detect-evil-and-good.p-3",
+      "text": "The spell is blocked by 1 foot of stone, dirt, or wood; 1 inch of metal; or a thin sheet of lead.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.detect-magic",
+      "text": "Detect Magic",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.detect-magic.p-1",
+      "text": "Level 1 Divination (Bard, Cleric, Druid, Paladin, Ranger, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.detect-magic.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.detect-magic.p-2",
+      "text": "For the duration, you sense the presence of magical effects within 30 feet of yourself. If you sense such effects, you can take the Magic action to see a faint aura around any visible creature or object in the area that bears the magic, and if an effect was created by a spell, you learn the spell’s school of magic.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.detect-magic.p-3",
+      "text": "The spell is blocked by 1 foot of stone, dirt, or wood; 1 inch of metal; or a thin sheet of lead.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.detect-poison-and-disease",
+      "text": "Detect Poison and Disease",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.detect-poison-and-disease.p-1",
+      "text": "Level 1 Divination (Cleric, Druid, Paladin, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a yew leaf)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.detect-poison-and-disease.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.detect-poison-and-disease.p-2",
+      "text": "For the duration, you sense the location of poisons, poisonous or venomous creatures, and magical contagions within 30 feet of yourself. You sense the kind of poison, creature, or contagion in each case.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.detect-poison-and-disease.p-3",
+      "text": "The spell is blocked by 1 foot of stone, dirt, or wood; 1 inch of metal; or a thin sheet of lead.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.detect-thoughts",
+      "text": "Detect Thoughts",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.detect-thoughts.p-1",
+      "text": "Level 2 Divination (Bard, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (1 Copper Piece)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.detect-thoughts.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.detect-thoughts.p-2",
+      "text": "You activate one of the effects below. Until the spell ends, you can activate either effect as a Magic action on your later turns.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.detect-thoughts.p-3",
+      "text": "Sense Thoughts. You sense the presence of thoughts within 30 feet of yourself that belong to creatures that know languages or are telepathic. You don’t read the thoughts, but you know that a thinking creature is present.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.detect-thoughts.p-4",
+      "text": "The spell is blocked by 1 foot of stone, dirt, or wood; 1 inch of metal; or a thin sheet of lead.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.detect-thoughts.p-5",
+      "text": "Read Thoughts. Target one creature you can see within 30 feet of yourself or one creature within 30 feet of yourself that you detected with the Sense Thoughts option. You learn what is most on the target’s mind right now. If the target doesn’t know any languages and isn’t telepathic, you learn nothing.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.detect-thoughts.p-6",
+      "text": "As a Magic action on your next turn, you can try to probe deeper into the target’s mind. If you probe deeper, the target makes a Wisdom saving throw. On a failed save, you discern the target’s reasoning, emotions, and something that looms large in its mind (such as a worry, love, or hate). On a successful save, the spell ends. Either way, the target knows that you are probing into its mind, and until you shift your attention away from the target’s mind, the target can take an action on its turn to make an Intelligence (Arcana) check against your spell save DC, ending the spell on a success.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dimension-door",
+      "text": "Dimension Door",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dimension-door.p-1",
+      "text": "Level 4 Conjuration (Bard, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "500 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dimension-door.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dimension-door.p-2",
+      "text": "You teleport to a location within range. You arrive at exactly the spot desired. It can be a place you can see, one you can visualize, or one you can describe by stating distance and direction, such as “200 feet straight downward” or “300 feet upward to the northwest at a 45-degree angle.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dimension-door.p-3",
+      "text": "You can also teleport one willing creature. The creature must be within 5 feet of you when you teleport, and it teleports to a space within 5 feet of your destination space.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dimension-door.p-4",
+      "text": "If you, the other creature, or both would arrive in a space occupied by a creature or completely filled by one or more objects, you and any creature traveling with you each take 4d6 Force damage, and the teleportation fails.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.disguise-self",
+      "text": "Disguise Self",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.disguise-self.p-1",
+      "text": "Level 1 Illusion (Bard, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.disguise-self.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.disguise-self.p-2",
+      "text": "You make yourself—including your clothing, armor, weapons, and other belongings on your person—look different until the spell ends. You can seem 1 foot shorter or taller and can appear heavier or lighter. You must adopt a form that has the same basic arrangement of limbs as you have. Otherwise, the extent of the illusion is up to you.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.disguise-self.p-3",
+      "text": "The changes wrought by this spell fail to hold up to physical inspection. For example, if you use this spell to add a hat to your outfit, objects pass through the hat, and anyone who touches it would feel nothing.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.disguise-self.p-4",
+      "text": "To discern that you are disguised, a creature must take the Study action to inspect your appearance and succeed on an Intelligence (Investigation) check against your spell save DC.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.disintegrate",
+      "text": "Disintegrate",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.disintegrate.p-1",
+      "text": "Level 6 Transmutation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a lodestone and dust)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.disintegrate.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.disintegrate.p-2",
+      "text": "You launch a green ray at a target you can see within range. The target can be a creature, a nonmagical object, or a creation of magical force, such as the wall created by Wall of Force.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.disintegrate.p-3",
+      "text": "A creature targeted by this spell makes a Dexterity saving throw. On a failed save, the target takes 10d6 + 40 Force damage. If this damage reduces it to 0 Hit Points, it and everything nonmagical it is wearing and carrying are disintegrated into gray dust. The target can be revived only by a True Resurrection or a Wish spell.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.disintegrate.p-4",
+      "text": "This spell automatically disintegrates a Large or smaller nonmagical object or a creation of magical force. If such a target is Huge or larger, this spell disintegrates a 10-foot-Cube portion of it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.disintegrate.p-5",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 3d6 for each spell slot level above 6.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dispel-evil-and-good",
+      "text": "Dispel Evil and Good",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dispel-evil-and-good.p-1",
+      "text": "Level 5 Abjuration (Cleric, Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (powdered silver and iron)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dispel-evil-and-good.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dispel-evil-and-good.p-2",
+      "text": "For the duration, Celestials, Elementals, Fey, Fiends, and Undead have Disadvantage on attack rolls against you. You can end the spell early by using either of the following special functions.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dispel-evil-and-good.p-3",
+      "text": "Break Enchantment. As a Magic action, you touch a creature that is possessed by or has the Charmed or Frightened condition from one or more creatures of the types above. The target is no longer possessed, Charmed, or Frightened by such creatures.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dispel-evil-and-good.p-4",
+      "text": "Dismissal. As a Magic action, you target one creature you can see within 5 feet of you that has one of the creature types above. The target must succeed on a Charisma saving throw or be sent back to its home plane if it isn’t there already. If they aren’t on their home plane, Undead are sent to the Shadowfell, and Fey are sent to the Feywild.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dispel-magic",
+      "text": "Dispel Magic",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dispel-magic.p-1",
+      "text": "Level 3 Abjuration (Bard, Cleric, Druid, Paladin, Ranger, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dispel-magic.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dispel-magic.p-2",
+      "text": "Choose one creature, object, or magical effect within range. Any ongoing spell of level 3 or lower on the target ends. For each ongoing spell of level 4 or higher on the target, make an ability check using your spellcasting ability (DC 10 plus that spell’s level). On a successful check, the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dispel-magic.p-3",
+      "text": "Using a Higher-Level Spell Slot. You automatically end a spell on the target if the spell’s level is equal to or less than the level of the spell slot you use.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dissonant-whispers",
+      "text": "Dissonant Whispers",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dissonant-whispers.p-1",
+      "text": "Level 1 Enchantment (Bard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dissonant-whispers.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dissonant-whispers.p-2",
+      "text": "One creature of your choice that you can see within range hears a discordant melody in its mind. The target makes a Wisdom saving throw. On a failed save, it takes 3d6 Psychic damage and must immediately use its Reaction, if available, to move as far away from you as it can, using the safest route. On a successful save, the target takes half as much damage only.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dissonant-whispers.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.divination",
+      "text": "Divination",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.divination.p-1",
+      "text": "Level 4 Divination (Cleric, Druid, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (incense worth 25+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.divination.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.divination.p-2",
+      "text": "This spell puts you in contact with a god or a god’s servants. You ask one question about a specific goal, event, or activity to occur within 7 days. The GM offers a truthful reply, which might be a short phrase or cryptic rhyme. The spell doesn’t account for circumstances that might change the answer, such as the casting of other spells.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.divination.p-3",
+      "text": "If you cast the spell more than once before finishing a Long Rest, there is a cumulative 25 percent chance for each casting after the first that you get no answer.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.divine-favor",
+      "text": "Divine Favor",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.divine-favor.p-1",
+      "text": "Level 1 Transmutation (Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.divine-favor.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.divine-favor.p-2",
+      "text": "Until the spell ends, your attacks with weapons deal an extra 1d4 Radiant damage on a hit.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.divine-smite",
+      "text": "Divine Smite",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.divine-smite.p-1",
+      "text": "Level 1 Evocation (Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action, which you take immediately after hitting a target with a Melee weapon or an Unarmed Strike",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.divine-smite.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.divine-smite.p-2",
+      "text": "The target takes an extra 2d8 Radiant damage from the attack. The damage increases by 1d8 if the target is a Fiend or an Undead.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.divine-smite.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.divine-word",
+      "text": "Divine Word",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.divine-word.p-1",
+      "text": "Level 7 Evocation (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.divine-word.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.divine-word.p-2",
+      "text": "You utter a word imbued with power from the Upper Planes. Each creature of your choice in range makes a Charisma saving throw. On a failed save, a target that has 50 Hit Points or fewer suffers an effect based on its current Hit Points, as shown in the Divine Word Effects table. Regardless of its Hit Points, a Celestial, an Elemental, a Fey, or a Fiend target that fails its save is forced back to its plane of origin (if it isn’t there already) and can’t return to the current plane for 24 hours by any means short of a Wish spell.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "spells.c-d.divine-word.divine-word-effects",
+      "text": "Divine Word Effects",
+      "type": "heading"
+    },
+    {
+      "caption": "Hit Points Effect",
+      "columns": [
+        "0–20",
+        "The target dies."
+      ],
+      "rows": [
+        [
+          "21–30",
+          "The target has the Blinded, Deafened, and Stunned conditions for 1 hour."
+        ],
+        [
+          "31–40",
+          "The target has the Blinded and Deafened conditions for 10 minutes."
+        ],
+        [
+          "41–50",
+          "The target has the Deafened condition for 1 minute."
+        ]
+      ],
+      "ruleId": "spells.c-d.divine-word.divine-word-effects.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dominate-beast",
+      "text": "Dominate Beast",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-beast.p-1",
+      "text": "Level 4 Enchantment (Druid, Ranger, Sorcerer)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dominate-beast.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-beast.p-2",
+      "text": "One Beast you can see within range must succeed on a Wisdom saving throw or have the Charmed condition for the duration. The target has Advantage on the save if you or your allies are fighting it. Whenever the target takes damage, it repeats the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-beast.p-3",
+      "text": "You have a telepathic link with the Charmed target while the two of you are on the same plane of existence. On your turn, you can use this link to issue commands to the target (no action required), such as “Attack that creature,” “Move over there,” or “Fetch that object.” The target does its best to obey on its turn. If it completes an order and doesn’t receive further direction from you, it acts and moves as it likes, focusing on protecting itself.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-beast.p-4",
+      "text": "You can command the target to take a Reaction but must take your own Reaction to do so.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-beast.p-5",
+      "text": "Using a Higher-Level Spell Slot. Your Concentration can last longer with a spell slot of level 5 (up to 10 minutes), 6 (up to 1 hour), or 7+ (up to 8 hours).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dominate-monster",
+      "text": "Dominate Monster",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-monster.p-1",
+      "text": "Level 8 Enchantment (Bard, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dominate-monster.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-monster.p-2",
+      "text": "One creature you can see within range must succeed on a Wisdom saving throw or have the Charmed condition for the duration. The target has Advantage on the save if you or your allies are fighting it. Whenever the target takes damage, it repeats the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-monster.p-3",
+      "text": "You have a telepathic link with the Charmed target while the two of you are on the same plane of existence. On your turn, you can use this link to issue commands to the target (no action required), such as “Attack that creature,” “Move over there,” or “Fetch that object.” The target does its best to obey on its turn. If it completes an order and doesn’t receive further direction from you, it acts and moves as it likes, focusing on protecting itself.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-monster.p-4",
+      "text": "You can command the target to take a Reaction but must take your own Reaction to do so.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-monster.p-5",
+      "text": "Using a Higher-Level Spell Slot. Your Concentration can last longer with a level 9 spell slot (up to 8 hours).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dominate-person",
+      "text": "Dominate Person",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-person.p-1",
+      "text": "Level 5 Enchantment (Bard, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dominate-person.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-person.p-2",
+      "text": "One Humanoid you can see within range must succeed on a Wisdom saving throw or have the Charmed condition for the duration. The target has Advantage on the save if you or your allies are fighting it. Whenever the target takes damage, it repeats the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-person.p-3",
+      "text": "You have a telepathic link with the Charmed target while the two of you are on the same plane of existence. On your turn, you can use this link to issue commands to the target (no action required), such as “Attack that creature,” “Move over there,” or “Fetch that object.” The target does its best to obey on its turn. If it completes an order and doesn’t receive further direction from you, it acts and moves as it likes, focusing on protecting itself.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-person.p-4",
+      "text": "You can command the target to take a Reaction but must take your own Reaction to do so.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dominate-person.p-5",
+      "text": "Using a Higher-Level Spell Slot. Your Concentration can last longer with a spell slot of level 6 (up to 10 minutes), 7 (up to 1 hour), or 8+ (up to 8 hours).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dragons-breath",
+      "text": "Dragon’s Breath",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dragons-breath.p-1",
+      "text": "Level 2 Transmutation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a hot pepper)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dragons-breath.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dragons-breath.p-2",
+      "text": "You touch one willing creature, and choose Acid, Cold, Fire, Lightning, or Poison. Until the spell ends, the target can take a Magic action to exhale a 15-foot Cone. Each creature in that area makes a Dexterity saving throw, taking 3d6 damage of the chosen type on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dragons-breath.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 2.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.dream",
+      "text": "Dream",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.dream.p-1",
+      "text": "Level 5 Illusion (Bard, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Special",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a handful of sand)",
+          "term": "Components"
+        },
+        {
+          "definition": "8 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.dream.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.dream.p-2",
+      "text": "You target a creature you know on the same plane of existence. You or a willing creature you touch enters a trance state to act as a dream messenger. While in the trance, the messenger is Incapacitated and has a Speed of 0.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dream.p-3",
+      "text": "If the target is asleep, the messenger appears in the target’s dreams and can converse with the target as long as it remains asleep, through the spell’s duration. The messenger can also shape the dream’s environment, creating landscapes, objects, and other images. The messenger can emerge from the trance at any time, ending the spell. The target recalls the dream perfectly upon waking.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dream.p-4",
+      "text": "If the target is awake when you cast the spell, the messenger knows it and can either end the trance (and the spell) or wait for the target to sleep, at which point the messenger enters its dreams.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.dream.p-5",
+      "text": "You can make the messenger terrifying to the target. If you do so, the messenger can deliver a message of no more than ten words, and then the target makes a Wisdom saving throw. On a failed save, the target gains no benefit from its rest, and it takes 3d6 Psychic damage when it wakes up.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.c-d.druidcraft",
+      "text": "Druidcraft",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.c-d.druidcraft.p-1",
+      "text": "Transmutation Cantrip (Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.c-d.druidcraft.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.c-d.druidcraft.p-2",
+      "text": "Whispering to the spirits of nature, you create one of the following effects within range.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.druidcraft.p-3",
+      "text": "Weather Sensor. You create a Tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb for clear skies, a cloud for rain, falling snowflakes for snow, and so on. This effect persists for 1 round.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.druidcraft.p-4",
+      "text": "Bloom. You instantly make a flower blossom, a seed pod open, or a leaf bud bloom.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.druidcraft.p-5",
+      "text": "Sensory Effect. You create a harmless sensory effect, such as falling leaves, spectral dancing fairies, a gentle breeze, the sound of an animal, or the faint odor of skunk. The effect must fit in a 5-foot Cube.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.c-d.druidcraft.p-6",
+      "text": "Fire Play. You light or snuff out a candle, a torch, or a campfire.",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "spells.c-d",
+  "editorialBlocks": [
+    "spells.c-d",
+    "spells.c-d.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Spells",
+    "Spells C–D"
+  ],
+  "order": 3602,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "spells-c-d",
+  "sourcePages": [
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126
+  ],
+  "title": "Spells C–D"
+}

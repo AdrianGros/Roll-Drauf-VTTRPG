@@ -25,7 +25,7 @@ from vtt.models import (
     User,
 )
 from vtt.models.table_seat import PLAYER_SEAT
-from vtt.play.vision import calculate_visible_cells
+from vtt.play.vision import calculate_visible_cells, token_world_xy
 from vtt.utils.time import utcnow
 
 SESSION_TRANSITIONS = {
@@ -382,9 +382,11 @@ def serialize_scene_stack(scene_stack: SceneStack | None, *,
     )
     if role is not None and not is_operator_role(role):
         layers = [layer for layer in layers if layer.is_player_visible]
+    from vtt.play.scene_settings import hierarchy_projection
+    parents, revision = hierarchy_projection(layers, scene_stack.campaign_id)
     return {
-        **scene_stack.serialize(),
-        "layers": [layer.serialize() for layer in layers],
+        **scene_stack.serialize(), "hierarchy_revision": revision,
+        "layers": [{**layer.serialize(), **parents[layer.id]} for layer in layers],
     }
 
 
@@ -717,7 +719,7 @@ def recalculate_fog_for_owner(owner_user_id: int, campaign_map: CampaignMap, ses
     visible_cells: set[tuple[int, int]] = set()
     for token in owned_tokens:
         visible_cells |= calculate_visible_cells(
-            token.x, token.y, token.sight_range, walls, lights, campaign_map.grid_size)
+            *token_world_xy(token,campaign_map.grid_size), token.sight_range, walls, lights, campaign_map.grid_size)
 
     fog = FogOfWarState.query.filter_by(
         user_id=owner_user_id, campaign_map_id=campaign_map.id).first()

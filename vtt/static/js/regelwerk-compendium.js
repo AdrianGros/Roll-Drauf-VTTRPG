@@ -1,7 +1,12 @@
 (function () {
     'use strict';
 
-    const API = '/api/rulesets/srd-5.2.1-de/compendium';
+    const initialParams = new URLSearchParams(window.location.search);
+    // Old character pins omit locale and continue to point to German mechanics.
+    const explicitLocale = initialParams.get('locale');
+    const contentLocale = ['de', 'en'].includes(explicitLocale) ? explicitLocale
+        : initialParams.has('entry') ? 'de' : globalThis.VTTI18n?.locale?.() === 'en' ? 'en' : 'de';
+    const API = `/api/rulesets/srd-5.2.1-${contentLocale}/compendium`;
     const PAGE = 50;
     // Only authored controls, headings and status text go through the explicit UI catalog.
     // Entity names, facet values and rule blocks from the API always stay source text.
@@ -27,7 +32,7 @@
                 { key: 'class', facet: 'classes', label: 'Klasse', type: 'select' },
                 { key: 'concentration', label: 'Konzentration', type: 'tri' },
                 { key: 'ritual', label: 'Ritual', type: 'tri' },
-                { key: 'component', label: 'Komponente', type: 'options', options: ['V', 'G', 'M'] },
+                { key: 'component', label: 'Komponente', type: 'options', options: ['V', contentLocale === 'en' ? 'S' : 'G', 'M'] },
             ],
             sorts: [['name', 'Name'], ['level', 'Grad']],
         },
@@ -294,6 +299,8 @@
         detailBody: document.getElementById('cpDetailBody'),
     };
     const ENTRY_API = `${API}/entry/`;
+    els.body.lang = contentLocale;
+    els.detailBody.lang = contentLocale;
 
     let facets = {};
     let offset = 0;
@@ -354,6 +361,7 @@
 
     function currentParams() {
         const params = new URLSearchParams();
+        params.set('locale', contentLocale);
         params.set('type', els.type.value);
         if (els.q.value.trim()) params.set('q', els.q.value.trim());
         els.filters.querySelectorAll('[data-filter]').forEach((control) => {
@@ -508,7 +516,7 @@
         els.detailBody.textContent = '';
         const actionRoot = node('div'); actionRoot.className = 'cp-character-actions-entry';
         els.detailBody.appendChild(actionRoot);
-        import('/static/js/compendium-character.js').then(({mountCatalogAction}) => {
+        if (contentLocale === 'de') import('/static/js/compendium-character.js').then(({mountCatalogAction}) => {
             if (version === detailVersion && actionRoot.isConnected) characterActionCleanup = mountCatalogAction(actionRoot, entity);
         }).catch(() => { if (version === detailVersion) actionRoot.textContent = ui('Charakteraktion konnte nicht geladen werden.'); });
         data.blocks.forEach((block) => els.detailBody.appendChild(renderBlock(block)));
@@ -630,6 +638,26 @@
     }
 
     async function init() {
+        const localePicker = document.createElement('select');
+        localePicker.id = 'cpLocale';
+        localePicker.setAttribute('aria-label', uiLocale() === 'en' ? 'Content language' : 'Sprache der Regeltexte');
+        localePicker.append(new Option('Deutsch · SRD 5.2.1', 'de'), new Option('English · SRD 5.2.1', 'en'));
+        localePicker.value = contentLocale;
+        localePicker.addEventListener('change', () => {
+            const params = new URLSearchParams({locale: localePicker.value, type: els.type.value});
+            window.location.href = `${window.location.pathname}?${params}`;
+        });
+        els.form.prepend(field(uiLocale() === 'en' ? 'Content language' : 'Sprache der Regeltexte', localePicker, 'cpLocale'));
+        document.querySelectorAll('a[href="/regelwerk"]').forEach((link) => {
+            link.href = contentLocale === 'en' ? '/regelwerk/5.2.1/en' : '/regelwerk?locale=de';
+        });
+        if (contentLocale === 'en') {
+            const source = document.querySelector('.regelwerk-footer p');
+            if (source) source.textContent = 'Source: System Reference Document 5.2.1 (English). Official rules text with separate Roll Drauf reading notes.';
+        }
+        document.querySelectorAll('a[href="/regelwerk/lizenz"]').forEach((link) => {
+            if (contentLocale === 'en') link.href = '/regelwerk/5.2.1/en/license';
+        });
         Object.entries(TYPES).forEach(([key, spec]) => els.type.appendChild(new Option(ui(spec.label), key)));
         const preset = new URLSearchParams(window.location.search);
         const typeKey = TYPES[preset.get('type')] ? preset.get('type') : 'spell';

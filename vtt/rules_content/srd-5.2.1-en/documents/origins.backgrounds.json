@@ -1,0 +1,262 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "origins.backgrounds",
+      "text": "Character Origins",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "origins.backgrounds.roll-drauf-note",
+      "text": "A background describes where a character comes from. It provides ability score increases, an Origin feat, skill and tool proficiencies, and starting equipment. Four backgrounds are presented.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 2,
+      "ruleId": "origins.backgrounds.character-backgrounds",
+      "text": "Character Backgrounds",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.backgrounds.character-backgrounds.p-1",
+      "text": "Your character’s background is a collection of characteristics that represent the place and occupation that were most formative before your character embarked on a life of adventure.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.backgrounds.character-backgrounds.parts-of-a-background",
+      "text": "Parts of a Background",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.backgrounds.character-backgrounds.parts-of-a-background.p-1",
+      "text": "A background includes the following parts.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.backgrounds.character-backgrounds.ability-scores",
+      "text": "Ability Scores",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.backgrounds.character-backgrounds.ability-scores.p-1",
+      "text": "A background lists three of your character’s ability scores. Increase one by 2 and another one by 1, or increase all three by 1. None of these increases can raise a score above 20.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.backgrounds.character-backgrounds.feat",
+      "text": "Feat",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.backgrounds.character-backgrounds.feat.p-1",
+      "text": "A background gives your character a specified Origin feat (described in “Feats”). Skill Proficiencies A background gives your character proficiency in two specified skills.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.backgrounds.character-backgrounds.tool-proficiency",
+      "text": "Tool Proficiency",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.backgrounds.character-backgrounds.tool-proficiency.p-1",
+      "text": "Each background gives a character proficiency with one tool—either a specific tool or one chosen from the Artisan’s Tools category. Tools are detailed in “Equipment.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.backgrounds.character-backgrounds.equipment",
+      "text": "Equipment",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.backgrounds.character-backgrounds.equipment.p-1",
+      "text": "Each background offers a choice between a package of equipment and 50 GP.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.backgrounds.character-backgrounds.background-descriptions",
+      "text": "Background Descriptions",
+      "type": "heading"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.backgrounds.acolyte",
+      "text": "Acolyte",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Intelligence, Wisdom, Charisma",
+          "term": "Ability Scores"
+        },
+        {
+          "definition": "Magic Initiate (Cleric) (see “Feats”)",
+          "term": "Feat"
+        },
+        {
+          "definition": "Insight and Religion",
+          "term": "Skill Proficiencies"
+        },
+        {
+          "definition": "Calligrapher’s Supplies",
+          "term": "Tool Proficiency"
+        },
+        {
+          "definition": "Choose A or B: (A) Calligrapher’s Supplies, Book (prayers), Holy Symbol, Parchment (10 sheets),",
+          "term": "Equipment"
+        }
+      ],
+      "ruleId": "origins.backgrounds.acolyte.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.backgrounds.acolyte.robe-8-gp-or-b-50-gp",
+      "text": "Robe, 8 GP; or (B) 50 GP",
+      "type": "heading"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.backgrounds.criminal",
+      "text": "Criminal",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity, Constitution, Intelligence",
+          "term": "Ability Scores"
+        },
+        {
+          "definition": "Alert (see “Feats”)",
+          "term": "Feat"
+        },
+        {
+          "definition": "Sleight of Hand and Stealth",
+          "term": "Skill Proficiencies"
+        },
+        {
+          "definition": "Thieves’ Tools",
+          "term": "Tool Proficiency"
+        },
+        {
+          "definition": "Choose A or B: (A) 2 Daggers, Thieves’",
+          "term": "Equipment"
+        }
+      ],
+      "ruleId": "origins.backgrounds.criminal.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.backgrounds.criminal.p-1",
+      "text": "Tools, Crowbar, 2 Pouches, Traveler’s Clothes, 16 GP; or (B) 50 GP",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.backgrounds.sage",
+      "text": "Sage",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Constitution, Intelligence, Wisdom",
+          "term": "Ability Scores"
+        },
+        {
+          "definition": "Magic Initiate (Wizard) (see “Feats”)",
+          "term": "Feat"
+        },
+        {
+          "definition": "Arcana and History",
+          "term": "Skill Proficiencies"
+        },
+        {
+          "definition": "Calligrapher’s Supplies",
+          "term": "Tool Proficiency"
+        },
+        {
+          "definition": "Choose A or B: (A) Quarterstaff, Calligrapher’s Supplies, Book (history), Parchment (8 sheets), Robe, 8 GP; or (B) 50 GP",
+          "term": "Equipment"
+        }
+      ],
+      "ruleId": "origins.backgrounds.sage.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.backgrounds.soldier",
+      "text": "Soldier",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Strength, Dexterity, Constitution",
+          "term": "Ability Scores"
+        },
+        {
+          "definition": "Savage Attacker (see “Feats”)",
+          "term": "Feat"
+        },
+        {
+          "definition": "Athletics and Intimidation",
+          "term": "Skill Proficiencies"
+        },
+        {
+          "definition": "Choose one kind of Gaming Set (see",
+          "term": "Tool Proficiency"
+        }
+      ],
+      "ruleId": "origins.backgrounds.soldier.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.backgrounds.soldier.equipment",
+      "text": "“Equipment”)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Choose A or B: (A) Spear, Shortbow, 20",
+          "term": "Equipment"
+        }
+      ],
+      "ruleId": "origins.backgrounds.soldier.equipment.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.backgrounds.soldier.equipment.p-1",
+      "text": "Arrows, Gaming Set (same as above), Healer’s Kit, Quiver, Traveler’s Clothes, 14 GP; or (B) 50 GP",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "origins.backgrounds",
+  "editorialBlocks": [
+    "origins.backgrounds.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Character Origins",
+    "Character Backgrounds"
+  ],
+  "order": 2500,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "backgrounds",
+  "sourcePages": [
+    83
+  ],
+  "title": "Character Backgrounds"
+}

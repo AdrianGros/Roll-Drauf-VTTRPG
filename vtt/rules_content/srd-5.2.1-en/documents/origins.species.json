@@ -1,0 +1,689 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "origins.species",
+      "text": "Character Species",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "origins.species.roll-drauf-note",
+      "text": "Your species determines creature type, size, Speed and a set of special traits. Nine species are presented in alphabetical order.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "ruleId": "origins.species.p-1",
+      "text": "When you choose your character’s species, you determine whether your character is a human or a member of a fantastical species, such as dragonborn or gnome.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.p-2",
+      "text": "The peoples of the multiverse hail from different worlds and include many kinds of sapient life forms. A player character’s species is the set of game traits that an adventurer gains from being one of those life forms.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.p-3",
+      "text": "Some species can trace their origin to a single world, plane of existence, or god, while other species first appeared in multiple realms at once. Whatever a species’ genesis, its members have spread across the multiverse and contribute to many different cultures.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.p-4",
+      "text": "Members of most species live for about 80 years, with exceptions noted in the text about the species in “Character Origins.” Regardless of life span, members of all species reach physical maturity at about the same age. Your character can be any age that isn’t beyond their species’ normal life span.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.species.parts-of-a-species",
+      "text": "Parts of a Species",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.species.parts-of-a-species.p-1",
+      "text": "A species includes the following parts.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.species.creature-type",
+      "text": "Creature Type",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.species.creature-type.p-1",
+      "text": "A character’s species determines the character’s creature type, which is described in “Rules Glossary.” Every species in “Character Origins” is Humanoid; playable non-Humanoid species appear in other books.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.species.size",
+      "text": "Size",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.species.size.p-1",
+      "text": "Your character’s species determines the character’s size. Individuals within a species cover a wide range of heights, and some species include such diversity of size that you can choose whether your character is Small or Medium.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.species.speed",
+      "text": "Speed",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.species.speed.p-1",
+      "text": "Your character’s species determines the character’s Speed.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.species.special-traits",
+      "text": "Special Traits",
+      "type": "heading"
+    },
+    {
+      "ruleId": "origins.species.special-traits.p-1",
+      "text": "Each species gives a character special traits—unique characteristics based on the species’ physiology or magical nature. When you choose a species, your character gets all the special traits listed for it. Some traits involve making a choice from a handful of options.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "origins.species.species-descriptions",
+      "text": "Species Descriptions",
+      "type": "heading"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.dragonborn",
+      "text": "Dragonborn",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Medium (about 5–7 feet tall)",
+          "term": "Size"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.dragonborn.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.dragonborn.p-1",
+      "text": "As a Dragonborn, you have these special traits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dragonborn.p-2",
+      "text": "Draconic Ancestry. Your lineage stems from a dragon progenitor. Choose the kind of dragon from the Draconic Ancestors table. Your choice affects your Breath Weapon and Damage Resistance traits as well as your appearance.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Draconic Ancestors",
+      "columns": [
+        "Dragon",
+        "Damage Type",
+        "Dragon Damage Type",
+        ""
+      ],
+      "rows": [
+        [
+          "Black",
+          "Acid",
+          "Gold",
+          "Fire"
+        ],
+        [
+          "Blue",
+          "Lightning",
+          "Green",
+          "Poison"
+        ],
+        [
+          "Brass",
+          "Fire",
+          "Red",
+          "Fire"
+        ],
+        [
+          "Bronze",
+          "Lightning",
+          "Silver",
+          "Cold"
+        ],
+        [
+          "Copper Acid",
+          "",
+          "White",
+          "Cold"
+        ]
+      ],
+      "ruleId": "origins.species.dragonborn.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "origins.species.dragonborn.p-3",
+      "text": "Breath Weapon. When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 damage of the type determined by your Draconic Ancestry trait. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dragonborn.p-4",
+      "text": "You can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dragonborn.p-5",
+      "text": "Damage Resistance. You have Resistance to the damage type determined by your Draconic Ancestry trait.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dragonborn.p-6",
+      "text": "Darkvision. You have Darkvision with a range of 60 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dragonborn.p-7",
+      "text": "Draconic Flight. When you reach character level 5, you can channel draconic magic to give yourself temporary flight. As a Bonus Action, you sprout spectral wings on your back that last for 10 minutes or until you retract the wings (no action required) or have the Incapacitated condition. During that time, you have a Fly Speed equal to your Speed. Your wings appear to be made of the same energy as your Breath Weapon. Once you use this trait, you can’t use it again until you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.dwarf",
+      "text": "Dwarf",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Medium (about 4–5 feet tall)",
+          "term": "Size"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.dwarf.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.dwarf.p-1",
+      "text": "As a Dwarf, you have these special traits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dwarf.p-2",
+      "text": "Darkvision. You have Darkvision with a range of 120 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dwarf.p-3",
+      "text": "Dwarven Resilience. You have Resistance to Poison damage. You also have Advantage on saving throws you make to avoid or end the Poisoned condition.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dwarf.p-4",
+      "text": "Dwarven Toughness. Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dwarf.p-5",
+      "text": "Stonecunning. As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You must be on a stone surface or touching a stone surface to use this Tremorsense. The stone can be natural or worked.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.dwarf.p-6",
+      "text": "You can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.elf",
+      "text": "Elf",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Medium (about 5–6 feet tall)",
+          "term": "Size"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.elf.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.elf.p-1",
+      "text": "As an Elf, you have these special traits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.elf.p-2",
+      "text": "Darkvision. You have Darkvision with a range of 60 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.elf.p-3",
+      "text": "Elven Lineage. You are part of a lineage that grants you supernatural abilities. Choose a lineage from the Elven Lineages table. You gain the level 1 benefit of that lineage.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.elf.p-4",
+      "text": "When you reach character levels 3 and 5, you learn a higher-level spell, as shown on the table. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Elven Lineages",
+      "columns": [
+        "Lineage",
+        "Level 1",
+        "Level 3",
+        "Level 5"
+      ],
+      "rows": [
+        [
+          "Drow",
+          "The range of your Darkvision increases to 120 feet. ​ You also know the Dancing Lights cantrip.",
+          "Faerie Fire",
+          "Darkness"
+        ],
+        [
+          "High Elf",
+          "You know the Prestidigitation cantrip. Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Wizard spell list.",
+          "Detect Magic",
+          "Misty Step"
+        ],
+        [
+          "Wood Elf",
+          "Your Speed increases to 35 feet. You also know the Druidcraft cantrip.",
+          "Longstrider",
+          "Pass without Trace"
+        ]
+      ],
+      "ruleId": "origins.species.elf.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "origins.species.elf.p-5",
+      "text": "Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.elf.p-6",
+      "text": "Fey Ancestry. You have Advantage on saving throws you make to avoid or end the Charmed condition.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.elf.p-7",
+      "text": "Keen Senses. You have proficiency in the Insight, Perception, or Survival skill.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.elf.p-8",
+      "text": "Trance. You don’t need to sleep, and magic can’t put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation, during which you retain consciousness.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.gnome",
+      "text": "Gnome",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Small (about 3–4 feet tall)",
+          "term": "Size"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.gnome.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.gnome.p-1",
+      "text": "As a Gnome, you have these special traits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.gnome.p-2",
+      "text": "Darkvision. You have Darkvision with a range of 60 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.gnome.p-3",
+      "text": "Gnomish Cunning. You have Advantage on Intelligence, Wisdom, and Charisma saving throws.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.gnome.p-4",
+      "text": "Gnomish Lineage. You are part of a lineage that grants you supernatural abilities. Choose one of the following options; whichever one you choose, Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage): Forest Gnome. You know the Minor Illusion cantrip. You also always have the Speak with Animals spell prepared. You can cast it without a spell slot a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest. You can also use any spell slots you have to cast the spell. Rock Gnome. You know the Mending and Prestidigitation cantrips. In addition, you can spend 10 minutes casting Prestidigitation to create a Tiny clockwork device (AC 5, 1 HP), such as a toy, fire starter, or music box. When you create the device, you determine its function by choosing one effect from Prestidigitation; the device produces that effect whenever you or another creature takes a Bonus Action to activate it with a touch. If the chosen effect has options within it, you choose one of those options for the device when you create it. For example, if you choose the spell’s ignite-extinguish effect, you determine whether the device ignites or extinguishes fire; the device doesn’t do both. You can have three such devices in existence at a time, and each falls apart 8 hours after its creation or when you dismantle it with a touch as a Utilize action.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.goliath",
+      "text": "Goliath",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Medium (about 7–8 feet tall)",
+          "term": "Size"
+        },
+        {
+          "definition": "35 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.goliath.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.goliath.p-1",
+      "text": "As a Goliath, you have these special traits. Giant Ancestry. You are descended from Giants. Choose one of the following benefits—a supernatural boon from your ancestry; you can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest: Cloud’s Jaunt (Cloud Giant). As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see. Fire’s Burn (Fire Giant). When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to that target. Frost’s Chill (Frost Giant). When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to that target and reduce its Speed by 10 feet until the start of your next turn. Hill’s Tumble (Hill Giant). When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition. Stone’s Endurance (Stone Giant). When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the number rolled and reduce the damage by that total. Storm’s Thunder (Storm Giant). When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to that creature. Large Form. Starting at character level 5, you can change your size to Large as a Bonus Action if you’re in a big enough space. This transformation lasts for 10 minutes or until you end it (no action required). For that duration, you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this trait, you can’t use it again until you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.goliath.p-2",
+      "text": "Powerful Build. You have Advantage on any ability check you make to end the Grappled condition. You also count as one size larger when determining your carrying capacity.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.halfling",
+      "text": "Halfling",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Small (about 2–3 feet tall)",
+          "term": "Size"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.halfling.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.halfling.p-1",
+      "text": "As a Halfling, you have these special traits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.halfling.p-2",
+      "text": "Brave. You have Advantage on saving throws you make to avoid or end the Frightened condition.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.halfling.p-3",
+      "text": "Halfling Nimbleness. You can move through the space of any creature that is a size larger than you, but you can’t stop in the same space.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.halfling.p-4",
+      "text": "Luck. When you roll a 1 on the d20 of a D20 Test, you can reroll the die, and you must use the new roll.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.halfling.p-5",
+      "text": "Naturally Stealthy. You can take the Hide action even when you are obscured only by a creature that is at least one size larger than you.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.human",
+      "text": "Human",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Medium (about 4–7 feet tall) or Small (about 2–4 feet tall), chosen when you select this species",
+          "term": "Size"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.human.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.human.p-1",
+      "text": "As a Human, you have these special traits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.human.p-2",
+      "text": "Resourceful. You gain Heroic Inspiration whenever you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.human.p-3",
+      "text": "Skillful. You gain proficiency in one skill of your choice.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.human.p-4",
+      "text": "Versatile. You gain an Origin feat of your choice (see “Feats”). Skilled is recommended.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Fiendish Legacies",
+      "columns": [
+        "Legacy",
+        "Level 1"
+      ],
+      "rows": [
+        [
+          "Abyssal",
+          "You have Resistance to Poison damage. You also know the Poison Spray cantrip."
+        ],
+        [
+          "Chthonic",
+          "You have Resistance to Necrotic damage. You also know the Chill Touch cantrip."
+        ],
+        [
+          "Infernal",
+          "You have Resistance to Fire damage. You also know the Fire Bolt cantrip."
+        ]
+      ],
+      "ruleId": "origins.species.human.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.orc",
+      "text": "Orc",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Medium (about 6–7 feet tall)",
+          "term": "Size"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.orc.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.orc.p-1",
+      "text": "As an Orc, you have these special traits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.orc.p-2",
+      "text": "Adrenaline Rush. You can take the Dash action as a Bonus Action. When you do so, you gain a number of Temporary Hit Points equal to your Proficiency Bonus.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.orc.p-3",
+      "text": "You can use this trait a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Short or Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.orc.p-4",
+      "text": "Darkvision. You have Darkvision with a range of 120 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.orc.p-5",
+      "text": "Relentless Endurance. When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can’t do so again until you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "origins.species.tiefling",
+      "text": "Tiefling",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Humanoid",
+          "term": "Creature Type"
+        },
+        {
+          "definition": "Medium (about 4–7 feet tall) or Small (about 3–4 feet tall), chosen when you select this species",
+          "term": "Size"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Speed"
+        }
+      ],
+      "ruleId": "origins.species.tiefling.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "origins.species.tiefling.p-1",
+      "text": "As a Tiefling, you have the following special traits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.tiefling.p-2",
+      "text": "Darkvision. You have Darkvision with a range of 60 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.tiefling.p-3",
+      "text": "Fiendish Legacy. You are the recipient of a legacy that grants you supernatural abilities. Choose a legacy from the Fiendish Legacies table. You gain the level 1 benefit of the chosen legacy.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.tiefling.p-4",
+      "text": "When you reach character levels 3 and 5, you learn a higher-level spell, as shown on the table. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.tiefling.p-5",
+      "text": "Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "origins.species.tiefling.p-6",
+      "text": "Otherworldly Presence. You know the Thaumaturgy cantrip. When you cast it with this trait, the spell uses the same spellcasting ability you use for your Fiendish Legacy trait.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "Level 3",
+        "Level 5"
+      ],
+      "rows": [
+        [
+          "Ray of Sickness",
+          "Hold Person"
+        ],
+        [
+          "False Life",
+          "Ray of Enfeeblement"
+        ],
+        [
+          "Hellish Rebuke",
+          "Darkness"
+        ]
+      ],
+      "ruleId": "origins.species.tiefling.table-1",
+      "type": "table"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "origins.species",
+  "editorialBlocks": [
+    "origins.species.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Character Origins",
+    "Character Species"
+  ],
+  "order": 2600,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "species",
+  "sourcePages": [
+    83,
+    84,
+    85,
+    86
+  ],
+  "title": "Character Species"
+}

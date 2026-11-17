@@ -1,0 +1,260 @@
+/* Shared document book frame (U01/U05) for Conversations, Maps, Atlas, Creation Engine, Rulebook
+   (German reader and English reference) and Compendium.
+   Markup in each template: .dbf-book[data-book-frame][data-book-chapter] > .dbf-spine + the page.
+   The page is .dbf-page (reader, studio, workspace) or, for the full-viewport map editor
+   (data-book-surface="app"), the editor app itself. document-book-frame.js fills the running head,
+   the chapter pager and the folio; the documents inside keep their own modules, links and lifecycle.
+   Modes: reader = reading measure; workspace = wide (Atlas keeps its former content width, the editor
+   keeps its full viewport); studio = Creation Engine, which yields room to Eagle windows outside the page.
+   Colors only come from the semantic tokens of display-preferences.css: paper keeps its plum/gold
+   binding, night uses Edo/Gray/Ink/Natural. Maps, images and SVG content are never painted here. */
+.dbf-book {
+  --dbf-gap: clamp(.25rem, 1.6vw, 1.25rem);
+  --dbf-pad: clamp(.75rem, 2.4vw, 2rem);
+  --dbf-spine-w: clamp(8px, .9vw, 14px);
+  --dbf-measure: 1180px;
+  --dbf-page-bg: var(--ui-panel, #fffaf1);
+  --dbf-page-line: rgba(130, 89, 52, .3);
+  --dbf-page-shadow: 0 18px 40px rgba(47, 22, 56, .16);
+  --dbf-fold: rgba(110, 80, 50, .16);
+  --dbf-spine-bg: linear-gradient(90deg, #2f1638, #4b235a 55%, #3a1a48);
+  --dbf-spine-edge: #a8842c;
+  position: relative;
+  box-sizing: border-box;
+  width: min(calc(var(--dbf-measure) + 2 * var(--dbf-pad) + var(--dbf-spine-w)), calc(100% - 2 * var(--dbf-gap)));
+  margin: var(--dbf-gap) auto;
+}
+/* Night: Edo binding with a Gray edge; the page is the Ink-90/Edo-10 panel; the fold darkens toward Ink. */
+html[data-vtt-theme=night] .dbf-book {
+  --dbf-page-line: var(--ui-line);
+  --dbf-page-shadow: 0 18px 40px rgba(28, 28, 28, .7);
+  --dbf-fold: rgba(28, 28, 28, .9);
+  --dbf-spine-bg: linear-gradient(90deg, var(--night-edo-deep), var(--night-edo) 55%, var(--night-edo-deep));
+  --dbf-spine-edge: var(--night-gray);
+}
+.dbf-book[data-book-frame=studio] { --dbf-measure: 72rem; }
+/* Atlas: the former .atlas-layout content box (max 1500px, 1rem padding, .6rem below 700px). */
+.dbf-book[data-book-frame=workspace] { --dbf-measure: 1500px; --dbf-pad: 1rem; --dbf-spine-w: 6px; --dbf-gap: 0px; }
+
+/* Spine: the binding. It lies over the page's inner margin, so it never takes width from content. */
+.dbf-spine {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--dbf-spine-w);
+  background: var(--dbf-spine-bg);
+  border-right: 1px solid var(--dbf-spine-edge);
+  border-radius: 6px 0 0 6px;
+  pointer-events: none;
+}
+
+/* Page surface with the fold (Buchfalz) beside the spine. Outline and shadow are box-shadows, so the
+   page adds no border width. isolation keeps the fold below all content. */
+.dbf-page {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: calc(var(--dbf-pad) * .5) var(--dbf-pad) calc(var(--dbf-pad) * .75) calc(var(--dbf-spine-w) + var(--dbf-pad));
+  background-color: var(--dbf-page-bg);
+  border: 0;
+  border-radius: 0 14px 14px 0;
+  box-shadow: inset 0 0 0 1px var(--dbf-page-line), var(--dbf-page-shadow);
+}
+.dbf-page::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: var(--dbf-spine-w);
+  width: clamp(12px, 2.2vw, 28px);
+  background: linear-gradient(90deg, var(--dbf-fold), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+.dbf-book[data-book-frame=workspace] > .dbf-page { padding-left: var(--dbf-pad); border-radius: 0; }
+.dbf-book[data-book-frame=workspace] > .dbf-page::before { left: var(--dbf-spine-w); width: 10px; }
+@media (max-width: 700px) {
+  .dbf-book[data-book-frame=workspace] { --dbf-pad: .6rem; --dbf-spine-w: 4px; }
+}
+
+/* Documents keep their markup; inside the page they take the page width instead of their own centring. */
+.dbf-page > :is(.regelwerk-site-header, .regelwerk-layout, .regelwerk-footer, .regelwerk-pdf, .private-layout) {
+  width: auto;
+  max-width: none;
+  margin-inline: 0;
+}
+.dbf-page > .regelwerk-site-header { padding-top: .25rem; }
+.dbf-page > .regelwerk-pdf { padding-inline: 0; }
+.dbf-page > .atlas-layout { max-width: none; margin: 0; padding: 0; }
+/* The global button style uses inline-flex; conversation title and source label
+   are two lines, including for a campaign whose name contains no whitespace. */
+.dbf-book .private-list button { display: block; text-align: left; }
+.dbf-book .private-list button small { display: block; margin-top: .2rem; }
+/* Reading measure for running prose; tables, stat blocks and code keep the full article width. */
+.dbf-book[data-book-frame=reader] .regelwerk-article :is(p, li, dd, h2, h3, h4, h5, h6, .regelwerk-breadcrumbs, .regelwerk-document-meta) {
+  max-width: 72ch;
+}
+
+/* Creation Engine: the page is .ce-page itself (its header stays a direct child for the shared ribbon). */
+.dbf-book[data-book-frame=studio] > .dbf-page {
+  max-width: none;
+  margin: 0;
+  padding: calc(var(--dbf-pad) * .5) var(--dbf-pad) 3rem calc(var(--dbf-spine-w) + var(--dbf-pad));
+}
+/* While Eagle docks its window on the right, the whole book yields the room (instead of only the old
+   page padding), so window header, drag area and focus stay outside the page surface. */
+@media (min-width: 1100px) {
+  body.eh-window-open .dbf-book[data-book-frame=studio] {
+    width: auto;
+    margin-left: var(--dbf-gap);
+    margin-right: calc(min(520px, 45vw) + 1.5rem);
+  }
+}
+html[data-vtt-theme=night] .dbf-page .book-dashboard-topbar { background: var(--ui-panel); background-image: none; }
+/* Night focus and deep-link target rings inside the book use the light Edo accent instead of the pages' gold. */
+html[data-vtt-theme=night] .dbf-book :focus-visible { outline-color: var(--ui-accent); }
+html[data-vtt-theme=night] .dbf-book :target { outline-color: var(--ui-accent); }
+
+/* Full-viewport map editor: the app is the page; nothing changes its grid tracks or canvas size. */
+.dbf-book[data-book-surface=app] { width: auto; max-width: none; margin: 0; --dbf-spine-w: 6px; }
+.dbf-book[data-book-surface=app] > .dbf-spine { border-radius: 0; }
+@media (max-width: 760px) {
+  .dbf-book[data-book-surface=app] { --dbf-spine-w: 4px; }
+}
+/* The running head shares the editor's fixed 84px global row with the ribbon: 3 + 24 + 2 + 48 + 3. */
+.dbf-book .mm-global-nav { grid-template-rows: 24px auto; row-gap: 2px; align-content: center; }
+.dbf-book .mm-global-nav > .dbf-running-head { grid-column: 1; grid-row: 1; }
+.dbf-book .mm-global-nav > .vtt-map-nav { grid-row: 2; padding-block: 3px; }
+.dbf-book .mm-global-nav > :is(.vtt-account-memo, .vtt-display-open) { grid-row: 1 / span 2; }
+
+/* Running head (Kolumnentitel): chapter, current document, rule and the chapter pager. */
+.dbf-running-head {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0 0 .35rem;
+  color: var(--ui-muted);
+  font-family: var(--vtt-font-heading, "Cinzel", Georgia, serif);
+  font-size: .76rem;
+  line-height: 1.2;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.dbf-running-title {
+  display: flex;
+  align-items: baseline;
+  gap: .55rem;
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.dbf-running-chapter { flex: none; color: var(--ui-ink); font-weight: 700; }
+.dbf-running-current {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--vtt-font-body, "Literata", Georgia, serif);
+  font-style: italic;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+.dbf-running-rule { flex: 1 1 1.5rem; min-width: .75rem; height: 0; border-top: 1px solid var(--dbf-page-line); }
+
+.dbf-pager { flex: none; display: flex; align-items: center; gap: .15rem; margin-left: auto; }
+.dbf-pager-link,
+.dbf-pager-gap {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 .5rem;
+}
+.dbf-pager-link {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--ui-accent);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dbf-pager-link:hover { color: var(--ui-accent); border-color: var(--ui-line); text-decoration: underline; text-underline-offset: .25em; }
+.dbf-pager-link:focus-visible { outline: 3px solid var(--ui-accent); outline-offset: 2px; }
+.dbf-pager-arrow { font-size: 1.35em; line-height: 1; letter-spacing: 0; }
+.dbf-pager-name { white-space: nowrap; }
+.dbf-pager-folio {
+  min-width: 3.5rem;
+  text-align: center;
+  color: var(--ui-ink);
+  font-family: var(--vtt-font-body, "Literata", Georgia, serif);
+  letter-spacing: .04em;
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+}
+.dbf-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dbf-pager-link { transition: border-color .15s ease, background-color .15s ease; }
+}
+@media (max-width: 899px) {
+  .dbf-pager-name { display: none; }
+}
+
+/* Compact running head inside the editor's global row: 24px targets (WCAG 2.2 AA 2.5.8), inset focus. */
+.dbf-running-head--compact { min-height: 24px; gap: .5rem; margin: 0; font-size: 11px; letter-spacing: .1em; }
+.dbf-running-head--compact :is(.dbf-pager-link, .dbf-pager-gap) { min-width: 24px; min-height: 24px; padding: 0 .3rem; }
+.dbf-running-head--compact .dbf-pager-link:focus-visible { outline-offset: -3px; }
+.dbf-running-head--compact .dbf-pager-name { display: none; }
+.dbf-running-head--compact .dbf-pager-folio { min-width: 2.6rem; }
+
+/* Folio at the foot of scrolling pages (decorative; the pager carries the accessible position). */
+.dbf-folio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  min-height: 2rem;
+  margin: 1.25rem 0 0;
+  color: var(--ui-muted);
+  font-family: var(--vtt-font-body, "Literata", Georgia, serif);
+  font-size: .92rem;
+  font-variant-numeric: oldstyle-nums;
+}
+.dbf-folio::before,
+.dbf-folio::after { content: ""; width: 2.75rem; border-top: 1px solid var(--dbf-page-line); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dbf-book .book-dashboard-ribbon-btn:is(:hover, :focus-visible) { transform: none; }
+}
+@media (forced-colors: active) {
+  .dbf-spine { background: CanvasText; }
+  .dbf-page { border: 1px solid CanvasText; }
+  .dbf-pager-link { border-color: LinkText; }
+}
+@media print {
+  .dbf-spine,
+  .dbf-pager,
+  .dbf-folio { display: none !important; }
+  .dbf-book { width: auto; margin: 0; }
+  .dbf-page { padding: 0; background: #fff; box-shadow: none; border-radius: 0; }
+  .dbf-page::before { display: none; }
+}

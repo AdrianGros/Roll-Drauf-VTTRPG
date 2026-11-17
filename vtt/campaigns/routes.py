@@ -1411,6 +1411,9 @@ def _parse_token_patch(data: dict, is_dm: bool):
         patch["hp_max"], error = _coerce_int(patch["hp_max"], "hp_max")
         if error:
             return None, error
+    if not is_dm and "initiative" in patch:
+        return None, (jsonify(error="forbidden", message="Initiative wird über den Wurftracker erfasst."), 403)
+
     if "initiative" in patch and patch["initiative"] is not None:
         patch["initiative"], error = _coerce_int(patch["initiative"], "initiative")
         if error:
@@ -1543,10 +1546,17 @@ def create_token(campaign_id, session_id):
             return error
 
     initiative = data.get("initiative")
+    if initiative is not None and not is_dm_member:
+        return jsonify(error="forbidden", message="Initiative wird über den Wurftracker erfasst."), 403
     if initiative is not None:
         initiative, error = _coerce_int(initiative, "initiative")
         if error:
             return error
+
+    sight_range = data.get('sight_range')
+    if sight_range is not None:
+        if type(sight_range) is not int or sight_range < 0:
+            return jsonify(error='invalid_sight_range'), 400
 
     token = TokenState(
         session_state_id=state.id,
@@ -1564,6 +1574,7 @@ def create_token(campaign_id, session_id):
         hp_current=hp_current,
         hp_max=hp_max,
         initiative=initiative,
+        sight_range=sight_range,
         visibility=visibility,
         metadata_json=data.get("metadata_json") or {},
         version=1,

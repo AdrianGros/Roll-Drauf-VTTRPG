@@ -1,0 +1,578 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "glossary.a-b",
+      "text": "Rules Glossary",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "glossary.a-b.roll-drauf-note",
+      "text": "Rules Glossary A–B. A bracketed tag such as [Action] or [Condition] tells you what kind of rule a term defines.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.glossary-conventions",
+      "text": "Glossary Conventions",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.glossary-conventions.p-1",
+      "text": "The glossary uses the following conventions: Tags in Brackets. Some entries have a tag in brackets after the entry’s name, as in “Attack [Action].” A tag—Action, Area of Effect, Attitude, Condition, or Hazard—indicates that a rule is part of a family of rules. The tags also have glossary entries. “You.” The game’s rules—in this glossary and elsewhere—often talk about something happening to you in the game world. That “you” refers to the creature or object that the rule applies to in a particular moment of play. For example, the “you” in the Prone condition is a creature that currently has that condition. “See Also.” Some glossary entries include a See also section that points to other entries in the glossary, to other parts of this document, or both. No Obsolete Terms. The glossary contains definitions of current rules terms only. If you’re looking for a term from an earlier version of the fifth edition rules, consult the index. Abbreviations. The abbreviations listed below appear in this glossary and elsewhere in the rules.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "AC",
+        "Armor Class",
+        "M",
+        "Material"
+      ],
+      "rows": [
+        [
+          "",
+          "",
+          "",
+          "component"
+        ],
+        [
+          "C",
+          "Concentration",
+          "",
+          ""
+        ],
+        [
+          "CE",
+          "Chaotic Evil",
+          "N",
+          "Neutral"
+        ],
+        [
+          "CG",
+          "Chaotic Good",
+          "NE NG",
+          "Neutral Evil Neutral Good"
+        ]
+      ],
+      "ruleId": "glossary.a-b.glossary-conventions.table-1",
+      "type": "table"
+    },
+    {
+      "caption": "Cha. Charisma",
+      "columns": [
+        "CN",
+        "Chaotic Neutral",
+        "NPC Nonplayer",
+        ""
+      ],
+      "rows": [
+        [
+          "Con.",
+          "Constitution",
+          "character PB",
+          "Proficiency Bonus"
+        ],
+        [
+          "CP",
+          "Copper Piece(s)",
+          "",
+          ""
+        ],
+        [
+          "CR",
+          "Challenge Rating",
+          "PP R",
+          "Platinum Piece(s) Ritual"
+        ],
+        [
+          "DC",
+          "Difficulty Class",
+          "S",
+          "Somatic"
+        ]
+      ],
+      "ruleId": "glossary.a-b.glossary-conventions.table-2",
+      "type": "table"
+    },
+    {
+      "ruleId": "glossary.a-b.glossary-conventions.p-2",
+      "text": "Dex. Dexterity component",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "EP",
+        "Electrum Piece(s) SP Silver Piece(s)"
+      ],
+      "rows": [
+        [
+          "GM",
+          "Game Master Str. Strength"
+        ],
+        [
+          "GP",
+          "Gold Piece(s) V Verbal"
+        ],
+        [
+          "HP",
+          "Hit Point(s) component"
+        ],
+        [
+          "Int.",
+          "Intelligence Wis. Wisdom"
+        ],
+        [
+          "LE",
+          "Lawful Evil XP Experience"
+        ],
+        [
+          "LG",
+          "Lawful Good Point(s)"
+        ],
+        [
+          "LN",
+          "Lawful Neutral"
+        ]
+      ],
+      "ruleId": "glossary.a-b.glossary-conventions.table-3",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.rules-definitions",
+      "text": "Rules Definitions",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.rules-definitions.p-1",
+      "text": "Here are definitions of various rules.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.ability-check",
+      "text": "Ability Check",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.ability-check.p-1",
+      "text": "An ability check is a D20 Test that represents using one of the six abilities—or a specific skill associated with an ability—to overcome a challenge. See also “Playing the Game” (“D20 Tests” and “Proficiency”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.ability-score-and-modifier",
+      "text": "Ability Score and Modifier",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.ability-score-and-modifier.p-1",
+      "text": "A creature has six ability scores—Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma—each of which has a corresponding modifier. Add the modifier when you make a D20 Test with the corresponding ability or when a rule asks you to do so. See also “Playing the Game” (“The Six Abilities”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.action",
+      "text": "Action",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.action.p-1",
+      "text": "On your turn, you can take one action. Choose which action to take from those below or from the special actions provided by your features. See also “Playing the Game” (“Actions”). These actions are defined elsewhere in this glossary:",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "Attack",
+        "Dodge",
+        "Influence",
+        "Search"
+      ],
+      "rows": [
+        [
+          "Dash",
+          "Help",
+          "Magic",
+          "Study"
+        ],
+        [
+          "Disengage",
+          "Hide",
+          "Ready",
+          "Utilize"
+        ]
+      ],
+      "ruleId": "glossary.a-b.action.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.advantage",
+      "text": "Advantage",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.advantage.p-1",
+      "text": "If you have Advantage on a D20 Test, roll two d20s, and use the higher roll. A roll can’t be affected by more than one Advantage, and Advantage and Disadvantage on the same roll cancel each other. See also “Playing the Game” (“D20 Tests”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.adventure",
+      "text": "Adventure",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.adventure.p-1",
+      "text": "An adventure is a series of encounters. A story emerges through playing them. See also “Encounter.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.alignment",
+      "text": "Alignment",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.alignment.p-1",
+      "text": "A creature’s alignment broadly describes its ethical attitudes and ideals. Alignment is a combination of two factors: one identifies morality (good, evil, or neutral), and the other describes attitudes toward order (lawful, chaotic, or neutral). These factors allow for nine possible combinations, such as Lawful Good and Neutral Evil. See also “Character Creation” (“Create Your Character”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.ally",
+      "text": "Ally",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.ally.p-1",
+      "text": "A creature is your ally if it is a member of your adventuring party, your friend, on your side in combat, or a creature that the rules or the GM designates as your ally.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.area-of-effect",
+      "text": "Area of Effect",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.area-of-effect.p-1",
+      "text": "The descriptions of many spells and other features specify that they have an area of effect, which typically has one of six shapes. These shapes are defined elsewhere in this glossary:",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "Cone",
+        "Cylinder",
+        "Line"
+      ],
+      "rows": [
+        [
+          "Cube",
+          "Emanation",
+          "Sphere"
+        ]
+      ],
+      "ruleId": "glossary.a-b.area-of-effect.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "glossary.a-b.area-of-effect.p-2",
+      "text": "An area of effect has a point of origin, a location from which the effect’s energy erupts. The rules for each shape specify how to position its point of origin. If all straight lines extending from the point of origin to a location in the area of effect are blocked, that location isn’t included in the area of effect. To block a line, an obstruction must provide Total Cover. See also “Cover.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.area-of-effect.p-3",
+      "text": "If the creator of an area of effect places it at an unseen point and an obstruction—such as a wall—is between the creator and that point, the point of origin comes into being on the near side of the obstruction.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.armor-class",
+      "text": "Armor Class",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.armor-class.p-1",
+      "text": "An Armor Class (AC) is the target number for an attack roll. AC represents how difficult it is to hit a target.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.armor-class.p-2",
+      "text": "Your base AC calculation is 10 plus your Dexterity modifier. If a rule gives you another base AC calculation, you choose which calculation to use; you can’t use more than one. See also “Attack Roll.” Armor Training Armor training allows you to use armor of a certain category without the following drawbacks. If you wear Light, Medium, or Heavy armor and lack training with it, you have Disadvantage on any D20 Test that involves Strength or Dexterity, and you can’t cast spells. If you use a Shield and lack training with it, you don’t gain its AC bonus. See also “Disadvantage” and “Equipment” (“Armor”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.attack-action",
+      "text": "Attack [Action]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.attack-action.p-1",
+      "text": "When you take the Attack action, you can make one attack roll with a weapon or an Unarmed Strike.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.attack-action.p-2",
+      "text": "Equipping and Unequipping Weapons. You can either equip or unequip one weapon when you make an attack as part of this action. You do so either before or after the attack. If you equip a weapon before an attack, you don’t need to use it for that attack. Equipping a weapon includes drawing it from a sheath or picking it up. Unequipping a weapon includes sheathing, stowing, or dropping it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.attack-action.p-3",
+      "text": "Moving between Attacks. If you move on your turn and have a feature, such as Extra Attack, that gives you more than one attack as part of the Attack action, you can use some or all of that movement to move between those attacks.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.attack-roll",
+      "text": "Attack Roll",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.attack-roll.p-1",
+      "text": "An attack roll is a D20 Test that represents making an attack with a weapon, an Unarmed Strike, or a spell. See also “Playing the Game” (“D20 Tests”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.attitude",
+      "text": "Attitude",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.attitude.p-1",
+      "text": "A monster has a starting attitude toward a player character: Friendly, Hostile, or Indifferent. See also “Friendly,” “Hostile,” “Indifferent,” and “Influence.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.attunement",
+      "text": "Attunement",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.attunement.p-1",
+      "text": "Some magic items require a creature to form a bond—called Attunement—with them before the creature can use an item’s magical properties. A creature can have Attunement with no more than three magic items at a time. See also “Equipment” (“Magic Items”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.blinded-condition",
+      "text": "Blinded [Condition]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.blinded-condition.p-1",
+      "text": "While you have the Blinded condition, you experience the following effects.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.blinded-condition.p-2",
+      "text": "Can’t See. You can’t see and automatically fail any ability check that requires sight.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.blinded-condition.p-3",
+      "text": "Attacks Affected. Attack rolls against you have Advantage, and your attack rolls have Disadvantage.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.blindsight",
+      "text": "Blindsight",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.blindsight.p-1",
+      "text": "If you have Blindsight, you can see within a specific range without relying on physical sight. Within that range, you can see anything that isn’t behind Total Cover even if you have the Blinded condition or are in Darkness. Moreover, in that range, you can see something that has the Invisible condition.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.bloodied",
+      "text": "Bloodied",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.bloodied.p-1",
+      "text": "A creature is Bloodied while it has half its Hit Points or fewer remaining.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.bonus-action",
+      "text": "Bonus Action",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.bonus-action.p-1",
+      "text": "A Bonus Action is a special action that you can take on the same turn that you take an action. You can’t take more than one Bonus Action on a turn, and you have a Bonus Action to take only if a rule explicitly says so. See also “Playing the Game” (“Actions”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.breaking-objects",
+      "text": "Breaking Objects",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.breaking-objects.p-1",
+      "text": "Objects can be harmed by attacks and by some spells, using the rules below. If an object is exceedingly fragile, the GM may allow a creature to break it automatically with the Attack or Utilize action.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.breaking-objects.p-2",
+      "text": "Armor Class. The Object Armor Class table suggests ACs for various substances.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Object Armor Class",
+      "columns": [
+        "AC Substance",
+        "",
+        "AC",
+        "Substance"
+      ],
+      "rows": [
+        [
+          "11",
+          "Cloth, paper, rope",
+          "19",
+          "Iron, steel"
+        ],
+        [
+          "13",
+          "Crystal, glass, ice",
+          "21",
+          "Mithral"
+        ],
+        [
+          "15",
+          "Wood",
+          "23",
+          "Adamantine"
+        ],
+        [
+          "17",
+          "Stone",
+          "",
+          ""
+        ]
+      ],
+      "ruleId": "glossary.a-b.breaking-objects.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "glossary.a-b.breaking-objects.p-3",
+      "text": "Hit Points. An object is destroyed when it has 0 Hit Points. The Object Hit Points table suggests Hit Points for fragile and resilient objects that are Large or smaller. To track Hit Points for a Huge or Gargantuan object, divide it into Large or smaller sections, and track each section’s Hit Points separately. The GM determines whether destroying part of an object causes the whole thing to collapse.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Object Hit Points",
+      "columns": [
+        "Size",
+        "Fragile",
+        "Resilient"
+      ],
+      "rows": [
+        [
+          "Tiny (bottle, lock)",
+          "2 (1d4)",
+          "5 (2d4)"
+        ],
+        [
+          "Small (chest, lute)",
+          "3 (1d6)",
+          "10 (3d6)"
+        ],
+        [
+          "Medium (barrel, chandelier)",
+          "4 (1d8)",
+          "18 (4d8)"
+        ],
+        [
+          "Large (cart, dining table)",
+          "5 (1d10)",
+          "27 (5d10)"
+        ]
+      ],
+      "ruleId": "glossary.a-b.breaking-objects.table-2",
+      "type": "table"
+    },
+    {
+      "ruleId": "glossary.a-b.breaking-objects.p-4",
+      "text": "Damage Types and Objects. Objects have Immunity to Poison and Psychic damage. The GM might decide that some damage types are more or less effective against an object. For example, Bludgeoning damage works well for smashing things but not for cutting. Paper or cloth objects might have Vulnerability to Fire damage.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.breaking-objects.p-5",
+      "text": "Damage Threshold. Big objects, such as castle walls, often have extra resilience represented by a damage threshold. See also “Damage Threshold.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.a-b.breaking-objects.p-6",
+      "text": "No Ability Scores. An object lacks ability scores unless a rule assigns scores to the object. Without ability scores, an object can’t make ability checks, and it fails all saving throws.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.bright-light",
+      "text": "Bright Light",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.bright-light.p-1",
+      "text": "Bright Light is normal illumination. See also “Playing the Game” (“Exploration”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.burning-hazard",
+      "text": "Burning [Hazard]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.burning-hazard.p-1",
+      "text": "A burning creature or object takes 1d4 Fire damage at the start of each of its turns. As an action, you can extinguish fire on yourself by giving yourself the Prone condition and rolling on the ground. The fire also goes out if it is doused, submerged, or suffocated.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.a-b.burrow-speed",
+      "text": "Burrow Speed",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.a-b.burrow-speed.p-1",
+      "text": "A creature that has a Burrow Speed can use that speed to move through sand, earth, mud, or ice. The creature can’t burrow through solid rock unless the creature has a trait that allows it to do so. See also “Speed.”",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "glossary.a-b",
+  "editorialBlocks": [
+    "glossary.a-b.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Rules Glossary",
+    "Rules Glossary A–B"
+  ],
+  "order": 3701,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "rules-glossary-a-b",
+  "sourcePages": [
+    176,
+    177,
+    178
+  ],
+  "title": "Rules Glossary A–B"
+}

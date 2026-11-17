@@ -1,0 +1,1217 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "animals.a-c",
+      "text": "Animals",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "animals.a-c.roll-drauf-note",
+      "text": "Animals A–C: beasts and dinosaurs that serve as mounts, companions, Wild Shape forms or threats.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast (Dinosaur), Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "51 (6d10 + 18)"
+        },
+        {
+          "label": "Speed",
+          "value": "60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "19 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Allosaurus",
+      "ruleId": "animals.a-c.allosaurus",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +6, reach 5 ft. Hit: 15 (2d10 + 4) Piercing damage.\nClaws. Melee Attack Roll: +6, reach 5 ft. Hit: 8 (1d8 + 4) Slashing damage. If the target is a Large or smaller creature and the allosaurus moved 30+ feet straight toward it immediately before the hit, the target has the Prone condition, and the allosaurus can make one Bite attack against it.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast (Dinosaur), Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "68 (8d12 + 16)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "19 · MOD +4 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Ankylosaurus",
+      "ruleId": "animals.a-c.ankylosaurus",
+      "sections": [
+        {
+          "text": "Multiattack. The ankylosaurus makes two Tail attacks.\nTail. Melee Attack Roll: +6, reach 10 ft. Hit: 9 (1d10 + 4) Bludgeoning damage. If the target is a Huge or smaller creature, it has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "19 (3d8 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Athletics +5, Perception +3"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Ape",
+      "ruleId": "animals.a-c.ape",
+      "sections": [
+        {
+          "text": "Multiattack. The ape makes two Fist attacks.\nFist. Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Bludgeoning damage.\nRock (Recharge 6). Ranged Attack Roll: +5, range 25/50 ft. Hit: 10 (2d6 + 3) Bludgeoning damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast (Dinosaur), Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "90 (12d12 + 12)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Swim 80 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "4 (XP 1,100; PB +2)"
+        }
+      ],
+      "name": "Archelon",
+      "ruleId": "animals.a-c.archelon",
+      "sections": [
+        {
+          "text": "Amphibious. The archelon can breathe air and water.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The archelon makes two Bite attacks.\nBite. Melee Attack Roll: +6, reach 5 ft. Hit: 14 (3d6 + 4) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "3 (1d6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Baboon",
+      "ruleId": "animals.a-c.baboon",
+      "sections": [
+        {
+          "text": "Pack Tactics. The baboon has Advantage on an attack roll against a creature if at least one of the baboon’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +1, reach 5 ft. Hit: 1 (1d4 − 1) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "5 (1d4 + 3)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Burrow 5 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3"
+        },
+        {
+          "label": "Resistances",
+          "value": "Poison"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 30 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Badger",
+      "ruleId": "animals.a-c.badger",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "1 (1d4 − 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "5 ft., Fly 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 60 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Bat",
+      "ruleId": "animals.a-c.bat",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "19 (3d8 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Black Bear",
+      "ruleId": "animals.a-c.black-bear",
+      "sections": [
+        {
+          "text": "Multiattack. The bear makes two Rend attacks.\nRend. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Slashing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "7 (2d6)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +6"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 16"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Blood Hawk",
+      "ruleId": "animals.a-c.blood-hawk",
+      "sections": [
+        {
+          "text": "Pack Tactics. The hawk has Advantage on an attack roll against a creature if at least one of the hawk’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Beak. Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Piercing damage, or 6 (1d8 + 2) Piercing damage if the target is Bloodied.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "13 (2d8 + 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Boar",
+      "ruleId": "animals.a-c.boar",
+      "sections": [
+        {
+          "text": "Bloodied Fury. While Bloodied, the boar has Advantage on attack rolls.",
+          "title": "Traits"
+        },
+        {
+          "text": "Gore. Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Piercing damage. If the target is a Medium or smaller creature and the boar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 (1d6) Piercing damage and has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "22 (3d10 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Brown Bear",
+      "ruleId": "animals.a-c.brown-bear",
+      "sections": [
+        {
+          "text": "Multiattack. The bear makes one Bite attack and one Claw attack.\nBite. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage.\nClaw. Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Slashing damage. If the target is a Large or smaller creature, it has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "−1 (9)"
+        },
+        {
+          "label": "HP",
+          "value": "17 (2d10 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +5"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Camel",
+      "ruleId": "animals.a-c.camel",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Bludgeoning damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "2 (1d4)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +4"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3, Stealth +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Cat",
+      "ruleId": "animals.a-c.cat",
+      "sections": [
+        {
+          "text": "Jumper. The cat’s jump distance is determined using its Dexterity rather than its Strength.",
+          "title": "Traits"
+        },
+        {
+          "text": "Scratch. Melee Attack Roll: +4, reach 5 ft. Hit: 1 Slashing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "13 (2d10 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2, Stealth +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Constrictor Snake",
+      "ruleId": "animals.a-c.constrictor-snake",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Piercing damage.\nConstrict. Strength Saving Throw: DC 12, one Medium or smaller creature the snake can see within 5 feet. Failure: 7 (3d4) Bludgeoning damage, and the target has the Grappled condition (escape DC 12).",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "3 (1d4 + 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Swim 20 ft."
+        },
+        {
+          "label": "Str",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +2"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 30 ft.; Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Crab",
+      "ruleId": "animals.a-c.crab",
+      "sections": [
+        {
+          "text": "Amphibious. The crab can breathe air and water.",
+          "title": "Traits"
+        },
+        {
+          "text": "Claw. Melee Attack Roll: +2, reach 5 ft. Hit: 1 Bludgeoning damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "13 (2d10 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +2"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Crocodile",
+      "ruleId": "animals.a-c.crocodile",
+      "sections": [
+        {
+          "text": "Hold Breath. The crocodile can hold its breath for 1 hour.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Piercing damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 12). While Grappled, the target has the Restrained condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "animals.a-c",
+  "editorialBlocks": [
+    "animals.a-c.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Animals",
+    "Animals A–C"
+  ],
+  "order": 4901,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "animals-a-c",
+  "sourcePages": [
+    344,
+    345,
+    346,
+    347
+  ],
+  "title": "Animals A–C"
+}

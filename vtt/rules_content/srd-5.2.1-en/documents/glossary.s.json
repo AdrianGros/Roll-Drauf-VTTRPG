@@ -1,0 +1,481 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "glossary.s",
+      "text": "Rules Glossary S",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "glossary.s.roll-drauf-note",
+      "text": "Rules Glossary S. A bracketed tag such as [Action] or [Condition] tells you what kind of rule a term defines.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.save",
+      "text": "Save",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.save.p-1",
+      "text": "Save is another name for a saving throw. See also “Saving Throw.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.saving-throw",
+      "text": "Saving Throw",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.saving-throw.p-1",
+      "text": "A saving throw—also called a save—represents an attempt to avoid or resist a threat. You normally make a saving throw only when a rule requires you to do so, but you can decide to fail the save without rolling. The result of a save is detailed in the effect that allowed it. If a target is forced to make a save and lacks the ability score used by it, the target automatically fails. See also “Playing the Game” (“D20 Tests”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.search-action",
+      "text": "Search [Action]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.search-action.p-1",
+      "text": "When you take the Search action, you make a Wisdom check to discern something that isn’t obvious. The Search table suggests which skills are applicable when you take this action, depending on what you’re trying to detect.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Search",
+      "columns": [
+        "Skill",
+        "Thing to Detect"
+      ],
+      "rows": [
+        [
+          "Insight",
+          "Creature’s state of mind"
+        ],
+        [
+          "Medicine",
+          "Creature’s ailment or cause of death"
+        ],
+        [
+          "Perception",
+          "Concealed creature or object"
+        ],
+        [
+          "Survival",
+          "Tracks or food"
+        ]
+      ],
+      "ruleId": "glossary.s.search-action.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.shape-shifting",
+      "text": "Shape-Shifting",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.shape-shifting.p-1",
+      "text": "If an effect, such as Wild Shape or the Polymorph spell, lets you shape-shift, its description specifies what happens to you. Unless that description says otherwise, any ongoing effects on you—conditions, spells, curses, and the like—carry over from one form to the other. You revert to your true form if you die.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.short-rest",
+      "text": "Short Rest",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.short-rest.p-1",
+      "text": "A Short Rest is a 1-hour period of downtime, during which a creature does nothing more strenuous than reading, talking, eating, or standing watch. To start a Short Rest, you must have at least 1 Hit Point.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.short-rest.p-2",
+      "text": "Benefits of the Rest. When you finish the rest, you gain the following benefits: Spend Hit Point Dice. You can spend one or more of your Hit Point Dice to regain Hit Points. For each Hit Point Die you spend in this way, roll the die and add your Constitution modifier to it. You regain Hit Points equal to the total (minimum of 1 Hit Point). You can decide to spend an additional Hit Point Die after each roll. Special Feature. Some features are recharged by a Short Rest. If you have such a feature, it recharges in the way specified in its description. Interrupting the Rest. A Short Rest is stopped by the following interruptions:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Rolling Initiative",
+        "Casting a spell other than a cantrip",
+        "Taking any damage"
+      ],
+      "ruleId": "glossary.s.short-rest.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "ruleId": "glossary.s.short-rest.p-3",
+      "text": "An interrupted Short Rest confers no benefits.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.simultaneous-effects",
+      "text": "Simultaneous Effects",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.simultaneous-effects.p-1",
+      "text": "If two or more things happen at the same time on a turn, the person at the game table—player or GM—whose turn it is decides the order in which those things happen. For example, if two effects occur at the start of a player character’s turn, the player decides which of the effects happens first.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.size",
+      "text": "Size",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.size.p-1",
+      "text": "A creature or an object belongs to a size category: Tiny, Small, Medium, Large, Huge, or Gargantuan. A creature’s size determines how much space the creature occupies in combat. An object’s size affects its Hit Points. See also “Breaking Objects” and “Playing the Game” (“Combat”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.skill",
+      "text": "Skill",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.skill.p-1",
+      "text": "A skill is an area of specialization associated with an ability check. If you have proficiency in a skill, you can add your Proficiency Bonus when you make an ability check associated with that skill. See also “Playing the Game” (“Proficiency”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.speed",
+      "text": "Speed",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.speed.p-1",
+      "text": "A creature has a Speed, which is the distance in feet the creature can cover when it moves on its turn. See also “Climbing,” “Crawling,” “Flying,” “Jumping,” “Swimming” and “Playing the Game” (“Combat”).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.speed.p-2",
+      "text": "Special Speeds. Some creatures have special speeds, such as a Burrow Speed, Climb Speed, Fly Speed, or Swim Speed, each of which is defined in this glossary. If you have more than one speed, choose which one to use when you move; you can switch between the speeds during your move. Whenever you switch, subtract the distance already moved from the new speed. The result determines how much farther you can move. If the result is 0 or less, you can’t use the new speed during the current move. For example, if you have a Speed of 30 and a Fly Speed of 40, you could fly 10 feet, walk 10 feet, and leap into the air to fly 20 feet more.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.speed.p-3",
+      "text": "Changes to Your Speeds. If an effect increases or decreases your Speed for a time, any special speed you have increases or decreases by an equal amount for the same duration. For example, if your Speed is reduced to 0 and you have a Climb Speed, your Climb Speed is also reduced to 0. Similarly, if your Speed is halved and you have a Fly Speed, your Fly Speed is also halved.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.spell",
+      "text": "Spell",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.spell.p-1",
+      "text": "A spell is a magical effect that has the characteristics described in “Spells.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.spell-attack",
+      "text": "Spell Attack",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.spell-attack.p-1",
+      "text": "A spell attack is an attack roll made as part of a spell or another magical effect. See also “Spells” (“Casting Spells”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.spellcasting-focus",
+      "text": "Spellcasting Focus",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.spellcasting-focus.p-1",
+      "text": "A Spellcasting Focus is an object that certain creatures can use in place of a spell’s Material components if those materials aren’t consumed by the spell and don’t have a cost specified. Some classes allow its members to use certain types of Spellcasting Focuses. See also “Spells” (“Casting Spells”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.sphere-area-of-effect",
+      "text": "Sphere [Area of Effect]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.sphere-area-of-effect.p-1",
+      "text": "A Sphere is an area of effect that extends in straight lines from a point of origin outward in all directions. The effect that creates a Sphere specifies the distance it extends as the radius of the Sphere.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.sphere-area-of-effect.p-2",
+      "text": "A Sphere’s point of origin is included in the Sphere’s area of effect.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.stable",
+      "text": "Stable",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.stable.p-1",
+      "text": "A creature is Stable if it has 0 Hit Points but isn’t required to make Death Saving Throws. See also “Playing the Game” (“Damage and Healing”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.stat-block",
+      "text": "Stat Block",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-1",
+      "text": "A stat block contains the game statistics of a monster. Each stat block includes the following information presented after the monster’s name.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-2",
+      "text": "Size. A monster is Tiny, Small, Medium, Large, Huge, or Gargantuan. See also “Size.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-3",
+      "text": "Creature Type. This entry notes the family of beings a monster belongs to, along with any descriptive tags. See also “Creature Type.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-4",
+      "text": "Alignment. An alignment is suggested for the monster, with the GM determining its actual alignment. See also “Alignment.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-5",
+      "text": "AC, Initiative, and HP. These entries give the monster’s Armor Class, Initiative, and Hit Points, which are detailed in “Playing the Game.” In parentheses after the Hit Points, the monster’s Hit Point Dice are provided, along with the contribution of its Constitution, if any, to its Hit Points. Following the Initiative modifier is an Initiative score. Some creatures that are created by magic lack Hit Dice and Initiative information.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-6",
+      "text": "Speed. Here the monster’s Speed is provided, along with any special speeds. See also “Burrow Speed,” “Climb Speed,” “Fly Speed,” and “Swim Speed.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-7",
+      "text": "Ability Scores. A table provides the monster’s ability scores, modifiers, and saving throw modifiers, all of which are detailed in “Playing the Game.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-8",
+      "text": "Skills. This entry lists the monster’s skill proficiencies, if any. See also “Playing the Game” (“Proficiency”).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-9",
+      "text": "Resistances and Vulnerabilities. These entries list the monster’s Resistances and Vulnerabilities, if any. See also “Resistance” and “Vulnerability.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-10",
+      "text": "Immunities. This section lists the monster’s damage and condition Immunities, if any. See also “Immunity.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-11",
+      "text": "Gear. If the monster has any equipment that can be given away or retrieved, it’s listed in this entry.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-12",
+      "text": "Senses. This entry lists the monster’s special senses, such as Darkvision, and its Passive Perception. See also “Passive Perception.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-13",
+      "text": "Languages. This entry lists any languages the monster knows.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-14",
+      "text": "CR. Challenge Rating summarizes the threat a monster poses and is detailed in “Monsters.” The Experience Points characters receive for defeating a monster and its Proficiency Bonus follow. Some creatures that are created by magic have no CR. See also “Challenge Rating” and “Experience Points.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-15",
+      "text": "Traits. The monster’s traits, if any, are features that are active at all times or in certain situations.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-16",
+      "text": "Actions. The monster can take these actions in addition to those detailed in this glossary. See also “Playing the Game” (“Actions”).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-17",
+      "text": "Bonus Actions. If the monster has Bonus Action options, they are listed in this section.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-18",
+      "text": "Reactions. If the monster can take special Reactions, those are listed in this section.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-19",
+      "text": "Attack Notation. The entry for a monster’s attack starts by identifying whether the attack is a melee or a ranged attack and then provides the attack roll’s bonus, its reach or range, and what happens on a hit. An attack is against one target unless its entry says otherwise.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-20",
+      "text": "Saving Throw Effect Notation. If an effect forces a saving throw, the effect’s entry starts by identifying the kind of saving throw required and then provides the save’s DC, a description of which creatures must make the save, and what happens on a failed or a successful save.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stat-block.p-21",
+      "text": "Damage Notation. A stat block usually provides both a static number and a die expression for each instance of damage. For example, an attack might deal 4 (1d4 + 2) damage on a hit. The GM determines whether you use the static number or the die expression in parentheses; you don’t use both.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.study-action",
+      "text": "Study [Action]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.study-action.p-1",
+      "text": "When you take the Study action, you make an Intelligence check to study your memory, a book, a clue, or another source of knowledge and call to mind an important piece of information about it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.study-action.p-2",
+      "text": "The Areas of Knowledge table suggests which skills are applicable to various areas of knowledge.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Areas of Knowledge",
+      "columns": [
+        "Skill",
+        "Areas"
+      ],
+      "rows": [
+        [
+          "Arcana",
+          "Spells, magic items, eldritch symbols, magical traditions, planes of existence, and certain creatures (Aberrations, Constructs, Elementals, Fey, and Monstrosities)"
+        ],
+        [
+          "History",
+          "Historic events and people, ancient civilizations, wars, and certain creatures (Giants and Humanoids)"
+        ],
+        [
+          "Investigation",
+          "Traps, ciphers, riddles, and gadgetry"
+        ],
+        [
+          "Nature",
+          "Terrain, flora, weather, and certain creatures (Beasts, Dragons, Oozes, and Plants)"
+        ],
+        [
+          "Religion",
+          "Deities, religious hierarchies and rites, holy symbols, cults, and certain creatures (Celestials, Fiends, and Undead)"
+        ]
+      ],
+      "ruleId": "glossary.s.study-action.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.stunned-condition",
+      "text": "Stunned [Condition]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.stunned-condition.p-1",
+      "text": "While you have the Stunned condition, you experience the following effects.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stunned-condition.p-2",
+      "text": "Incapacitated. You have the Incapacitated condition.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stunned-condition.p-3",
+      "text": "Saving Throws Affected. You automatically fail Strength and Dexterity saving throws.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.s.stunned-condition.p-4",
+      "text": "Attacks Affected. Attack rolls against you have Advantage.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.suffocation-hazard",
+      "text": "Suffocation [Hazard]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.suffocation-hazard.p-1",
+      "text": "A creature can hold its breath for a number of minutes equal to 1 plus its Constitution modifier (minimum of 30 seconds) before suffocation begins. When a creature runs out of breath or is choking, it gains 1 Exhaustion level at the end of each of its turns. When a creature can breathe again, it removes all levels of Exhaustion it gained from suffocating.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.surprise",
+      "text": "Surprise",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.surprise.p-1",
+      "text": "If a creature is caught unawares by the start of combat, that creature is surprised, which causes it to have Disadvantage on its Initiative roll. See also “Playing the Game” (“Combat”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.swimming",
+      "text": "Swimming",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.swimming.p-1",
+      "text": "While you’re swimming, each foot of movement costs 1 extra foot (2 extra feet in Difficult Terrain). You ignore this extra cost if you have a Swim Speed and use it to swim. At the GM’s option, moving any distance in rough water might require a successful DC 15 Strength (Athletics) check.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.s.swim-speed",
+      "text": "Swim Speed",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.s.swim-speed.p-1",
+      "text": "A Swim Speed can be used to swim without expending the extra movement normally associated with swimming. See also “Swimming” and “Speed.”",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "glossary.s",
+  "editorialBlocks": [
+    "glossary.s",
+    "glossary.s.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Rules Glossary",
+    "Rules Glossary S"
+  ],
+  "order": 3706,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "rules-glossary-s",
+  "sourcePages": [
+    187,
+    188,
+    189
+  ],
+  "title": "Rules Glossary S"
+}

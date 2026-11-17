@@ -1,38 +1,26 @@
-"""S10: vision/Fog-of-War calculation.
+"""Wall-clipped token visibility and independently blocked light expansion.
 
-Pure geometry -- no Flask, no DB session, no imports from vtt.models --
-so this module is trivially unit-testable and reusable from routes.py,
-socket_handlers.py, and tests without any app context.
-
-Apply decision (research doc §12, deferred to this module rather than a
-second migration): the full Foundry model computes light-to-cell line of
-sight separately from token-to-cell line of sight, which needs one
-raycast pass PER LIGHT plus one per token -- real complexity for a first
-pass explicitly scoped to "start with raycasting, defer advanced
-algorithms" (§12 Q7). This engine instead does ONE raycast pass per
-token (token -> map edge, blocked by walls) and then classifies each
-unobstructed cell by distance:
-
-  - within the token's own sight_range (or unlimited if None): visible.
-  - else, within reach of a vision-providing "light" source's radius
-    (straight-line distance from the token, not a second raycast from the
-    light): visible. Interpretation: "if you can look toward a lit spot
-    with nothing blocking the view, you see it, even past your own
-    natural range."
-  - Darkness sources are simpler still: any cell within a "darkness"
-    source's radius is excluded from visibility outright, regardless of
-    the above (a flat exclusion zone, not full priority-based blending).
-
-This is a documented simplification, not the full Foundry model -- walls
-still fully gate what a token can perceive at all; only the "how far do I
-see" question is simplified. A future slice can replace the per-light
-distance check with a real light->cell raycast without changing this
-module's public contract (calculate_visible_cells).
+Token sight rays and light-to-sample segments respect separate wall properties.
+Natural sight, bright/dim reach and darkness retain their established meanings.
+Rendering uses the parallel wall-clipped polygon engine; only authorized image
+projections are delivered to players.
 """
 
 from __future__ import annotations
 
 import math
+
+def _light_reaches(light, x, y, walls):
+    # Keep this module usable without importing Flask or its blueprint package.
+    ox, oy = getattr(light, 'x', 0), getattr(light, 'y', 0)
+    for wall in walls:
+        if getattr(wall, 'light', 'normal') == 'none':
+            continue
+        t = _segment_intersection_fraction(ox, oy, x-ox, y-oy, wall.x0, wall.y0, wall.x1, wall.y1)
+        if t is not None and 1e-7 < t < 1-1e-7:
+            return False
+    return True
+
 
 DEFAULT_RAY_COUNT = 180
 # Cap so a misconfigured/unlimited-sight token on a huge map can't make a
@@ -138,9 +126,10 @@ def calculate_visible_cells(
     visible: set[tuple[int, int]] = {cell_of(origin_x, origin_y, grid_size)}
     for x, y, distance in samples:
         within_own_sight = sight_range is None or distance <= sight_range
-        within_a_light = any(
+        within_a_light = not within_own_sight and any(
             math.hypot(getattr(light, "x", 0) - x, getattr(light, "y", 0) - y)
                 <= max(getattr(light, "bright_radius", 0) or 0, getattr(light, "dim_radius", 0) or 0)
+            and _light_reaches(light, x, y, walls)
             for light in vision_lights
         )
         if within_own_sight or within_a_light:
@@ -166,6 +155,24 @@ def visible_token_ids(origin_x, origin_y, sight_range, walls, lights, tokens, gr
     visible_cells = calculate_visible_cells(origin_x, origin_y, sight_range, walls, lights, grid_size, ray_count)
     result = []
     for token in tokens:
-        if cell_of(token.x, token.y, grid_size) in visible_cells:
+        if cell_of(*token_world_xy(token, grid_size), grid_size) in visible_cells:
             result.append(token.id)
     return result
+
+
+def token_world_xy(token, grid_size):
+    """Match the table's legacy grid-coordinate resolver without mutating data."""
+    x,y=token.x,token.y
+    if not hasattr(token,'metadata_json'):
+        return x,y  # Pure geometry callers already pass world coordinates.
+    mode=str((token.metadata_json or {}).get('position_mode','')).strip().lower()
+    if mode=='grid' or not mode and abs(x)<=300 and abs(y)<=300:
+        return x*grid_size,y*grid_size
+    return x,y
+
+
+def map_world_size(map_):
+    """The established table renderer treats small legacy dimensions as cells."""
+    grid=max(16,map_.grid_size or 70)
+    pixels=(getattr(map_,'light_rules',None) or {}).get('dimensions_mode')=='pixel'
+    return tuple(round(value if pixels or value>200 else max(1,value)*grid) for value in (map_.width,map_.height))

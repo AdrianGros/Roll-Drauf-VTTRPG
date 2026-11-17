@@ -104,7 +104,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this.measurement = { waypoints: [] };
             this.measureShape = 'line';
             this._measurePreviewPoint = null;
-            this.measureSnapEnabled = true;
+            this.measureSnapEnabled = false;
             this._measurePointerIsTouch = false;
             // S04: reconnecting indicator for the token HUD.
             this._connectionLost = false;
@@ -205,7 +205,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this._composedOperator = operator;
             if (operator) {
                 const surface = await this.auth.makeAuthRequest(`/api/play/campaigns/${this.campaignId}/sessions/${this.sessionId}/surface`);
-                for (const source of ["/static/js/play-token-layers-dm.js", "/static/js/play-dm.js"]) await new Promise((resolve, reject) => {
+                for (const source of ["/static/js/play-token-layers-dm.js", "/static/js/play-dm.js", "/static/js/play-feedback-dm.js"]) await new Promise((resolve, reject) => {
                     const script = document.createElement("script");
                     script.src = source;
                     script.onload = resolve;
@@ -695,8 +695,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                         if (!token || !this._canMoveToken(token)) continue;
                         const patch = {};
                         const initiative = Number(combatant.initiative);
-                        if (Number.isFinite(initiative) && Number(token.initiative) !== Math.round(initiative)) {
-                            patch.initiative = Math.round(initiative);
+                        this._trackerTotals ||= new Map();
+                        if (Number.isFinite(initiative) && this._trackerTotals.get(token.id) !== Math.round(initiative)) {
+                            this._trackerTotals.set(token.id, Math.round(initiative));
+                            Auth.makeAuthRequest(`/api/play/campaigns/${this.campaignId}/sessions/${this.sessionId}/initiative-candidates`,
+                                'POST', {token_id:token.id,total:Math.round(initiative),event_id:`tracker:${token.id}:${Math.round(initiative)}`,source:'tracker'})
+                                .then(()=>this.feedback?.refreshInitiative()).catch(error=>this._showMessage(error.message,true));
                         }
                         const isTurn = Boolean(combatant.turn);
                         const hadTurn = Boolean(token.metadata_json?.current_turn);
@@ -968,8 +972,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 button.addEventListener("click", () => {
                     const tool = button.getAttribute("data-tool") || "select";
                     this._setTool(tool);
+                    if ((tool === "wall" || tool === "light") && this._composedOperator) this.windows.open("mapPresentation");
                     if (tool === "token") {
-                        this._openTokenMenu();
+                        this.windows.open('tokenWidget');
+                        this.tokenLibrary.refresh();
                     }
                 });
             });
@@ -1268,7 +1274,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             viewport.addEventListener("pointerdown", (event) => {
                 const isMiddle = event.button === 1;
                 const isPanTool = this.currentTool === "pan" && event.button === 0;
-                if (!isMiddle && !isPanTool) return;
+                const emptySelect = this.currentTool === 'select' && event.button === 0 && !event.shiftKey
+                    && !event.target.closest?.('.token-marker, .floating, .stage-topbar, button, input, select, textarea, a, .vision-light-marker, .vision-wall-line');
+                if (!isMiddle && !isPanTool && !this._spacePan && !emptySelect) return;
                 if (this._mapTouchGesture || event.target.closest?.(".floating, .stage-topbar")) return;
                 event.preventDefault();
                 this.panState = {
@@ -1283,6 +1291,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             });
             window.addEventListener("pointermove", (event) => {
                 if (!this.panState || this.panState.pointerId !== event.pointerId) return;
+                if (Math.hypot(event.clientX-this.panState.startX,event.clientY-this.panState.startY)<5) return;
+                this._suppressMapClickUntil = performance.now()+250;
                 viewport.scrollLeft = this.panState.scrollLeft - (event.clientX - this.panState.startX);
                 viewport.scrollTop = this.panState.scrollTop - (event.clientY - this.panState.startY);
             });
@@ -1305,7 +1315,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const worldY = (event.clientY - worldRect.top) / scale;
                 const { width, height } = this._worldSize();
                 if (worldX < 0 || worldY < 0 || worldX > width || worldY > height) return;
-                this._openTokenCreatePanel(worldX, worldY, event);
+                if (this.pendingTokenTemplate) this.feedback.placeTemplate(worldX, worldY);
+                else this._openTokenCreatePanel(worldX, worldY, event);
             });
 
             // S03 measurement tool. Available to read-only users too (no
@@ -1408,7 +1419,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // Grid-snapped: diagonal costs the same as orthogonal (5e's
             // simplified default). Freehand: real Euclidean distance.
             // Matches the good_examples' grid-vs-freehand distinction.
-            return this.measureSnapEnabled ? Math.max(dx, dy) : Math.sqrt(dx * dx + dy * dy);
+            return Math.hypot(dx, dy);
         }
 
         _formatMeasureDistance(squares) {
@@ -1454,6 +1465,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 return;
             }
             const parts = [];
+            const labelScale = 100 / this.zoomLevel;
+            svg.style.setProperty("--measure-label-size", `${12*labelScale}px`);
             if (this.measureShape !== 'line' && points.length >= 2) {
                 const a = points[0], b = points[1], dx = b.x - a.x, dy = b.y - a.y;
                 const length = Math.hypot(dx, dy), side = Math.max(Math.abs(dx), Math.abs(dy));
@@ -1461,13 +1474,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (this.measureShape === 'circle') {
                     geometry = `<circle cx="${a.x}" cy="${a.y}" r="${length}"/>`;label = globalThis.VTTUi('Radius');pixels = length;
                 } else if (this.measureShape === 'square') {
-                    geometry = `<rect x="${dx < 0 ? a.x - side : a.x}" y="${dy < 0 ? a.y - side : a.y}" width="${side}" height="${side}"/>`;label = globalThis.VTTUi('Seitenlänge');pixels = side;
+                    geometry = `<rect x="${a.x-side}" y="${a.y-side}" width="${side*2}" height="${side*2}"/>`;label = globalThis.VTTUi('Seitenlänge');pixels = side*2;
                 } else {
                     geometry = `<polygon points="${a.x},${a.y} ${b.x - dy / 2},${b.y + dx / 2} ${b.x + dy / 2},${b.y - dx / 2}"/>`;label = globalThis.VTTUi('Kegellänge');pixels = length;
                 }
                 const distance = this._formatMeasureDistance(pixels / (this._measureGridSize() || 1));
                 const safeLabel = label.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-                svg.innerHTML = `<g class="measure-shape" data-shape="${this.measureShape}">${geometry}</g><text class="measure-label" x="${a.x + 10}" y="${a.y - 10}">${safeLabel}: ${distance}</text>`;
+                const nx=length?dx/length:0,ny=length?dy/length:-1;
+                const labelX=b.x+nx*16*labelScale,labelY=b.y+ny*16*labelScale;
+                const anchor=Math.abs(nx)<0.2?'middle':nx<0?'end':'start';
+                svg.innerHTML = `<g class="measure-shape" data-shape="${this.measureShape}">${geometry}</g><text class="measure-label" x="${labelX}" y="${labelY}" text-anchor="${anchor}">${safeLabel}: ${distance}</text>`;
                 if (announce) announce.textContent = `${label}: ${distance}`;
                 return;
             }
@@ -1579,6 +1595,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         _cancelTokenPlacement() {
             this.pendingTokenPlacement = null;
+            this.pendingTokenTemplate = null;
             this.pendingTokenImage = null;
             this.pendingTokenImageLabel = "";
             const imageLabel = document.getElementById("tokenCreateImageLabel");
@@ -2079,6 +2096,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this._lights = Array.isArray(lightsResponse?.lights) ? lightsResponse.lights : [];
                 this._visionGeometryLoadedForMapId = activeMap.id;
                 this._renderVisionLayer();
+                this.feedbackDM?.refresh();
             } catch (error) {
                 if (isCurrent()) this._showMessage(error.message || globalThis.VTTUi("Wand-/Lichtdaten konnten nicht geladen werden."), true);
             }
@@ -2136,7 +2154,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (!svg) return;
             const parts = [];
 
-            parts.push(...this._fogCellMarkup());
+            if (!this._illuminationActive) parts.push(...this._fogCellMarkup());
+            this.feedback?.scheduleLighting();
 
             for (const wall of this._walls) {
                 const blockingClass = wall.sight === "none" ? " sight-none" : "";
@@ -2795,6 +2814,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this._closeTableDock = () => {};
             this.tokenLibrary = new window.PlayTokenLibrary(this);
             this.campaignRoom = new window.PlayCampaignRoom(this);
+            this.feedback = new window.PlayFeedback(this);
+            if (this._composedOperator) this.feedbackDM = new window.PlayFeedbackDM(this);
             const roll = async () => {
                 const token = this._findStateToken(this.selectedTokenId);
                 if (!token || !this._canMoveToken(token)) {
@@ -2911,10 +2932,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     try {
                         if (status) status.textContent = globalThis.VTTUi("Lade hoch...");
                         const uploaded = await this._uploadAssetFile(file, "token");
+                        this._setTool("token");
                         this.pendingTokenImage = `/api/assets/${uploaded.asset_id}/preview`;
                         this.pendingTokenImageLabel = file.name.slice(0, 24);
                         if (status) status.textContent = globalThis.VTTUi("Tokenbild geladen – auf die Karte klicken.");
-                        this._setTool("token");
                         this._showMessage(globalThis.VTTUi("Tokenbild geladen. Klicke auf die Karte, um den Token zu platzieren."));
                     } catch (error) {
                         this.pendingTokenImage = null;
@@ -3192,6 +3213,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _handleTokenUpdated(payload) {
+            this.feedback?.refreshInitiative(true);
+            this.feedback?.scheduleLighting();
             const token = payload?.token;
             if (!token) return;
             this._upsertStateToken(token);
@@ -3241,6 +3264,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this._renderMapCanvas();
                 this._renderTurnOrder();
                 this._renderTokenSelectors();
+                this.feedback?.refresh();
+                this.feedbackDM?.refresh();
             });
         }
 
@@ -3290,6 +3315,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this.readOnly = Boolean(payload?.read_only ?? this.readOnly);
                 this._renderMeta();
                 this._renderFirstSteps();
+            this.feedback?.refresh();
+            this.feedbackDM?.refresh();
             }
             this._logActivity(globalThis.VTTUi("Session-Status: {p0}.",{p0:(stateName)}), "info");
         }
@@ -3527,6 +3554,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this._renderChat();
             this._renderActivity();
             this._renderFirstSteps();
+            this.feedback?.refresh();
+            this.feedbackDM?.refresh();
         }
 
         _renderMeta() {
@@ -3643,7 +3672,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 container.innerHTML = `<div class='muted'>${globalThis.VTTUiHTML("Keine Seite passt zur Suche.")}</div>`;
             } else {
                 container.innerHTML = layers.map((layer) => {
-                    const index = allLayers.indexOf(layer);
+                    const siblings=allLayers.filter(row=>(row.parent_layer_id??null)===(layer.parent_layer_id??null));
+                    const index = siblings.indexOf(layer);
                     const isActive = Number(layer.id) === Number(stack.active_layer_id);
                     const mapName = escapeHtml(layer.campaign_map?.name || `Map ${layer.campaign_map_id}`);
                     const thumb = this._thumbUrl(layer.campaign_map);
@@ -3666,7 +3696,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     const actionsRow = canEdit ? `
                                 <div class="layer-actions-row">
                                     <button data-act="up" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Nach oben")}" ${index === 0 ? "disabled" : ""}>&uarr;</button>
-                                    <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Nach unten")}" ${index === allLayers.length - 1 ? "disabled" : ""}>&darr;</button>
+                                    <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Nach unten")}" ${index === siblings.length - 1 ? "disabled" : ""}>&darr;</button>
                                     <button data-act="visibility" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn ${layer.is_player_visible ? "active-toggle" : ""}" title="${visibleTitle}" aria-pressed="${layer.is_player_visible ? "true" : "false"}">${visibleIcon}</button>
                                     <button data-act="duplicate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Seite duplizieren")}">&#10697;</button>
                                     <button data-act="activate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Seite aktivieren")}" aria-label="${globalThis.VTTUiHTML("Seite aktivieren")}">${activateIcon}</button>
@@ -3697,7 +3727,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 rows.forEach((row) => row.setAttribute("tabindex", row === focusCandidate ? "0" : "-1"));
                 rows.forEach((row) => {
                     row.addEventListener("click", (event) => {
-                        if (event.target.closest("button, input")) return;
+                        if (event.target.closest("button, input, select, textarea, a")) return;
                         if (!canEdit) return;
                         this._activateLayer(Number(row.dataset.layerId));
                     });
@@ -3734,6 +3764,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 }
             }
 
+            this.feedback?.hierarchy();
             if (canEdit) {
                 await this._renderLayerAddControl(allLayers);
             }
@@ -3745,6 +3776,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         // delegation in _bindLayersDirectoryControls, not re-bound per
         // render, so it survives every _renderLayers() re-render for free.
         _handleLayerListKeydown(event) {
+            if(event.target.closest("input,select,textarea,button,a")) return;
             const container = document.getElementById("layerList");
             if (!container) return;
             const rows = Array.from(container.querySelectorAll(".layer-row"));
@@ -4057,11 +4089,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         async _moveLayer(layerId, direction) {
             const stack = this.bootstrap?.scene_stack;
             const layers = (stack && Array.isArray(stack.layers)) ? stack.layers.slice().sort((a, b) => a.order_index - b.order_index) : [];
-            const index = layers.findIndex((l) => Number(l.id) === layerId);
-            const swapWith = index + direction;
-            if (index === -1 || swapWith < 0 || swapWith >= layers.length) return;
-
-            [layers[index].order_index, layers[swapWith].order_index] = [layers[swapWith].order_index, layers[index].order_index];
+            const selected=layers.find(layer=>Number(layer.id)===layerId);
+            if(!selected)return;
+            const siblings=layers.filter(layer=>(layer.parent_layer_id??null)===(selected.parent_layer_id??null));
+            const index=siblings.indexOf(selected),swapWith=index+direction;
+            if(index<0||swapWith<0||swapWith>=siblings.length)return;
+            [siblings[index].order_index,siblings[swapWith].order_index]=[siblings[swapWith].order_index,siblings[index].order_index];
             const order = layers.map((l) => ({ layer_id: l.id, order_index: l.order_index }));
             try {
                 await this.api.reorderLayers(this.campaignId, this.sessionId, order);
@@ -4323,13 +4356,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // renderer instead clamped everything to >=900x600, which
             // letterboxed/stretched every map that didn't match (the "scale
             // is bad" bug, robot audit 2026-08-23).
+            const pixelDimensions=activeMap?.light_rules?.dimensions_mode==='pixel';
             const rawWidth = Number(activeMap?.width) || 0;
             const rawHeight = Number(activeMap?.height) || 0;
             const width = activeMap
-                ? Math.round(rawWidth > 200 ? rawWidth : Math.max(1, rawWidth) * gridSize)
+                ? Math.round(pixelDimensions || rawWidth > 200 ? rawWidth : Math.max(1, rawWidth) * gridSize)
                 : 1800;
             const height = activeMap
-                ? Math.round(rawHeight > 200 ? rawHeight : Math.max(1, rawHeight) * gridSize)
+                ? Math.round(pixelDimensions || rawHeight > 200 ? rawHeight : Math.max(1, rawHeight) * gridSize)
                 : 1200;
             mapWorld.style.width = `${width}px`;
             mapWorld.style.height = `${height}px`;
@@ -4772,6 +4806,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 actorSelect.value = String(token.id);
             }
             this._renderState();
+            this.feedback?.refresh();
             this._syncTokenMarkerSelection();
             // S06: completes the bidirectional turn-order<->map selection
             // sync -- _renderState() does not itself touch the turn-order

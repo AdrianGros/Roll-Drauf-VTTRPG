@@ -1,0 +1,18 @@
+{
+  "purpose": "subscription connectivity and token refresh; no research verdict",
+  "started_at": "2026-11-16T20:58:04.231127+00:00",
+  "exit_code": 0,
+  "result": "OK",
+  "is_error": false,
+  "session_id": "59f2afe4-cfbc-4695-850c-b6fdec4d3778",
+  "stderr_bytes": 0,
+  "stdout_bytes": 1889,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "auth_method": "claude.ai",
+  "provider": "firstParty",
+  "initial_quota_check": "HTTP 401; no credentials printed",
+  "safe_mode": true,
+  "tools": []
+}

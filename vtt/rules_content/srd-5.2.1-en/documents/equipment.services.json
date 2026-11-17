@@ -1,0 +1,430 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "equipment.services",
+      "text": "Lifestyle Expenses",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "equipment.services.roll-drauf-note",
+      "text": "Lifestyle expenses, food and lodging, hirelings and paid spellcasting.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "ruleId": "equipment.services.p-1",
+      "text": "Lifestyle expenses summarize the cost of living in a fantasy world. They cover lodging, food, equipment maintenance, and other necessities.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.services.p-2",
+      "text": "At the start of each week or month (GM’s choice), choose a lifestyle below—Wretched, Squalid, Poor, Modest, Comfortable, Wealthy, or Aristocratic—and pay the price to sustain that lifestyle.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.services.p-3",
+      "text": "Lifestyles have no inherent consequences, but the GM might take them into account when determining risks or how others perceive your character.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.wretched-free",
+      "text": "Wretched (Free)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.wretched-free.p-1",
+      "text": "You survive via chance and charity. You’re often exposed to natural dangers as a result of sleeping outside.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.squalid-1-sp-per-day",
+      "text": "Squalid (1 SP per Day)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.squalid-1-sp-per-day.p-1",
+      "text": "You spend the bare minimum for your necessities. You might be exposed to unhealthy conditions and opportunistic criminals.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.poor-2-sp-per-day",
+      "text": "Poor (2 SP per Day)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.poor-2-sp-per-day.p-1",
+      "text": "You spend frugally for your necessities.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.modest-1-gp-per-day",
+      "text": "Modest (1 GP per Day)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.modest-1-gp-per-day.p-1",
+      "text": "You support yourself at an average level.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.comfortable-2-gp-per-day",
+      "text": "Comfortable (2 GP per Day)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.comfortable-2-gp-per-day.p-1",
+      "text": "You spend modestly for your necessities and enjoy a few luxuries.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.wealthy-4-gp-per-day",
+      "text": "Wealthy (4 GP per Day)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.wealthy-4-gp-per-day.p-1",
+      "text": "You’re accustomed to the finer things in life and might have servants.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.aristocratic-10-gp-per-day",
+      "text": "Aristocratic (10 GP per Day)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.aristocratic-10-gp-per-day.p-1",
+      "text": "You pay for the best and might have a staff that supports your lifestyle. Others notice your wealth and might encourage you to share it, either legally or otherwise.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.services.food-drink-and-lodging",
+      "text": "Food, Drink, and Lodging",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.food-drink-and-lodging.p-1",
+      "text": "The Food, Drink, and Lodging table gives prices for food and a single night’s lodging. Prices for daily lodging and meals are included in your lifestyle’s expenses.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Food, Drink, and Lodging",
+      "columns": [
+        "Item",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "Ale (mug)",
+          "4 CP"
+        ],
+        [
+          "Bread (loaf)",
+          "2 CP"
+        ],
+        [
+          "Cheese (wedge)",
+          "1 SP"
+        ],
+        [
+          "Inn Stay per Day",
+          ""
+        ],
+        [
+          "Squalid",
+          "7 CP"
+        ],
+        [
+          "Poor",
+          "1 SP"
+        ],
+        [
+          "Modest",
+          "5 SP"
+        ],
+        [
+          "Comfortable",
+          "8 SP"
+        ],
+        [
+          "Wealthy",
+          "2 GP"
+        ],
+        [
+          "Aristocratic",
+          "4 GP"
+        ],
+        [
+          "Meal",
+          ""
+        ],
+        [
+          "Squalid",
+          "1 CP"
+        ],
+        [
+          "Poor",
+          "2 CP"
+        ],
+        [
+          "Modest",
+          "1 SP"
+        ],
+        [
+          "Comfortable",
+          "2 SP"
+        ],
+        [
+          "Wealthy",
+          "3 SP"
+        ],
+        [
+          "Aristocratic",
+          "6 SP"
+        ],
+        [
+          "Wine (bottle)",
+          ""
+        ],
+        [
+          "Common",
+          "2 SP"
+        ],
+        [
+          "Fine",
+          "10 GP"
+        ]
+      ],
+      "ruleId": "equipment.services.food-drink-and-lodging.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.services.hirelings",
+      "text": "Hirelings",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.hirelings.p-1",
+      "text": "Skilled hirelings include anyone hired to perform a service that involves a proficiency (including weapon, tool, or skill): a mercenary, an artisan, a scribe, or the like. The pay shown on the Hirelings table is a minimum; some expert hirelings require more pay. Untrained hirelings are hired for work that requires no particular proficiencies; they include laborers and porters.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Hirelings",
+      "columns": [
+        "Service",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "Skilled hireling",
+          "2 GP per day"
+        ],
+        [
+          "Untrained hireling",
+          "2 SP per day"
+        ],
+        [
+          "Messenger",
+          "2 CP per mile"
+        ]
+      ],
+      "ruleId": "equipment.services.hirelings.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.services.spellcasting",
+      "text": "Spellcasting",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.spellcasting.p-1",
+      "text": "Most settlements contain individuals who are willing to cast spells in exchange for payment. If a spell has expensive components, add the cost of those components to the cost listed in the Spellcasting Services table. The higher the level of a desired spell, the harder it is to find someone to cast it.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Spellcasting Services",
+      "columns": [
+        "Spell Level",
+        "Availability",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "Cantrip",
+          "Village, town, or city",
+          "30 GP"
+        ],
+        [
+          "1",
+          "Village, town, or city",
+          "50 GP"
+        ],
+        [
+          "2",
+          "Village, town, or city",
+          "200 GP"
+        ],
+        [
+          "3",
+          "Town or city only",
+          "300 GP"
+        ],
+        [
+          "4–5",
+          "Town or city only",
+          "2,000 GP"
+        ],
+        [
+          "6–8",
+          "City only",
+          "20,000 GP"
+        ],
+        [
+          "9",
+          "City only",
+          "100,000 GP"
+        ]
+      ],
+      "ruleId": "equipment.services.spellcasting.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.services.magic-items",
+      "text": "Magic Items",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.p-1",
+      "text": "Adventures hold the promise—but not a guarantee—of finding magic items. Hundreds of magic items are detailed in “Magic Items” later in this document. Here’s what you need to know about using magic items.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.magic-items.identifying-a-magic-item",
+      "text": "Identifying a Magic Item",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.identifying-a-magic-item.p-1",
+      "text": "Some magic items are indistinguishable from their nonmagical counterparts, while others are conspicuously magical. Handling a magic item is enough to give you a sense that it is extraordinary, but learning a magic item’s properties isn’t automatic.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.identifying-a-magic-item.p-2",
+      "text": "The Identify spell is the fastest way to reveal an item’s properties. Alternatively, you can focus on one magic item during a Short Rest while being in physical contact with the item. At the end of the rest, you learn its properties and how to use them (but not any curse the item might bear).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.identifying-a-magic-item.p-3",
+      "text": "Sometimes a magic item carries a clue to its properties. The command word to activate a ring might be etched inside the band, or a feathered design might hint that it’s a Ring of Feather Falling.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.identifying-a-magic-item.p-4",
+      "text": "Wearing or experimenting with an item can also offer hints about its properties. In the specific case of Potions, a little taste is enough to tell the taster what a potion does. Other items might require more experimentation. For example, if your character puts on a Ring of Swimming, the GM might say, “Your movement feels strangely fluid.” Perhaps you then dive into a river to see what happens. The GM would then say you swim unexpectedly well.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.magic-items.attunement",
+      "text": "Attunement",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.attunement.p-1",
+      "text": "Some magic items require a creature to form a bond—called Attunement—with them before the creature can use an item’s magical properties. Without becoming attuned to an item that requires Attunement, you gain only its nonmagical benefits unless its description states otherwise. For example, a magic Shield that requires Attunement provides the benefits of a normal Shield if you aren’t attuned to it, but none of its magical properties. Attune during a Short Rest Attuning to an item requires you to spend a Short Rest focused on only that item while being in physical contact with it (this can’t be the same Short Rest used to learn the item’s properties). This focus can take the form of weapon practice (for a Weapon), meditation (for a Wand), or some other appropriate activity. If the Short Rest is interrupted, the Attunement attempt fails. Otherwise, at the end of the Short Rest, you’re attuned to the magic item and can access its full magical capabilities.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.magic-items.no-more-than-three-items",
+      "text": "No More Than Three Items",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.no-more-than-three-items.p-1",
+      "text": "You can be attuned to no more than three magic items at a time. Any attempt to attune to a fourth item fails; you must end your Attunement to an item first. Additionally, you can’t attune to more than one copy of an item. For example, you can’t attune to more than one Ring of Protection at a time.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.magic-items.ending-attunement",
+      "text": "Ending Attunement",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.ending-attunement.p-1",
+      "text": "Your Attunement to an item ends if you no longer satisfy the prerequisites for Attunement, if the item has been more than 100 feet away for at least 24 hours, if you die, or if another creature attunes to the item. You can also voluntarily end Attunement by spending another Short Rest focused on the item unless the item is cursed.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.magic-items.wearing-and-wielding-items",
+      "text": "Wearing and Wielding Items",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.wearing-and-wielding-items.p-1",
+      "text": "Using a magic item’s properties might mean wearing or wielding it. A magic item meant to be worn must be donned in the intended fashion: boots go on feet, gloves on hands, hats and helmets on a head, and rings on a finger. Magic armor must be donned, a Shield strapped to the arm, a cloak fastened about the shoulders. A weapon must be held.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.wearing-and-wielding-items.p-2",
+      "text": "In most cases, a magic item that’s meant to be worn can fit a creature regardless of size or build. Magic garments are made to be easily adjustable, or they magically adjust themselves to the wearer.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.magic-items.multiple-items-of-the-same-kind",
+      "text": "Multiple Items of the Same Kind",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.multiple-items-of-the-same-kind.p-1",
+      "text": "You can’t wear more than one of certain magic items. You can’t normally wear more than one pair of footwear, one pair of gloves or gauntlets, one pair of bracers, one suit of armor, one item of headwear, or one cloak. The GM might make exceptions.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "equipment.services.magic-items.paired-items",
+      "text": "Paired Items",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.services.magic-items.paired-items.p-1",
+      "text": "Items that come in pairs—such as boots, bracers, gauntlets, and gloves—impart their benefits only if both items of the pair are worn. For example, a character wearing a Boot of Striding and Springing on one foot and a Boot of Elvenkind on the other foot gains no benefit from either.",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "equipment.services",
+  "editorialBlocks": [
+    "equipment.services.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Equipment",
+    "Lifestyle, Lodging and Services"
+  ],
+  "order": 3300,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "lifestyle-and-services",
+  "sourcePages": [
+    101,
+    102,
+    103
+  ],
+  "title": "Lifestyle, Lodging and Services"
+}

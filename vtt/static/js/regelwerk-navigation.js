@@ -7,7 +7,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
     function availability() {
         if (!availabilityPromise) {
-            availabilityPromise = fetch('/api/rulesets/main', { credentials: 'same-origin' })
+            availabilityPromise = fetch(`/api/rulesets/main?locale=${globalThis.VTTI18n?.locale?.() === 'en' ? 'en' : 'de'}`, { credentials: 'same-origin' })
                 .then((response) => response.ok ? response.json() : { available: false })
                 .catch(() => ({ available: false }));
         }

@@ -1,0 +1,958 @@
+{
+  "compendiumUrl": "/regelwerk/compendium?locale=en",
+  "kind": "srd",
+  "licenseUrl": "/regelwerk/5.2.1/en/license",
+  "locale": "en-US",
+  "packageDigest": "sha256:14d257a77de8a580dd4805b7f6db3856d02c469733b5abc607a937bcb31df15b",
+  "pdfUrl": "/regelwerk/en",
+  "readerUrl": "/regelwerk/5.2.1/en",
+  "rulesetId": "srd-5.2.1-en",
+  "rulesetVersion": "1.0.0",
+  "schemaVersion": "regelwerk.navigation.v1",
+  "sections": [
+    {
+      "documents": [
+        {
+          "documentId": "core.rhythm-and-abilities",
+          "navigationPath": [
+            "Playing the Game",
+            "Rhythm of Play and the Six Abilities"
+          ],
+          "order": 100,
+          "slug": "rhythm-of-play-and-abilities",
+          "title": "Rhythm of Play and the Six Abilities",
+          "url": "/regelwerk/5.2.1/en/rhythm-of-play-and-abilities"
+        },
+        {
+          "documentId": "core.d20-tests",
+          "navigationPath": [
+            "Playing the Game",
+            "D20 Tests"
+          ],
+          "order": 200,
+          "slug": "d20-tests",
+          "title": "D20 Tests",
+          "url": "/regelwerk/5.2.1/en/d20-tests"
+        },
+        {
+          "documentId": "core.proficiency",
+          "navigationPath": [
+            "Playing the Game",
+            "Proficiency"
+          ],
+          "order": 300,
+          "slug": "proficiency",
+          "title": "Proficiency",
+          "url": "/regelwerk/5.2.1/en/proficiency"
+        },
+        {
+          "documentId": "core.actions",
+          "navigationPath": [
+            "Playing the Game",
+            "Actions"
+          ],
+          "order": 400,
+          "slug": "actions",
+          "title": "Actions",
+          "url": "/regelwerk/5.2.1/en/actions"
+        },
+        {
+          "documentId": "core.social-interaction",
+          "navigationPath": [
+            "Playing the Game",
+            "Social Interaction"
+          ],
+          "order": 500,
+          "slug": "social-interaction",
+          "title": "Social Interaction",
+          "url": "/regelwerk/5.2.1/en/social-interaction"
+        },
+        {
+          "documentId": "core.exploration",
+          "navigationPath": [
+            "Playing the Game",
+            "Exploration"
+          ],
+          "order": 600,
+          "slug": "exploration",
+          "title": "Exploration",
+          "url": "/regelwerk/5.2.1/en/exploration"
+        },
+        {
+          "documentId": "core.combat",
+          "navigationPath": [
+            "Playing the Game",
+            "Combat"
+          ],
+          "order": 700,
+          "slug": "combat",
+          "title": "Combat",
+          "url": "/regelwerk/5.2.1/en/combat"
+        },
+        {
+          "documentId": "core.damage-and-healing",
+          "navigationPath": [
+            "Playing the Game",
+            "Damage and Healing"
+          ],
+          "order": 800,
+          "slug": "damage-and-healing",
+          "title": "Damage and Healing",
+          "url": "/regelwerk/5.2.1/en/damage-and-healing"
+        }
+      ],
+      "sectionId": "playing-the-game",
+      "title": "Playing the Game"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "character-creation.overview",
+          "navigationPath": [
+            "Character Creation",
+            "Creating a Character"
+          ],
+          "order": 900,
+          "slug": "character-creation",
+          "title": "Creating a Character",
+          "url": "/regelwerk/5.2.1/en/character-creation"
+        },
+        {
+          "documentId": "character-creation.advancement",
+          "navigationPath": [
+            "Character Creation",
+            "Level Advancement"
+          ],
+          "order": 1000,
+          "slug": "level-advancement",
+          "title": "Level Advancement",
+          "url": "/regelwerk/5.2.1/en/level-advancement"
+        },
+        {
+          "documentId": "character-creation.multiclassing",
+          "navigationPath": [
+            "Character Creation",
+            "Multiclassing"
+          ],
+          "order": 1100,
+          "slug": "multiclassing",
+          "title": "Multiclassing",
+          "url": "/regelwerk/5.2.1/en/multiclassing"
+        },
+        {
+          "documentId": "character-creation.trinkets",
+          "navigationPath": [
+            "Character Creation",
+            "Trinkets"
+          ],
+          "order": 1200,
+          "slug": "trinkets",
+          "title": "Trinkets",
+          "url": "/regelwerk/5.2.1/en/trinkets"
+        }
+      ],
+      "sectionId": "character-creation",
+      "title": "Character Creation"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "classes.barbarian",
+          "navigationPath": [
+            "Classes",
+            "Barbarian"
+          ],
+          "order": 1300,
+          "slug": "barbarian",
+          "title": "Barbarian",
+          "url": "/regelwerk/5.2.1/en/barbarian"
+        },
+        {
+          "documentId": "classes.bard",
+          "navigationPath": [
+            "Classes",
+            "Bard"
+          ],
+          "order": 1400,
+          "slug": "bard",
+          "title": "Bard",
+          "url": "/regelwerk/5.2.1/en/bard"
+        },
+        {
+          "documentId": "classes.cleric",
+          "navigationPath": [
+            "Classes",
+            "Cleric"
+          ],
+          "order": 1500,
+          "slug": "cleric",
+          "title": "Cleric",
+          "url": "/regelwerk/5.2.1/en/cleric"
+        },
+        {
+          "documentId": "classes.druid",
+          "navigationPath": [
+            "Classes",
+            "Druid"
+          ],
+          "order": 1600,
+          "slug": "druid",
+          "title": "Druid",
+          "url": "/regelwerk/5.2.1/en/druid"
+        },
+        {
+          "documentId": "classes.fighter",
+          "navigationPath": [
+            "Classes",
+            "Fighter"
+          ],
+          "order": 1700,
+          "slug": "fighter",
+          "title": "Fighter",
+          "url": "/regelwerk/5.2.1/en/fighter"
+        },
+        {
+          "documentId": "classes.monk",
+          "navigationPath": [
+            "Classes",
+            "Monk"
+          ],
+          "order": 1800,
+          "slug": "monk",
+          "title": "Monk",
+          "url": "/regelwerk/5.2.1/en/monk"
+        },
+        {
+          "documentId": "classes.paladin",
+          "navigationPath": [
+            "Classes",
+            "Paladin"
+          ],
+          "order": 1900,
+          "slug": "paladin",
+          "title": "Paladin",
+          "url": "/regelwerk/5.2.1/en/paladin"
+        },
+        {
+          "documentId": "classes.ranger",
+          "navigationPath": [
+            "Classes",
+            "Ranger"
+          ],
+          "order": 2000,
+          "slug": "ranger",
+          "title": "Ranger",
+          "url": "/regelwerk/5.2.1/en/ranger"
+        },
+        {
+          "documentId": "classes.rogue",
+          "navigationPath": [
+            "Classes",
+            "Rogue"
+          ],
+          "order": 2100,
+          "slug": "rogue",
+          "title": "Rogue",
+          "url": "/regelwerk/5.2.1/en/rogue"
+        },
+        {
+          "documentId": "classes.sorcerer",
+          "navigationPath": [
+            "Classes",
+            "Sorcerer"
+          ],
+          "order": 2200,
+          "slug": "sorcerer",
+          "title": "Sorcerer",
+          "url": "/regelwerk/5.2.1/en/sorcerer"
+        },
+        {
+          "documentId": "classes.warlock",
+          "navigationPath": [
+            "Classes",
+            "Warlock"
+          ],
+          "order": 2300,
+          "slug": "warlock",
+          "title": "Warlock",
+          "url": "/regelwerk/5.2.1/en/warlock"
+        },
+        {
+          "documentId": "classes.wizard",
+          "navigationPath": [
+            "Classes",
+            "Wizard"
+          ],
+          "order": 2400,
+          "slug": "wizard",
+          "title": "Wizard",
+          "url": "/regelwerk/5.2.1/en/wizard"
+        }
+      ],
+      "sectionId": "classes",
+      "title": "Classes"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "origins.backgrounds",
+          "navigationPath": [
+            "Character Origins",
+            "Character Backgrounds"
+          ],
+          "order": 2500,
+          "slug": "backgrounds",
+          "title": "Character Backgrounds",
+          "url": "/regelwerk/5.2.1/en/backgrounds"
+        },
+        {
+          "documentId": "origins.species",
+          "navigationPath": [
+            "Character Origins",
+            "Character Species"
+          ],
+          "order": 2600,
+          "slug": "species",
+          "title": "Character Species",
+          "url": "/regelwerk/5.2.1/en/species"
+        }
+      ],
+      "sectionId": "character-origins",
+      "title": "Character Origins"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "feats",
+          "navigationPath": [
+            "Feats",
+            "Feats"
+          ],
+          "order": 2700,
+          "slug": "feats",
+          "title": "Feats",
+          "url": "/regelwerk/5.2.1/en/feats"
+        }
+      ],
+      "sectionId": "feats",
+      "title": "Feats"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "equipment.coins-and-weapons",
+          "navigationPath": [
+            "Equipment",
+            "Coins and Weapons"
+          ],
+          "order": 2800,
+          "slug": "coins-and-weapons",
+          "title": "Coins and Weapons",
+          "url": "/regelwerk/5.2.1/en/coins-and-weapons"
+        },
+        {
+          "documentId": "equipment.armor",
+          "navigationPath": [
+            "Equipment",
+            "Armor"
+          ],
+          "order": 2900,
+          "slug": "armor",
+          "title": "Armor",
+          "url": "/regelwerk/5.2.1/en/armor"
+        },
+        {
+          "documentId": "equipment.tools",
+          "navigationPath": [
+            "Equipment",
+            "Tools"
+          ],
+          "order": 3000,
+          "slug": "tools",
+          "title": "Tools",
+          "url": "/regelwerk/5.2.1/en/tools"
+        },
+        {
+          "documentId": "equipment.adventuring-gear",
+          "navigationPath": [
+            "Equipment",
+            "Adventuring Gear"
+          ],
+          "order": 3100,
+          "slug": "adventuring-gear",
+          "title": "Adventuring Gear",
+          "url": "/regelwerk/5.2.1/en/adventuring-gear"
+        },
+        {
+          "documentId": "equipment.mounts-and-vehicles",
+          "navigationPath": [
+            "Equipment",
+            "Mounts and Vehicles"
+          ],
+          "order": 3200,
+          "slug": "mounts-and-vehicles",
+          "title": "Mounts and Vehicles",
+          "url": "/regelwerk/5.2.1/en/mounts-and-vehicles"
+        },
+        {
+          "documentId": "equipment.services",
+          "navigationPath": [
+            "Equipment",
+            "Lifestyle, Lodging and Services"
+          ],
+          "order": 3300,
+          "slug": "lifestyle-and-services",
+          "title": "Lifestyle, Lodging and Services",
+          "url": "/regelwerk/5.2.1/en/lifestyle-and-services"
+        },
+        {
+          "documentId": "equipment.crafting",
+          "navigationPath": [
+            "Equipment",
+            "Crafting"
+          ],
+          "order": 3400,
+          "slug": "crafting",
+          "title": "Crafting",
+          "url": "/regelwerk/5.2.1/en/crafting"
+        }
+      ],
+      "sectionId": "equipment",
+      "title": "Equipment"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "spells.rules",
+          "navigationPath": [
+            "Spells",
+            "Gaining and Casting Spells"
+          ],
+          "order": 3500,
+          "slug": "gaining-and-casting-spells",
+          "title": "Gaining and Casting Spells",
+          "url": "/regelwerk/5.2.1/en/gaining-and-casting-spells"
+        },
+        {
+          "documentId": "spells.a-b",
+          "navigationPath": [
+            "Spells",
+            "Spells A–B"
+          ],
+          "order": 3601,
+          "slug": "spells-a-b",
+          "title": "Spells A–B",
+          "url": "/regelwerk/5.2.1/en/spells-a-b"
+        },
+        {
+          "documentId": "spells.c-d",
+          "navigationPath": [
+            "Spells",
+            "Spells C–D"
+          ],
+          "order": 3602,
+          "slug": "spells-c-d",
+          "title": "Spells C–D",
+          "url": "/regelwerk/5.2.1/en/spells-c-d"
+        },
+        {
+          "documentId": "spells.e-f",
+          "navigationPath": [
+            "Spells",
+            "Spells E–F"
+          ],
+          "order": 3603,
+          "slug": "spells-e-f",
+          "title": "Spells E–F",
+          "url": "/regelwerk/5.2.1/en/spells-e-f"
+        },
+        {
+          "documentId": "spells.g-h",
+          "navigationPath": [
+            "Spells",
+            "Spells G–H"
+          ],
+          "order": 3604,
+          "slug": "spells-g-h",
+          "title": "Spells G–H",
+          "url": "/regelwerk/5.2.1/en/spells-g-h"
+        },
+        {
+          "documentId": "spells.i-l",
+          "navigationPath": [
+            "Spells",
+            "Spells I–L"
+          ],
+          "order": 3605,
+          "slug": "spells-i-l",
+          "title": "Spells I–L",
+          "url": "/regelwerk/5.2.1/en/spells-i-l"
+        },
+        {
+          "documentId": "spells.m-o",
+          "navigationPath": [
+            "Spells",
+            "Spells M–O"
+          ],
+          "order": 3606,
+          "slug": "spells-m-o",
+          "title": "Spells M–O",
+          "url": "/regelwerk/5.2.1/en/spells-m-o"
+        },
+        {
+          "documentId": "spells.p-r",
+          "navigationPath": [
+            "Spells",
+            "Spells P–R"
+          ],
+          "order": 3607,
+          "slug": "spells-p-r",
+          "title": "Spells P–R",
+          "url": "/regelwerk/5.2.1/en/spells-p-r"
+        },
+        {
+          "documentId": "spells.s",
+          "navigationPath": [
+            "Spells",
+            "Spells S"
+          ],
+          "order": 3608,
+          "slug": "spells-s",
+          "title": "Spells S",
+          "url": "/regelwerk/5.2.1/en/spells-s"
+        },
+        {
+          "documentId": "spells.t-v",
+          "navigationPath": [
+            "Spells",
+            "Spells T–V"
+          ],
+          "order": 3609,
+          "slug": "spells-t-v",
+          "title": "Spells T–V",
+          "url": "/regelwerk/5.2.1/en/spells-t-v"
+        },
+        {
+          "documentId": "spells.w-z",
+          "navigationPath": [
+            "Spells",
+            "Spells W–Z"
+          ],
+          "order": 3610,
+          "slug": "spells-w-z",
+          "title": "Spells W–Z",
+          "url": "/regelwerk/5.2.1/en/spells-w-z"
+        }
+      ],
+      "sectionId": "spells",
+      "title": "Spells"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "glossary.a-b",
+          "navigationPath": [
+            "Rules Glossary",
+            "Rules Glossary A–B"
+          ],
+          "order": 3701,
+          "slug": "rules-glossary-a-b",
+          "title": "Rules Glossary A–B",
+          "url": "/regelwerk/5.2.1/en/rules-glossary-a-b"
+        },
+        {
+          "documentId": "glossary.c-d",
+          "navigationPath": [
+            "Rules Glossary",
+            "Rules Glossary C–D"
+          ],
+          "order": 3702,
+          "slug": "rules-glossary-c-d",
+          "title": "Rules Glossary C–D",
+          "url": "/regelwerk/5.2.1/en/rules-glossary-c-d"
+        },
+        {
+          "documentId": "glossary.e-h",
+          "navigationPath": [
+            "Rules Glossary",
+            "Rules Glossary E–H"
+          ],
+          "order": 3703,
+          "slug": "rules-glossary-e-h",
+          "title": "Rules Glossary E–H",
+          "url": "/regelwerk/5.2.1/en/rules-glossary-e-h"
+        },
+        {
+          "documentId": "glossary.m-r",
+          "navigationPath": [
+            "Rules Glossary",
+            "Rules Glossary M–R"
+          ],
+          "order": 3705,
+          "slug": "rules-glossary-m-r",
+          "title": "Rules Glossary M–R",
+          "url": "/regelwerk/5.2.1/en/rules-glossary-m-r"
+        },
+        {
+          "documentId": "glossary.s",
+          "navigationPath": [
+            "Rules Glossary",
+            "Rules Glossary S"
+          ],
+          "order": 3706,
+          "slug": "rules-glossary-s",
+          "title": "Rules Glossary S",
+          "url": "/regelwerk/5.2.1/en/rules-glossary-s"
+        },
+        {
+          "documentId": "glossary.t-z",
+          "navigationPath": [
+            "Rules Glossary",
+            "Rules Glossary T–Z"
+          ],
+          "order": 3707,
+          "slug": "rules-glossary-t-z",
+          "title": "Rules Glossary T–Z",
+          "url": "/regelwerk/5.2.1/en/rules-glossary-t-z"
+        }
+      ],
+      "sectionId": "rules-glossary",
+      "title": "Rules Glossary"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "toolbox.travel-and-backgrounds",
+          "navigationPath": [
+            "Gameplay Toolbox",
+            "Travel Pace and Creating a Background"
+          ],
+          "order": 3800,
+          "slug": "travel-pace-and-backgrounds",
+          "title": "Travel Pace and Creating a Background",
+          "url": "/regelwerk/5.2.1/en/travel-pace-and-backgrounds"
+        },
+        {
+          "documentId": "toolbox.curses",
+          "navigationPath": [
+            "Gameplay Toolbox",
+            "Curses and Magical Contagions"
+          ],
+          "order": 3900,
+          "slug": "curses-and-magical-contagions",
+          "title": "Curses and Magical Contagions",
+          "url": "/regelwerk/5.2.1/en/curses-and-magical-contagions"
+        },
+        {
+          "documentId": "toolbox.environment",
+          "navigationPath": [
+            "Gameplay Toolbox",
+            "Environmental Effects"
+          ],
+          "order": 4000,
+          "slug": "environmental-effects",
+          "title": "Environmental Effects",
+          "url": "/regelwerk/5.2.1/en/environmental-effects"
+        },
+        {
+          "documentId": "toolbox.fear",
+          "navigationPath": [
+            "Gameplay Toolbox",
+            "Fear and Mental Stress"
+          ],
+          "order": 4100,
+          "slug": "fear-and-mental-stress",
+          "title": "Fear and Mental Stress",
+          "url": "/regelwerk/5.2.1/en/fear-and-mental-stress"
+        },
+        {
+          "documentId": "toolbox.poison",
+          "navigationPath": [
+            "Gameplay Toolbox",
+            "Poison"
+          ],
+          "order": 4200,
+          "slug": "poison",
+          "title": "Poison",
+          "url": "/regelwerk/5.2.1/en/poison"
+        },
+        {
+          "documentId": "toolbox.traps",
+          "navigationPath": [
+            "Gameplay Toolbox",
+            "Traps"
+          ],
+          "order": 4300,
+          "slug": "traps",
+          "title": "Traps",
+          "url": "/regelwerk/5.2.1/en/traps"
+        },
+        {
+          "documentId": "toolbox.combat-encounters",
+          "navigationPath": [
+            "Gameplay Toolbox",
+            "Combat Encounters"
+          ],
+          "order": 4400,
+          "slug": "combat-encounters",
+          "title": "Combat Encounters",
+          "url": "/regelwerk/5.2.1/en/combat-encounters"
+        }
+      ],
+      "sectionId": "gameplay-toolbox",
+      "title": "Gameplay Toolbox"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "magic-items.rules",
+          "navigationPath": [
+            "Magic Items",
+            "Magic Item Rules"
+          ],
+          "order": 4500,
+          "slug": "magic-item-rules",
+          "title": "Magic Item Rules",
+          "url": "/regelwerk/5.2.1/en/magic-item-rules"
+        },
+        {
+          "documentId": "magic-items.a-b",
+          "navigationPath": [
+            "Magic Items",
+            "Magic Items A–B"
+          ],
+          "order": 4601,
+          "slug": "magic-items-a-b",
+          "title": "Magic Items A–B",
+          "url": "/regelwerk/5.2.1/en/magic-items-a-b"
+        },
+        {
+          "documentId": "magic-items.c-d",
+          "navigationPath": [
+            "Magic Items",
+            "Magic Items C–D"
+          ],
+          "order": 4602,
+          "slug": "magic-items-c-d",
+          "title": "Magic Items C–D",
+          "url": "/regelwerk/5.2.1/en/magic-items-c-d"
+        },
+        {
+          "documentId": "magic-items.m-o",
+          "navigationPath": [
+            "Magic Items",
+            "Magic Items M–O"
+          ],
+          "order": 4605,
+          "slug": "magic-items-m-o",
+          "title": "Magic Items M–O",
+          "url": "/regelwerk/5.2.1/en/magic-items-m-o"
+        },
+        {
+          "documentId": "magic-items.p-r",
+          "navigationPath": [
+            "Magic Items",
+            "Magic Items P–R"
+          ],
+          "order": 4606,
+          "slug": "magic-items-p-r",
+          "title": "Magic Items P–R",
+          "url": "/regelwerk/5.2.1/en/magic-items-p-r"
+        },
+        {
+          "documentId": "magic-items.s",
+          "navigationPath": [
+            "Magic Items",
+            "Magic Items S"
+          ],
+          "order": 4607,
+          "slug": "magic-items-s",
+          "title": "Magic Items S",
+          "url": "/regelwerk/5.2.1/en/magic-items-s"
+        },
+        {
+          "documentId": "magic-items.t-z",
+          "navigationPath": [
+            "Magic Items",
+            "Magic Items T–Z"
+          ],
+          "order": 4608,
+          "slug": "magic-items-t-z",
+          "title": "Magic Items T–Z",
+          "url": "/regelwerk/5.2.1/en/magic-items-t-z"
+        }
+      ],
+      "sectionId": "magic-items",
+      "title": "Magic Items"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "monsters.overview",
+          "navigationPath": [
+            "Monsters",
+            "Stat Blocks and Running a Monster"
+          ],
+          "order": 4700,
+          "slug": "stat-blocks-and-running-monsters",
+          "title": "Stat Blocks and Running a Monster",
+          "url": "/regelwerk/5.2.1/en/stat-blocks-and-running-monsters"
+        },
+        {
+          "documentId": "monsters.a-b",
+          "navigationPath": [
+            "Monsters",
+            "Monsters A–B"
+          ],
+          "order": 4801,
+          "slug": "monsters-a-b",
+          "title": "Monsters A–B",
+          "url": "/regelwerk/5.2.1/en/monsters-a-b"
+        },
+        {
+          "documentId": "monsters.c-d",
+          "navigationPath": [
+            "Monsters",
+            "Monsters C–D"
+          ],
+          "order": 4802,
+          "slug": "monsters-c-d",
+          "title": "Monsters C–D",
+          "url": "/regelwerk/5.2.1/en/monsters-c-d"
+        },
+        {
+          "documentId": "monsters.e-g",
+          "navigationPath": [
+            "Monsters",
+            "Monsters E–G"
+          ],
+          "order": 4803,
+          "slug": "monsters-e-g",
+          "title": "Monsters E–G",
+          "url": "/regelwerk/5.2.1/en/monsters-e-g"
+        },
+        {
+          "documentId": "monsters.h-k",
+          "navigationPath": [
+            "Monsters",
+            "Monsters H–K"
+          ],
+          "order": 4804,
+          "slug": "monsters-h-k",
+          "title": "Monsters H–K",
+          "url": "/regelwerk/5.2.1/en/monsters-h-k"
+        },
+        {
+          "documentId": "monsters.l-n",
+          "navigationPath": [
+            "Monsters",
+            "Monsters L–N"
+          ],
+          "order": 4805,
+          "slug": "monsters-l-n",
+          "title": "Monsters L–N",
+          "url": "/regelwerk/5.2.1/en/monsters-l-n"
+        },
+        {
+          "documentId": "monsters.o-r",
+          "navigationPath": [
+            "Monsters",
+            "Monsters O–R"
+          ],
+          "order": 4806,
+          "slug": "monsters-o-r",
+          "title": "Monsters O–R",
+          "url": "/regelwerk/5.2.1/en/monsters-o-r"
+        },
+        {
+          "documentId": "monsters.s",
+          "navigationPath": [
+            "Monsters",
+            "Monsters S"
+          ],
+          "order": 4807,
+          "slug": "monsters-s",
+          "title": "Monsters S",
+          "url": "/regelwerk/5.2.1/en/monsters-s"
+        },
+        {
+          "documentId": "monsters.t-z",
+          "navigationPath": [
+            "Monsters",
+            "Monsters T–Z"
+          ],
+          "order": 4808,
+          "slug": "monsters-t-z",
+          "title": "Monsters T–Z",
+          "url": "/regelwerk/5.2.1/en/monsters-t-z"
+        }
+      ],
+      "sectionId": "monsters",
+      "title": "Monsters"
+    },
+    {
+      "documents": [
+        {
+          "documentId": "animals.a-c",
+          "navigationPath": [
+            "Animals",
+            "Animals A–C"
+          ],
+          "order": 4901,
+          "slug": "animals-a-c",
+          "title": "Animals A–C",
+          "url": "/regelwerk/5.2.1/en/animals-a-c"
+        },
+        {
+          "documentId": "animals.d-g",
+          "navigationPath": [
+            "Animals",
+            "Animals D–G"
+          ],
+          "order": 4902,
+          "slug": "animals-d-g",
+          "title": "Animals D–G",
+          "url": "/regelwerk/5.2.1/en/animals-d-g"
+        },
+        {
+          "documentId": "animals.h-o",
+          "navigationPath": [
+            "Animals",
+            "Animals H–O"
+          ],
+          "order": 4903,
+          "slug": "animals-h-o",
+          "title": "Animals H–O",
+          "url": "/regelwerk/5.2.1/en/animals-h-o"
+        },
+        {
+          "documentId": "animals.p-r",
+          "navigationPath": [
+            "Animals",
+            "Animals P–R"
+          ],
+          "order": 4904,
+          "slug": "animals-p-r",
+          "title": "Animals P–R",
+          "url": "/regelwerk/5.2.1/en/animals-p-r"
+        },
+        {
+          "documentId": "animals.s-z",
+          "navigationPath": [
+            "Animals",
+            "Animals S–Z"
+          ],
+          "order": 4905,
+          "slug": "animals-s-z",
+          "title": "Animals S–Z",
+          "url": "/regelwerk/5.2.1/en/animals-s-z"
+        }
+      ],
+      "sectionId": "animals",
+      "title": "Animals"
+    }
+  ],
+  "sourceVersion": "5.2.1",
+  "status": "published",
+  "title": "Roll Drauf Rulebook — SRD 5.2.1 (English)"
+}

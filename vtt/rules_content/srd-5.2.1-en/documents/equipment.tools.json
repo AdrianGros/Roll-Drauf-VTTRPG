@@ -1,0 +1,819 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "equipment.tools",
+      "text": "Tools",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "equipment.tools.roll-drauf-note",
+      "text": "Each tool lists its ability, its weight, the checks it helps with and the items it can craft.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "ruleId": "equipment.tools.p-1",
+      "text": "A tool helps you make specialized ability checks, craft certain items, or both. A tool’s description includes the tool’s cost and weight, as well as the following entries: Ability. This entry lists the ability to use when making an ability check with the tool. Utilize. This entry lists things you can do with the tool when you take the Utilize action. You can do one of those things each time you take the action. This entry also provides the DC for the action. Craft. This entry lists what, if anything, you can craft with the tool. For crafting rules, see “Crafting Nonmagical Items,” “Brewing Potions of Healing,” and “Scribing Spell Scrolls” later in “Equipment.” Variants. This entry appears if the tool has variants, which are listed. Each requires a separate proficiency.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.tool-proficiency",
+      "text": "Tool Proficiency",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.tools.tool-proficiency.p-1",
+      "text": "If you have proficiency with a tool, add your Proficiency Bonus to any ability check you make that uses the tool. If you have proficiency in a skill that’s used with that check, you have Advantage on the check too.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.tools.tool-proficiency.p-2",
+      "text": "Your features might give you proficiency with a tool. A monster has proficiency with any tool in its stat block.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.artisans-tools",
+      "text": "Artisan’s Tools",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.tools.artisans-tools.p-1",
+      "text": "Artisan’s Tools are each focused on crafting items and pursuing a trade. Each of these tools requires a separate proficiency.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.alchemists-supplies-50-gp",
+      "text": "Alchemist’s Supplies (50 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Intelligence",
+          "term": "Ability"
+        },
+        {
+          "definition": "8 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Identify a substance (DC 15), or start a fire",
+          "term": "Utilize"
+        }
+      ],
+      "ruleId": "equipment.tools.alchemists-supplies-50-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.dc-15",
+      "text": "(DC 15)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Acid, Alchemist’s Fire, Component Pouch, Oil,",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.dc-15.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.paper-perfume",
+      "text": "Paper, Perfume",
+      "type": "heading"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.brewers-supplies-20-gp",
+      "text": "Brewer’s Supplies (20 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Intelligence",
+          "term": "Ability"
+        },
+        {
+          "definition": "9 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Detect poisoned drink (DC 15), or identify alcohol (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Antitoxin",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.brewers-supplies-20-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.calligraphers-supplies-10-gp",
+      "text": "Calligrapher’s Supplies (10 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity",
+          "term": "Ability"
+        },
+        {
+          "definition": "5 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Write text with impressive flourishes that guard against forgery (DC 15)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Ink, Spell Scroll",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.calligraphers-supplies-10-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.carpenters-tools-8-gp",
+      "text": "Carpenter’s Tools (8 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Strength",
+          "term": "Ability"
+        },
+        {
+          "definition": "6 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Seal or pry open a door or container (DC 20)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Club, Greatclub, Quarterstaff, Barrel, Chest, Ladder, Pole, Portable Ram, Torch",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.carpenters-tools-8-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.cartographers-tools-15-gp",
+      "text": "Cartographer’s Tools (15 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Wisdom",
+          "term": "Ability"
+        },
+        {
+          "definition": "6 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Draft a map of a small area (DC 15)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Map",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.cartographers-tools-15-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.cobblers-tools-5-gp",
+      "text": "Cobbler’s Tools (5 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity",
+          "term": "Ability"
+        },
+        {
+          "definition": "5 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Modify footwear to give Advantage on the wearer’s next Dexterity (Acrobatics) check (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Climber’s Kit",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.cobblers-tools-5-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.cooks-utensils-1-gp",
+      "text": "Cook’s Utensils (1 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Wisdom",
+          "term": "Ability"
+        },
+        {
+          "definition": "8 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Improve food’s flavor (DC 10), or detect spoiled or poisoned food (DC 15)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Rations",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.cooks-utensils-1-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.glassblowers-tools-30-gp",
+      "text": "Glassblower’s Tools (30 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Intelligence",
+          "term": "Ability"
+        },
+        {
+          "definition": "5 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Discern what a glass object held in the past 24 hours (DC 15)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Glass Bottle, Magnifying Glass, Spyglass, Vial",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.glassblowers-tools-30-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.jewelers-tools-25-gp",
+      "text": "Jeweler’s Tools (25 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Intelligence",
+          "term": "Ability"
+        },
+        {
+          "definition": "2 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Discern a gem’s value (DC 15)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Arcane Focus, Holy Symbol",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.jewelers-tools-25-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.leatherworkers-tools-5-gp",
+      "text": "Leatherworker’s Tools (5 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity",
+          "term": "Ability"
+        },
+        {
+          "definition": "5 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Add a design to a leather item (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Sling, Whip, Hide Armor, Leather Armor, Studded",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.leatherworkers-tools-5-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "equipment.tools.leatherworkers-tools-5-gp.p-1",
+      "text": "Leather Armor, Backpack, Crossbow Bolt Case, Map or Scroll Case, Parchment, Pouch, Quiver, Waterskin",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.masons-tools-10-gp",
+      "text": "Mason’s Tools (10 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Strength",
+          "term": "Ability"
+        },
+        {
+          "definition": "8 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Chisel a symbol or hole in stone (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Block and Tackle",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.masons-tools-10-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.painters-supplies-10-gp",
+      "text": "Painter’s Supplies (10 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Wisdom",
+          "term": "Ability"
+        },
+        {
+          "definition": "5 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Paint a recognizable image of something you’ve seen (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Druidic Focus, Holy Symbol",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.painters-supplies-10-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.potters-tools-10-gp",
+      "text": "Potter’s Tools (10 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Intelligence",
+          "term": "Ability"
+        },
+        {
+          "definition": "3 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Discern what a ceramic object held in the past",
+          "term": "Utilize"
+        }
+      ],
+      "ruleId": "equipment.tools.potters-tools-10-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "equipment.tools.potters-tools-10-gp.p-1",
+      "text": "24 hours (DC 15) Craft: Jug, Lamp",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.smiths-tools-20-gp",
+      "text": "Smith’s Tools (20 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Strength",
+          "term": "Ability"
+        },
+        {
+          "definition": "8 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Pry open a door or container (DC 20)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Any Melee weapon (except Club, Greatclub, Quarterstaff, and Whip), Medium armor (except Hide), Heavy armor, Ball Bearings, Bucket, Caltrops, Chain, Crowbar, Firearm Bullets, Grappling Hook, Iron Pot,",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.smiths-tools-20-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.iron-spikes-sling-bullets",
+      "text": "Iron Spikes, Sling Bullets",
+      "type": "heading"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.tinkers-tools-50-gp",
+      "text": "Tinker’s Tools (50 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity",
+          "term": "Ability"
+        },
+        {
+          "definition": "10 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Assemble a Tiny item composed of scrap, which falls apart in 1 minute (DC 20)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Musket, Pistol, Bell, Bullseye Lantern, Flask, Hooded Lantern, Hunting Trap, Lock, Manacles, Mirror, Shovel, Signal Whistle, Tinderbox",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.tinkers-tools-50-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.weavers-tools-1-gp",
+      "text": "Weaver’s Tools (1 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity",
+          "term": "Ability"
+        },
+        {
+          "definition": "5 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Mend a tear in clothing (DC 10), or sew a Tiny design (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Padded Armor, Basket, Bedroll, Blanket, Fine",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.weavers-tools-1-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.clothes-net-robe-rope-sack-string-tent-travelers",
+      "text": "Clothes, Net, Robe, Rope, Sack, String, Tent, Traveler’s",
+      "type": "heading"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.clothes",
+      "text": "Clothes",
+      "type": "heading"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.woodcarvers-tools-1-gp",
+      "text": "Woodcarver’s Tools (1 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity",
+          "term": "Ability"
+        },
+        {
+          "definition": "5 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Carve a pattern in wood (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Club, Greatclub, Quarterstaff, Ranged weapons",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.woodcarvers-tools-1-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "equipment.tools.woodcarvers-tools-1-gp.p-1",
+      "text": "(except Pistol, Musket, and Sling), Arcane Focus, Arrows, Bolts, Druidic Focus, Ink Pen, Needles Other Tools",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.disguise-kit-25-gp",
+      "text": "Disguise Kit (25 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Charisma",
+          "term": "Ability"
+        },
+        {
+          "definition": "3 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Apply makeup (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Costume",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.disguise-kit-25-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.forgery-kit-15-gp",
+      "text": "Forgery Kit (15 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity",
+          "term": "Ability"
+        },
+        {
+          "definition": "5 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Mimic 10 or fewer words of someone else’s handwriting (DC 15), or duplicate a wax seal (DC 20)",
+          "term": "Utilize"
+        }
+      ],
+      "ruleId": "equipment.tools.forgery-kit-15-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.gaming-set-varies",
+      "text": "Gaming Set (Varies)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Wisdom",
+          "term": "Ability"
+        },
+        {
+          "definition": "—",
+          "term": "Weight"
+        },
+        {
+          "definition": "Discern whether someone is cheating (DC 10), or win the game (DC 20)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Dice (1 SP), dragonchess (1 GP), playing cards",
+          "term": "Variants"
+        }
+      ],
+      "ruleId": "equipment.tools.gaming-set-varies.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "equipment.tools.gaming-set-varies.p-1",
+      "text": "(5 SP), three-dragon ante (1 GP)",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.herbalism-kit-5-gp",
+      "text": "Herbalism Kit (5 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Intelligence",
+          "term": "Ability"
+        },
+        {
+          "definition": "3 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Identify a plant (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Antitoxin, Candle, Healer’s Kit, Potion of Healing",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.herbalism-kit-5-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.musical-instrument-varies",
+      "text": "Musical Instrument (Varies)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Charisma",
+          "term": "Ability"
+        },
+        {
+          "definition": "Varies",
+          "term": "Weight"
+        },
+        {
+          "definition": "Play a known tune (DC 10), or improvise a song",
+          "term": "Utilize"
+        }
+      ],
+      "ruleId": "equipment.tools.musical-instrument-varies.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.dc-15-2",
+      "text": "(DC 15)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bagpipes (30 GP, 6 lb.), drum (6 GP, 3 lb.), dulcimer (25 GP, 10 lb.), flute (2 GP, 1 lb.), horn (3 GP, 2 lb.), lute (35 GP, 2 lb.), lyre (30 GP, 2 lb.), pan flute (12 GP, 2 lb.), shawm (2 GP, 1 lb.), viol (30 GP, 1 lb.)",
+          "term": "Variants"
+        }
+      ],
+      "ruleId": "equipment.tools.dc-15-2.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.navigators-tools-25-gp",
+      "text": "Navigator’s Tools (25 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Wisdom",
+          "term": "Ability"
+        },
+        {
+          "definition": "2 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Plot a course (DC 10), or determine position by stargazing (DC 15)",
+          "term": "Utilize"
+        }
+      ],
+      "ruleId": "equipment.tools.navigators-tools-25-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.poisoners-kit-50-gp",
+      "text": "Poisoner’s Kit (50 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Intelligence",
+          "term": "Ability"
+        },
+        {
+          "definition": "2 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Detect a poisoned object (DC 10)",
+          "term": "Utilize"
+        },
+        {
+          "definition": "Basic Poison",
+          "term": "Craft"
+        }
+      ],
+      "ruleId": "equipment.tools.poisoners-kit-50-gp.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.tools.thieves-tools-25-gp",
+      "text": "Thieves’ Tools (25 GP)",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Dexterity",
+          "term": "Ability"
+        },
+        {
+          "definition": "1 lb.",
+          "term": "Weight"
+        },
+        {
+          "definition": "Pick a lock (DC 15), or disarm a trap (DC 15)",
+          "term": "Utilize"
+        }
+      ],
+      "ruleId": "equipment.tools.thieves-tools-25-gp.dl-1",
+      "type": "definition-list"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "equipment.tools",
+  "editorialBlocks": [
+    "equipment.tools.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Equipment",
+    "Tools"
+  ],
+  "order": 3000,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "tools",
+  "sourcePages": [
+    93,
+    94
+  ],
+  "title": "Tools"
+}

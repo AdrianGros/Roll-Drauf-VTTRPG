@@ -2598,7 +2598,7 @@
                          sind bereits Seiten" existiert nicht mehr. -->
                     <span data-dm-slot="map-upload"></span>
                     <input id="layerSearchInput" class="layer-search-input" type="text" placeholder="Seiten durchsuchen..." data-ui-placeholder="u_0f040903e1e3" aria-label="Seiten durchsuchen" data-ui-aria-label="u_159904309ef9" autocomplete="off">
-                    <div id="layerList" role="listbox" aria-label="Seiten (Kartenebenen)" data-ui-aria-label="u_832c9eec3d6d"></div>
+                    <div id="layerList" role="group" aria-label="Seiten (Kartenebenen)" data-ui-aria-label="u_832c9eec3d6d"></div>
                     <span data-dm-slot="layer-add"></span>
                     <div id="layerAddStatus" class="layer-empty-state" role="status" aria-live="polite" hidden></div>
                 </div>
@@ -2756,7 +2756,7 @@
             <button type="button" class="tool-btn active" data-tool="select" title="Auswählen" data-ui-title="u_2ac692f43843"><span class="tool-ico" aria-hidden="true">🎯</span><span class="tool-label"><span data-ui-key="u_06cea5c40f66">Wählen</span></span></button>
             <button type="button" class="tool-btn" data-tool="pan" title="Karte verschieben (auch: mittlere Maustaste ziehen)" data-ui-title="u_7d07bdddbf19"><span class="tool-ico" aria-hidden="true">🖐</span><span class="tool-label"><span data-ui-key="u_5f489a216d95">Bewegen</span></span></button>
             <button type="button" class="tool-btn" data-tool="measure" title="Entfernung messen: klicken für Wegpunkte, Esc entfernt den letzten, nochmal Esc bricht ab" data-ui-title="u_462949b03aab" aria-label="Entfernung messen" data-ui-aria-label="u_b9fceaaa639e"><span class="tool-ico" aria-hidden="true">📏</span><span class="tool-label"><span data-ui-key="u_1d017b3a6394">Messen</span></span></button>
-            <button type="button" id="btnMeasureSnap" class="tool-btn active" title="Rastereinrasten für Messungen an/aus" data-ui-title="u_dc8d09e66c34" aria-pressed="true" hidden><span class="tool-ico" aria-hidden="true">▦</span><span class="tool-label"><span data-ui-key="u_4e92822e2798">Raster</span></span></button>
+            <button type="button" id="btnMeasureSnap" class="tool-btn" title="Rastereinrasten für Messungen an/aus" data-ui-title="u_dc8d09e66c34" aria-pressed="false" hidden><span class="tool-ico" aria-hidden="true">▦</span><span class="tool-label"><span>Einrasten</span></span></button>
             <!-- Table refactor, 2026-08-23: measure/draw/text/fog buttons
                  used to sit here as silent no-ops (the handler only toggled
                  a CSS class). Removed until the tools actually exist -- a
@@ -3101,6 +3101,8 @@
     <script src="/static/js/play-windows.js"></script>
     <script src="/static/js/play-token-library.js"></script>
     <script src="/static/js/play-campaign-room.js"></script>
+    <link rel="stylesheet" href="/static/css/play-feedback.css">
+    <script src="/static/js/play-feedback.js"></script>
     <script src="/static/js/play-ui.js"></script>
     <script src="/static/js/beyond20-bridge.js"></script>
     <script src="/static/js/vtt-main-nav.js"></script>

@@ -1,0 +1,1527 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "equipment.adventuring-gear",
+      "text": "Adventuring Gear",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "equipment.adventuring-gear.roll-drauf-note",
+      "text": "Prices, weights and rules for everyday adventuring equipment.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.p-1",
+      "text": "The Adventuring Gear table in this section includes gear that adventurers often find useful. These items are described here in alphabetical order, with an item’s price appearing after its name.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.acid-25-gp",
+      "text": "Acid (25 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.acid-25-gp.p-1",
+      "text": "When you take the Attack action, you can replace one of your attacks with throwing a vial of Acid. Target one creature or object you can see within 20 feet of yourself. The target must succeed on a Dexterity saving throw (DC 8 plus your Dexterity modifier and Proficiency Bonus) or take 2d6 Acid damage.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.alchemists-fire-50-gp",
+      "text": "Alchemist’s Fire (50 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.alchemists-fire-50-gp.p-1",
+      "text": "When you take the Attack action, you can replace one of your attacks with throwing a flask of Alchemist’s Fire. Target one creature or object you can see within 20 feet of yourself. The target must succeed on a Dexterity saving throw (DC 8 plus your Dexterity modifier and Proficiency Bonus) or take 1d4 Fire damage and start burning (see “Rules Glossary”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.ammunition-varies",
+      "text": "Ammunition (Varies)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.ammunition-varies.p-1",
+      "text": "Ammunition is required by a weapon that has the Ammunition property. A weapon’s description specifies the type of ammunition used by the weapon. The Ammunition table lists the different types and the amount you get when you buy them. The table also lists the item that is typically used to store each type; storage must be bought separately.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Adventuring Gear",
+      "columns": [
+        "Item",
+        "Weight",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "Acid",
+          "1 lb.",
+          "25 GP"
+        ],
+        [
+          "Alchemist’s Fire",
+          "1 lb.",
+          "50 GP"
+        ],
+        [
+          "Ammunition",
+          "Varies",
+          "Varies"
+        ],
+        [
+          "Antitoxin",
+          "—",
+          "50 GP"
+        ],
+        [
+          "Arcane Focus",
+          "Varies",
+          "Varies"
+        ],
+        [
+          "Backpack",
+          "5 lb.",
+          "2 GP"
+        ],
+        [
+          "Ball Bearings",
+          "2 lb.",
+          "1 GP"
+        ],
+        [
+          "Barrel",
+          "70 lb.",
+          "2 GP"
+        ],
+        [
+          "Basket",
+          "2 lb.",
+          "4 SP"
+        ],
+        [
+          "Bedroll",
+          "7 lb.",
+          "1 GP"
+        ],
+        [
+          "Bell",
+          "—",
+          "1 GP"
+        ],
+        [
+          "Blanket",
+          "3 lb.",
+          "5 SP"
+        ],
+        [
+          "Block and Tackle",
+          "5 lb.",
+          "1 GP"
+        ],
+        [
+          "Book",
+          "5 lb.",
+          "25 GP"
+        ],
+        [
+          "Bottle, Glass",
+          "2 lb.",
+          "2 GP"
+        ],
+        [
+          "Bucket",
+          "2 lb.",
+          "5 CP"
+        ],
+        [
+          "Burglar’s Pack",
+          "42 lb.",
+          "16 GP"
+        ],
+        [
+          "Caltrops",
+          "2 lb.",
+          "1 GP"
+        ],
+        [
+          "Candle",
+          "—",
+          "1 CP"
+        ],
+        [
+          "Case, Crossbow Bolt",
+          "1 lb.",
+          "1 GP"
+        ],
+        [
+          "Case, Map or Scroll",
+          "1 lb.",
+          "1 GP"
+        ],
+        [
+          "Chain",
+          "10 lb.",
+          "5 GP"
+        ],
+        [
+          "Chest",
+          "25 lb.",
+          "5 GP"
+        ],
+        [
+          "Climber’s Kit",
+          "12 lb.",
+          "25 GP"
+        ],
+        [
+          "Clothes, Fine",
+          "6 lb.",
+          "15 GP"
+        ],
+        [
+          "Clothes, Traveler’s",
+          "4 lb.",
+          "2 GP"
+        ],
+        [
+          "Component Pouch",
+          "2 lb.",
+          "25 GP"
+        ],
+        [
+          "Costume",
+          "4 lb.",
+          "5 GP"
+        ],
+        [
+          "Crowbar",
+          "5 lb.",
+          "2 GP"
+        ],
+        [
+          "Diplomat’s Pack",
+          "39 lb.",
+          "39 GP"
+        ],
+        [
+          "Druidic Focus",
+          "Varies",
+          "Varies"
+        ],
+        [
+          "Dungeoneer’s Pack",
+          "55 lb.",
+          "12 GP"
+        ],
+        [
+          "Entertainer’s Pack",
+          "58½ lb.",
+          "40 GP"
+        ],
+        [
+          "Explorer’s Pack",
+          "55 lb.",
+          "10 GP"
+        ],
+        [
+          "Flask",
+          "1 lb.",
+          "2 CP"
+        ],
+        [
+          "Grappling Hook",
+          "4 lb.",
+          "2 GP"
+        ],
+        [
+          "Healer’s Kit",
+          "3 lb.",
+          "5 GP"
+        ],
+        [
+          "Holy Symbol",
+          "Varies",
+          "Varies"
+        ],
+        [
+          "Holy Water",
+          "1 lb.",
+          "25 GP"
+        ],
+        [
+          "Hunting Trap",
+          "25 lb.",
+          "5 GP"
+        ],
+        [
+          "Ink",
+          "—",
+          "10 GP"
+        ],
+        [
+          "Ink Pen",
+          "—",
+          "2 CP"
+        ],
+        [
+          "Jug",
+          "4 lb.",
+          "2 CP"
+        ],
+        [
+          "Ladder",
+          "25 lb.",
+          "1 SP"
+        ],
+        [
+          "Lamp",
+          "1 lb.",
+          "5 SP"
+        ],
+        [
+          "Lantern, Bullseye",
+          "2 lb.",
+          "10 GP"
+        ],
+        [
+          "Lantern, Hooded",
+          "2 lb.",
+          "5 GP"
+        ],
+        [
+          "Lock",
+          "1 lb.",
+          "10 GP"
+        ],
+        [
+          "Magnifying Glass",
+          "—",
+          "100 GP"
+        ],
+        [
+          "Manacles",
+          "6 lb.",
+          "2 GP"
+        ],
+        [
+          "Map",
+          "—",
+          "1 GP"
+        ],
+        [
+          "Mirror",
+          "1/2 lb.",
+          "5 GP"
+        ],
+        [
+          "Net",
+          "3 lb.",
+          "1 GP"
+        ],
+        [
+          "Oil",
+          "1 lb.",
+          "1 SP"
+        ],
+        [
+          "Paper",
+          "—",
+          "2 SP"
+        ],
+        [
+          "Parchment",
+          "—",
+          "1 SP"
+        ],
+        [
+          "Perfume",
+          "—",
+          "5 GP"
+        ],
+        [
+          "Poison, Basic",
+          "—",
+          "100 GP"
+        ],
+        [
+          "Pole",
+          "7 lb.",
+          "5 CP"
+        ],
+        [
+          "Pot, Iron",
+          "10 lb.",
+          "2 GP"
+        ],
+        [
+          "Potion of Healing",
+          "1/2 lb.",
+          "50 GP"
+        ],
+        [
+          "Pouch",
+          "1 lb.",
+          "5 SP"
+        ],
+        [
+          "Priest’s Pack",
+          "29 lb.",
+          "33 GP"
+        ],
+        [
+          "Quiver",
+          "1 lb.",
+          "1 GP"
+        ],
+        [
+          "Ram, Portable",
+          "35 lb.",
+          "4 GP"
+        ],
+        [
+          "Rations",
+          "2 lb.",
+          "5 SP"
+        ],
+        [
+          "Robe",
+          "4 lb.",
+          "1 GP"
+        ],
+        [
+          "Rope",
+          "5 lb.",
+          "1 GP"
+        ],
+        [
+          "Sack",
+          "1/2 lb.",
+          "1 CP"
+        ],
+        [
+          "Scholar’s Pack",
+          "22 lb.",
+          "40 GP"
+        ],
+        [
+          "Shovel",
+          "5 lb.",
+          "2 GP"
+        ],
+        [
+          "Signal Whistle",
+          "—",
+          "5 CP"
+        ],
+        [
+          "Spell Scroll (Cantrip)",
+          "—",
+          "30 GP"
+        ],
+        [
+          "Spell Scroll (Level 1)",
+          "—",
+          "50 GP"
+        ],
+        [
+          "Spikes, Iron",
+          "5 lb.",
+          "1 GP"
+        ],
+        [
+          "Spyglass",
+          "1 lb.",
+          "1,000 GP"
+        ],
+        [
+          "String",
+          "—",
+          "1 SP"
+        ],
+        [
+          "Tent",
+          "20 lb.",
+          "2 GP"
+        ],
+        [
+          "Tinderbox",
+          "1 lb.",
+          "5 SP"
+        ],
+        [
+          "Torch",
+          "1 lb.",
+          "1 CP"
+        ],
+        [
+          "Vial",
+          "—",
+          "1 GP"
+        ],
+        [
+          "Waterskin",
+          "5 lb. (full)",
+          "2 SP"
+        ]
+      ],
+      "ruleId": "equipment.adventuring-gear.ammunition-varies.table-1",
+      "type": "table"
+    },
+    {
+      "caption": "Ammunition",
+      "columns": [
+        "Type Amount Storage",
+        "",
+        "Weight",
+        "",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "Arrows",
+          "20",
+          "Quiver",
+          "1 lb.",
+          "1 GP"
+        ],
+        [
+          "Bolts",
+          "20",
+          "Case 1½ lb.",
+          "",
+          "1 GP"
+        ],
+        [
+          "Bullets, Firearm",
+          "10",
+          "Pouch",
+          "2 lb.",
+          "3 GP"
+        ],
+        [
+          "Bullets, Sling",
+          "20",
+          "Pouch 1½ lb.",
+          "",
+          "4 CP"
+        ],
+        [
+          "Needles",
+          "50",
+          "Pouch",
+          "1 lb.",
+          "1 GP"
+        ]
+      ],
+      "ruleId": "equipment.adventuring-gear.ammunition-varies.table-2",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.antitoxin-50-gp",
+      "text": "Antitoxin (50 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.antitoxin-50-gp.p-1",
+      "text": "As a Bonus Action, you can drink a vial of Antitoxin to gain Advantage on saving throws to avoid or end the Poisoned condition for 1 hour.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.arcane-focus-varies",
+      "text": "Arcane Focus (Varies)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.arcane-focus-varies.p-1",
+      "text": "An Arcane Focus takes one of the forms in the Arcane Focuses table and is bejeweled or carved to channel arcane magic. A Sorcerer, Warlock, or Wizard can use such an item as a Spellcasting Focus.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Arcane Focuses",
+      "columns": [
+        "Focus",
+        "Weight",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "Crystal",
+          "1 lb.",
+          "10 GP"
+        ],
+        [
+          "Orb",
+          "3 lb.",
+          "20 GP"
+        ],
+        [
+          "Rod",
+          "2 lb.",
+          "10 GP"
+        ],
+        [
+          "Staff (also a Quarterstaff)",
+          "4 lb.",
+          "5 GP"
+        ],
+        [
+          "Wand",
+          "1 lb.",
+          "10 GP"
+        ]
+      ],
+      "ruleId": "equipment.adventuring-gear.arcane-focus-varies.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.backpack-2-gp",
+      "text": "Backpack (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.backpack-2-gp.p-1",
+      "text": "A Backpack holds up to 30 pounds within 1 cubic foot. It can also serve as a saddlebag.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.ball-bearings-1-gp",
+      "text": "Ball Bearings (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.ball-bearings-1-gp.p-1",
+      "text": "As a Utilize action, you can spill Ball Bearings from their pouch. They spread to cover a level, 10-foot-square area within 10 feet of yourself. A creature that enters this area for the first time on a turn must succeed on a DC 10 Dexterity saving throw or have the Prone condition. It takes 10 minutes to recover the Ball Bearings.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.barrel-2-gp",
+      "text": "Barrel (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.barrel-2-gp.p-1",
+      "text": "A Barrel holds up to 40 gallons of liquid or up to 4 cubic feet of dry goods.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.basket-4-sp",
+      "text": "Basket (4 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.basket-4-sp.p-1",
+      "text": "A Basket holds up to 40 pounds within 2 cubic feet.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.bedroll-1-gp",
+      "text": "Bedroll (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.bedroll-1-gp.p-1",
+      "text": "A Bedroll sleeps one Small or Medium creature. While in a Bedroll, you automatically succeed on saving throws against extreme cold (see “Gameplay Toolbox”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.bell-1-gp",
+      "text": "Bell (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.bell-1-gp.p-1",
+      "text": "When rung as a Utilize action, a Bell produces a sound that can be heard up to 60 feet away.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.blanket-5-sp",
+      "text": "Blanket (5 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.blanket-5-sp.p-1",
+      "text": "While wrapped in a blanket, you have Advantage on saving throws against extreme cold (see “Gameplay Toolbox”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.block-and-tackle-1-gp",
+      "text": "Block and Tackle (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.block-and-tackle-1-gp.p-1",
+      "text": "A Block and Tackle allows you to hoist up to four times the weight you can normally lift.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.book-25-gp",
+      "text": "Book (25 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.book-25-gp.p-1",
+      "text": "A Book contains fiction or nonfiction. If you consult an accurate nonfiction Book about its topic, you gain a +5 bonus to Intelligence (Arcana, History, Nature, or Religion) checks you make about that topic.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.bottle-glass-2-gp",
+      "text": "Bottle, Glass (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.bottle-glass-2-gp.p-1",
+      "text": "A Glass Bottle holds up to 11/2 pints.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.bucket-5-cp",
+      "text": "Bucket (5 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.bucket-5-cp.p-1",
+      "text": "A Bucket holds up to half a cubic foot of contents.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.burglars-pack-16-gp",
+      "text": "Burglar’s Pack (16 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.burglars-pack-16-gp.p-1",
+      "text": "A Burglar’s Pack contains the following items: Backpack, Ball Bearings, Bell, 10 Candles, Crowbar, Hooded Lantern, 7 flasks of Oil, 5 days of Rations, Rope, Tinderbox, and Waterskin.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.caltrops-1-gp",
+      "text": "Caltrops (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.caltrops-1-gp.p-1",
+      "text": "As a Utilize action, you can spread Caltrops from their bag to cover a 5-foot-square area within 5 feet of yourself. A creature that enters this area for the first time on a turn must succeed on a DC 15 Dexterity saving throw or take 1 Piercing damage and have its Speed reduced to 0 until the start of its next turn. It takes 10 minutes to recover the Caltrops.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.candle-1-cp",
+      "text": "Candle (1 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.candle-1-cp.p-1",
+      "text": "For 1 hour, a lit Candle sheds Bright Light in a 5-foot radius and Dim Light for an additional 5 feet.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.case-crossbow-bolt-1-gp",
+      "text": "Case, Crossbow Bolt (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.case-crossbow-bolt-1-gp.p-1",
+      "text": "A Crossbow Bolt Case holds up to 20 Bolts.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.case-map-or-scroll-1-gp",
+      "text": "Case, Map or Scroll (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.case-map-or-scroll-1-gp.p-1",
+      "text": "A Map or Scroll Case holds up to 10 sheets of paper or 5 sheets of parchment.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.chain-5-gp",
+      "text": "Chain (5 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.chain-5-gp.p-1",
+      "text": "As a Utilize action, you can wrap a Chain around an unwilling creature within 5 feet of yourself that has the Grappled, Incapacitated, or Restrained condition if you succeed on a DC 13 Strength (Athletics) check. If the creature’s legs are bound, the creature has the Restrained condition until it escapes. Escaping the Chain requires the creature to make a successful DC 18 Dexterity (Acrobatics) check as an action. Bursting the Chain requires a successful DC 20 Strength (Athletics) check as an action.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.chest-5-gp",
+      "text": "Chest (5 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.chest-5-gp.p-1",
+      "text": "A Chest holds up to 12 cubic feet of contents.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.climbers-kit-25-gp",
+      "text": "Climber’s Kit (25 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.climbers-kit-25-gp.p-1",
+      "text": "A Climber’s Kit includes boot tips, gloves, pitons, and a harness. As a Utilize action, you can use the Climber’s Kit to anchor yourself; when you do, you can’t fall more than 25 feet from the anchor point, and you can’t move more than 25 feet from there without undoing the anchor as a Bonus Action.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.clothes-fine-15-gp",
+      "text": "Clothes, Fine (15 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.clothes-fine-15-gp.p-1",
+      "text": "Fine Clothes are made of expensive fabrics and adorned with expertly crafted details. Some events and locations admit only people wearing these clothes.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.clothes-travelers-2-gp",
+      "text": "Clothes, Traveler’s (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.clothes-travelers-2-gp.p-1",
+      "text": "Traveler’s Clothes are resilient garments designed for travel in various environments.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.component-pouch-25-gp",
+      "text": "Component Pouch (25 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.component-pouch-25-gp.p-1",
+      "text": "A Component Pouch is watertight and filled with compartments that hold all the free Material components of your spells.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.costume-5-gp",
+      "text": "Costume (5 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.costume-5-gp.p-1",
+      "text": "While wearing a Costume, you have Advantage on any ability check you make to impersonate the person or type of person it represents.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.crowbar-2-gp",
+      "text": "Crowbar (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.crowbar-2-gp.p-1",
+      "text": "Using a Crowbar gives you Advantage on Strength checks where the Crowbar’s leverage can be applied.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.diplomats-pack-39-gp",
+      "text": "Diplomat’s Pack (39 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.diplomats-pack-39-gp.p-1",
+      "text": "A Diplomat’s Pack contains the following items: Chest, Fine Clothes, Ink, 5 Ink Pens, Lamp, 2 Map or Scroll Cases, 4 flasks of Oil, 5 sheets of Paper, 5 sheets of Parchment, Perfume, and Tinderbox.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.druidic-focus-varies",
+      "text": "Druidic Focus (Varies)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.druidic-focus-varies.p-1",
+      "text": "A Druidic Focus takes one of the forms in the Druidic Focuses table and is carved, tied with ribbon, or painted to channel primal magic. A Druid or Ranger can use such an object as a Spellcasting Focus.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Druidic Focuses",
+      "columns": [
+        "Focus",
+        "Weight",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "Sprig of mistletoe",
+          "—",
+          "1 GP"
+        ],
+        [
+          "Wooden staff (also a Quarterstaff)",
+          "4 lb.",
+          "5 GP"
+        ],
+        [
+          "Yew wand",
+          "1 lb.",
+          "10 GP"
+        ]
+      ],
+      "ruleId": "equipment.adventuring-gear.druidic-focus-varies.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.dungeoneers-pack-12-gp",
+      "text": "Dungeoneer’s Pack (12 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.dungeoneers-pack-12-gp.p-1",
+      "text": "A Dungeoneer’s Pack contains the following items: Backpack, Caltrops, Crowbar, 2 flasks of Oil, 10 days of Rations, Rope, Tinderbox, 10 Torches, and Waterskin.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.entertainers-pack-40-gp",
+      "text": "Entertainer’s Pack (40 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.entertainers-pack-40-gp.p-1",
+      "text": "An Entertainer’s Pack contains the following items: Backpack, Bedroll, Bell, Bullseye Lantern, 3 Costumes, Mirror, 8 flasks of Oil, 9 days of Rations, Tinderbox, and Waterskin.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.explorers-pack-10-gp",
+      "text": "Explorer’s Pack (10 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.explorers-pack-10-gp.p-1",
+      "text": "An Explorer’s Pack contains the following items: Backpack, Bedroll, 2 flasks of Oil, 10 days of Rations, Rope, Tinderbox, 10 Torches, and Waterskin.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.flask-2-cp",
+      "text": "Flask (2 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.flask-2-cp.p-1",
+      "text": "A Flask holds up to 1 pint.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.grappling-hook-2-gp",
+      "text": "Grappling Hook (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.grappling-hook-2-gp.p-1",
+      "text": "As a Utilize action, you can throw the Grappling Hook at a railing, a ledge, or another catch within 50 feet of yourself, and the hook catches on if you succeed on a DC 13 Dexterity (Acrobatics) check. If you tied a Rope to the hook, you can then climb it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.healers-kit-5-gp",
+      "text": "Healer’s Kit (5 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.healers-kit-5-gp.p-1",
+      "text": "A Healer’s Kit has ten uses. As a Utilize action, you can expend one of its uses to stabilize an Unconscious creature that has 0 Hit Points without needing to make a Wisdom (Medicine) check.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.holy-symbol-varies",
+      "text": "Holy Symbol (Varies)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.holy-symbol-varies.p-1",
+      "text": "A Holy Symbol takes one of the forms in the Holy Symbol table and is bejeweled or painted to channel divine magic. A Cleric or Paladin can use a Holy Symbol as a Spellcasting Focus.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.holy-symbol-varies.p-2",
+      "text": "The table indicates whether a Holy Symbol needs to be held, worn, or borne on fabric (such as a tabard or banner) or a Shield.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Holy Symbols",
+      "columns": [
+        "Symbol",
+        "Weight",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "Amulet (worn or held)",
+          "1 lb.",
+          "5 GP"
+        ],
+        [
+          "Emblem (borne on fabric or a Shield)",
+          "—",
+          "5 GP"
+        ],
+        [
+          "Reliquary (held)",
+          "2 lb.",
+          "5 GP"
+        ]
+      ],
+      "ruleId": "equipment.adventuring-gear.holy-symbol-varies.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.holy-water-25-gp",
+      "text": "Holy Water (25 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.holy-water-25-gp.p-1",
+      "text": "When you take the Attack action, you can replace one of your attacks with throwing a flask of Holy Water. Target one creature you can see within 20 feet of yourself. The target must succeed on a Dexterity saving throw (DC 8 plus your Dexterity modifier and Proficiency Bonus) or take 2d8 Radiant damage if it is a Fiend or an Undead.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.hunting-trap-5-gp",
+      "text": "Hunting Trap (5 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.hunting-trap-5-gp.p-1",
+      "text": "As a Utilize action, you can set a Hunting Trap, which is a sawtooth steel ring that snaps shut when a creature steps on a pressure plate in the center. The trap is affixed by a heavy chain to an immobile object, such as a tree or a spike driven into the ground. A creature that steps on the plate must succeed on a DC 13 Dexterity saving throw or take 1d4 Piercing damage and have its Speed reduced to 0 until the start of its next turn. Thereafter, until the creature breaks free of the trap, its movement is limited by the length of the chain (typically 3 feet). A creature can use its action to make a DC 13 Strength (Athletics) check, freeing itself or another creature within its reach on a success. Each failed check deals 1 Piercing damage to the trapped creature.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.ink-10-gp",
+      "text": "Ink (10 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.ink-10-gp.p-1",
+      "text": "Ink comes in a 1-ounce bottle, which provides enough ink to write about 500 pages.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.ink-pen-2-cp",
+      "text": "Ink Pen (2 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.ink-pen-2-cp.p-1",
+      "text": "Using Ink, an Ink Pen is used to write or draw.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.jug-2-cp",
+      "text": "Jug (2 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.jug-2-cp.p-1",
+      "text": "A Jug holds up to 1 gallon.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.ladder-1-sp",
+      "text": "Ladder (1 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.ladder-1-sp.p-1",
+      "text": "A Ladder is 10 feet tall. You must climb to move up or down it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.lamp-5-sp",
+      "text": "Lamp (5 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.lamp-5-sp.p-1",
+      "text": "A Lamp burns Oil as fuel to cast Bright Light in a 15- foot radius and Dim Light for an additional 30 feet.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.lantern-bullseye-10-gp",
+      "text": "Lantern, Bullseye (10 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.lantern-bullseye-10-gp.p-1",
+      "text": "A Bullseye Lantern burns Oil as fuel to cast Bright Light in a 60-foot Cone and Dim Light for an additional 60 feet.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.lantern-hooded-5-gp",
+      "text": "Lantern, Hooded (5 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.lantern-hooded-5-gp.p-1",
+      "text": "A Hooded Lantern burns Oil as fuel to cast Bright Light in a 30-foot radius and Dim Light for an additional 30 feet. As a Bonus Action, you can lower the hood, reducing the light to Dim Light in a 5-foot radius, or raise it again.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.lock-10-gp",
+      "text": "Lock (10 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.lock-10-gp.p-1",
+      "text": "A Lock comes with a key. Without the key, a creature can use Thieves’ Tools to pick this Lock with a successful DC 15 Dexterity (Sleight of Hand) check.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.magnifying-glass-100-gp",
+      "text": "Magnifying Glass (100 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.magnifying-glass-100-gp.p-1",
+      "text": "A Magnifying Glass grants Advantage on any ability check made to appraise or inspect a highly detailed item. Lighting a fire with a Magnifying Glass requires light as bright as sunlight to focus, tinder to ignite, and about 5 minutes for the fire to ignite.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.manacles-2-gp",
+      "text": "Manacles (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.manacles-2-gp.p-1",
+      "text": "As a Utilize action, you can use Manacles to bind an unwilling Small or Medium creature within 5 feet of yourself that has the Grappled, Incapacitated, or Restrained condition if you succeed on a DC 13 Dexterity (Sleight of Hand) check. While bound, a creature has Disadvantage on attack rolls, and the creature is Restrained if the Manacles are attached to a chain or hook that is fixed in place. Escaping the Manacles requires a successful DC 20 Dexterity (Sleight of Hand) check as an action. Bursting them requires a successful DC 25 Strength (Athletics) check as an action.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.manacles-2-gp.p-2",
+      "text": "Each set of Manacles comes with a key. Without the key, a creature can use Thieves’ Tools to pick the Manacles’ lock with a successful DC 15 Dexterity (Sleight of Hand) check.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.map-1-gp",
+      "text": "Map (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.map-1-gp.p-1",
+      "text": "If you consult an accurate Map, you gain a +5 bonus to Wisdom (Survival) checks you make to find your way in the place represented on it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.mirror-5-gp",
+      "text": "Mirror (5 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.mirror-5-gp.p-1",
+      "text": "A handheld steel Mirror is useful for personal cosmetics but also for peeking around corners and reflecting light as a signal.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.net-1-gp",
+      "text": "Net (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.net-1-gp.p-1",
+      "text": "When you take the Attack action, you can replace one of your attacks with throwing a Net. Target a creature you can see within 15 feet of yourself. The target must succeed on a Dexterity saving throw (DC 8 plus your Dexterity modifier and Proficiency Bonus) or have the Restrained condition until it escapes. The target succeeds automatically if it is Huge or larger.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.net-1-gp.p-2",
+      "text": "To escape, the target or a creature within 5 feet of it must take an action to make a DC 10 Strength (Athletics) check, freeing the Restrained creature on a success. Destroying the Net (AC 10; 5 HP; Immunity to Bludgeoning, Poison, and Psychic damage) also frees the target, ending the effect.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.oil-1-sp",
+      "text": "Oil (1 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.oil-1-sp.p-1",
+      "text": "You can douse a creature, object, or space with Oil or use it as fuel, as detailed below.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.oil-1-sp.p-2",
+      "text": "Dousing a Creature or an Object. When you take the Attack action, you can replace one of your attacks with throwing an Oil flask. Target one creature or object within 20 feet of yourself. The target must succeed on a Dexterity saving throw (DC 8 plus your Dexterity modifier and Proficiency Bonus) or be covered in oil. If the target takes Fire damage before the oil dries (after 1 minute), the target takes an extra 5 Fire damage from burning oil.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.oil-1-sp.p-3",
+      "text": "Dousing a Space. You can take the Utilize action to pour an Oil flask on level ground to cover a 5-foot-square area within 5 feet of yourself. If lit, the oil burns until the end of the turn 2 rounds from when the oil was lit (or 12 seconds) and deals 5 Fire damage to any creature that enters the area or ends its turn there. A creature can take this damage only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.oil-1-sp.p-4",
+      "text": "Fuel. Oil serves as fuel for Lamps and Lanterns. Once lit, a flask of Oil burns for 6 hours in a Lamp or Lantern. That duration doesn’t need to be consecutive; you can extinguish the burning Oil (as a Utilize action) and rekindle it again until it has burned for a total of 6 hours.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.paper-2-sp",
+      "text": "Paper (2 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.paper-2-sp.p-1",
+      "text": "One sheet of Paper can hold about 250 handwritten words.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.parchment-1-sp",
+      "text": "Parchment (1 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.parchment-1-sp.p-1",
+      "text": "One sheet of Parchment can hold about 250 handwritten words.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.perfume-5-gp",
+      "text": "Perfume (5 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.perfume-5-gp.p-1",
+      "text": "Perfume comes in a 4-ounce vial. For 1 hour after applying Perfume to yourself, you have Advantage on Charisma (Persuasion) checks made to influence an Indifferent Humanoid within 5 feet of yourself.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.poison-basic-100-gp",
+      "text": "Poison, Basic (100 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.poison-basic-100-gp.p-1",
+      "text": "As a Bonus Action, you can use a vial of Basic Poison to coat one weapon or up to three pieces of ammunition. A creature that takes Piercing or Slashing damage from the poisoned weapon or ammunition takes an extra 1d4 Poison damage. Once applied, the poison retains potency for 1 minute or until its damage is dealt, whichever comes first.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.pole-5-cp",
+      "text": "Pole (5 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.pole-5-cp.p-1",
+      "text": "A Pole is 10 feet long. You can use it to touch something up to 10 feet away. If you must make a Strength (Athletics) check as part of a High or Long Jump, you can use the Pole to vault, giving yourself Advantage on the check.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.pot-iron-2-gp",
+      "text": "Pot, Iron (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.pot-iron-2-gp.p-1",
+      "text": "An Iron Pot holds up to 1 gallon.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.potion-of-healing-50-gp",
+      "text": "Potion of Healing (50 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.potion-of-healing-50-gp.p-1",
+      "text": "This potion is a magic item. As a Bonus Action, you can drink it or administer it to another creature within 5 feet of yourself. The creature that drinks the magical red fluid in this vial regains 2d4 + 2 Hit Points.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.pouch-5-sp",
+      "text": "Pouch (5 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.pouch-5-sp.p-1",
+      "text": "A Pouch holds up to 6 pounds within one-fifth of a cubic foot.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.priests-pack-33-gp",
+      "text": "Priest’s Pack (33 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.priests-pack-33-gp.p-1",
+      "text": "A Priest’s Pack contains the following items: Backpack, Blanket, Holy Water, Lamp, 7 days of Rations, Robe, and Tinderbox.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.quiver-1-gp",
+      "text": "Quiver (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.quiver-1-gp.p-1",
+      "text": "A Quiver holds up to 20 Arrows.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.ram-portable-4-gp",
+      "text": "Ram, Portable (4 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.ram-portable-4-gp.p-1",
+      "text": "You can use a Portable Ram to break down doors. When doing so, you gain a +4 bonus to the Strength check. One other character can help you use the ram, giving you Advantage on this check.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.rations-5-sp",
+      "text": "Rations (5 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.rations-5-sp.p-1",
+      "text": "Rations consist of travel-ready food, including jerky, dried fruit, hardtack, and nuts. See “Malnutrition” in “Rules Glossary” for the risks of not eating.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.robe-1-gp",
+      "text": "Robe (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.robe-1-gp.p-1",
+      "text": "A Robe has vocational or ceremonial significance. Some events and locations admit only people wearing a Robe bearing certain colors or symbols.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.rope-1-gp",
+      "text": "Rope (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.rope-1-gp.p-1",
+      "text": "As a Utilize action, you can tie a knot with Rope if you succeed on a DC 10 Dexterity (Sleight of Hand) check. The Rope can be burst with a successful DC 20 Strength (Athletics) check.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.rope-1-gp.p-2",
+      "text": "You can bind an unwilling creature with the Rope only if the creature has the Grappled, Incapacitated, or Restrained condition. If the creature’s legs are bound, the creature has the Restrained condition until it escapes. Escaping the Rope requires the creature to make a successful DC 15 Dexterity (Acrobatics) check as an action.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.sack-1-cp",
+      "text": "Sack (1 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.sack-1-cp.p-1",
+      "text": "A Sack holds up to 30 pounds within 1 cubic foot.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.scholars-pack-40-gp",
+      "text": "Scholar’s Pack (40 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.scholars-pack-40-gp.p-1",
+      "text": "A Scholar’s Pack contains the following items: Backpack, Book, Ink, Ink Pen, Lamp, 10 flasks of Oil, 10 sheets of Parchment, and Tinderbox.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.shovel-2-gp",
+      "text": "Shovel (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.shovel-2-gp.p-1",
+      "text": "Working for 1 hour, you can use a Shovel to dig a hole that is 5 feet on each side in soil or similar material.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.signal-whistle-5-cp",
+      "text": "Signal Whistle (5 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.signal-whistle-5-cp.p-1",
+      "text": "When blown as a Utilize action, a Signal Whistle produces a sound that can be heard up to 600 feet away. Spell Scroll (Cantrip, 30 GP; Level 1, 50 GP) A Spell Scroll (Cantrip) or Spell Scroll (Level 1) is a magic item that bears the words of a cantrip or level 1 spell, respectively, determined by the scroll’s creator. If the spell is on your class’s spell list, you can read the scroll and cast the spell using its normal casting time and without providing any Material components.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.signal-whistle-5-cp.p-2",
+      "text": "If the spell requires a saving throw or an attack roll, the spell save DC is 13, and the attack bonus is +5. The scroll disintegrates when the casting is completed.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.spikes-iron-1-gp",
+      "text": "Spikes, Iron (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.spikes-iron-1-gp.p-1",
+      "text": "Iron Spikes come in bundles of ten. As a Utilize action, you can use a blunt object, such as a Light Hammer, to hammer a spike into wood, earth, or a similar material. You can do so to jam a door shut or to then tie a Rope or Chain to the Spike.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.spyglass-1-000-gp",
+      "text": "Spyglass (1,000 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.spyglass-1-000-gp.p-1",
+      "text": "Objects viewed through a Spyglass are magnified to twice their size.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.string-1-sp",
+      "text": "String (1 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.string-1-sp.p-1",
+      "text": "String is 10 feet long. You can tie a knot in it as a Utilize action.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.tent-2-gp",
+      "text": "Tent (2 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.tent-2-gp.p-1",
+      "text": "A Tent sleeps up to two Small or Medium creatures.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.tinderbox-5-sp",
+      "text": "Tinderbox (5 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.tinderbox-5-sp.p-1",
+      "text": "A Tinderbox is a small container holding flint, fire steel, and tinder (usually dry cloth soaked in light oil) used to kindle a fire. Using it to light a Candle, Lamp, Lantern, or Torch—or anything else with exposed fuel—takes a Bonus Action. Lighting any other fire takes 1 minute.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.torch-1-cp",
+      "text": "Torch (1 CP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.torch-1-cp.p-1",
+      "text": "A Torch burns for 1 hour, casting Bright Light in a 20-foot radius and Dim Light for an additional 20 feet. When you take the Attack action, you can attack with the Torch, using it as a Simple Melee weapon. On a hit, the target takes 1 Fire damage.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.vial-1-gp",
+      "text": "Vial (1 GP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.vial-1-gp.p-1",
+      "text": "A Vial holds up to 4 ounces.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "equipment.adventuring-gear.waterskin-2-sp",
+      "text": "Waterskin (2 SP)",
+      "type": "heading"
+    },
+    {
+      "ruleId": "equipment.adventuring-gear.waterskin-2-sp.p-1",
+      "text": "A Waterskin holds up to 4 pints. If you don’t drink sufficient water, you risk dehydration (see “Rules Glossary”).",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "equipment.adventuring-gear",
+  "editorialBlocks": [
+    "equipment.adventuring-gear.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Equipment",
+    "Adventuring Gear"
+  ],
+  "order": 3100,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "adventuring-gear",
+  "sourcePages": [
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100
+  ],
+  "title": "Adventuring Gear"
+}

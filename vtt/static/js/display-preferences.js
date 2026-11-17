@@ -39,17 +39,24 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     return .2126*values[0]+.7152*values[1]+.0722*values[2];
   }
   function contrast(a,b){const x=luminance(a),y=luminance(b);return x===null || y===null?0:(Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
+  // Night palette (owner decision 2026-11-17): Edo #5E4A8C, Gray #8A8A8A, Ink #1C1C1C, Natural #F8F4E9.
+  // Edo/Ink is 2.30:1, so Edo is only a filled surface with Natural text (6.74:1); text, links and
+  // focus use the documented sRGB mixture Edo 50 % + Natural 50 % (6.82:1 on Ink).
+  const NIGHT=Object.freeze({edo:'#5e4a8c',gray:'#8a8a8a',ink:'#1c1c1c',natural:'#f8f4e9',edoLight:'#ab9fbb'});
   let branding=null;
   function apply(){
     const root=document.documentElement;root.dataset.vttTheme=prefs.theme;root.dataset.vttAccent=prefs.accent;root.dataset.vttStickyPortrait=String(prefs.stickyPortrait);root.lang=language;
     root.style.colorScheme=prefs.theme==='night'?'dark':'light';
-    const night=prefs.theme==='night',paper=night?'#211a17':'#f8f3e9';
-    const safe={default:night?'#f29a90':'#713536',bronze:night?'#e4c17f':'#754c19',teal:night?'#96dac8':'#245b50'};
+    const night=prefs.theme==='night',paper=night?NIGHT.ink:'#f8f3e9';
+    const safe={default:night?NIGHT.edoLight:'#713536',bronze:night?'#e4c17f':'#754c19',teal:night?'#96dac8':'#245b50'};
     const candidate=!night && prefs.accent==='default'?(branding?.primary_color || branding?.accent_color):null;
     const accent=candidate && contrast(candidate,paper)>=4.5?candidate:safe[prefs.accent];
+    // An explicit bronze/teal choice stays both accent and action color; only the night default fills with Edo.
+    const action=night && prefs.accent==='default'?NIGHT.edo:accent;
+    const [light,dark]=night?[NIGHT.natural,NIGHT.ink]:['#ffffff','#19151d'];
     root.style.setProperty('--ui-accent',accent);
-    root.style.setProperty('--ui-action-bg',accent);
-    root.style.setProperty('--ui-action-text',contrast(accent,'#ffffff')>=contrast(accent,'#19151d')?'#ffffff':'#19151d');
+    root.style.setProperty('--ui-action-bg',action);
+    root.style.setProperty('--ui-action-text',contrast(action,light)>=contrast(action,dark)?light:dark);
     if(document.body)document.body.dataset.sheetTheme=prefs.theme;
     for(const [id,value] of [['sfTheme',prefs.theme],['sfUnits',prefs.unit]]){const node=document.getElementById(id);if(node)node.value=value;}
     window.SheetFeedback?.applyDisplay?.({...prefs});
@@ -82,7 +89,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       select.value=prefs[key];values[key]=select;row.append(select);dialog.append(row);
     }
     const portrait=element('label'),check=element('input');check.type='checkbox';check.id='vttDisplay-stickyPortrait';check.checked=prefs.stickyPortrait;portrait.append(check,element('span',globalThis.VTTUi("Porträt beim Scrollen sichtbar halten (große Ansichten)")));dialog.append(portrait);
-    dialog.append(element('p',globalThis.VTTUi("UI-Sprache und Anzeigeeinheiten ändern keine Regeltexte, Namen oder gespeicherten Spielwerte. Präferenzen gelten in diesem Browser.")));
+    dialog.append(element('p',language==='en'
+      ? 'Available English rulebooks and the compendium follow the language setting. Names and saved game values stay unchanged. Preferences apply in this browser.'
+      : 'Verfügbare englische Regelbücher und das Compendium folgen der Sprachwahl. Namen und gespeicherte Spielwerte bleiben erhalten. Präferenzen gelten in diesem Browser.'));
     const actions=element('div');actions.className='vtt-display-actions';const cancel=element('button',globalThis.VTTUi("Abbrechen"));cancel.type='button';cancel.addEventListener('click',()=>dialog.close());
     const save=element('button',globalThis.VTTUi("Anwenden"));save.type='button';const explain=element('p');explain.setAttribute('role','status');
     const changed=()=>{const reload=values.language.value!==language;save.textContent=literal(reload?globalThis.VTTUi("Anwenden und Seite neu laden"):globalThis.VTTUi("Anwenden"));explain.textContent=literal(reload?globalThis.VTTUi("Für die neue UI-Sprache wird die Seite neu geladen."):globalThis.VTTUi("Darstellung und Entfernungen werden direkt angepasst."));};
@@ -139,7 +148,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   window.VTTI18n={t,literal,translate,error:apiError,report,installEagle,locale:()=>language};
   globalThis.VTTUi=(source,parameters={})=>literal(source,parameters);
   globalThis.VTTUiHTML=source=>literal(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  window.VTTDisplay={get:()=>({...prefs}),update,open,formatDistance,number,contrast};
+  window.VTTDisplay={get:()=>({...prefs}),update,open,formatDistance,number,contrast,nightPalette:()=>({...NIGHT})};
   apply();
   document.addEventListener('DOMContentLoaded',()=>{
     apply();

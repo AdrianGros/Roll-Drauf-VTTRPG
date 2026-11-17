@@ -1,0 +1,789 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "magic-items.c-d",
+      "text": "Magic Items C–D",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "magic-items.c-d.roll-drauf-note",
+      "text": "Magic items C–D in alphabetical order. The line under each name gives the item's category, its rarity and whether it requires Attunement.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.candle-of-invocation",
+      "text": "Candle of Invocation",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.candle-of-invocation.p-1",
+      "text": "Wondrous Item, Very Rare (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.candle-of-invocation.p-2",
+      "text": "This candle’s magic is activated when the candle is lit, which requires a Magic action. After burning for 4 hours, the candle is destroyed. You can snuff it out early for use at a later time. Deduct the time it burned in increments of 1 minute from its total burn time.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.candle-of-invocation.p-3",
+      "text": "While lit, the candle sheds Dim Light in a 30-foot radius. While you are within that light, you have Advantage on D20 Tests. In addition, a Cleric or Druid in the light can cast level 1 spells they have prepared without expending spell slots.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.candle-of-invocation.p-4",
+      "text": "Alternatively, when you light the candle for the first time, you can cast Gate with it. Doing so destroys the candle. The portal created by the spell links to a particular Outer Plane chosen by the GM or determined by rolling on the following table.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "1d100",
+        "Outer Plane",
+        "1d100",
+        "Outer Plane"
+      ],
+      "rows": [
+        [
+          "01–05",
+          "Abyss",
+          "55–59 Gehenna",
+          ""
+        ],
+        [
+          "06–10",
+          "Acheron",
+          "60–64 Hades",
+          ""
+        ],
+        [
+          "11–17",
+          "Arborea",
+          "65–69 Limbo",
+          ""
+        ],
+        [
+          "18–25",
+          "Arcadia",
+          "70–77 Mechanus",
+          ""
+        ],
+        [
+          "26–33",
+          "Beastlands",
+          "78–85 Mount Celestia",
+          ""
+        ],
+        [
+          "34–41",
+          "Bytopia",
+          "86–90 Nine Hells",
+          ""
+        ],
+        [
+          "42–46",
+          "Carceri",
+          "91–95",
+          "Pandemonium"
+        ],
+        [
+          "47–54",
+          "Elysium",
+          "96–00 Ysgard",
+          ""
+        ]
+      ],
+      "ruleId": "magic-items.c-d.candle-of-invocation.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cape-of-the-mountebank",
+      "text": "Cape of the Mountebank",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cape-of-the-mountebank.p-1",
+      "text": "Wondrous Item, Rare",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cape-of-the-mountebank.p-2",
+      "text": "This cape smells faintly of brimstone. While wearing it, you can use it to cast Dimension Door as a Magic action. This property can’t be used again until the next dawn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cape-of-the-mountebank.p-3",
+      "text": "When you teleport with that spell, you leave behind a cloud of smoke. The space you left is Lightly Obscured by that smoke until the end of your next turn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.carpet-of-flying",
+      "text": "Carpet of Flying",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.carpet-of-flying.p-1",
+      "text": "Wondrous Item, Very Rare",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.carpet-of-flying.p-2",
+      "text": "You can make this carpet hover and fly by taking a Magic action and using the carpet’s command word. It moves according to your directions if you are within 30 feet of it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.carpet-of-flying.p-3",
+      "text": "Four sizes of Carpet of Flying exist. The GM chooses the size of a given carpet or determines it randomly by rolling on the following table. A carpet can carry up to twice the weight shown on the table, but its Fly Speed is halved if it carries more than its normal capacity.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "1d100",
+        "Size",
+        "Capacity",
+        "Fly Speed"
+      ],
+      "rows": [
+        [
+          "01–20 3",
+          "ft. × 5 ft.",
+          "200 lb.",
+          "80 feet"
+        ],
+        [
+          "21–55 4",
+          "ft. × 6 ft.",
+          "400 lb.",
+          "60 feet"
+        ],
+        [
+          "56–80 5",
+          "ft. × 7 ft.",
+          "600 lb.",
+          "40 feet"
+        ],
+        [
+          "81–00 6",
+          "ft. × 9 ft.",
+          "800 lb.",
+          "30 feet"
+        ]
+      ],
+      "ruleId": "magic-items.c-d.carpet-of-flying.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.censer-of-controlling-air-elementals",
+      "text": "Censer of Controlling Air Elementals",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.censer-of-controlling-air-elementals.p-1",
+      "text": "Wondrous Item, Rare",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.censer-of-controlling-air-elementals.p-2",
+      "text": "While gently swinging this censer, you can take a Magic action to summon an Air Elemental. The elemental appears in an unoccupied space as close to the censer as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your Initiative count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a Bonus Action. The censer can’t be used this way again until the next dawn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.chime-of-opening",
+      "text": "Chime of Opening",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.chime-of-opening.p-1",
+      "text": "Wondrous Item, Rare",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.chime-of-opening.p-2",
+      "text": "This hollow metal tube measures about 1 foot long and weighs 1 pound. As a Magic action, you can strike the chime to cast Knock. The spell’s customary knocking sound is replaced by the clear, ringing tone of the chime, which is audible out to 300 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.chime-of-opening.p-3",
+      "text": "The chime can be used 10 times. After the tenth time, it cracks and becomes useless.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.circlet-of-blasting",
+      "text": "Circlet of Blasting",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.circlet-of-blasting.p-1",
+      "text": "Wondrous Item, Uncommon",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.circlet-of-blasting.p-2",
+      "text": "While wearing this circlet, you can cast Scorching Ray with it (+5 to hit). The circlet can’t cast this spell again until the next dawn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cloak-of-arachnida",
+      "text": "Cloak of Arachnida",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-arachnida.p-1",
+      "text": "Wondrous Item, Very Rare (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-arachnida.p-2",
+      "text": "This fine garment is made of black silk interwoven with faint, silvery threads. While wearing it, you gain the following benefits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-arachnida.p-3",
+      "text": "Poison Resistance. You have Resistance to Poison damage.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-arachnida.p-4",
+      "text": "Spider Climb. You have a Climb Speed equal to your Speed and can move up, down, and across vertical surfaces and along ceilings, while leaving your hands free.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-arachnida.p-5",
+      "text": "Spider Walk. You can’t be caught in webs of any sort and can move through webs as if they were Difficult Terrain.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-arachnida.p-6",
+      "text": "Web. You can cast Web (save DC 13). The web created by the spell fills twice its normal area. Once used, this property can’t be used again until the next dawn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cloak-of-displacement",
+      "text": "Cloak of Displacement",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-displacement.p-1",
+      "text": "Wondrous Item, Rare (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-displacement.p-2",
+      "text": "While you wear this cloak, it magically projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have Disadvantage on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while your Speed is 0.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cloak-of-elvenkind",
+      "text": "Cloak of Elvenkind",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-elvenkind.p-1",
+      "text": "Wondrous Item, Uncommon (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-elvenkind.p-2",
+      "text": "While you wear this cloak, Wisdom (Perception) checks made to perceive you have Disadvantage, and you have Advantage on Dexterity (Stealth) checks.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cloak-of-invisibility",
+      "text": "Cloak of Invisibility",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-invisibility.p-1",
+      "text": "Wondrous Item, Legendary (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-invisibility.p-2",
+      "text": "This cloak has 3 charges and regains 1d3 expended charges daily at dawn. While wearing the cloak, you can take a Magic action to pull its hood over your head and expend 1 charge to give yourself the Invisible condition for 1 hour. The effect ends early if you pull the hood down (no action required) or cease wearing the cloak.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cloak-of-protection",
+      "text": "Cloak of Protection",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-protection.p-1",
+      "text": "Wondrous Item, Uncommon (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-protection.p-2",
+      "text": "You gain a +1 bonus to Armor Class and saving throws while you wear this cloak.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cloak-of-the-bat",
+      "text": "Cloak of the Bat",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-the-bat.p-1",
+      "text": "Wondrous Item, Rare (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-the-bat.p-2",
+      "text": "While wearing this cloak, you have Advantage on Dexterity (Stealth) checks. In an area of Dim Light or Darkness, you can grip the edges of the cloak and use it to gain a Fly Speed of 40 feet. If you ever fail to grip the cloak’s edges while flying in this way, or if you are no longer in Dim Light or Darkness, you lose this Fly Speed.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-the-bat.p-3",
+      "text": "While wearing the cloak in an area of Dim Light or Darkness, you can cast Polymorph on yourself, shape-shifting into a Bat. While in that form, you retain your Intelligence, Wisdom, and Charisma scores. The cloak can’t be used this way again until the next dawn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cloak-of-the-manta-ray",
+      "text": "Cloak of the Manta Ray",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-the-manta-ray.p-1",
+      "text": "Wondrous Item, Uncommon (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cloak-of-the-manta-ray.p-2",
+      "text": "While wearing this cloak, you can breathe underwater, and you have a Swim Speed of 60 feet.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.crystal-ball",
+      "text": "Crystal Ball",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.crystal-ball.p-1",
+      "text": "Wondrous Item, Very Rare (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.crystal-ball.p-2",
+      "text": "While touching this crystal orb, you can cast Scrying (save DC 17) with it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.crystal-ball-of-mind-reading",
+      "text": "Crystal Ball of Mind Reading",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.crystal-ball-of-mind-reading.p-1",
+      "text": "Wondrous Item, Legendary (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.crystal-ball-of-mind-reading.p-2",
+      "text": "While touching this crystal orb, you can cast Scrying (save DC 17) with it. In addition, you can cast Detect Thoughts (save DC 17) targeting creatures you can see within 30 feet of the spell’s sensor. You don’t need to concentrate on this Detect Thoughts spell to maintain it during its duration, but it ends if the Scrying spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.crystal-ball-of-telepathy",
+      "text": "Crystal Ball of Telepathy",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.crystal-ball-of-telepathy.p-1",
+      "text": "Wondrous Item, Legendary (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.crystal-ball-of-telepathy.p-2",
+      "text": "While touching this crystal orb, you can cast Scrying (save DC 17) with it. In addition, you can communicate telepathically with creatures you can see within 30 feet of the spell’s sensor. You can also cast Suggestion (save DC 17) through the sensor on one of those creatures. You don’t need to concentrate on this Suggestion to maintain it during its duration, but it ends if Scrying ends. You can’t cast Suggestion in this way again until the next dawn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.crystal-ball-of-true-seeing",
+      "text": "Crystal Ball of True Seeing",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.crystal-ball-of-true-seeing.p-1",
+      "text": "Wondrous Item, Legendary (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.crystal-ball-of-true-seeing.p-2",
+      "text": "While touching this crystal orb, you can cast Scrying (save DC 17) with it. In addition, you have Truesight with a range of 120 feet centered on the spell’s sensor.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cube-of-force",
+      "text": "Cube of Force",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cube-of-force.p-1",
+      "text": "Wondrous Item, Rare (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cube-of-force.p-2",
+      "text": "This cube is about an inch across. Each face has a distinct marking on it. You can press one of those faces, expend the number of charges required for it, and thereby cast the spell associated with it (save DC 17), as shown in the Cube of Force Faces table.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cube-of-force.p-3",
+      "text": "The cube starts with 10 charges, and it regains 1d6 expended charges daily at dawn.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Cube of Force Faces",
+      "columns": [
+        "Spell",
+        "Charge Cost"
+      ],
+      "rows": [
+        [
+          "Mage Armor",
+          "1"
+        ],
+        [
+          "Shield",
+          "1"
+        ],
+        [
+          "Tiny Hut",
+          "3"
+        ],
+        [
+          "Private Sanctum",
+          "4"
+        ],
+        [
+          "Resilient Sphere",
+          "4"
+        ],
+        [
+          "Wall of Force",
+          "5"
+        ]
+      ],
+      "ruleId": "magic-items.c-d.cube-of-force.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.cubic-gate",
+      "text": "Cubic Gate",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.cubic-gate.p-1",
+      "text": "Wondrous Item, Legendary",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cubic-gate.p-2",
+      "text": "This cube is 3 inches across and radiates palpable magical energy. The six sides of the cube are each keyed to a different plane of existence, one of which is the Material Plane. The other sides are linked to planes determined by the GM.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cubic-gate.p-3",
+      "text": "The cube has 3 charges and regains 1d3 expended charges daily at dawn. As a Magic action, you can expend 1 of the cube’s charges to cast one of the following spells using the cube.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cubic-gate.p-4",
+      "text": "Gate. Pressing one side of the cube, you cast Gate, opening a portal to the plane of existence keyed to that side.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.cubic-gate.p-5",
+      "text": "Plane Shift. Pressing one side of the cube twice, you cast Plane Shift, transporting the targets to the plane of existence keyed to that side.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.dagger-of-venom",
+      "text": "Dagger of Venom",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.dagger-of-venom.p-1",
+      "text": "Weapon (Dagger), Rare",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.dagger-of-venom.p-2",
+      "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.dagger-of-venom.p-3",
+      "text": "You can take a Bonus Action to magically coat the blade with poison. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a DC 15 Constitution saving throw or take 2d10 Poison damage and have the Poisoned condition for 1 minute. The weapon can’t be used this way again until the next dawn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.dancing-sword",
+      "text": "Dancing Sword",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.dancing-sword.p-1",
+      "text": "Weapon (Greatsword, Longsword, Rapier, Scimitar, or Shortsword), Very Rare (Requires Attunement)",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.dancing-sword.p-2",
+      "text": "You can take a Bonus Action to toss this magic weapon into the air. When you do so, the weapon begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of itself. The weapon uses your attack roll and adds your ability modifier to damage rolls.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.dancing-sword.p-3",
+      "text": "While the weapon hovers, you can take a Bonus Action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same Bonus Action, you can cause the weapon to attack one creature within 5 feet of the weapon.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.dancing-sword.p-4",
+      "text": "After the hovering weapon attacks for the fourth time, it flies back to you and tries to return to your hand. If you have no hand free, the weapon falls to the ground in your space. If the weapon has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or are more than 30 feet away from it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.decanter-of-endless-water",
+      "text": "Decanter of Endless Water",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.decanter-of-endless-water.p-1",
+      "text": "Wondrous Item, Uncommon",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.decanter-of-endless-water.p-2",
+      "text": "This stoppered flask sloshes when shaken, as if it contains water. The decanter weighs 2 pounds.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.decanter-of-endless-water.p-3",
+      "text": "You can take a Magic action to remove the stopper and issue one of three command words, whereupon an amount of fresh water or salt water (your choice) pours out of the flask. The water stops pouring out at the start of your next turn. Choose from the following command words: Splash. The decanter produces 1 gallon of water. Fountain. The decanter produces 5 gallons of water. Geyser. The decanter produces 30 gallons of water that gushes forth in a Line 30 feet long and 1 foot wide. If you’re holding the decanter, you can aim the geyser in one direction (no action required). One creature of your choice in the Line must succeed on a DC 13 Strength saving throw or take 1d4 Bludgeoning damage and have the Prone condition. Instead of a creature, you can target one object in the Line that isn’t being worn or carried and that weighs no more than 200 pounds. The object is knocked over by the geyser.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "magic-items.c-d.deck-of-illusions",
+      "text": "Deck of Illusions",
+      "type": "heading"
+    },
+    {
+      "ruleId": "magic-items.c-d.deck-of-illusions.p-1",
+      "text": "Wondrous Item, Uncommon",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.deck-of-illusions.p-2",
+      "text": "This box contains a set of cards. A full deck has 34 cards: 32 depicting specific creatures and two with a mirrored surface. A deck found as treasure is usually missing 1d20 − 1 cards.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.deck-of-illusions.p-3",
+      "text": "The magic of the deck functions only if its cards are drawn at random. You can take a Magic action to draw a card at random from the deck and throw it to the ground at a point within 30 feet of yourself. An illusion of a creature, determined by rolling on the Deck of Illusions table, forms over the thrown card and remains until dispelled. The illusory creature created by the card looks and behaves like a real creature of its kind, except that it can do no harm. While you are within 120 feet of the illusory creature and can see it, you can take a Magic action to move it anywhere within 30 feet of its card.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "magic-items.c-d.deck-of-illusions.p-4",
+      "text": "Any physical interaction with the illusory creature reveals it to be false, because objects pass through it. A creature that takes a Study action to visually inspect the illusory creature identifies it as an illusion with a successful DC 15 Intelligence (Investigation) check. The illusion lasts until its card is moved or the illusion is dispelled (using a Dispel Magic spell or a similar effect). When the illusion ends, the image on its card disappears, and that card can’t be used again.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Deck of Illusions",
+      "columns": [
+        "1d100",
+        "Illusion*"
+      ],
+      "rows": [
+        [
+          "01–03",
+          "Adult Red Dragon"
+        ],
+        [
+          "04–06",
+          "Archmage"
+        ],
+        [
+          "07–09",
+          "Assassin"
+        ],
+        [
+          "10–12",
+          "Bandit Captain"
+        ],
+        [
+          "13–15",
+          "Basilisk"
+        ],
+        [
+          "16–18",
+          "Berserker"
+        ],
+        [
+          "19–21",
+          "Bugbear Warrior"
+        ],
+        [
+          "22–24",
+          "Cloud Giant"
+        ],
+        [
+          "25–27",
+          "Druid"
+        ],
+        [
+          "28–30",
+          "Erinyes"
+        ],
+        [
+          "31–33",
+          "Ettin"
+        ],
+        [
+          "34–36",
+          "Fire Giant"
+        ],
+        [
+          "37–39",
+          "Frost Giant"
+        ],
+        [
+          "40–42",
+          "Gnoll Warrior"
+        ],
+        [
+          "43–45",
+          "Goblin Warrior"
+        ],
+        [
+          "46–48",
+          "Guardian Naga"
+        ],
+        [
+          "49–51",
+          "Hill Giant"
+        ],
+        [
+          "52–54",
+          "Hobgoblin Warrior"
+        ],
+        [
+          "55–57",
+          "Incubus"
+        ],
+        [
+          "58–60",
+          "Iron Golem"
+        ],
+        [
+          "61–63",
+          "Knight"
+        ],
+        [
+          "64–66",
+          "Kobold Warrior"
+        ],
+        [
+          "67–69",
+          "Lich"
+        ],
+        [
+          "70–72",
+          "Medusa"
+        ],
+        [
+          "73–75",
+          "Night Hag"
+        ],
+        [
+          "76–78",
+          "Ogre"
+        ],
+        [
+          "79–81",
+          "Oni"
+        ],
+        [
+          "82–84",
+          "Priest"
+        ],
+        [
+          "85–87",
+          "Succubus"
+        ],
+        [
+          "88–90",
+          "Troll"
+        ],
+        [
+          "91–93",
+          "Veteran Warrior"
+        ],
+        [
+          "94–96",
+          "Wyvern"
+        ],
+        [
+          "97–00",
+          "The card drawer"
+        ]
+      ],
+      "ruleId": "magic-items.c-d.deck-of-illusions.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "magic-items.c-d.deck-of-illusions.p-5",
+      "text": "*Stat blocks for these creatures (except the card drawer) appear in",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "magic-items.c-d",
+  "editorialBlocks": [
+    "magic-items.c-d",
+    "magic-items.c-d.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Magic Items",
+    "Magic Items C–D"
+  ],
+  "order": 4602,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "magic-items-c-d",
+  "sourcePages": [
+    214,
+    215,
+    216,
+    217,
+    218
+  ],
+  "title": "Magic Items C–D"
+}

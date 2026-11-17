@@ -2,7 +2,7 @@
 
 pytest_plugins = ["tests.play_shared"]
 
-from tests.play_shared import add_map, add_member, create_campaign, create_session
+from tests.play_shared import enter_table, add_map, add_member, create_campaign, create_session
 
 
 class TestSceneStackApi:
@@ -12,6 +12,7 @@ class TestSceneStackApi:
         map_two = add_map(campaign, play_dm_user, "Floor 2")
         session = create_session(campaign, "Stack Session", status="scheduled", map_id=map_one.id)
 
+        enter_table(play_dm_client, campaign, session, "dm")
         response = play_dm_client.post(
             f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/scene-stack/init",
             json={"map_ids": [map_one.id, map_two.id]},
@@ -27,6 +28,7 @@ class TestSceneStackApi:
         map_two = add_map(campaign, play_dm_user, "Tower")
         session = create_session(campaign, "Activate Session", status="scheduled", map_id=map_one.id)
 
+        enter_table(play_dm_client, campaign, session, "dm")
         init_response = play_dm_client.post(
             f"/api/play/campaigns/{campaign.id}/sessions/{session.id}/scene-stack/init",
             json={"map_ids": [map_one.id, map_two.id]},
@@ -62,6 +64,7 @@ class TestSceneLayerManagementApi:
         return f"/api/play/campaigns/{campaign_id}/sessions/{session_id}/scene-stack"
 
     def _init_stack(self, client, campaign, session, map_ids):
+        enter_table(client, campaign, session, "dm")
         response = client.post(
             f"{self._base_url(campaign.id, session.id)}/init",
             json={"map_ids": map_ids},

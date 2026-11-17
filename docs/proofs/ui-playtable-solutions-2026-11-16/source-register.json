@@ -1,0 +1,148 @@
+{
+  "accessed_on": "2026-11-16",
+  "policy": "primary sources only for technical claims; no external messages sent",
+  "sources": [
+    {
+      "id": "palette",
+      "title": "Edo Purple & Mouse Grey — direct publisher of this editorial palette",
+      "url": "https://colorcombinations.org/palettes/edo-murasaki-nezumi/",
+      "supports": "Four exact palette labels and published screen hex values; match to intended Owner website remains inference."
+    },
+    {
+      "id": "contrast",
+      "title": "W3C WCAG 2.2 Understanding Contrast Minimum",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "supports": "4.5:1 normal text and 3:1 large text; rendered CSS still needs verification."
+    },
+    {
+      "id": "nontext",
+      "title": "W3C WCAG 2.2 Understanding Non-text Contrast",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast",
+      "supports": "3:1 for required component/state indicators against adjacent colors."
+    },
+    {
+      "id": "tree",
+      "title": "W3C APG Tree View Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/treeview/",
+      "supports": "Hierarchy semantics and keyboard conventions; focus versus selection."
+    },
+    {
+      "id": "lighting",
+      "title": "Foundry official Lighting article",
+      "url": "https://foundryvtt.com/article/lighting/",
+      "supports": "Behavioral reference for visible light, wall clipping, bright/dim and vision provision; not an integration dependency."
+    },
+    {
+      "id": "walls",
+      "title": "Foundry official Walls article",
+      "url": "https://foundryvtt.com/article/walls/",
+      "supports": "Independent sight/light restrictions; comparable UX semantics, not a source of permission authority for this app."
+    },
+    {
+      "id": "polygons",
+      "title": "Foundry official ClockwiseSweepPolygon API",
+      "url": "https://foundryvtt.com/api/classes/foundry.canvas.geometry.ClockwiseSweepPolygon.html",
+      "supports": "Primary API evidence for polygon/edge/ray visibility approach; no source code copied."
+    },
+    {
+      "id": "svg",
+      "title": "MDN SVG mask reference",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/mask",
+      "supports": "Alpha/luminance masking and coordinate units; candidate renderer mechanics."
+    },
+    {
+      "id": "canvas",
+      "title": "MDN Canvas globalCompositeOperation",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation",
+      "supports": "Canvas compositing candidate; destination-in/out and overlapping lighting."
+    },
+    {
+      "id": "beyond20",
+      "title": "Beyond20 official API",
+      "url": "https://beyond20.here-for-more.info/api",
+      "supports": "Explicit initiative roll type and separate update-combat events; neither authorizes actor/resource access."
+    },
+    {
+      "id": "srd",
+      "title": "Wizards/D&D Beyond official SRD page",
+      "url": "https://www.dndbeyond.com/srd",
+      "supports": "Published English SRD 5.2.1 source and locale/version downloads."
+    },
+    {
+      "id": "license",
+      "title": "Creative Commons BY 4.0 deed",
+      "url": "https://creativecommons.org/licenses/by/4.0/",
+      "supports": "Adaptation permitted under terms including attribution and indicating changes; retain actual SRD attribution."
+    },
+    {
+      "id": "locking",
+      "title": "PostgreSQL 16 Explicit Locking",
+      "url": "https://www.postgresql.org/docs/16/explicit-locking.html",
+      "supports": "Row locking behavior and deadlock considerations for candidate confirmation concurrency."
+    },
+    {
+      "id": "pagination",
+      "title": "PostgreSQL 16 LIMIT and OFFSET",
+      "url": "https://www.postgresql.org/docs/16/queries-limit.html",
+      "supports": "Unique deterministic ordering needed; skipped OFFSET rows cost work."
+    },
+    {
+      "id": "language",
+      "title": "W3C Language tags in HTML and XML",
+      "url": "https://www.w3.org/International/articles/language-tags/index.en.html",
+      "supports": "BCP 47 language labels for content; not a substitute for translated datasets."
+    },
+    {
+      "id": "pointer",
+      "title": "MDN Pointer Events",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events",
+      "supports": "Pointer capture/cancel and touch gesture coordination."
+    },
+    {
+      "id": "measurement",
+      "title": "Foundry Measurement and Templates",
+      "url": "https://foundryvtt.com/article/measurement/",
+      "supports": "Comparable measurement interactions; not an Owner requirement."
+    },
+    {
+      "id": "scenes",
+      "title": "Foundry Scenes",
+      "url": "https://foundryvtt.com/article/scenes/",
+      "supports": "Active versus viewed scene and grid configuration reference."
+    },
+    {
+      "id": "listbox",
+      "title": "W3C APG Listbox",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/listbox/",
+      "supports": "Options do not support independent interactive descendants."
+    },
+    {
+      "id": "treegrid",
+      "title": "W3C APG Treegrid",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/treegrid/",
+      "supports": "Interactive hierarchical grid keyboard and focus model."
+    },
+    {
+      "id": "breadcrumb",
+      "title": "W3C APG Breadcrumb",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/",
+      "supports": "Hierarchical navigation trail semantics."
+    },
+    {
+      "id": "targets",
+      "title": "W3C WCAG 2.2 Target Size Minimum",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "supports": "24x24 CSS-pixel base criterion with explicit exceptions; not a test of current app."
+    }
+  ],
+  "worker_additional_references": [
+    {
+      "url": "https://foundryvtt.com/article/folders/",
+      "verification": "Claude primary-source report; not independently used for normative synthesis claims"
+    },
+    {
+      "url": "https://foundryvtt.com/api/classes/foundry.documents.BaseScene.html",
+      "verification": "Claude primary-source report; no new schema inferred from this reference"
+    }
+  ]
+}

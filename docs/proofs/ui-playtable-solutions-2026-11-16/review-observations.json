@@ -1,0 +1,86 @@
+[
+  {
+    "id": "night_accent_in_script",
+    "path": "vtt/static/js/display-preferences.js",
+    "source_sha256": "b9c9dee0791992951e19d89dda2fb5a8c5d4fcc600f175b228a80a49436ab707",
+    "matches": [
+      {
+        "line": 47,
+        "text": "const safe={default:night?'#f29a90':'#713536',bronze:night?'#e4c17f':'#754c19',teal:night?'#96dac8':'#245b50'};"
+      }
+    ]
+  },
+  {
+    "id": "grid_label_is_measure_snap",
+    "path": "vtt/templates/play.html",
+    "source_sha256": "15e15d44eb68f69c445eaf4b364792351c7d98bf01c0bb1e34d1aa23fbb54a5a",
+    "matches": [
+      {
+        "line": 2759,
+        "text": "<button type=\"button\" id=\"btnMeasureSnap\" class=\"tool-btn active\" title=\"Rastereinrasten für Messungen an/aus\" data-ui-title=\"u_dc8d09e66c34\" aria-pressed=\"true\" hidden><span class=\"tool-ico\" aria-hidden=\"true\">▦</span><"
+      }
+    ]
+  },
+  {
+    "id": "snap_also_selects_distance_rule",
+    "path": "vtt/static/js/play-ui.js",
+    "source_sha256": "3de39af70f6acb9ec76731fdf8c809a7f629e0d4dc9519dfa82c87150592573d",
+    "matches": [
+      {
+        "line": 1411,
+        "text": "return this.measureSnapEnabled ? Math.max(dx, dy) : Math.sqrt(dx * dx + dy * dy);"
+      }
+    ]
+  },
+  {
+    "id": "campaign_dm_check_restricts_context",
+    "path": "vtt/campaigns/routes.py",
+    "source_sha256": "d4dfd6ffbb15569fe472f606ed1b849c2a9e4083154e89c88e3ba28cdb720bcf",
+    "matches": [
+      {
+        "line": 139,
+        "text": "if restrict_campaign_role(campaign.id, user_id):"
+      }
+    ]
+  },
+  {
+    "id": "global_guard_reads_context_header",
+    "path": "vtt/play/contexts.py",
+    "source_sha256": "316c07ebafb41ef45600734426dca02b7511c74917bb5e1f76b3a68df69c0779",
+    "matches": [
+      {
+        "line": 143,
+        "text": "token = request.headers.get(\"X-VTT-Context\")"
+      }
+    ]
+  },
+  {
+    "id": "stack_session_is_unique",
+    "path": "vtt/models/scene_stack.py",
+    "source_sha256": "2f5d8631b17766ce54465234b7eb4c9e9735740b6028c3490578e81b01ebce23",
+    "matches": [
+      {
+        "line": 15,
+        "text": "game_session_id = db.Column(db.Integer, db.ForeignKey(\"game_sessions.id\"), nullable=False, unique=True, index=True)"
+      }
+    ]
+  },
+  {
+    "id": "eagle_mount_outside_page",
+    "path": "vtt/templates/creation-engine.html",
+    "source_sha256": "26038a251f52f49e84ae263b3cb44a424ce82a1fe1bd25155b2b1d5d8baefadc",
+    "matches": [
+      {
+        "line": 146,
+        "text": "<div id=\"ce-eagle-mount\"></div>"
+      }
+    ]
+  },
+  {
+    "id": "cancel_omits_template_reset",
+    "path": "vtt/static/js/play-ui.js",
+    "method": "_cancelTokenPlacement",
+    "confirmed_absence": "pendingTokenTemplate",
+    "limit": "Source observation only; no browser reproduction of a following wrong placement."
+  }
+]

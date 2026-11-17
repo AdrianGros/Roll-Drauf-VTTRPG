@@ -17,6 +17,7 @@ from flask import Blueprint, abort, current_app, jsonify, request, send_from_dir
 from vtt.rules_content.compendium import CompendiumQueryError, entry_excerpt, query_compendium
 from vtt.rules_content.generator import DEFAULT_PACKAGE, normalized_search_text
 from vtt.rules_content.validator import CONTENT_ROOT
+from vtt.rules_content import english
 
 
 rules_bp = Blueprint("rules", __name__)
@@ -205,6 +206,10 @@ def reader_book_home(route_key: str):
 
 @rules_bp.get("/regelwerk/<source_version>/<locale>/<slug>")
 def reader_document(source_version: str, locale: str, slug: str):
+    if source_version == _SOURCE_VERSION and locale == "en":
+        if not _english_enabled() or (slug != english.LICENSE_SLUG and english.document_by_slug(slug) is None):
+            abort(404)
+        return _reader_shell()
     if source_version != _SOURCE_VERSION:
         ruleset_id = _book_by_route_key(source_version)
         if (
@@ -230,6 +235,11 @@ def list_rulesets():
         navigation = _navigation()
         books.append({"rulesetId": navigation["rulesetId"], "kind": "srd", "title": navigation["title"],
                       "status": navigation["status"], "readerUrl": navigation["readerUrl"]})
+    if _english_enabled():
+        navigation = english.navigation()
+        books.append({"rulesetId": english.RULESET_ID, "kind": "srd", "title": navigation["title"],
+                      "locale": navigation["locale"], "status": navigation["status"],
+                      "readerUrl": navigation["readerUrl"]})
     for ruleset_id in _EXTRA_BOOKS:
         if _book_enabled(ruleset_id):
             navigation = _book_navigation(ruleset_id)
@@ -240,6 +250,12 @@ def list_rulesets():
 
 @rules_bp.get("/api/rulesets/main")
 def main_ruleset():
+    if request.args.get("locale") in {"en", "en-US"}:
+        if not _english_enabled():
+            return _public_json({"available": False})
+        navigation = english.navigation()
+        return _public_json({"available": True, **{key: navigation[key] for key in (
+            "rulesetId", "rulesetVersion", "sourceVersion", "locale", "status", "title", "readerUrl")}})
     if not _enabled():
         return _public_json({"available": False})
     navigation = _navigation()
@@ -403,3 +419,83 @@ def book_license(ruleset_id: str):
         "attribution": attribution,
     }
     return _public_json(payload, etag=manifest["license"]["attributionSha256"])
+
+
+# English is a separate published ruleset. German catalogue IDs and pinned
+# character mechanics continue to resolve through the existing German routes.
+def _english_enabled() -> bool:
+    return _enabled() and english.available() and english.coverage()["complete"]
+
+
+@rules_bp.get("/regelwerk/5.2.1/en")
+def reader_english():
+    if not _english_enabled():
+        abort(404)
+    return _reader_shell()
+
+
+@rules_bp.get("/api/rulesets/srd-5.2.1-en/manifest")
+def english_manifest():
+    if not _english_enabled():
+        return _json_not_found()
+    return _public_json(english.navigation())
+
+
+@rules_bp.get("/api/rulesets/srd-5.2.1-en/documents/<document_id>")
+def english_document(document_id: str):
+    if not _english_enabled():
+        return _json_not_found()
+    data = english.document(document_id)
+    return _public_json(data) if data is not None else _json_not_found()
+
+
+@rules_bp.get("/api/rulesets/srd-5.2.1-en/search")
+def english_search():
+    if not _english_enabled():
+        return _json_not_found()
+    query = request.args.get("q", "")
+    if len(query) > 100:
+        return _public_json({"error": "query must be at most 100 characters"}, status=400)
+    return _public_json({"query": query, "results": english.search(query)})
+
+
+@rules_bp.get("/api/rulesets/srd-5.2.1-en/license")
+def english_license():
+    if not _english_enabled():
+        return _json_not_found()
+    data = english.manifest()
+    return _public_json({"rulesetId": english.RULESET_ID, "source": data["source"],
+                         "license": data["license"], "attribution": english.attribution(),
+                         "editorialPolicy": data["editorialPolicy"], "coverage": english.coverage()})
+
+
+@rules_bp.get("/api/rulesets/srd-5.2.1-en/compendium")
+def english_compendium():
+    if not _english_enabled():
+        return _json_not_found()
+    try:
+        return _public_json(english.query(request.args.to_dict()))
+    except CompendiumQueryError as error:
+        return _public_json({"error": str(error)}, status=400)
+
+
+@rules_bp.get("/api/rulesets/srd-5.2.1-en/compendium/entry/<path:entity_id>")
+def english_compendium_entry(entity_id: str):
+    if not _english_enabled():
+        return _json_not_found()
+    result = english.entry(entity_id)
+    if result is None:
+        return _json_not_found()
+    entity, blocks = result
+    return _public_json({"entity": entity, "blocks": blocks,
+                         "rulesetVersion": english.compendium()["rulesetVersion"],
+                         "rulesetId": english.RULESET_ID})
+
+
+@rules_bp.get("/api/rulesets/srd-5.2.1-en/compendium/summary")
+def english_compendium_summary():
+    if not _english_enabled():
+        return _json_not_found()
+    data = english.compendium()
+    return _public_json({"counts": data["counts"], "rulesetVersion": data["rulesetVersion"],
+                         "rulesetId": english.RULESET_ID})

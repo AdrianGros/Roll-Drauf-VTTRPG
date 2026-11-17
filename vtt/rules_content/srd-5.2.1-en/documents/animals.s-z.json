@@ -1,0 +1,1418 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "animals.s-z",
+      "text": "Animals S–Z",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "animals.s-z.roll-drauf-note",
+      "text": "Animals S–Z: beasts and dinosaurs that serve as mounts, companions, Wild Shape forms or threats.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "52 (7d10 + 14)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +5"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5, Stealth +7"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Saber-Toothed Tiger",
+      "ruleId": "animals.s-z.saber-toothed-tiger",
+      "sections": [
+        {
+          "text": "Running Leap. With a 10-foot running start, the tiger can Long Jump up to 25 feet.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The tiger makes two Rend attacks.\nRend. Melee Attack Roll: +6, reach 5 ft. Hit: 11 (2d6 + 4) Slashing damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Nimble Escape. The tiger takes the Disengage or Hide action.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "1 (1d4 − 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft."
+        },
+        {
+          "label": "Str",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft.; Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Scorpion",
+      "ruleId": "animals.s-z.scorpion",
+      "sections": [
+        {
+          "text": "Sting. Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage plus 3 (1d6) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "1 (1d4 − 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "5 ft., Swim 20 ft."
+        },
+        {
+          "label": "Str",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2, Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 0; PB +2)"
+        }
+      ],
+      "name": "Seahorse",
+      "ruleId": "animals.s-z.seahorse",
+      "sections": [
+        {
+          "text": "Water Breathing. The seahorse can breathe only underwater.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bubble Dash. While underwater, the seahorse moves up to its Swim Speed without provoking Opportunity Attacks.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "1 (1d4 − 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Climb 20 ft."
+        },
+        {
+          "label": "Str",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 30 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Spider",
+      "ruleId": "animals.s-z.spider",
+      "sections": [
+        {
+          "text": "Spider Climb. The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check.\nWeb Walker. The spider ignores movement restrictions caused by webs, and the spider knows the location of any other creature in contact with the same web.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage plus 2 (1d4) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Swarm of Tiny Beasts, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "11 (2d10)"
+        },
+        {
+          "label": "Speed",
+          "value": "5 ft., Fly 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Resistances",
+          "value": "Bludgeoning, Piercing, Slashing"
+        },
+        {
+          "label": "Immunities",
+          "value": "Charmed, Frightened, Grappled, Paralyzed, Petrified, Prone, Restrained, Stunned"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 60 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Swarm of Bats",
+      "ruleId": "animals.s-z.swarm-of-bats",
+      "sections": [
+        {
+          "text": "Swarm. The swarm can occupy another creature’s space and vice versa, and the swarm can move through any opening large enough for a Tiny bat. The swarm can’t regain Hit Points or gain Temporary Hit Points.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bites. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (2d4) Piercing damage, or 2 (1d4) Piercing damage if the swarm is Bloodied.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Swarm of Tiny Beasts, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "19 (3d8 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Climb or Fly 20 ft. (GM’s choice)"
+        },
+        {
+          "label": "Str",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Cha",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Resistances",
+          "value": "Bludgeoning, Piercing, Slashing"
+        },
+        {
+          "label": "Immunities",
+          "value": "Charmed, Frightened, Grappled, Paralyzed, Petrified, Prone, Restrained, Stunned"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 30 ft.; Passive Perception 8"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Swarm of Insects",
+      "ruleId": "animals.s-z.swarm-of-insects",
+      "sections": [
+        {
+          "text": "Spider Climb. If the swarm has a Climb Speed, the swarm can climb difficult surfaces, including along ceilings, without needing to make an ability check.\nSwarm. The swarm can occupy another creature’s space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can’t regain Hit Points or gain Temporary Hit Points.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bites. Melee Attack Roll: +3, reach 5 ft. Hit: 6 (2d4 + 1) Poison damage, or 3 (1d4 + 1) Poison damage if the swarm is Bloodied.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Swarm of Tiny Beasts, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "28 (8d8 − 8)"
+        },
+        {
+          "label": "Speed",
+          "value": "5 ft., Swim 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Cha",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Resistances",
+          "value": "Bludgeoning, Piercing, Slashing"
+        },
+        {
+          "label": "Immunities",
+          "value": "Charmed, Frightened, Grappled, Paralyzed, Petrified, Prone, Restrained, Stunned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 8"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Swarm of Piranhas",
+      "ruleId": "animals.s-z.swarm-of-piranhas",
+      "sections": [
+        {
+          "text": "Swarm. The swarm can occupy another creature’s space and vice versa, and the swarm can move through any opening large enough for a Tiny piranha. The swarm can’t regain Hit Points or gain Temporary Hit Points.\nWater Breathing. The swarm can breathe only underwater.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bites. Melee Attack Roll: +5 (with Advantage if the target doesn’t have all its Hit Points), reach 5 ft. Hit: 8 (2d4 + 3) Piercing damage, or 5 (1d4 + 3) Piercing damage if the swarm is Bloodied.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Swarm of Tiny Beasts, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "14 (4d8 − 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Resistances",
+          "value": "Bludgeoning, Piercing, Slashing"
+        },
+        {
+          "label": "Immunities",
+          "value": "Charmed, Frightened, Grappled, Paralyzed, Petrified, Prone, Restrained, Stunned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 30 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Swarm of Rats",
+      "ruleId": "animals.s-z.swarm-of-rats",
+      "sections": [
+        {
+          "text": "Swarm. The swarm can occupy another creature’s space and vice versa, and the swarm can move through any opening large enough for a Tiny rat. The swarm can’t regain Hit Points or gain Temporary Hit Points.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bites. Melee Attack Roll: +2, reach 5 ft. Hit: 5 (2d4) Piercing damage, or 2 (1d4) Piercing damage if the swarm is Bloodied.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Swarm of Tiny Beasts, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "11 (2d8 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5"
+        },
+        {
+          "label": "Resistances",
+          "value": "Bludgeoning, Piercing, Slashing"
+        },
+        {
+          "label": "Immunities",
+          "value": "Charmed, Frightened, Grappled, Paralyzed, Petrified, Prone, Restrained, Stunned"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Swarm of Ravens",
+      "ruleId": "animals.s-z.swarm-of-ravens",
+      "sections": [
+        {
+          "text": "Swarm. The swarm can occupy another creature’s space and vice versa, and the swarm can move through any opening large enough for a Tiny raven. The swarm can’t regain Hit Points or gain Temporary Hit Points.",
+          "title": "Traits"
+        },
+        {
+          "text": "Beaks. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage, or 2 (1d4) Piercing damage if the swarm is Bloodied.\nCacophony (Recharge 6). Wisdom Saving Throw: DC 10, one creature in the swarm’s space. Failure: The target has the Deafened condition until the start of the swarm’s next turn. While Deafened, the target also has Disadvantage on ability checks and attack rolls.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Swarm of Tiny Beasts, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "HP",
+          "value": "36 (8d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Dex",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Resistances",
+          "value": "Bludgeoning, Piercing, Slashing"
+        },
+        {
+          "label": "Immunities",
+          "value": "Charmed, Frightened, Grappled, Paralyzed, Petrified, Prone, Restrained, Stunned"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Swarm of Venomous Snakes",
+      "ruleId": "animals.s-z.swarm-of-venomous-snakes",
+      "sections": [
+        {
+          "text": "Swarm. The swarm can occupy another creature’s space and vice versa, and the swarm can move through any opening large enough for a Tiny snake. The swarm can’t regain Hit Points or gain Temporary Hit Points.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bites. Melee Attack Roll: +6, reach 5 ft. Hit: 8 (1d8 + 4) Piercing damage—or 6 (1d4 + 4) Piercing damage if the swarm is Bloodied—plus 10 (3d6) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "30 (4d10 + 8)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3, Stealth +7"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Tiger",
+      "ruleId": "animals.s-z.tiger",
+      "sections": [
+        {
+          "text": "Rend. Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage. If the target is a Large or smaller creature, it has the Prone condition.",
+          "title": "Actions"
+        },
+        {
+          "text": "Nimble Escape. The tiger takes the Disengage or Hide action.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast (Dinosaur), Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "−1 (9)"
+        },
+        {
+          "label": "HP",
+          "value": "114 (12d12 + 36)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "22 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "5 (XP 1,800; PB +3)"
+        }
+      ],
+      "name": "Triceratops",
+      "ruleId": "animals.s-z.triceratops",
+      "sections": [
+        {
+          "text": "Multiattack. The triceratops makes two Gore attacks.\nGore. Melee Attack Roll: +9, reach 5 ft. Hit: 19 (2d12 + 6) Piercing damage. If the target is Huge or smaller and the triceratops moved 20+ feet straight toward it immediately before the hit, the target takes an extra 9 (2d8) Piercing damage and has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast (Dinosaur), Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "136 (13d12 + 52)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "25 · MOD +7 · SAVE +10"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "19 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +4"
+        },
+        {
+          "label": "Cha",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "8 (XP 3,900; PB +3)"
+        }
+      ],
+      "name": "Tyrannosaurus Rex",
+      "ruleId": "animals.s-z.tyrannosaurus-rex",
+      "sections": [
+        {
+          "text": "Multiattack. The tyrannosaurus makes one Bite attack and one Tail attack.\nBite. Melee Attack Roll: +10, reach 10 ft. Hit: 33 (4d12 + 7) Piercing damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 17). While Grappled, the target has the Restrained condition and can’t be targeted by the tyrannosaurus’s Tail.\nTail. Melee Attack Roll: +10, reach 15 ft. Hit: 25 (4d8 + 7) Bludgeoning damage. If the target is a Huge or smaller creature, it has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "5 (2d4)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Venomous Snake",
+      "ruleId": "animals.s-z.venomous-snake",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Piercing damage plus 3 (1d6) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "5 (1d8 + 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Vulture",
+      "ruleId": "animals.s-z.vulture",
+      "sections": [
+        {
+          "text": "Pack Tactics. The vulture has Advantage on an attack roll against a creature if at least one of the vulture’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Beak. Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "19 (3d10 + 3)"
+        },
+        {
+          "label": "Speed",
+          "value": "60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +3"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Warhorse",
+      "ruleId": "animals.s-z.warhorse",
+      "sections": [
+        {
+          "text": "Hooves. Melee Attack Roll: +6, reach 5 ft. Hit: 9 (2d4 + 4) Bludgeoning damage. If the target is a Large or smaller creature and the horse moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 (2d4) Bludgeoning damage and has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "1 (1d4 − 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Acrobatics +5, Perception +3, Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Weasel",
+      "ruleId": "animals.s-z.weasel",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +5, reach 5 ft. Hit: 1 Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "11 (2d8 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5, Stealth +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Wolf",
+      "ruleId": "animals.s-z.wolf",
+      "sections": [
+        {
+          "text": "Pack Tactics. The wolf has Advantage on attack rolls against a creature if at least one of the wolf’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage. If the target is a Medium or smaller creature, it has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "animals.s-z",
+  "editorialBlocks": [
+    "animals.s-z",
+    "animals.s-z.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Animals",
+    "Animals S–Z"
+  ],
+  "order": 4905,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "animals-s-z",
+  "sourcePages": [
+    360,
+    361,
+    362,
+    363,
+    364
+  ],
+  "title": "Animals S–Z"
+}

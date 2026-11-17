@@ -1,0 +1,2403 @@
+{
+  "builder": {
+    "tool": "tools/build_english_srd.py",
+    "version": "1.0.0"
+  },
+  "checks": {
+    "classSpellLists": {
+      "expected": 338,
+      "found": 338,
+      "missing": []
+    },
+    "fixedCounts": {
+      "background": {
+        "expected": 4,
+        "found": 4
+      },
+      "class": {
+        "expected": 12,
+        "found": 12
+      },
+      "feat": {
+        "expected": 17,
+        "found": 17
+      },
+      "species": {
+        "expected": 9,
+        "found": 9
+      },
+      "subclass": {
+        "expected": 12,
+        "found": 12
+      }
+    },
+    "statBlockIndex": {
+      "expected": 330,
+      "found": 330,
+      "missing": []
+    }
+  },
+  "documents": [
+    {
+      "blocks": 18,
+      "documentId": "core.rhythm-and-abilities",
+      "headings": 6,
+      "statBlocks": 0,
+      "tables": 3
+    },
+    {
+      "blocks": 55,
+      "documentId": "core.d20-tests",
+      "headings": 17,
+      "statBlocks": 0,
+      "tables": 4
+    },
+    {
+      "blocks": 20,
+      "documentId": "core.proficiency",
+      "headings": 6,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 16,
+      "documentId": "core.actions",
+      "headings": 4,
+      "statBlocks": 0,
+      "tables": 1
+    },
+    {
+      "blocks": 14,
+      "documentId": "core.social-interaction",
+      "headings": 3,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 54,
+      "documentId": "core.exploration",
+      "headings": 22,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 90,
+      "documentId": "core.combat",
+      "headings": 27,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 65,
+      "documentId": "core.damage-and-healing",
+      "headings": 25,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 109,
+      "documentId": "character-creation.overview",
+      "headings": 26,
+      "statBlocks": 0,
+      "tables": 10
+    },
+    {
+      "blocks": 39,
+      "documentId": "character-creation.advancement",
+      "headings": 15,
+      "statBlocks": 0,
+      "tables": 3
+    },
+    {
+      "blocks": 34,
+      "documentId": "character-creation.multiclassing",
+      "headings": 10,
+      "statBlocks": 0,
+      "tables": 1
+    },
+    {
+      "blocks": 6,
+      "documentId": "character-creation.trinkets",
+      "headings": 2,
+      "statBlocks": 0,
+      "tables": 1
+    },
+    {
+      "blocks": 80,
+      "documentId": "classes.barbarian",
+      "headings": 32,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 77,
+      "documentId": "classes.bard",
+      "headings": 24,
+      "statBlocks": 0,
+      "tables": 12
+    },
+    {
+      "blocks": 83,
+      "documentId": "classes.cleric",
+      "headings": 24,
+      "statBlocks": 0,
+      "tables": 15
+    },
+    {
+      "blocks": 97,
+      "documentId": "classes.druid",
+      "headings": 24,
+      "statBlocks": 0,
+      "tables": 18
+    },
+    {
+      "blocks": 67,
+      "documentId": "classes.fighter",
+      "headings": 29,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 90,
+      "documentId": "classes.monk",
+      "headings": 33,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 100,
+      "documentId": "classes.paladin",
+      "headings": 32,
+      "statBlocks": 0,
+      "tables": 11
+    },
+    {
+      "blocks": 87,
+      "documentId": "classes.ranger",
+      "headings": 31,
+      "statBlocks": 0,
+      "tables": 8
+    },
+    {
+      "blocks": 83,
+      "documentId": "classes.rogue",
+      "headings": 31,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 118,
+      "documentId": "classes.sorcerer",
+      "headings": 35,
+      "statBlocks": 0,
+      "tables": 14
+    },
+    {
+      "blocks": 178,
+      "documentId": "classes.warlock",
+      "headings": 52,
+      "statBlocks": 0,
+      "tables": 14
+    },
+    {
+      "blocks": 76,
+      "documentId": "classes.wizard",
+      "headings": 23,
+      "statBlocks": 0,
+      "tables": 12
+    },
+    {
+      "blocks": 28,
+      "documentId": "origins.backgrounds",
+      "headings": 14,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 86,
+      "documentId": "origins.species",
+      "headings": 16,
+      "statBlocks": 0,
+      "tables": 4
+    },
+    {
+      "blocks": 93,
+      "documentId": "feats",
+      "headings": 24,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 55,
+      "documentId": "equipment.coins-and-weapons",
+      "headings": 26,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 12,
+      "documentId": "equipment.armor",
+      "headings": 5,
+      "statBlocks": 0,
+      "tables": 1
+    },
+    {
+      "blocks": 70,
+      "documentId": "equipment.tools",
+      "headings": 34,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 176,
+      "documentId": "equipment.adventuring-gear",
+      "headings": 81,
+      "statBlocks": 0,
+      "tables": 5
+    },
+    {
+      "blocks": 24,
+      "documentId": "equipment.mounts-and-vehicles",
+      "headings": 10,
+      "statBlocks": 0,
+      "tables": 3
+    },
+    {
+      "blocks": 48,
+      "documentId": "equipment.services",
+      "headings": 19,
+      "statBlocks": 0,
+      "tables": 3
+    },
+    {
+      "blocks": 20,
+      "documentId": "equipment.crafting",
+      "headings": 7,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 66,
+      "documentId": "spells.rules",
+      "headings": 25,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 200,
+      "documentId": "spells.a-b",
+      "headings": 37,
+      "statBlocks": 1,
+      "tables": 1
+    },
+    {
+      "blocks": 371,
+      "documentId": "spells.c-d",
+      "headings": 66,
+      "statBlocks": 0,
+      "tables": 4
+    },
+    {
+      "blocks": 231,
+      "documentId": "spells.e-f",
+      "headings": 39,
+      "statBlocks": 1,
+      "tables": 0
+    },
+    {
+      "blocks": 197,
+      "documentId": "spells.g-h",
+      "headings": 35,
+      "statBlocks": 1,
+      "tables": 0
+    },
+    {
+      "blocks": 122,
+      "documentId": "spells.i-l",
+      "headings": 23,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 174,
+      "documentId": "spells.m-o",
+      "headings": 30,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 232,
+      "documentId": "spells.p-r",
+      "headings": 41,
+      "statBlocks": 0,
+      "tables": 9
+    },
+    {
+      "blocks": 244,
+      "documentId": "spells.s",
+      "headings": 43,
+      "statBlocks": 1,
+      "tables": 1
+    },
+    {
+      "blocks": 131,
+      "documentId": "spells.t-v",
+      "headings": 21,
+      "statBlocks": 0,
+      "tables": 1
+    },
+    {
+      "blocks": 90,
+      "documentId": "spells.w-z",
+      "headings": 16,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 68,
+      "documentId": "glossary.a-b",
+      "headings": 24,
+      "statBlocks": 0,
+      "tables": 7
+    },
+    {
+      "blocks": 98,
+      "documentId": "glossary.c-d",
+      "headings": 38,
+      "statBlocks": 0,
+      "tables": 5
+    },
+    {
+      "blocks": 15,
+      "documentId": "glossary.e-h",
+      "headings": 5,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 185,
+      "documentId": "glossary.m-r",
+      "headings": 60,
+      "statBlocks": 0,
+      "tables": 5
+    },
+    {
+      "blocks": 76,
+      "documentId": "glossary.s",
+      "headings": 22,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 43,
+      "documentId": "glossary.t-z",
+      "headings": 14,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 27,
+      "documentId": "toolbox.travel-and-backgrounds",
+      "headings": 8,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 40,
+      "documentId": "toolbox.curses",
+      "headings": 16,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 22,
+      "documentId": "toolbox.environment",
+      "headings": 10,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 19,
+      "documentId": "toolbox.fear",
+      "headings": 4,
+      "statBlocks": 0,
+      "tables": 2
+    },
+    {
+      "blocks": 52,
+      "documentId": "toolbox.poison",
+      "headings": 32,
+      "statBlocks": 0,
+      "tables": 0
+    },
+    {
+      "blocks": 68,
+      "documentId": "toolbox.traps",
+      "headings": 19,
+      "statBlocks": 0,
+      "tables": 5
+    },
+    {
+      "blocks": 29,
+      "documentId": "toolbox.combat-encounters",
+      "headings": 12,
+      "statBlocks": 0,
+      "tables": 1
+    },
+    {
+      "blocks": 109,
+      "documentId": "magic-items.rules",
+      "headings": 37,
+      "statBlocks": 0,
+      "tables": 10
+    },
+    {
+      "blocks": 146,
+      "documentId": "magic-items.a-b",
+      "headings": 37,
+      "statBlocks": 0,
+      "tables": 8
+    },
+    {
+      "blocks": 96,
+      "documentId": "magic-items.c-d",
+      "headings": 24,
+      "statBlocks": 0,
+      "tables": 4
+    },
+    {
+      "blocks": 394,
+      "documentId": "magic-items.m-o",
+      "headings": 81,
+      "statBlocks": 2,
+      "tables": 10
+    },
+    {
+      "blocks": 289,
+      "documentId": "magic-items.p-r",
+      "headings": 67,
+      "statBlocks": 0,
+      "tables": 15
+    },
+    {
+      "blocks": 149,
+      "documentId": "magic-items.s",
+      "headings": 31,
+      "statBlocks": 0,
+      "tables": 8
+    },
+    {
+      "blocks": 128,
+      "documentId": "magic-items.t-z",
+      "headings": 34,
+      "statBlocks": 0,
+      "tables": 4
+    },
+    {
+      "blocks": 93,
+      "documentId": "monsters.overview",
+      "headings": 36,
+      "statBlocks": 0,
+      "tables": 3
+    },
+    {
+      "blocks": 67,
+      "documentId": "monsters.a-b",
+      "headings": 25,
+      "statBlocks": 41,
+      "tables": 0
+    },
+    {
+      "blocks": 50,
+      "documentId": "monsters.c-d",
+      "headings": 22,
+      "statBlocks": 27,
+      "tables": 0
+    },
+    {
+      "blocks": 68,
+      "documentId": "monsters.e-g",
+      "headings": 27,
+      "statBlocks": 40,
+      "tables": 0
+    },
+    {
+      "blocks": 39,
+      "documentId": "monsters.h-k",
+      "headings": 19,
+      "statBlocks": 19,
+      "tables": 0
+    },
+    {
+      "blocks": 43,
+      "documentId": "monsters.l-n",
+      "headings": 19,
+      "statBlocks": 23,
+      "tables": 0
+    },
+    {
+      "blocks": 46,
+      "documentId": "monsters.o-r",
+      "headings": 20,
+      "statBlocks": 25,
+      "tables": 0
+    },
+    {
+      "blocks": 49,
+      "documentId": "monsters.s",
+      "headings": 20,
+      "statBlocks": 28,
+      "tables": 0
+    },
+    {
+      "blocks": 57,
+      "documentId": "monsters.t-z",
+      "headings": 24,
+      "statBlocks": 32,
+      "tables": 0
+    },
+    {
+      "blocks": 18,
+      "documentId": "animals.a-c",
+      "headings": 1,
+      "statBlocks": 16,
+      "tables": 0
+    },
+    {
+      "blocks": 39,
+      "documentId": "animals.d-g",
+      "headings": 1,
+      "statBlocks": 37,
+      "tables": 0
+    },
+    {
+      "blocks": 15,
+      "documentId": "animals.h-o",
+      "headings": 1,
+      "statBlocks": 13,
+      "tables": 0
+    },
+    {
+      "blocks": 13,
+      "documentId": "animals.p-r",
+      "headings": 1,
+      "statBlocks": 11,
+      "tables": 0
+    },
+    {
+      "blocks": 20,
+      "documentId": "animals.s-z",
+      "headings": 1,
+      "statBlocks": 18,
+      "tables": 0
+    }
+  ],
+  "layout": {
+    "10": {
+      "bands": [],
+      "gutter": 64
+    },
+    "100": {
+      "bands": [],
+      "gutter": 67
+    },
+    "101": {
+      "bands": [
+        [
+          1,
+          9
+        ]
+      ],
+      "gutter": 68
+    },
+    "102": {
+      "bands": [],
+      "gutter": 71
+    },
+    "103": {
+      "bands": [
+        [
+          44,
+          54
+        ]
+      ],
+      "gutter": 63
+    },
+    "104": {
+      "bands": [],
+      "gutter": 65
+    },
+    "105": {
+      "bands": [],
+      "gutter": 65
+    },
+    "106": {
+      "bands": [],
+      "gutter": 66
+    },
+    "107": {
+      "bands": [],
+      "gutter": 64
+    },
+    "108": {
+      "bands": [],
+      "gutter": 64
+    },
+    "109": {
+      "bands": [],
+      "gutter": 68
+    },
+    "11": {
+      "bands": [],
+      "gutter": 62
+    },
+    "110": {
+      "bands": [],
+      "gutter": 64
+    },
+    "111": {
+      "bands": [],
+      "gutter": 65
+    },
+    "112": {
+      "bands": [],
+      "gutter": 64
+    },
+    "113": {
+      "bands": [],
+      "gutter": 63
+    },
+    "114": {
+      "bands": [],
+      "gutter": 62
+    },
+    "115": {
+      "bands": [],
+      "gutter": 65
+    },
+    "116": {
+      "bands": [],
+      "gutter": 63
+    },
+    "117": {
+      "bands": [],
+      "gutter": 62
+    },
+    "118": {
+      "bands": [],
+      "gutter": 67
+    },
+    "119": {
+      "bands": [],
+      "gutter": 65
+    },
+    "12": {
+      "bands": [],
+      "gutter": 65
+    },
+    "120": {
+      "bands": [],
+      "gutter": 64
+    },
+    "121": {
+      "bands": [],
+      "gutter": 65
+    },
+    "122": {
+      "bands": [],
+      "gutter": 63
+    },
+    "123": {
+      "bands": [],
+      "gutter": 64
+    },
+    "124": {
+      "bands": [],
+      "gutter": 62
+    },
+    "125": {
+      "bands": [],
+      "gutter": 64
+    },
+    "126": {
+      "bands": [],
+      "gutter": 65
+    },
+    "127": {
+      "bands": [],
+      "gutter": 64
+    },
+    "128": {
+      "bands": [],
+      "gutter": 63
+    },
+    "129": {
+      "bands": [],
+      "gutter": 64
+    },
+    "13": {
+      "bands": [],
+      "gutter": 63
+    },
+    "130": {
+      "bands": [],
+      "gutter": 64
+    },
+    "131": {
+      "bands": [],
+      "gutter": 68
+    },
+    "132": {
+      "bands": [],
+      "gutter": 63
+    },
+    "133": {
+      "bands": [],
+      "gutter": 65
+    },
+    "134": {
+      "bands": [],
+      "gutter": 64
+    },
+    "135": {
+      "bands": [],
+      "gutter": 64
+    },
+    "136": {
+      "bands": [],
+      "gutter": 70
+    },
+    "137": {
+      "bands": [],
+      "gutter": 65
+    },
+    "138": {
+      "bands": [],
+      "gutter": 64
+    },
+    "139": {
+      "bands": [],
+      "gutter": 65
+    },
+    "14": {
+      "bands": [],
+      "gutter": 62
+    },
+    "140": {
+      "bands": [],
+      "gutter": 64
+    },
+    "141": {
+      "bands": [],
+      "gutter": 63
+    },
+    "142": {
+      "bands": [],
+      "gutter": 66
+    },
+    "143": {
+      "bands": [],
+      "gutter": 64
+    },
+    "144": {
+      "bands": [],
+      "gutter": 64
+    },
+    "145": {
+      "bands": [],
+      "gutter": 66
+    },
+    "146": {
+      "bands": [],
+      "gutter": 64
+    },
+    "147": {
+      "bands": [],
+      "gutter": 64
+    },
+    "148": {
+      "bands": [],
+      "gutter": 63
+    },
+    "149": {
+      "bands": [],
+      "gutter": 64
+    },
+    "15": {
+      "bands": [],
+      "gutter": 63
+    },
+    "150": {
+      "bands": [],
+      "gutter": 64
+    },
+    "151": {
+      "bands": [],
+      "gutter": 67
+    },
+    "152": {
+      "bands": [],
+      "gutter": 64
+    },
+    "153": {
+      "bands": [],
+      "gutter": 66
+    },
+    "154": {
+      "bands": [],
+      "gutter": 63
+    },
+    "155": {
+      "bands": [],
+      "gutter": 67
+    },
+    "156": {
+      "bands": [],
+      "gutter": 65
+    },
+    "157": {
+      "bands": [],
+      "gutter": 61
+    },
+    "158": {
+      "bands": [],
+      "gutter": 66
+    },
+    "159": {
+      "bands": [],
+      "gutter": 64
+    },
+    "16": {
+      "bands": [],
+      "gutter": 65
+    },
+    "160": {
+      "bands": [],
+      "gutter": 64
+    },
+    "161": {
+      "bands": [],
+      "gutter": 65
+    },
+    "162": {
+      "bands": [],
+      "gutter": 66
+    },
+    "163": {
+      "bands": [],
+      "gutter": 65
+    },
+    "164": {
+      "bands": [],
+      "gutter": 63
+    },
+    "165": {
+      "bands": [],
+      "gutter": 63
+    },
+    "166": {
+      "bands": [],
+      "gutter": 64
+    },
+    "167": {
+      "bands": [],
+      "gutter": 64
+    },
+    "168": {
+      "bands": [],
+      "gutter": 63
+    },
+    "169": {
+      "bands": [],
+      "gutter": 63
+    },
+    "17": {
+      "bands": [],
+      "gutter": 65
+    },
+    "170": {
+      "bands": [],
+      "gutter": 64
+    },
+    "171": {
+      "bands": [],
+      "gutter": 62
+    },
+    "172": {
+      "bands": [],
+      "gutter": 64
+    },
+    "173": {
+      "bands": [],
+      "gutter": 64
+    },
+    "174": {
+      "bands": [],
+      "gutter": 65
+    },
+    "175": {
+      "bands": [],
+      "gutter": 66
+    },
+    "176": {
+      "bands": [],
+      "gutter": 64
+    },
+    "177": {
+      "bands": [],
+      "gutter": 64
+    },
+    "178": {
+      "bands": [],
+      "gutter": 66
+    },
+    "179": {
+      "bands": [],
+      "gutter": 64
+    },
+    "18": {
+      "bands": [],
+      "gutter": 61
+    },
+    "180": {
+      "bands": [],
+      "gutter": 63
+    },
+    "181": {
+      "bands": [],
+      "gutter": 65
+    },
+    "182": {
+      "bands": [],
+      "gutter": 65
+    },
+    "183": {
+      "bands": [],
+      "gutter": 64
+    },
+    "184": {
+      "bands": [],
+      "gutter": 63
+    },
+    "185": {
+      "bands": [],
+      "gutter": 63
+    },
+    "186": {
+      "bands": [],
+      "gutter": 66
+    },
+    "187": {
+      "bands": [],
+      "gutter": 66
+    },
+    "188": {
+      "bands": [],
+      "gutter": 65
+    },
+    "189": {
+      "bands": [],
+      "gutter": 63
+    },
+    "19": {
+      "bands": [],
+      "gutter": 63
+    },
+    "190": {
+      "bands": [],
+      "gutter": 65
+    },
+    "191": {
+      "bands": [],
+      "gutter": null
+    },
+    "192": {
+      "bands": [],
+      "gutter": 81
+    },
+    "193": {
+      "bands": [],
+      "gutter": 63
+    },
+    "194": {
+      "bands": [],
+      "gutter": 65
+    },
+    "195": {
+      "bands": [],
+      "gutter": 62
+    },
+    "196": {
+      "bands": [],
+      "gutter": 64
+    },
+    "197": {
+      "bands": [],
+      "gutter": 62
+    },
+    "198": {
+      "bands": [],
+      "gutter": 61
+    },
+    "199": {
+      "bands": [],
+      "gutter": 66
+    },
+    "20": {
+      "bands": [],
+      "gutter": 62
+    },
+    "200": {
+      "bands": [],
+      "gutter": 63
+    },
+    "201": {
+      "bands": [],
+      "gutter": 63
+    },
+    "202": {
+      "bands": [],
+      "gutter": 62
+    },
+    "203": {
+      "bands": [],
+      "gutter": 65
+    },
+    "204": {
+      "bands": [],
+      "gutter": 62
+    },
+    "205": {
+      "bands": [],
+      "gutter": 62
+    },
+    "206": {
+      "bands": [],
+      "gutter": 81
+    },
+    "207": {
+      "bands": [],
+      "gutter": 63
+    },
+    "208": {
+      "bands": [],
+      "gutter": 65
+    },
+    "209": {
+      "bands": [],
+      "gutter": 63
+    },
+    "21": {
+      "bands": [],
+      "gutter": 71
+    },
+    "210": {
+      "bands": [],
+      "gutter": 73
+    },
+    "211": {
+      "bands": [],
+      "gutter": 64
+    },
+    "212": {
+      "bands": [],
+      "gutter": 64
+    },
+    "213": {
+      "bands": [],
+      "gutter": 62
+    },
+    "214": {
+      "bands": [],
+      "gutter": 62
+    },
+    "215": {
+      "bands": [],
+      "gutter": 64
+    },
+    "216": {
+      "bands": [],
+      "gutter": 64
+    },
+    "217": {
+      "bands": [],
+      "gutter": 64
+    },
+    "218": {
+      "bands": [],
+      "gutter": 76
+    },
+    "219": {
+      "bands": [],
+      "gutter": 65
+    },
+    "22": {
+      "bands": [],
+      "gutter": 63
+    },
+    "220": {
+      "bands": [],
+      "gutter": 65
+    },
+    "221": {
+      "bands": [],
+      "gutter": 64
+    },
+    "222": {
+      "bands": [],
+      "gutter": 67
+    },
+    "223": {
+      "bands": [],
+      "gutter": 63
+    },
+    "224": {
+      "bands": [],
+      "gutter": 62
+    },
+    "225": {
+      "bands": [],
+      "gutter": 69
+    },
+    "226": {
+      "bands": [],
+      "gutter": 62
+    },
+    "227": {
+      "bands": [],
+      "gutter": 65
+    },
+    "228": {
+      "bands": [],
+      "gutter": 64
+    },
+    "229": {
+      "bands": [],
+      "gutter": 63
+    },
+    "23": {
+      "bands": [],
+      "gutter": 63
+    },
+    "230": {
+      "bands": [],
+      "gutter": 64
+    },
+    "231": {
+      "bands": [],
+      "gutter": 63
+    },
+    "232": {
+      "bands": [],
+      "gutter": 63
+    },
+    "233": {
+      "bands": [],
+      "gutter": 65
+    },
+    "234": {
+      "bands": [],
+      "gutter": 64
+    },
+    "235": {
+      "bands": [],
+      "gutter": 65
+    },
+    "236": {
+      "bands": [],
+      "gutter": 64
+    },
+    "237": {
+      "bands": [],
+      "gutter": 65
+    },
+    "238": {
+      "bands": [],
+      "gutter": 68
+    },
+    "239": {
+      "bands": [],
+      "gutter": 66
+    },
+    "24": {
+      "bands": [],
+      "gutter": 64
+    },
+    "240": {
+      "bands": [],
+      "gutter": 63
+    },
+    "241": {
+      "bands": [],
+      "gutter": 65
+    },
+    "242": {
+      "bands": [],
+      "gutter": 62
+    },
+    "243": {
+      "bands": [],
+      "gutter": 65
+    },
+    "244": {
+      "bands": [],
+      "gutter": 67
+    },
+    "245": {
+      "bands": [],
+      "gutter": 64
+    },
+    "246": {
+      "bands": [],
+      "gutter": 65
+    },
+    "247": {
+      "bands": [],
+      "gutter": 64
+    },
+    "248": {
+      "bands": [],
+      "gutter": 63
+    },
+    "249": {
+      "bands": [],
+      "gutter": 64
+    },
+    "25": {
+      "bands": [],
+      "gutter": 64
+    },
+    "250": {
+      "bands": [],
+      "gutter": 65
+    },
+    "251": {
+      "bands": [],
+      "gutter": 63
+    },
+    "252": {
+      "bands": [],
+      "gutter": 72
+    },
+    "253": {
+      "bands": [],
+      "gutter": 65
+    },
+    "254": {
+      "bands": [],
+      "gutter": 64
+    },
+    "255": {
+      "bands": [],
+      "gutter": 63
+    },
+    "256": {
+      "bands": [],
+      "gutter": 62
+    },
+    "257": {
+      "bands": [],
+      "gutter": 67
+    },
+    "258": {
+      "bands": [],
+      "gutter": 68
+    },
+    "259": {
+      "bands": [],
+      "gutter": 67
+    },
+    "26": {
+      "bands": [],
+      "gutter": 65
+    },
+    "260": {
+      "bands": [],
+      "gutter": 68
+    },
+    "261": {
+      "bands": [],
+      "gutter": 68
+    },
+    "262": {
+      "bands": [],
+      "gutter": 68
+    },
+    "263": {
+      "bands": [],
+      "gutter": 70
+    },
+    "264": {
+      "bands": [],
+      "gutter": 67
+    },
+    "265": {
+      "bands": [],
+      "gutter": 68
+    },
+    "266": {
+      "bands": [],
+      "gutter": 66
+    },
+    "267": {
+      "bands": [],
+      "gutter": 71
+    },
+    "268": {
+      "bands": [],
+      "gutter": 68
+    },
+    "269": {
+      "bands": [],
+      "gutter": 68
+    },
+    "27": {
+      "bands": [],
+      "gutter": 74
+    },
+    "270": {
+      "bands": [],
+      "gutter": 68
+    },
+    "271": {
+      "bands": [],
+      "gutter": 68
+    },
+    "272": {
+      "bands": [],
+      "gutter": 67
+    },
+    "273": {
+      "bands": [],
+      "gutter": 69
+    },
+    "274": {
+      "bands": [],
+      "gutter": 69
+    },
+    "275": {
+      "bands": [],
+      "gutter": 67
+    },
+    "276": {
+      "bands": [],
+      "gutter": 67
+    },
+    "277": {
+      "bands": [],
+      "gutter": 68
+    },
+    "278": {
+      "bands": [],
+      "gutter": 67
+    },
+    "279": {
+      "bands": [],
+      "gutter": 67
+    },
+    "28": {
+      "bands": [
+        [
+          32,
+          54
+        ]
+      ],
+      "gutter": 68
+    },
+    "280": {
+      "bands": [],
+      "gutter": 68
+    },
+    "281": {
+      "bands": [],
+      "gutter": 68
+    },
+    "282": {
+      "bands": [],
+      "gutter": 67
+    },
+    "283": {
+      "bands": [],
+      "gutter": 69
+    },
+    "284": {
+      "bands": [],
+      "gutter": 67
+    },
+    "285": {
+      "bands": [],
+      "gutter": 67
+    },
+    "286": {
+      "bands": [],
+      "gutter": 67
+    },
+    "287": {
+      "bands": [],
+      "gutter": 67
+    },
+    "288": {
+      "bands": [],
+      "gutter": 68
+    },
+    "289": {
+      "bands": [],
+      "gutter": 67
+    },
+    "29": {
+      "bands": [],
+      "gutter": 62
+    },
+    "290": {
+      "bands": [],
+      "gutter": 66
+    },
+    "291": {
+      "bands": [],
+      "gutter": 68
+    },
+    "292": {
+      "bands": [],
+      "gutter": 68
+    },
+    "293": {
+      "bands": [],
+      "gutter": 68
+    },
+    "294": {
+      "bands": [],
+      "gutter": 68
+    },
+    "295": {
+      "bands": [],
+      "gutter": 68
+    },
+    "296": {
+      "bands": [],
+      "gutter": 69
+    },
+    "297": {
+      "bands": [],
+      "gutter": 66
+    },
+    "298": {
+      "bands": [],
+      "gutter": 68
+    },
+    "299": {
+      "bands": [],
+      "gutter": 68
+    },
+    "30": {
+      "bands": [],
+      "gutter": 63
+    },
+    "300": {
+      "bands": [],
+      "gutter": 69
+    },
+    "301": {
+      "bands": [],
+      "gutter": 70
+    },
+    "302": {
+      "bands": [],
+      "gutter": 65
+    },
+    "303": {
+      "bands": [],
+      "gutter": 67
+    },
+    "304": {
+      "bands": [],
+      "gutter": 69
+    },
+    "305": {
+      "bands": [],
+      "gutter": 70
+    },
+    "306": {
+      "bands": [],
+      "gutter": 67
+    },
+    "307": {
+      "bands": [],
+      "gutter": 70
+    },
+    "308": {
+      "bands": [],
+      "gutter": 67
+    },
+    "309": {
+      "bands": [],
+      "gutter": 68
+    },
+    "31": {
+      "bands": [
+        [
+          33,
+          57
+        ]
+      ],
+      "gutter": 69
+    },
+    "310": {
+      "bands": [],
+      "gutter": 67
+    },
+    "311": {
+      "bands": [],
+      "gutter": 68
+    },
+    "312": {
+      "bands": [],
+      "gutter": 68
+    },
+    "313": {
+      "bands": [],
+      "gutter": 70
+    },
+    "314": {
+      "bands": [],
+      "gutter": 67
+    },
+    "315": {
+      "bands": [],
+      "gutter": 67
+    },
+    "316": {
+      "bands": [],
+      "gutter": 66
+    },
+    "317": {
+      "bands": [],
+      "gutter": 67
+    },
+    "318": {
+      "bands": [],
+      "gutter": 66
+    },
+    "319": {
+      "bands": [],
+      "gutter": 68
+    },
+    "32": {
+      "bands": [],
+      "gutter": 63
+    },
+    "320": {
+      "bands": [],
+      "gutter": 67
+    },
+    "321": {
+      "bands": [],
+      "gutter": 69
+    },
+    "322": {
+      "bands": [],
+      "gutter": 67
+    },
+    "323": {
+      "bands": [],
+      "gutter": 67
+    },
+    "324": {
+      "bands": [],
+      "gutter": 69
+    },
+    "325": {
+      "bands": [],
+      "gutter": 68
+    },
+    "326": {
+      "bands": [],
+      "gutter": 66
+    },
+    "327": {
+      "bands": [],
+      "gutter": 68
+    },
+    "328": {
+      "bands": [],
+      "gutter": 68
+    },
+    "329": {
+      "bands": [],
+      "gutter": 68
+    },
+    "33": {
+      "bands": [],
+      "gutter": 63
+    },
+    "330": {
+      "bands": [],
+      "gutter": 67
+    },
+    "331": {
+      "bands": [],
+      "gutter": 67
+    },
+    "332": {
+      "bands": [],
+      "gutter": 66
+    },
+    "333": {
+      "bands": [],
+      "gutter": 68
+    },
+    "334": {
+      "bands": [],
+      "gutter": 69
+    },
+    "335": {
+      "bands": [],
+      "gutter": 70
+    },
+    "336": {
+      "bands": [],
+      "gutter": 67
+    },
+    "337": {
+      "bands": [],
+      "gutter": 69
+    },
+    "338": {
+      "bands": [],
+      "gutter": 67
+    },
+    "339": {
+      "bands": [],
+      "gutter": 68
+    },
+    "34": {
+      "bands": [],
+      "gutter": 58
+    },
+    "340": {
+      "bands": [],
+      "gutter": 72
+    },
+    "341": {
+      "bands": [],
+      "gutter": 72
+    },
+    "342": {
+      "bands": [],
+      "gutter": 68
+    },
+    "343": {
+      "bands": [],
+      "gutter": 68
+    },
+    "344": {
+      "bands": [],
+      "gutter": 67
+    },
+    "345": {
+      "bands": [],
+      "gutter": 69
+    },
+    "346": {
+      "bands": [],
+      "gutter": 67
+    },
+    "347": {
+      "bands": [],
+      "gutter": 66
+    },
+    "348": {
+      "bands": [],
+      "gutter": 66
+    },
+    "349": {
+      "bands": [],
+      "gutter": 67
+    },
+    "35": {
+      "bands": [],
+      "gutter": 62
+    },
+    "350": {
+      "bands": [],
+      "gutter": 67
+    },
+    "351": {
+      "bands": [],
+      "gutter": 69
+    },
+    "352": {
+      "bands": [],
+      "gutter": 67
+    },
+    "353": {
+      "bands": [],
+      "gutter": 67
+    },
+    "354": {
+      "bands": [],
+      "gutter": 67
+    },
+    "355": {
+      "bands": [],
+      "gutter": 67
+    },
+    "356": {
+      "bands": [],
+      "gutter": 70
+    },
+    "357": {
+      "bands": [],
+      "gutter": 67
+    },
+    "358": {
+      "bands": [],
+      "gutter": 68
+    },
+    "359": {
+      "bands": [],
+      "gutter": 67
+    },
+    "36": {
+      "bands": [],
+      "gutter": 74
+    },
+    "360": {
+      "bands": [],
+      "gutter": 68
+    },
+    "361": {
+      "bands": [],
+      "gutter": 67
+    },
+    "362": {
+      "bands": [],
+      "gutter": 68
+    },
+    "363": {
+      "bands": [],
+      "gutter": 67
+    },
+    "364": {
+      "bands": [],
+      "gutter": 69
+    },
+    "37": {
+      "bands": [],
+      "gutter": 65
+    },
+    "38": {
+      "bands": [],
+      "gutter": 63
+    },
+    "39": {
+      "bands": [],
+      "gutter": 56
+    },
+    "40": {
+      "bands": [],
+      "gutter": 63
+    },
+    "41": {
+      "bands": [
+        [
+          28,
+          52
+        ]
+      ],
+      "gutter": 71
+    },
+    "42": {
+      "bands": [],
+      "gutter": 64
+    },
+    "43": {
+      "bands": [],
+      "gutter": 63
+    },
+    "44": {
+      "bands": [],
+      "gutter": 63
+    },
+    "45": {
+      "bands": [],
+      "gutter": 58
+    },
+    "46": {
+      "bands": [],
+      "gutter": 61
+    },
+    "47": {
+      "bands": [
+        [
+          36,
+          58
+        ]
+      ],
+      "gutter": 69
+    },
+    "48": {
+      "bands": [],
+      "gutter": 65
+    },
+    "49": {
+      "bands": [],
+      "gutter": 63
+    },
+    "5": {
+      "bands": [],
+      "gutter": 66
+    },
+    "50": {
+      "bands": [
+        [
+          1,
+          24
+        ]
+      ],
+      "gutter": 65
+    },
+    "51": {
+      "bands": [],
+      "gutter": 62
+    },
+    "52": {
+      "bands": [],
+      "gutter": 60
+    },
+    "53": {
+      "bands": [],
+      "gutter": 66
+    },
+    "54": {
+      "bands": [],
+      "gutter": 62
+    },
+    "55": {
+      "bands": [],
+      "gutter": 63
+    },
+    "56": {
+      "bands": [],
+      "gutter": 63
+    },
+    "57": {
+      "bands": [],
+      "gutter": 62
+    },
+    "58": {
+      "bands": [],
+      "gutter": 61
+    },
+    "59": {
+      "bands": [],
+      "gutter": 64
+    },
+    "6": {
+      "bands": [],
+      "gutter": 61
+    },
+    "60": {
+      "bands": [],
+      "gutter": 60
+    },
+    "61": {
+      "bands": [],
+      "gutter": 62
+    },
+    "62": {
+      "bands": [
+        [
+          1,
+          23
+        ]
+      ],
+      "gutter": 65
+    },
+    "63": {
+      "bands": [],
+      "gutter": 63
+    },
+    "64": {
+      "bands": [],
+      "gutter": 66
+    },
+    "65": {
+      "bands": [
+        [
+          1,
+          30
+        ]
+      ],
+      "gutter": 65
+    },
+    "66": {
+      "bands": [],
+      "gutter": 63
+    },
+    "67": {
+      "bands": [],
+      "gutter": 62
+    },
+    "68": {
+      "bands": [],
+      "gutter": 57
+    },
+    "69": {
+      "bands": [],
+      "gutter": 58
+    },
+    "7": {
+      "bands": [],
+      "gutter": 62
+    },
+    "70": {
+      "bands": [],
+      "gutter": 63
+    },
+    "71": {
+      "bands": [],
+      "gutter": 63
+    },
+    "72": {
+      "bands": [],
+      "gutter": 63
+    },
+    "73": {
+      "bands": [],
+      "gutter": 62
+    },
+    "74": {
+      "bands": [],
+      "gutter": 62
+    },
+    "75": {
+      "bands": [],
+      "gutter": 63
+    },
+    "76": {
+      "bands": [],
+      "gutter": 63
+    },
+    "77": {
+      "bands": [
+        [
+          28,
+          51
+        ]
+      ],
+      "gutter": 68
+    },
+    "78": {
+      "bands": [],
+      "gutter": 64
+    },
+    "79": {
+      "bands": [],
+      "gutter": 63
+    },
+    "8": {
+      "bands": [],
+      "gutter": 64
+    },
+    "80": {
+      "bands": [],
+      "gutter": 55
+    },
+    "81": {
+      "bands": [],
+      "gutter": 55
+    },
+    "82": {
+      "bands": [],
+      "gutter": 61
+    },
+    "83": {
+      "bands": [],
+      "gutter": 62
+    },
+    "84": {
+      "bands": [],
+      "gutter": 65
+    },
+    "85": {
+      "bands": [
+        [
+          1,
+          9
+        ]
+      ],
+      "gutter": 68
+    },
+    "86": {
+      "bands": [],
+      "gutter": 62
+    },
+    "87": {
+      "bands": [],
+      "gutter": 63
+    },
+    "88": {
+      "bands": [],
+      "gutter": 62
+    },
+    "89": {
+      "bands": [],
+      "gutter": 61
+    },
+    "9": {
+      "bands": [
+        [
+          1,
+          20
+        ]
+      ],
+      "gutter": 66
+    },
+    "90": {
+      "bands": [],
+      "gutter": 64
+    },
+    "91": {
+      "bands": [],
+      "gutter": null
+    },
+    "92": {
+      "bands": [
+        [
+          27,
+          45
+        ]
+      ],
+      "gutter": 67
+    },
+    "93": {
+      "bands": [],
+      "gutter": 65
+    },
+    "94": {
+      "bands": [],
+      "gutter": 67
+    },
+    "95": {
+      "bands": [],
+      "gutter": 56
+    },
+    "96": {
+      "bands": [],
+      "gutter": 69
+    },
+    "97": {
+      "bands": [],
+      "gutter": 64
+    },
+    "98": {
+      "bands": [],
+      "gutter": 62
+    },
+    "99": {
+      "bands": [],
+      "gutter": 63
+    }
+  },
+  "markers": [
+    {
+      "documentId": "core.rhythm-and-abilities",
+      "found": true,
+      "marker": "Playing the Game",
+      "page": 5
+    },
+    {
+      "documentId": "core.d20-tests",
+      "found": true,
+      "marker": "D20 Tests",
+      "page": 6
+    },
+    {
+      "documentId": "core.proficiency",
+      "found": true,
+      "marker": "Proficiency",
+      "page": 8
+    },
+    {
+      "documentId": "core.actions",
+      "found": true,
+      "marker": "Actions",
+      "page": 9
+    },
+    {
+      "documentId": "core.social-interaction",
+      "found": true,
+      "marker": "Social Interaction",
+      "page": 10
+    },
+    {
+      "documentId": "core.exploration",
+      "found": true,
+      "marker": "Exploration",
+      "page": 11
+    },
+    {
+      "documentId": "core.combat",
+      "found": true,
+      "marker": "Combat",
+      "page": 13
+    },
+    {
+      "documentId": "core.damage-and-healing",
+      "found": true,
+      "marker": "Damage and Healing",
+      "page": 16
+    },
+    {
+      "documentId": "character-creation.overview",
+      "found": true,
+      "marker": "Character Creation",
+      "page": 19
+    },
+    {
+      "documentId": "character-creation.advancement",
+      "found": true,
+      "marker": "Level Advancement",
+      "page": 23
+    },
+    {
+      "documentId": "character-creation.multiclassing",
+      "found": true,
+      "marker": "Multiclassing",
+      "page": 24
+    },
+    {
+      "documentId": "character-creation.trinkets",
+      "found": true,
+      "marker": "Trinkets",
+      "page": 26
+    },
+    {
+      "documentId": "classes.barbarian",
+      "found": true,
+      "marker": "Classes",
+      "page": 28
+    },
+    {
+      "documentId": "classes.bard",
+      "found": true,
+      "marker": "Bard",
+      "page": 31
+    },
+    {
+      "documentId": "classes.cleric",
+      "found": true,
+      "marker": "Cleric",
+      "page": 36
+    },
+    {
+      "documentId": "classes.druid",
+      "found": true,
+      "marker": "Druid",
+      "page": 41
+    },
+    {
+      "documentId": "classes.fighter",
+      "found": true,
+      "marker": "Fighter",
+      "page": 47
+    },
+    {
+      "documentId": "classes.monk",
+      "found": true,
+      "marker": "Monk",
+      "page": 49
+    },
+    {
+      "documentId": "classes.paladin",
+      "found": true,
+      "marker": "Paladin",
+      "page": 53
+    },
+    {
+      "documentId": "classes.ranger",
+      "found": true,
+      "marker": "Ranger",
+      "page": 57
+    },
+    {
+      "documentId": "classes.rogue",
+      "found": true,
+      "marker": "Rogue",
+      "page": 61
+    },
+    {
+      "documentId": "classes.sorcerer",
+      "found": true,
+      "marker": "Sorcerer",
+      "page": 64
+    },
+    {
+      "documentId": "classes.warlock",
+      "found": true,
+      "marker": "Warlock",
+      "page": 70
+    },
+    {
+      "documentId": "classes.wizard",
+      "found": true,
+      "marker": "Wizard",
+      "page": 77
+    },
+    {
+      "documentId": "origins.backgrounds",
+      "found": true,
+      "marker": "Character Origins",
+      "page": 83
+    },
+    {
+      "documentId": "origins.species",
+      "found": true,
+      "marker": "Character Species",
+      "page": 83
+    },
+    {
+      "documentId": "feats",
+      "found": true,
+      "marker": "Feats",
+      "page": 87
+    },
+    {
+      "documentId": "equipment.coins-and-weapons",
+      "found": true,
+      "marker": "Equipment",
+      "page": 89
+    },
+    {
+      "documentId": "equipment.armor",
+      "found": true,
+      "marker": "Armor",
+      "page": 92
+    },
+    {
+      "documentId": "equipment.tools",
+      "found": true,
+      "marker": "Tools",
+      "page": 93
+    },
+    {
+      "documentId": "equipment.adventuring-gear",
+      "found": true,
+      "marker": "Adventuring Gear",
+      "page": 94
+    },
+    {
+      "documentId": "equipment.mounts-and-vehicles",
+      "found": true,
+      "marker": "Mounts and Vehicles",
+      "page": 100
+    },
+    {
+      "documentId": "equipment.services",
+      "found": true,
+      "marker": "Lifestyle Expenses",
+      "page": 101
+    },
+    {
+      "documentId": "equipment.crafting",
+      "found": true,
+      "marker": "Crafting Nonmagical Items",
+      "page": 103
+    },
+    {
+      "documentId": "spells.rules",
+      "found": true,
+      "marker": "Spells",
+      "page": 104
+    },
+    {
+      "documentId": "spells",
+      "found": true,
+      "marker": "Spell Descriptions",
+      "page": 107
+    },
+    {
+      "documentId": "glossary",
+      "found": true,
+      "marker": "Rules Glossary",
+      "page": 176
+    },
+    {
+      "documentId": "toolbox.travel-and-backgrounds",
+      "found": true,
+      "marker": "Gameplay Toolbox",
+      "page": 192
+    },
+    {
+      "documentId": "toolbox.curses",
+      "found": true,
+      "marker": "Curses and Magical Contagions",
+      "page": 193
+    },
+    {
+      "documentId": "toolbox.environment",
+      "found": true,
+      "marker": "Environmental Effects",
+      "page": 195
+    },
+    {
+      "documentId": "toolbox.fear",
+      "found": true,
+      "marker": "Fear and Mental Stress",
+      "page": 196
+    },
+    {
+      "documentId": "toolbox.poison",
+      "found": true,
+      "marker": "Poison",
+      "page": 197
+    },
+    {
+      "documentId": "toolbox.traps",
+      "found": true,
+      "marker": "Traps",
+      "page": 199
+    },
+    {
+      "documentId": "toolbox.combat-encounters",
+      "found": true,
+      "marker": "Combat Encounters",
+      "page": 202
+    },
+    {
+      "documentId": "magic-items.rules",
+      "found": true,
+      "marker": "Magic Items",
+      "page": 204
+    },
+    {
+      "documentId": "magic-items",
+      "found": true,
+      "marker": "Magic Items A–Z",
+      "page": 209
+    },
+    {
+      "documentId": "monsters.overview",
+      "found": true,
+      "marker": "Monsters",
+      "page": 254
+    },
+    {
+      "documentId": "monsters",
+      "found": true,
+      "marker": "Monsters A–Z",
+      "page": 258
+    },
+    {
+      "documentId": "animals",
+      "found": true,
+      "marker": "Animals",
+      "page": 344
+    }
+  ],
+  "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+  "sourceTextSha256": "130b7ed653ef845fc6a831f14c0ed823b28274103c251e879c7d9313d80a5322",
+  "unconsumedLines": [],
+  "warningCount": 0,
+  "warnings": []
+}

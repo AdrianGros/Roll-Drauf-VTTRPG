@@ -1420,8 +1420,9 @@ def play_token_visible_tokens(campaign_id, session_id, token_id):
         .filter(TokenState.deleted_at.is_(None))
         .all()
     )
+    from vtt.play.vision import token_world_xy
     ids = set(visible_token_ids(
-        origin_token.x, origin_token.y, origin_token.sight_range,
+        *token_world_xy(origin_token,campaign_map.grid_size), origin_token.sight_range,
         walls, lights, all_tokens, campaign_map.grid_size))
     visible = [token for token in all_tokens if token.id in ids]
 

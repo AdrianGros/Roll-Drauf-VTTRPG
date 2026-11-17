@@ -1,0 +1,1770 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "spells.a-b",
+      "text": "Spell Descriptions",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "spells.a-b.roll-drauf-note",
+      "text": "Spells A–B in alphabetical order. Under each name you find the spell level, school and the classes that can prepare it, followed by casting time, range, components and duration.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.acid-arrow",
+      "text": "Acid Arrow",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.acid-arrow.p-1",
+      "text": "Level 2 Evocation (Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (powdered rhubarb leaf)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.acid-arrow.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.acid-arrow.p-2",
+      "text": "A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes 4d4 Acid damage and 2d4 Acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage only.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.acid-arrow.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage (both initial and later) increases by 1d4 for each spell slot level above 2.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.acid-splash",
+      "text": "Acid Splash",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.acid-splash.p-1",
+      "text": "Evocation Cantrip (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.acid-splash.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.acid-splash.p-2",
+      "text": "You create an acidic bubble at a point within range, where it explodes in a 5-foot-radius Sphere. Each creature in that Sphere must succeed on a Dexterity saving throw or take 1d6 Acid damage.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.acid-splash.p-3",
+      "text": "Cantrip Upgrade. The damage increases by 1d6 when you reach levels 5 (2d6), 11 (3d6), and 17 (4d6).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.aid",
+      "text": "Aid",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.aid.p-1",
+      "text": "Level 2 Abjuration (Bard, Cleric, Druid, Paladin, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a strip of white cloth)",
+          "term": "Components"
+        },
+        {
+          "definition": "8 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.aid.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.aid.p-2",
+      "text": "Choose up to three creatures within range. Each target’s Hit Point maximum and current Hit Points increase by 5 for the duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.aid.p-3",
+      "text": "Using a Higher-Level Spell Slot. Each target’s Hit Points increase by 5 for each spell slot level above 2.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.alarm",
+      "text": "Alarm",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.alarm.p-1",
+      "text": "Level 1 Abjuration (Ranger, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a bell and silver wire)",
+          "term": "Components"
+        },
+        {
+          "definition": "8 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.alarm.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.alarm.p-2",
+      "text": "You set an alarm against intrusion. Choose a door, a window, or an area within range that is no larger than a 20-foot Cube. Until the spell ends, an alarm alerts you whenever a creature touches or enters the warded area. When you cast the spell, you can designate creatures that won’t set off the alarm. You also choose whether the alarm is audible or mental: Audible Alarm. The alarm produces the sound of a handbell for 10 seconds within 60 feet of the warded area. Mental Alarm. You are alerted by a mental ping if you are within 1 mile of the warded area. This ping awakens you if you’re asleep.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.alter-self",
+      "text": "Alter Self",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.alter-self.p-1",
+      "text": "Level 2 Transmutation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.alter-self.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.alter-self.p-2",
+      "text": "You alter your physical form. Choose one of the following options. Its effects last for the duration, during which you can take a Magic action to replace the option you chose with a different one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.alter-self.p-3",
+      "text": "Aquatic Adaptation. You sprout gills and grow webs between your fingers. You can breathe underwater and gain a Swim Speed equal to your Speed.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.alter-self.p-4",
+      "text": "Change Appearance. You alter your appearance. You decide what you look like, including your height, weight, facial features, sound of your voice, hair length, coloration, and other distinguishing characteristics. You can make yourself appear as a member of another species, though none of your statistics change. You can’t appear as a creature of a different size, and your basic shape stays the same; if you’re bipedal, you can’t use this spell to become quadrupedal, for instance. For the duration, you can take a Magic action to change your appearance in this way again.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.alter-self.p-5",
+      "text": "Natural Weapons. You grow claws (Slashing), fangs (Piercing), horns (Piercing), or hooves (Bludgeoning). When you use your Unarmed Strike to deal damage with that new growth, it deals 1d6 damage of the type in parentheses instead of dealing the normal damage for your Unarmed Strike, and you use your spellcasting ability modifier for the attack and damage rolls rather than using Strength.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.animal-friendship",
+      "text": "Animal Friendship",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.animal-friendship.p-1",
+      "text": "Level 1 Enchantment (Bard, Druid, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a morsel of food)",
+          "term": "Components"
+        },
+        {
+          "definition": "24 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.animal-friendship.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.animal-friendship.p-2",
+      "text": "Target a Beast that you can see within range. The target must succeed on a Wisdom saving throw or have the Charmed condition for the duration. If you or one of your allies deals damage to the target, the spells ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animal-friendship.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional Beast for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.animal-messenger",
+      "text": "Animal Messenger",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.animal-messenger.p-1",
+      "text": "Level 2 Enchantment (Bard, Druid, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a morsel of food)",
+          "term": "Components"
+        },
+        {
+          "definition": "24 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.animal-messenger.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.animal-messenger.p-2",
+      "text": "A Tiny Beast of your choice that you can see within range must succeed on a Charisma saving throw, or it attempts to deliver a message for you (if the target’s Challenge Rating isn’t 0, it automatically succeeds). You specify a location you have visited and a recipient who matches a general description, such as “a person dressed in the uniform of the town guard” or “a red-haired dwarf wearing a pointed hat.” You also communicate a message of up to twenty-five words. The Beast travels for the duration toward the specified location, covering about 25 miles per 24 hours or 50 miles if the Beast can fly.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animal-messenger.p-3",
+      "text": "When the Beast arrives, it delivers your message to the creature that you described, mimicking your communication. If the Beast doesn’t reach its destination before the spell ends, the message is lost, and the Beast returns to where you cast the spell.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animal-messenger.p-4",
+      "text": "Using a Higher-Level Spell Slot. The spell’s duration increases by 48 hours for each spell slot level above 2.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.animal-shapes",
+      "text": "Animal Shapes",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.animal-shapes.p-1",
+      "text": "Level 8 Transmutation (Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "24 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.animal-shapes.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.animal-shapes.p-2",
+      "text": "Choose any number of willing creatures that you can see within range. Each target shape-shifts into a Large or smaller Beast of your choice that has a Challenge Rating of 4 or lower. You can choose a different form for each target. On later turns, you can take a Magic action to transform the targets again.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animal-shapes.p-3",
+      "text": "A target’s game statistics are replaced by the chosen Beast’s statistics, but the target retains its creature type; Hit Points; Hit Point Dice; alignment; ability to communicate; and Intelligence, Wisdom, and Charisma scores. The target’s actions are limited by the Beast form’s anatomy, and it can’t cast spells. The target’s equipment melds into the new form, and the target can’t use any of that equipment while in that form.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animal-shapes.p-4",
+      "text": "The target gains a number of Temporary Hit Points equal to the Hit Points of the first form into which it shape-shifts. These Temporary Hit Points vanish if any remain when the spell ends. The transformation lasts for the duration or until the target ends it as a Bonus Action.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.animate-dead",
+      "text": "Animate Dead",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.animate-dead.p-1",
+      "text": "Level 3 Necromancy (Cleric, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "10 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a drop of blood, a piece of flesh, and a pinch of bone dust)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.animate-dead.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.animate-dead.p-2",
+      "text": "Choose a pile of bones or a corpse of a Medium or Small Humanoid within range. The target becomes an Undead creature: a Skeleton if you chose bones or a Zombie if you chose a corpse (see “Monsters” for the stat blocks).",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animate-dead.p-3",
+      "text": "On each of your turns, you can take a Bonus Action to mentally command any creature you made with this spell if the creature is within 60 feet of you (if you control multiple creatures, you can command any of them at the same time, issuing the same command to each one). You decide what action the creature will take and where it will move on its next turn, or you can issue a general command, such as to guard a chamber or corridor. If you issue no commands, the creature takes the Dodge action and moves only to avoid harm. Once given an order, the creature continues to follow it until its task is complete.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animate-dead.p-4",
+      "text": "The creature is under your control for 24 hours, after which it stops obeying any command you’ve given it. To maintain control of the creature for another 24 hours, you must cast this spell on the creature again before the current 24-hour period ends. This use of the spell reasserts your control over up to four creatures you have animated with this spell rather than animating a new creature.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animate-dead.p-5",
+      "text": "Using a Higher-Level Spell Slot. You animate or reassert control over two additional Undead creatures for each spell slot level above 3. Each of the creatures must come from a different corpse or pile of bones.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.animate-objects",
+      "text": "Animate Objects",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.animate-objects.p-1",
+      "text": "Level 5 Transmutation (Bard, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.animate-objects.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.animate-objects.p-2",
+      "text": "Objects animate at your command. Choose a number of nonmagical objects within range that aren’t being worn or carried, aren’t fixed to a surface, and aren’t Gargantuan. The maximum number of objects is equal to your spellcasting ability modifier; for this number, a Medium or smaller target counts as one object, a Large target counts as two, and a Huge target counts as three.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animate-objects.p-3",
+      "text": "Each target animates, sprouts legs, and becomes a Construct that uses the Animated Object stat block; this creature is under your control until the spell ends or until it is reduced to 0 Hit Points. Each creature you make with this spell is an ally to you and your allies. In combat, it shares your Initiative count and takes its turn immediately after yours.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animate-objects.p-4",
+      "text": "Until the spell ends, you can take a Bonus Action to mentally command any creature you made with this spell if the creature is within 500 feet of you (if you control multiple creatures, you can command any of them at the same time, issuing the same command to each one). If you issue no commands, the creature takes the Dodge action and moves only to avoid harm. When the creature drops to 0 Hit Points, it reverts to its object form, and any remaining damage carries over to that form.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.animate-objects.p-5",
+      "text": "Using a Higher-Level Spell Slot. The creature’s Slam damage increases by 1d4 (Medium or smaller), 1d6 (Large), or 1d12 (Huge) for each spell slot level above 5.",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge or Smaller Construct, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "HP",
+          "value": "10 (Medium or smaller), 20 (Large), 40 (Huge)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Cha",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison, Psychic; Charmed, Exhaustion, Frightened, Paralyzed, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 30 ft.; Passive Perception 6"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands the languages you know"
+        },
+        {
+          "label": "CR",
+          "value": "None (XP 0; PB equals your Proficiency Bonus)"
+        }
+      ],
+      "name": "Animated Object",
+      "ruleId": "spells.a-b.animate-objects.animated-object",
+      "sections": [
+        {
+          "text": "Slam. Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: Force damage equal to 1d4 + 3 (Medium or smaller), 2d6 + 3 + your spellcasting ability modifier (Large), or 2d12 + 3 + your spellcasting ability modifier (Huge).",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.antilife-shell",
+      "text": "Antilife Shell",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.antilife-shell.p-1",
+      "text": "Level 5 Abjuration (Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.antilife-shell.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.antilife-shell.p-2",
+      "text": "An aura extends from you in a 10-foot Emanation for the duration. The aura prevents creatures other than Constructs and Undead from passing or reaching through it. An affected creature can cast spells or make attacks with Ranged or Reach weapons through the barrier.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.antilife-shell.p-3",
+      "text": "If you move so that an affected creature is forced to pass through the barrier, the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.antimagic-field",
+      "text": "Antimagic Field",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.antimagic-field.p-1",
+      "text": "Level 8 Abjuration (Cleric, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (iron filings)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.antimagic-field.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.antimagic-field.p-2",
+      "text": "An aura of antimagic surrounds you in 10-foot Emanation. No one can cast spells, take Magic actions, or create other magical effects inside the aura, and those things can’t target or otherwise affect anything inside it. Magical properties of magic items don’t work inside the aura or on anything inside it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.antimagic-field.p-3",
+      "text": "Areas of effect created by spells or other magic can’t extend into the aura, and no one can teleport into or out of it or use planar travel there. Portals close temporarily while in the aura.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.antimagic-field.p-4",
+      "text": "Ongoing spells, except those cast by an Artifact or a deity, are suppressed in the area. While an effect is suppressed, it doesn’t function, but the time it spends suppressed counts against its duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.antimagic-field.p-5",
+      "text": "Dispel Magic has no effect on the aura, and the auras created by different Antimagic Field spells don’t nullify each other.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.antipathy-sympathy",
+      "text": "Antipathy/Sympathy",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.antipathy-sympathy.p-1",
+      "text": "Level 8 Enchantment (Bard, Druid, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 hour",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a mix of vinegar and honey)",
+          "term": "Components"
+        },
+        {
+          "definition": "10 days",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.antipathy-sympathy.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.antipathy-sympathy.p-2",
+      "text": "As you cast the spell, choose whether it creates antipathy or sympathy, and target one creature or object that is Huge or smaller. Then specify a kind of creature, such as red dragons, goblins, or vampires. A creature of the chosen kind makes a Wisdom saving throw when it comes within 120 feet of the target. Your choice of antipathy or sympathy determines what happens to a creature when it fails that save: Antipathy. The creature has the Frightened condition. The Frightened creature must use its movement on its turns to get as far away as possible from the target, moving by the safest route. Sympathy. The creature has the Charmed condition. The Charmed creature must use its movement on its turns to get as close as possible to the target, moving by the safest route. If the creature is within 5 feet of the target, the creature can’t willingly move away. If the target damages the Charmed creature, that creature can make a Wisdom saving throw to end the effect, as described below. Ending the Effect. If the Frightened or Charmed creature ends its turn more than 120 feet away from the target, the creature makes a Wisdom saving throw. On a successful save, the creature is no longer affected by the target. A creature that successfully saves against this effect is immune to it for 1 minute, after which it can be affected again.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.arcane-eye",
+      "text": "Arcane Eye",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-eye.p-1",
+      "text": "Level 4 Divination (Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a bit of bat fur)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.arcane-eye.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-eye.p-2",
+      "text": "You create an Invisible, invulnerable eye within range that hovers for the duration. You mentally receive visual information from the eye, which can see in every direction. It also has Darkvision with a range of 30 feet.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-eye.p-3",
+      "text": "As a Bonus Action, you can move the eye up to 30 feet in any direction. A solid barrier blocks the eye’s movement, but the eye can pass through an opening as small as 1 inch in diameter.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.arcane-hand",
+      "text": "Arcane Hand",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-hand.p-1",
+      "text": "Level 5 Evocation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (an eggshell and a glove)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.arcane-hand.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-hand.p-2",
+      "text": "You create a Large hand of shimmering magical energy in an unoccupied space that you can see within range. The hand lasts for the duration, and it moves at your command, mimicking the movements of your own hand.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-hand.p-3",
+      "text": "The hand is an object that has AC 20 and Hit Points equal to your Hit Point maximum. If it drops to 0 Hit Points, the spell ends. The hand doesn’t occupy its space.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-hand.p-4",
+      "text": "When you cast the spell and as a Bonus Action on your later turns, you can move the hand up to 60 feet and then cause one of the following effects: Clenched Fist. The hand strikes a target within 5 feet of it. Make a melee spell attack. On a hit, the target takes 5d8 Force damage. Forceful Hand. The hand attempts to push a Huge or smaller creature within 5 feet of it. The target must succeed on a Strength saving throw, or the hand pushes the target up to 5 feet plus a number of feet equal to five times your spellcasting ability modifier. The hand moves with the target, remaining within 5 feet of it. Grasping Hand. The hand attempts to grapple a Huge or smaller creature within 5 feet of it. The target must succeed on a Dexterity saving throw, or the target has the Grappled condition, with an escape DC equal to your spell save DC. While the hand grapples the target, you can take a Bonus Action to cause the hand to crush it, dealing Bludgeoning damage to the target equal to 4d6 plus your spellcasting ability modifier. Interposing Hand. The hand grants you Half Cover against attacks and other effects that originate from its space or that pass through it. In addition, its space counts as Difficult Terrain for your enemies. Using a Higher-Level Spell Slot. The damage of the Clenched Fist increases by 2d8 and the damage of the Grasping Hand increases by 2d6 for each spell slot level above 5.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.arcane-lock",
+      "text": "Arcane Lock",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-lock.p-1",
+      "text": "Level 2 Abjuration (Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (gold dust worth 25+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Until dispelled",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.arcane-lock.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-lock.p-2",
+      "text": "You touch a closed door, window, gate, container, or hatch and magically lock it for the duration. This lock can’t be unlocked by any nonmagical means. You and any creatures you designate when you cast the spell can open and close the object despite the lock. You can also set a password that, when spoken within 5 feet of the object, unlocks it for 1 minute.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.arcane-sword",
+      "text": "Arcane Sword",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-sword.p-1",
+      "text": "Level 7 Evocation (Bard, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a miniature sword worth 250+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.arcane-sword.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-sword.p-2",
+      "text": "You create a spectral sword that hovers within range. It lasts for the duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-sword.p-3",
+      "text": "When the sword appears, you make a melee spell attack against a target within 5 feet of the sword. On a hit, the target takes Force damage equal to 4d12 plus your spellcasting ability modifier.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.arcane-sword.p-4",
+      "text": "On your later turns, you can take a Bonus Action to move the sword up to 30 feet to a spot you can see and repeat the attack against the same target or a different one.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.arcanists-magic-aura",
+      "text": "Arcanist’s Magic Aura",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.arcanists-magic-aura.p-1",
+      "text": "Level 2 Illusion (Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a small square of silk)",
+          "term": "Components"
+        },
+        {
+          "definition": "24 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.arcanists-magic-aura.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.arcanists-magic-aura.p-2",
+      "text": "With a touch, you place an illusion on a willing creature or an object that isn’t being worn or carried. A creature gains the Mask effect below, and an object gains the False Aura effect below. The effect lasts for the duration. If you cast the spell on the same target every day for 30 days, the illusion lasts until dispelled.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.arcanists-magic-aura.p-3",
+      "text": "Mask (Creature). Choose a creature type other than the target’s actual type. Spells and other magical effects treat the target as if it were a creature of the chosen type.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.arcanists-magic-aura.p-4",
+      "text": "False Aura (Object). You change the way the target appears to spells and magical effects that detect magical auras, such as Detect Magic. You can make a nonmagical object appear magical, make a magic item appear nonmagical, or change the object’s aura so that it appears to belong to a school of magic you choose.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.astral-projection",
+      "text": "Astral Projection",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.astral-projection.p-1",
+      "text": "Level 9 Necromancy (Cleric, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 hour",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "10 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (for each of the spell’s targets, one jacinth worth 1,000+ GP and one silver bar worth 100+ GP, all of which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Until dispelled",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.astral-projection.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.astral-projection.p-2",
+      "text": "You and up to eight willing creatures within range project your astral bodies into the Astral Plane (the spell ends instantly if you are already on that plane). Each target’s body is left behind in a state of suspended animation; it has the Unconscious condition, doesn’t need food or air, and doesn’t age.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.astral-projection.p-3",
+      "text": "A target’s astral form resembles its body in almost every way, replicating its game statistics and possessions. The principal difference is the addition of a silvery cord that trails from between the shoulder blades of the astral form. The cord fades from view after 1 foot. If the cord is cut—which happens only when an effect states that it does so—the target’s body and astral form both die.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.astral-projection.p-4",
+      "text": "A target’s astral form can travel through the Astral Plane. The moment an astral form leaves that plane, the target’s body and possessions travel along the silver cord, causing the target to re-enter its body on the new plane.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.astral-projection.p-5",
+      "text": "Any damage or other effects that apply to an astral form have no effect on the target’s body and vice versa. If a target’s body or astral form drops to 0 Hit Points, the spell ends for that target. The spell ends for all the targets if you take a Magic action to dismiss it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.astral-projection.p-6",
+      "text": "When the spell ends for a target who isn’t dead, the target reappears in its body and exits the state of suspended animation.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.augury",
+      "text": "Augury",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.augury.p-1",
+      "text": "Level 2 Divination (Cleric, Druid, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (specially marked sticks, bones, cards, or other divinatory tokens worth 25+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.augury.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.augury.p-2",
+      "text": "You receive an omen from an otherworldly entity about the results of a course of action that you plan to take within the next 30 minutes. The GM chooses the omen from the Omens table.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Omens",
+      "columns": [
+        "Omen",
+        "For Results That Will Be …"
+      ],
+      "rows": [
+        [
+          "Weal",
+          "Good"
+        ],
+        [
+          "Woe",
+          "Bad"
+        ],
+        [
+          "Weal and woe",
+          "Good and bad"
+        ],
+        [
+          "Indifference",
+          "Neither good nor bad"
+        ]
+      ],
+      "ruleId": "spells.a-b.augury.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "spells.a-b.augury.p-3",
+      "text": "The spell doesn’t account for circumstances, such as other spells, that might change the results.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.augury.p-4",
+      "text": "If you cast the spell more than once before finishing a Long Rest, there is a cumulative 25 percent chance for each casting after the first that you get no answer.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.aura-of-life",
+      "text": "Aura of Life",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.aura-of-life.p-1",
+      "text": "Level 4 Abjuration (Cleric, Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.aura-of-life.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.aura-of-life.p-2",
+      "text": "An aura radiates from you in a 30-foot Emanation for the duration. While in the aura, you and your allies have Resistance to Necrotic damage, and your Hit Point maximums can’t be reduced. If an ally with 0 Hit Points starts its turn in the aura, that ally regains 1 Hit Point.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.awaken",
+      "text": "Awaken",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.awaken.p-1",
+      "text": "Level 5 Transmutation (Bard, Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "8 hours",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (an agate worth 1,000+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.awaken.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.awaken.p-2",
+      "text": "You spend the casting time tracing magical pathways within a precious gemstone, and then touch the target. The target must be either a Beast or Plant creature with an Intelligence of 3 or less or a natural plant that isn’t a creature. The target gains an Intelligence of 10 and the ability to speak one language you know. If the target is a natural plant, it becomes a Plant creature and gains the ability to move its limbs, roots, vines, creepers, and so forth, and it gains senses similar to a human’s. The GM chooses statistics appropriate for the awakened Plant, such as the statistics for the Awakened Shrub or Awakened Tree in “Monsters.”",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.awaken.p-3",
+      "text": "The awakened target has the Charmed condition for 30 days or until you or your allies deal damage to it. When that condition ends, the awakened creature chooses its attitude toward you.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.bane",
+      "text": "Bane",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.bane.p-1",
+      "text": "Level 1 Enchantment (Bard, Cleric, Warlock)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a drop of blood)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.bane.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.bane.p-2",
+      "text": "Up to three creatures of your choice that you can see within range must each make a Charisma saving throw. Whenever a target that fails this save makes an attack roll or a saving throw before the spell ends, the target must subtract 1d4 from the attack roll or save.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.bane.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.banishment",
+      "text": "Banishment",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.banishment.p-1",
+      "text": "Level 4 Abjuration (Cleric, Paladin, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a pentacle)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.banishment.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.banishment.p-2",
+      "text": "One creature that you can see within range must succeed on a Charisma saving throw or be transported to a harmless demiplane for the duration. While there, the target has the Incapacitated condition. When the spell ends, the target reappears in the space it left or in the nearest unoccupied space if that space is occupied.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.banishment.p-3",
+      "text": "If the target is an Aberration, a Celestial, an Elemental, a Fey, or a Fiend, the target doesn’t return if the spell lasts for 1 minute. The target is instead transported to a random location on a plane (GM’s choice) associated with its creature type.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.banishment.p-4",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 4.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.barkskin",
+      "text": "Barkskin",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.barkskin.p-1",
+      "text": "Level 2 Transmutation (Druid, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a handful of bark)",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.barkskin.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.barkskin.p-2",
+      "text": "You touch a willing creature. Until the spell ends, the target’s skin assumes a bark-like appearance, and the target has an Armor Class of 17 if its AC is lower than that.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.beacon-of-hope",
+      "text": "Beacon of Hope",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.beacon-of-hope.p-1",
+      "text": "Level 3 Abjuration (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.beacon-of-hope.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.beacon-of-hope.p-2",
+      "text": "Choose any number of creatures within range. For the duration, each target has Advantage on Wisdom saving throws and Death Saving Throws and regains the maximum number of Hit Points possible from any healing.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.befuddlement",
+      "text": "Befuddlement",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.befuddlement.p-1",
+      "text": "Level 8 Enchantment (Bard, Druid, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "150 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a key ring with no keys)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.befuddlement.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.befuddlement.p-2",
+      "text": "You blast the mind of a creature that you can see within range. The target makes an Intelligence saving throw.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.befuddlement.p-3",
+      "text": "On a failed save, the target takes 10d12 Psychic damage and can’t cast spells or take the Magic action. At the end of every 30 days, the target repeats the save, ending the effect on a success. The effect can also be ended by the Greater Restoration, Heal, or Wish spell.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.befuddlement.p-4",
+      "text": "On a successful save, the target takes half as much damage only.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.bestow-curse",
+      "text": "Bestow Curse",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.bestow-curse.p-1",
+      "text": "Level 3 Necromancy (Bard, Cleric, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.bestow-curse.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.bestow-curse.p-2",
+      "text": "You touch a creature, which must succeed on a Wisdom saving throw or become cursed for the duration. Until the curse ends, the target suffers one of the following effects of your choice:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Choose one ability. The target has Disadvantage on ability checks and saving throws made with that ability.",
+        "The target has Disadvantage on attack rolls against you.",
+        "In combat, the target must succeed on a Wisdom saving throw at the start of each of its turns or be forced to take the Dodge action on that turn.",
+        "If you deal damage to the target with an attack roll or a spell, the target takes an extra 1d8 Necrotic damage. Using a Higher-Level Spell Slot. If you cast this"
+      ],
+      "ruleId": "spells.a-b.bestow-curse.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "ruleId": "spells.a-b.bestow-curse.p-3",
+      "text": "spell using a level 4 spell slot, you can maintain Concentration on it for up to 10 minutes. If you use a level 5+ spell slot, the spell doesn’t require Concentration, and the duration becomes 8 hours (level 5–6 slot) or 24 hours (level 7–8 slot). If you use a level 9 spell slot, the spell lasts until dispelled.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.black-tentacles",
+      "text": "Black Tentacles",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.black-tentacles.p-1",
+      "text": "Level 4 Conjuration (Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a tentacle)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.black-tentacles.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.black-tentacles.p-2",
+      "text": "Squirming, ebony tentacles fill a 20-foot square on ground that you can see within range. For the duration, these tentacles turn the ground in that area into Difficult Terrain.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.black-tentacles.p-3",
+      "text": "Each creature in that area makes a Strength saving throw. On a failed save, it takes 3d6 Bludgeoning damage, and it has the Restrained condition until the spell ends. A creature also makes that save if it enters the area or ends it turn there. A creature makes that save only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.black-tentacles.p-4",
+      "text": "A Restrained creature can take an action to make a Strength (Athletics) check against your spell save DC, ending the condition on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.blade-barrier",
+      "text": "Blade Barrier",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.blade-barrier.p-1",
+      "text": "Level 6 Evocation (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.blade-barrier.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.blade-barrier.p-2",
+      "text": "You create a wall of whirling blades made of magical energy. The wall appears within range and lasts for the duration. You make a straight wall up to 100 feet long, 20 feet high, and 5 feet thick, or a ringed wall up to 60 feet in diameter, 20 feet high, and 5 feet thick. The wall provides Three-Quarters Cover, and its space is Difficult Terrain.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.blade-barrier.p-3",
+      "text": "Any creature in the wall’s space makes a Dexterity saving throw, taking 6d10 Force damage on a failed save or half as much damage on a successful one. A creature also makes that save if it enters the wall’s space or ends it turn there. A creature makes that save only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.bless",
+      "text": "Bless",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.bless.p-1",
+      "text": "Level 1 Enchantment (Cleric, Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a Holy Symbol worth 5+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.bless.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.bless.p-2",
+      "text": "You bless up to three creatures within range. Whenever a target makes an attack roll or a saving throw before the spell ends, the target adds 1d4 to the attack roll or save.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.bless.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.blight",
+      "text": "Blight",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.blight.p-1",
+      "text": "Level 4 Necromancy (Druid, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.blight.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.blight.p-2",
+      "text": "A creature that you can see within range makes a Constitution saving throw, taking 8d8 Necrotic damage on a failed save or half as much damage on a successful one. A Plant creature automatically fails the save.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.blight.p-3",
+      "text": "Alternatively, target a nonmagical plant that isn’t a creature, such as a tree or shrub. It doesn’t make a save; it simply withers and dies.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.blight.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 4.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.blindness-deafness",
+      "text": "Blindness/Deafness",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.blindness-deafness.p-1",
+      "text": "Level 2 Transmutation (Bard, Cleric, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.blindness-deafness.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.blindness-deafness.p-2",
+      "text": "One creature that you can see within range must succeed on a Constitution saving throw, or it has the Blinded or Deafened condition (your choice) for the duration. At the end of each of its turns, the target repeats the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.blindness-deafness.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 2.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.blink",
+      "text": "Blink",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.blink.p-1",
+      "text": "Level 3 Transmutation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.blink.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.blink.p-2",
+      "text": "Roll 1d6 at the end of each of your turns for the duration. On a roll of 4–6, you vanish from your current plane of existence and appear in the Ethereal Plane (the spell ends instantly if you are already on that plane). While on the Ethereal Plane, you can perceive the plane you left, which is cast in shades of gray, but you can’t see anything there more than 60 feet away. You can affect and be affected only by other creatures on the Ethereal Plane, and creatures on the other plane can’t perceive you unless they have a special ability that lets them perceive things on the Ethereal Plane.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.blink.p-3",
+      "text": "You return to the other plane at the start of your next turn and when the spell ends if you are on the Ethereal Plane. You return to an unoccupied space of your choice that you can see within 10 feet of the space you left. If no unoccupied space is available within that range, you appear in the nearest unoccupied space.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.blur",
+      "text": "Blur",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.blur.p-1",
+      "text": "Level 2 Illusion (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.blur.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.blur.p-2",
+      "text": "Your body becomes blurred. For the duration, any creature has Disadvantage on attack rolls against you. An attacker is immune to this effect if it perceives you with Blindsight or Truesight.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.a-b.burning-hands",
+      "text": "Burning Hands",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.a-b.burning-hands.p-1",
+      "text": "Level 1 Evocation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.a-b.burning-hands.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.a-b.burning-hands.p-2",
+      "text": "A thin sheet of flames shoots forth from you. Each creature in a 15-foot Cone makes a Dexterity saving throw, taking 3d6 Fire damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.burning-hands.p-3",
+      "text": "Flammable objects in the Cone that aren’t being worn or carried start burning.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.a-b.burning-hands.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 1.",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "spells.a-b",
+  "editorialBlocks": [
+    "spells.a-b.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Spells",
+    "Spells A–B"
+  ],
+  "order": 3601,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "spells-a-b",
+  "sourcePages": [
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114
+  ],
+  "title": "Spells A–B"
+}

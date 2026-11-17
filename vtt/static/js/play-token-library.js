@@ -9,7 +9,7 @@
             const actions = el('div'); actions.className = 'token-library-actions';
             const save = el('button', 'Auswahl speichern'); save.type = 'button'; save.id = 'btnSaveTokenTemplate';
             const refresh = el('button', 'Aktualisieren'); refresh.type = 'button';
-            const place = el('button', 'Neuen Token platzieren'); place.type = 'button'; place.id = 'btnPlaceNewToken';
+            const place = el('button', document.documentElement.lang.startsWith('en')?'Create new token':'Neuen Token erstellen'); place.type = 'button'; place.id = 'btnPlaceNewToken';
             place.onclick = () => { ui.pendingTokenTemplate = null; ui._setTool('token'); ui.windows.close('tokenWidget'); ui._showMessage(t('Klicke auf die Karte, um einen Token zu platzieren.')); };
             actions.append(place, save, refresh);
             this.status = el('p'); this.status.id = 'tokenLibraryStatus'; this.status.setAttribute('role', 'status');
@@ -44,9 +44,10 @@
             const place = el('button', 'Platzieren'); place.type = 'button';
             place.onclick = () => {
                 if (this.ui.readOnly) { this.status.textContent = t('Die Sitzung muss zum Platzieren gestartet sein.'); return; }
+                this.ui._setTool('token');
                 this.ui.pendingTokenTemplate = row;
                 this.ui.pendingTokenImage = image || null; this.ui.pendingTokenImageLabel = row.name;
-                this.ui._setTool('token'); this.ui.windows.close('tokenWidget');
+                this.ui.windows.close('tokenWidget');
                 this.ui._showMessage(t('Vorlage gewählt. Klicke auf die Karte.'));
             };
             const edit = el('button', 'Bearbeiten'); edit.type = 'button';

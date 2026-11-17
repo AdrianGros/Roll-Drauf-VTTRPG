@@ -1,0 +1,519 @@
+{
+  "builder": {
+    "tool": "tools/build_english_srd.py",
+    "version": "1.0.0"
+  },
+  "documents": [
+    {
+      "digest": "sha256:ab71ef2e7efec8bbf259742c957665e33c8f3224c1dc5739e870045a969edcd1",
+      "documentId": "core.rhythm-and-abilities",
+      "slug": "rhythm-of-play-and-abilities",
+      "title": "Rhythm of Play and the Six Abilities"
+    },
+    {
+      "digest": "sha256:adb0f09b9571a78cf34eb89c81c12d6a2712f9ead891edeb8984ec001937e996",
+      "documentId": "core.d20-tests",
+      "slug": "d20-tests",
+      "title": "D20 Tests"
+    },
+    {
+      "digest": "sha256:c69eec8dd8931c61ea8eeedde6aa71c2c8b78204518b0c4b97d8de2f6b386086",
+      "documentId": "core.proficiency",
+      "slug": "proficiency",
+      "title": "Proficiency"
+    },
+    {
+      "digest": "sha256:bb96b4d859b559d9e4b11eed3b552c36a6e2d3c2e3e9b78e18014d1e44cfa9ef",
+      "documentId": "core.actions",
+      "slug": "actions",
+      "title": "Actions"
+    },
+    {
+      "digest": "sha256:a62a7155fdcd708ed4bfa1a34a9c7a51e8e5a9421c59a7068dc11eb1f455c9af",
+      "documentId": "core.social-interaction",
+      "slug": "social-interaction",
+      "title": "Social Interaction"
+    },
+    {
+      "digest": "sha256:2e483269159ba9ff0a90bbf02086db2bbc379a6757ce99e90c66c84f60beba4e",
+      "documentId": "core.exploration",
+      "slug": "exploration",
+      "title": "Exploration"
+    },
+    {
+      "digest": "sha256:13fb18f61a3886a99a4a74453d818be4e6a981c7db052b8e43ea032f430c6f70",
+      "documentId": "core.combat",
+      "slug": "combat",
+      "title": "Combat"
+    },
+    {
+      "digest": "sha256:2930e65b1d88d4afd31cb135fea083cf29eb2fe36e9ef46d2001f53057bfc23b",
+      "documentId": "core.damage-and-healing",
+      "slug": "damage-and-healing",
+      "title": "Damage and Healing"
+    },
+    {
+      "digest": "sha256:0fbfbe9e0f76017f0b3c9e70ed676317633a76baa47d5f6d497794194b721f1b",
+      "documentId": "character-creation.overview",
+      "slug": "character-creation",
+      "title": "Creating a Character"
+    },
+    {
+      "digest": "sha256:bf289d4a4afb9ee3ee45aaf0cccd0df841fb774a3380e449ae38d12575c21704",
+      "documentId": "character-creation.advancement",
+      "slug": "level-advancement",
+      "title": "Level Advancement"
+    },
+    {
+      "digest": "sha256:2c4803e1097b894954b1a7de9795a50d467b806c82bf9cd941480aa3c0e6df1f",
+      "documentId": "character-creation.multiclassing",
+      "slug": "multiclassing",
+      "title": "Multiclassing"
+    },
+    {
+      "digest": "sha256:f54c1d10b0788e49d4d15ca62c5c7366de9bcda9dd3c5a7d1a2bb785bfff4127",
+      "documentId": "character-creation.trinkets",
+      "slug": "trinkets",
+      "title": "Trinkets"
+    },
+    {
+      "digest": "sha256:043261c3cef142b60cc3a1d4de4f5723d43ccdb61eb9267d884bdd7bd7814fd1",
+      "documentId": "classes.barbarian",
+      "slug": "barbarian",
+      "title": "Barbarian"
+    },
+    {
+      "digest": "sha256:6c8f0b97b2e32af48f2757af8b2dfe31275d20a7af78b14bf39e2ee2886137b6",
+      "documentId": "classes.bard",
+      "slug": "bard",
+      "title": "Bard"
+    },
+    {
+      "digest": "sha256:6abdd8207ef7aa1cff93d01b494753b9bd7d20474fc90dc7b91fa4f09c522b97",
+      "documentId": "classes.cleric",
+      "slug": "cleric",
+      "title": "Cleric"
+    },
+    {
+      "digest": "sha256:4143fc6b40b5d1dce23b25a3313584e60cd5dc298ad37e2d105c8edf9aa9cfa7",
+      "documentId": "classes.druid",
+      "slug": "druid",
+      "title": "Druid"
+    },
+    {
+      "digest": "sha256:252f792c3aa681c469ba4b915a651af7cc0070b756ba87442bcdcc2402e82799",
+      "documentId": "classes.fighter",
+      "slug": "fighter",
+      "title": "Fighter"
+    },
+    {
+      "digest": "sha256:48ed6bad75be9fe9ded8292759a3139e941dac5367447dc7cceb9750f2026e14",
+      "documentId": "classes.monk",
+      "slug": "monk",
+      "title": "Monk"
+    },
+    {
+      "digest": "sha256:e0ba5d6057e091563e41a8e1747f827bbe716acc2a6079691f3e309d186231e0",
+      "documentId": "classes.paladin",
+      "slug": "paladin",
+      "title": "Paladin"
+    },
+    {
+      "digest": "sha256:c6fe1bf44ee6bf2e4c7f9450192447560176dfc97f3c8fd89166fd826fb2ca5d",
+      "documentId": "classes.ranger",
+      "slug": "ranger",
+      "title": "Ranger"
+    },
+    {
+      "digest": "sha256:9ff22b8ef8efa44cfe953779d02ef12efbba4005fd709d5ac000e4ea900e590e",
+      "documentId": "classes.rogue",
+      "slug": "rogue",
+      "title": "Rogue"
+    },
+    {
+      "digest": "sha256:3402bdb7fac37c6f067f0d3bb5b6aa87501ce2371d97516891227d41f8b57f3f",
+      "documentId": "classes.sorcerer",
+      "slug": "sorcerer",
+      "title": "Sorcerer"
+    },
+    {
+      "digest": "sha256:891bedd79ca69001ed71a6ac469977bfea99d163ee61a22f4db198ed61ffe442",
+      "documentId": "classes.warlock",
+      "slug": "warlock",
+      "title": "Warlock"
+    },
+    {
+      "digest": "sha256:dda0454440290b014b4a7dd14ffcf90972bf1235946a5f9496e0bde01f0a1c2f",
+      "documentId": "classes.wizard",
+      "slug": "wizard",
+      "title": "Wizard"
+    },
+    {
+      "digest": "sha256:0794954294ccf25519f9aa856f47a0f91120518c356a8fd5d2e5f7981a31ff07",
+      "documentId": "origins.backgrounds",
+      "slug": "backgrounds",
+      "title": "Character Backgrounds"
+    },
+    {
+      "digest": "sha256:2b5661aa74b4759c30e3957c493737b168f17d6ce13916793358787a218794cf",
+      "documentId": "origins.species",
+      "slug": "species",
+      "title": "Character Species"
+    },
+    {
+      "digest": "sha256:15e32a1350b99f2d86ec92c5b2d4d2388c339a4d9e9f6aaab2730723abb40a13",
+      "documentId": "feats",
+      "slug": "feats",
+      "title": "Feats"
+    },
+    {
+      "digest": "sha256:571a6dbf0277cb0e09f5e39f452c41e6180944363660ae896e1ece35f1c37aa0",
+      "documentId": "equipment.coins-and-weapons",
+      "slug": "coins-and-weapons",
+      "title": "Coins and Weapons"
+    },
+    {
+      "digest": "sha256:0cba831a4248001b97b691ea08a82fd3ede629d7fee0212cbf68d8dbed778d08",
+      "documentId": "equipment.armor",
+      "slug": "armor",
+      "title": "Armor"
+    },
+    {
+      "digest": "sha256:cf10374502660a3803f861f9ca342a7639fb1c7df2a8661b049bebe6c62e2cc3",
+      "documentId": "equipment.tools",
+      "slug": "tools",
+      "title": "Tools"
+    },
+    {
+      "digest": "sha256:91d95412e3023710f146b376fd014f1b1d5713bc3f7ddcc023aec02a5c4db62a",
+      "documentId": "equipment.adventuring-gear",
+      "slug": "adventuring-gear",
+      "title": "Adventuring Gear"
+    },
+    {
+      "digest": "sha256:3acf861fce49f0007ea82ac8535a9426e55e6c6792d8e345a97a55af82517b28",
+      "documentId": "equipment.mounts-and-vehicles",
+      "slug": "mounts-and-vehicles",
+      "title": "Mounts and Vehicles"
+    },
+    {
+      "digest": "sha256:c93997f46699a5459fa455f172b4b83773789365e9480a0e18959edb1d1e97c1",
+      "documentId": "equipment.services",
+      "slug": "lifestyle-and-services",
+      "title": "Lifestyle, Lodging and Services"
+    },
+    {
+      "digest": "sha256:18e6ce294f6c2b678f53d845a163a8128e942114f84fbeb74e7a59d9feb68f9b",
+      "documentId": "equipment.crafting",
+      "slug": "crafting",
+      "title": "Crafting"
+    },
+    {
+      "digest": "sha256:1879730ce047ce1fbc9839123e9bfe5d41110008e1fddd94aadf0373a7ee49ac",
+      "documentId": "spells.rules",
+      "slug": "gaining-and-casting-spells",
+      "title": "Gaining and Casting Spells"
+    },
+    {
+      "digest": "sha256:74b5038ee5ec05014edde81d6a7dabab4b55000447669c5466e5fb2c91f9bc8a",
+      "documentId": "spells.a-b",
+      "slug": "spells-a-b",
+      "title": "Spells A–B"
+    },
+    {
+      "digest": "sha256:69268f0493fec2185da21075c63138a2a2313a4a2f123278b2cffcb2955a92ae",
+      "documentId": "spells.c-d",
+      "slug": "spells-c-d",
+      "title": "Spells C–D"
+    },
+    {
+      "digest": "sha256:75fc100c28ecfe3eae80cc4a9ef5cf906e303d6b61bbe481c2663b4a247790a7",
+      "documentId": "spells.e-f",
+      "slug": "spells-e-f",
+      "title": "Spells E–F"
+    },
+    {
+      "digest": "sha256:ee30b35792ca685ab1131a0e4652312ecf8c7f9713b2b00d3b4e1e50bee3468c",
+      "documentId": "spells.g-h",
+      "slug": "spells-g-h",
+      "title": "Spells G–H"
+    },
+    {
+      "digest": "sha256:c119477b6a1f33f616eb3191348c08b66cb9ab04ed6270608aea4dcd9aee0d3e",
+      "documentId": "spells.i-l",
+      "slug": "spells-i-l",
+      "title": "Spells I–L"
+    },
+    {
+      "digest": "sha256:3f83cd396a59b70623d68e510006b23498cb2f7b87db3efafbecb23e70484414",
+      "documentId": "spells.m-o",
+      "slug": "spells-m-o",
+      "title": "Spells M–O"
+    },
+    {
+      "digest": "sha256:884d09b22d809c9af187f98eda68e80d4ef463d8e58a11e08da927d86b48f220",
+      "documentId": "spells.p-r",
+      "slug": "spells-p-r",
+      "title": "Spells P–R"
+    },
+    {
+      "digest": "sha256:e2b8502796f275c2d15b1fe79d67c04b762d2670390b828f1d215362da9edbde",
+      "documentId": "spells.s",
+      "slug": "spells-s",
+      "title": "Spells S"
+    },
+    {
+      "digest": "sha256:72f24d11bcc359e5b510e239c9bc79cb176a547162208b4e7a21893b5a4f3ec1",
+      "documentId": "spells.t-v",
+      "slug": "spells-t-v",
+      "title": "Spells T–V"
+    },
+    {
+      "digest": "sha256:8dd3e5ae87d9444bec7ccac6f7e9856c502b88fd11710afc3355738b5b76cc89",
+      "documentId": "spells.w-z",
+      "slug": "spells-w-z",
+      "title": "Spells W–Z"
+    },
+    {
+      "digest": "sha256:eec680a6da09f3c6c8daced160a4c61b0c0882f8b436ffdf76cbb305b405eece",
+      "documentId": "glossary.a-b",
+      "slug": "rules-glossary-a-b",
+      "title": "Rules Glossary A–B"
+    },
+    {
+      "digest": "sha256:8a3adacb1fd9e55259eb0a0039b621f167462372a3a6c33f607a927b42a41e2e",
+      "documentId": "glossary.c-d",
+      "slug": "rules-glossary-c-d",
+      "title": "Rules Glossary C–D"
+    },
+    {
+      "digest": "sha256:7cb7ebe25b60b0114b54bfd5e2098edbe9b339529ffdaf9c9037ee803e000caf",
+      "documentId": "glossary.e-h",
+      "slug": "rules-glossary-e-h",
+      "title": "Rules Glossary E–H"
+    },
+    {
+      "digest": "sha256:78dfdd693db8a518c9f9e2ad1998ba62f56fa6a9b75e0e0e72b754e8b98fdb37",
+      "documentId": "glossary.m-r",
+      "slug": "rules-glossary-m-r",
+      "title": "Rules Glossary M–R"
+    },
+    {
+      "digest": "sha256:dea45bb9ec108c43875195726d2ec67d24dc25cb6765e6fca0cf7367dbb319e5",
+      "documentId": "glossary.s",
+      "slug": "rules-glossary-s",
+      "title": "Rules Glossary S"
+    },
+    {
+      "digest": "sha256:941e000ec323ec248f1c1358a3a05d5373050219622df55e2f9e0b1296266290",
+      "documentId": "glossary.t-z",
+      "slug": "rules-glossary-t-z",
+      "title": "Rules Glossary T–Z"
+    },
+    {
+      "digest": "sha256:1f65b67c870b1b516e964fac8dafc15f72ae6c2d794edf7795c22f4bb45957c9",
+      "documentId": "toolbox.travel-and-backgrounds",
+      "slug": "travel-pace-and-backgrounds",
+      "title": "Travel Pace and Creating a Background"
+    },
+    {
+      "digest": "sha256:72fb79250458087c5b7c447636c87b9f6bdce6e7cc5d70115f3b3d3ad45ed948",
+      "documentId": "toolbox.curses",
+      "slug": "curses-and-magical-contagions",
+      "title": "Curses and Magical Contagions"
+    },
+    {
+      "digest": "sha256:eea8a98bf6ec201f61a21ca0c4871d696f1c690300b7875e3d1d530ba26c8628",
+      "documentId": "toolbox.environment",
+      "slug": "environmental-effects",
+      "title": "Environmental Effects"
+    },
+    {
+      "digest": "sha256:c0ea490381c2b9ba44a1446577b4d7058143647d4b39cefb1992927de4ebb66a",
+      "documentId": "toolbox.fear",
+      "slug": "fear-and-mental-stress",
+      "title": "Fear and Mental Stress"
+    },
+    {
+      "digest": "sha256:10395329d571343c8913351e8e023c4bbab06bf3c407a5f6d408915823a74b27",
+      "documentId": "toolbox.poison",
+      "slug": "poison",
+      "title": "Poison"
+    },
+    {
+      "digest": "sha256:77899289f184030704074016272004bfc4384c0af6f3fc990a858705a523706a",
+      "documentId": "toolbox.traps",
+      "slug": "traps",
+      "title": "Traps"
+    },
+    {
+      "digest": "sha256:9e82f990086dd4ffa74f88af295c908ecc8981251ff0c2df93a03c7c30f52d9d",
+      "documentId": "toolbox.combat-encounters",
+      "slug": "combat-encounters",
+      "title": "Combat Encounters"
+    },
+    {
+      "digest": "sha256:b5b4bfdc6cdd832fbb1c6770f4fe628289f60f3541048efde94e82af1966122f",
+      "documentId": "magic-items.rules",
+      "slug": "magic-item-rules",
+      "title": "Magic Item Rules"
+    },
+    {
+      "digest": "sha256:fe12c5dafaa779c6073e5da2732d0fc3a26d0230840adc417c38b11bfd554fa2",
+      "documentId": "magic-items.a-b",
+      "slug": "magic-items-a-b",
+      "title": "Magic Items A–B"
+    },
+    {
+      "digest": "sha256:773ef5b5f4b3ef34c1c1a4c0c415276bad8594aafd0424f06de0e4f1801c62af",
+      "documentId": "magic-items.c-d",
+      "slug": "magic-items-c-d",
+      "title": "Magic Items C–D"
+    },
+    {
+      "digest": "sha256:5cf33951a5eab8ea8f6b8bdff7704d3f52e96ecc93acec58182ca5eb05aa9d89",
+      "documentId": "magic-items.m-o",
+      "slug": "magic-items-m-o",
+      "title": "Magic Items M–O"
+    },
+    {
+      "digest": "sha256:de3e535bb108a8e773cb820b7f06e1fdf3a7c268e1e192a1dd6e3dc08b4aa845",
+      "documentId": "magic-items.p-r",
+      "slug": "magic-items-p-r",
+      "title": "Magic Items P–R"
+    },
+    {
+      "digest": "sha256:7dd3a980a01139db1fd31bb8c04a6d916a7a8339eb27cb72dd19c60aa04f251e",
+      "documentId": "magic-items.s",
+      "slug": "magic-items-s",
+      "title": "Magic Items S"
+    },
+    {
+      "digest": "sha256:0d1d2422be5ba00db1f8c766d0ec350d0a58b8b0e90932654abfbbc482c164b4",
+      "documentId": "magic-items.t-z",
+      "slug": "magic-items-t-z",
+      "title": "Magic Items T–Z"
+    },
+    {
+      "digest": "sha256:e48b5cce26a7daf2b7f1eb0dc6a956aeb9f1efb6ff817cd63cb91175a62c13ae",
+      "documentId": "monsters.overview",
+      "slug": "stat-blocks-and-running-monsters",
+      "title": "Stat Blocks and Running a Monster"
+    },
+    {
+      "digest": "sha256:d23ffa90882f10e543bf87f68ec073a9b9f7b44d1f0534b632c3fd0c5ad6a035",
+      "documentId": "monsters.a-b",
+      "slug": "monsters-a-b",
+      "title": "Monsters A–B"
+    },
+    {
+      "digest": "sha256:e3aee873057d694159bb75be7865fd63407808a93682b062162e83ce49fc7959",
+      "documentId": "monsters.c-d",
+      "slug": "monsters-c-d",
+      "title": "Monsters C–D"
+    },
+    {
+      "digest": "sha256:b4e340f4ec633a56ec0ad30dac754f3120815bbe2ad9651049a3c7079fefe071",
+      "documentId": "monsters.e-g",
+      "slug": "monsters-e-g",
+      "title": "Monsters E–G"
+    },
+    {
+      "digest": "sha256:11b8183c375f0d1ca13693409f90f88a314e189a9857538230a89fdea5fdec59",
+      "documentId": "monsters.h-k",
+      "slug": "monsters-h-k",
+      "title": "Monsters H–K"
+    },
+    {
+      "digest": "sha256:c556897fdb5821ee28e559d400841cf37a8a4e0995ac7ab45d65fb8c07f1f498",
+      "documentId": "monsters.l-n",
+      "slug": "monsters-l-n",
+      "title": "Monsters L–N"
+    },
+    {
+      "digest": "sha256:d2ed02f3d4db66a14af139581ce85b05148109ad4743b418ef93f3f106cee469",
+      "documentId": "monsters.o-r",
+      "slug": "monsters-o-r",
+      "title": "Monsters O–R"
+    },
+    {
+      "digest": "sha256:e3a59053adec2a30bab513254895eebe4e4fa3602cdac49e703e7b413c3cfe01",
+      "documentId": "monsters.s",
+      "slug": "monsters-s",
+      "title": "Monsters S"
+    },
+    {
+      "digest": "sha256:9987c0bd652660da88c2c15c9b9709d37758de46b8984f88a69434c9a6731f5c",
+      "documentId": "monsters.t-z",
+      "slug": "monsters-t-z",
+      "title": "Monsters T–Z"
+    },
+    {
+      "digest": "sha256:a10cc58019a7499e5a322f9c9196fdb0361e1b1bffa4236ddcad1a95e07cfe28",
+      "documentId": "animals.a-c",
+      "slug": "animals-a-c",
+      "title": "Animals A–C"
+    },
+    {
+      "digest": "sha256:fa360787e1bae1f50f34b3424238f6dc2eae67dbbbae3dd72a13f679d1415845",
+      "documentId": "animals.d-g",
+      "slug": "animals-d-g",
+      "title": "Animals D–G"
+    },
+    {
+      "digest": "sha256:ba88423481cd607fea7915c20bb0559e44a4f4f1c165bf879f35a37ab1de23b6",
+      "documentId": "animals.h-o",
+      "slug": "animals-h-o",
+      "title": "Animals H–O"
+    },
+    {
+      "digest": "sha256:46cce660fcdf597506a056403d935b208448152235a93eac0d88ea44c18cf652",
+      "documentId": "animals.p-r",
+      "slug": "animals-p-r",
+      "title": "Animals P–R"
+    },
+    {
+      "digest": "sha256:f075ea702e411a5a0520d556bd402a3ded56e5f8eb0bba508c6699b3f8d747d9",
+      "documentId": "animals.s-z",
+      "slug": "animals-s-z",
+      "title": "Animals S–Z"
+    }
+  ],
+  "edition": "2024",
+  "editorialPolicy": {
+    "editorialBlockType": "original-note",
+    "editorialFlag": "editorial",
+    "officialBody": "extracted",
+    "paraphrased": false,
+    "statement": "All blocks except Roll Drauf reading notes are the official SRD 5.2.1 text, extracted from the text layer of the English PDF. Extraction restores the two-column reading order, joins line breaks, removes soft hyphens and structures the text into headings, paragraphs, lists, tables and stat blocks. The official text is not paraphrased, summarised or reworded. Blocks of type original-note with editorial=true are Roll Drauf's own explanatory English text and are not part of the SRD.",
+    "structuralLabels": "Stat block labels 'Type' and the ability score row layout are structural, not source text."
+  },
+  "license": {
+    "attributionFile": "attribution.txt",
+    "attributionSha256": "5080b4d38671c15a22585b642f416b74be624ee281dbc713fe88084149465d63",
+    "id": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/legalcode"
+  },
+  "locale": "en-US",
+  "publishedAt": "2026-11-17T00:00:00Z",
+  "rulesetId": "srd-5.2.1-en",
+  "rulesetVersion": "1.0.0",
+  "schemaVersion": "regelwerk.package.v1",
+  "source": {
+    "localCopy": "/static/regelwerk/SRD_CC_v5.2.1.pdf",
+    "localReader": "/regelwerk/en",
+    "pageCount": 364,
+    "pdfVerified": true,
+    "publisher": "Wizards of the Coast LLC",
+    "sha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+    "textLayer": {
+      "bytes": 2145780,
+      "sha256": "130b7ed653ef845fc6a831f14c0ed823b28274103c251e879c7d9313d80a5322",
+      "tool": "pdftotext -layout (poppler)"
+    },
+    "title": "System Reference Document 5.2.1",
+    "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf"
+  },
+  "status": "published",
+  "title": "Roll Drauf Rulebook — SRD 5.2.1 (English)"
+}

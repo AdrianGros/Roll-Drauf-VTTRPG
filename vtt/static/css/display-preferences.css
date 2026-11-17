@@ -9,10 +9,25 @@ html[data-vtt-theme] {
   --vtt-rubric:var(--ui-accent); --vtt-rubric-deep:var(--ui-accent); --vtt-success-ink:var(--ui-success); --vtt-error-ink:var(--ui-danger);
   --vtt-text:var(--ui-ink); --vtt-bg:var(--ui-paper); --vtt-sidecar-text:var(--ui-ink); --vtt-sidecar-bg:var(--ui-panel);
 }
+/* Night: the owner's four-color palette (colorcombinations.org "Edo Purple & Mouse Grey"):
+   Edo #5E4A8C, Gray #8A8A8A, Ink #1C1C1C, Natural #F8F4E9. Measured WCAG 2.2 pairs (opaque sRGB):
+   Natural/Ink 15.51, Natural/Edo 6.74, Gray/Ink 4.94, Edo/Ink 2.30 (insufficient: Edo never carries
+   text on Ink, and an Edo state also gets a light border or underline).
+   Derived steps are documented sRGB mixtures, color-mix(in srgb, A p%, B), precomputed as hex:
+     panel        #232127 = Ink 90 % + Edo 10 %       (Natural 14.49, muted 6.47, Gray line 4.61)
+     soft         #292532 = Ink 80 % + Edo 20 %       (Natural 13.60, muted 6.07, Gray line 4.33)
+     muted        #a6a5a2 = Gray 75 % + Natural 25 %  (secondary text: 6.92 on Ink)
+     edo-light    #ab9fbb = Edo 50 % + Natural 50 %   (text, link and focus accent: 6.82 on Ink)
+     edo-deep     #44385f = Edo 60 % + Ink 40 %       (binding, hover and pressed surface: Natural 9.67)
+     chrome-muted #e2dfd6 = Natural 80 % + Gray 20 %  (secondary text on Edo chrome: 5.56)
+   Gray itself is the line color. Danger/success/warning stay light state colors (not part of the palette).
+   The default accent is set by display-preferences.js (Edo fill, edo-light text); bronze/teal stay as chosen. */
 html[data-vtt-theme=night] {
-  --ui-paper:#211a17; --ui-panel:#2b221d; --ui-soft:#352b25; --ui-ink:#f5ecda; --ui-muted:#d4c6b2;
-  --ui-line:#b38d7b; --ui-danger:#ffb8b1; --ui-success:#ace0b8; --ui-warning:#f0d29a;
-  --vtt-plum:#6f292c; --vtt-plum-deep:#381a1b; --vtt-gold:var(--ui-accent); --vtt-gold-deep:var(--ui-accent);
+  --night-edo:#5e4a8c; --night-gray:#8a8a8a; --night-ink:#1c1c1c; --night-natural:#f8f4e9;
+  --night-panel:#232127; --night-soft:#292532; --night-muted:#a6a5a2; --night-edo-light:#ab9fbb; --night-edo-deep:#44385f; --night-chrome-muted:#e2dfd6;
+  --ui-paper:var(--night-ink); --ui-panel:var(--night-panel); --ui-soft:var(--night-soft); --ui-ink:var(--night-natural); --ui-muted:var(--night-muted);
+  --ui-line:var(--night-gray); --ui-danger:#ffb8b1; --ui-success:#ace0b8; --ui-warning:#f0d29a;
+  --vtt-plum:var(--night-edo); --vtt-plum-deep:var(--night-edo-deep); --vtt-gold:var(--ui-accent); --vtt-gold-deep:var(--ui-accent);
 }
 html[data-vtt-theme] body { color:var(--ui-ink); }
 html[data-vtt-theme] :is(input:not([type=color]):not([type=checkbox]):not([type=radio]),textarea,select) {
@@ -29,6 +44,7 @@ html[data-vtt-theme] :is(.sc-btn-primary,.sf-tab[aria-selected=true],.sc-card[ar
 html[data-vtt-theme] .sf-spell-filter {background:var(--ui-soft);color:var(--ui-ink);}
 html[data-vtt-theme] :is(.sc-findings,.sc-finding,.sc-import-error,.ce-help,.ce-species-entries) {color:var(--ui-ink);}
 html[data-vtt-theme=night] body:not(.ce-authoring) {background-color:var(--ui-paper);}
+html[data-vtt-theme=night] body.ce-authoring {background:var(--ui-paper);color:var(--ui-ink);}
 html[data-vtt-theme=night] :is(.book-page,.book-dashboard-page,.sheet-focus-page,.sheet-pane,.sheet-card,.sc-builder,.ce-page,dialog,.panel,.subpanel,.srd-rollbar,.sheet-next-hint,.sf-panel) {
   background-color:var(--ui-panel) !important; background-image:none !important; color:var(--ui-ink);border-color:var(--ui-line);
 }
@@ -37,18 +53,21 @@ html[data-vtt-theme=night] :is(.book-page,.sheet-focus-page,.sc-builder,.ce-page
 html[data-vtt-theme=night] :is(.sc-card,.sc-detail,.sc-table,.sc-control,.sheet-empty,.srd-sheet-note,.srd-inv-item,.srd-inv-attack,.srd-sheet-origin) {background-color:var(--ui-soft);color:var(--ui-ink);border-color:var(--ui-line);}
 html[data-vtt-theme=night] :is(.srd-sheet-value,.srd-sheet-ability-score,.srd-sheet-label,.srd-inv-meta,.sheet-identity-value,.is-proficient,.srd-roll-destination) {color:var(--ui-ink) !important;}
 html[data-vtt-theme=night] .book-dashboard-shell {background-color:var(--ui-paper);}
-/* Warm charred edges and a darker binding; content panels keep their quiet ink/paper pair. */
-html[data-vtt-theme=night] :is(.book-dashboard-page,.book-spread-page,.book-page,.sheet-focus-page,.sc-builder,.ce-page) {
+/* Night book pages: Sumi page surface with a neutral Ink fold toward both edges and an Edo binding.
+   No leather, char or warm gradients. The document book frame (.dbf-page) draws its own fold. */
+html[data-vtt-theme=night] :is(.book-dashboard-page,.book-spread-page,.book-page,.sheet-focus-page,.sc-builder,.ce-page):not(.dbf-page) {
   background-color:var(--ui-panel) !important;
-  background-image:linear-gradient(90deg,rgba(8,5,4,.88),rgba(8,5,4,0) 26px,rgba(8,5,4,0) calc(100% - 26px),rgba(8,5,4,.88)),linear-gradient(0deg,rgba(8,5,4,.6),rgba(8,5,4,0) 24px,rgba(8,5,4,0) calc(100% - 24px),rgba(8,5,4,.6)),repeating-linear-gradient(12deg,rgba(192,138,93,.025) 0 1px,rgba(192,138,93,0) 1px 7px) !important;
-  border-color:#79534a;
-  box-shadow:inset 0 0 0 1px #50342b,inset 0 0 24px #100906,0 12px 32px #0005;
+  background-image:linear-gradient(90deg,rgba(28,28,28,.85),rgba(28,28,28,0) 22px,rgba(28,28,28,0) calc(100% - 22px),rgba(28,28,28,.85)) !important;
+  border-color:var(--ui-line);
+  box-shadow:inset 0 0 0 1px var(--night-soft),0 12px 32px rgba(28,28,28,.6);
 }
-html[data-vtt-theme=night] .book-spread-page--left {border-right:3px solid #110b08;}
-html[data-vtt-theme=night] .book-spread-page--right {border-left:3px solid #110b08;}
-html[data-vtt-theme=night] :is(.book-cover,.book-spine,.book-scene-backdrop) {background:linear-gradient(135deg,#1b0f0c,#3c211b,#130c0a);border-color:#8d4b45;}
-html[data-vtt-theme=night] :is(.book-pages,.book-shell-page-stack) {background:linear-gradient(90deg,#120b08,#3b2c22 12%,#3b2c22 88%,#120b08);border-color:#79534a;}
-html[data-vtt-theme=night] .book-back {background:linear-gradient(135deg,#381a1b,#1b0f0c);border-color:#8d4b45;}
+html[data-vtt-theme=night] .book-spread-page--left {border-right:3px solid var(--night-ink);}
+html[data-vtt-theme=night] .book-spread-page--right {border-left:3px solid var(--night-ink);}
+html[data-vtt-theme=night] :is(.book-cover,.book-spine) {background:linear-gradient(135deg,var(--night-edo-deep),var(--night-edo) 55%,var(--night-edo-deep));border-color:var(--night-gray);}
+html[data-vtt-theme=night] .book-cover :is(.cover-title,.cover-kicker,.cover-action) {color:var(--night-natural);border-color:var(--night-gray);}
+html[data-vtt-theme=night] .book-scene-backdrop {background:linear-gradient(160deg,var(--night-ink),var(--night-panel));}
+html[data-vtt-theme=night] :is(.book-pages,.book-shell-page-stack) {background:linear-gradient(90deg,var(--night-ink),var(--night-soft) 12%,var(--night-soft) 88%,var(--night-ink));border-color:var(--night-gray);}
+html[data-vtt-theme=night] .book-back {background:linear-gradient(135deg,var(--night-edo-deep),var(--night-ink));border-color:var(--night-gray);}
 /* The editor shares the book's materials and type, while its canvas remains its own document. */
 html[data-vtt-theme] .mm-app {
   --parchment:var(--ui-paper);--parchment-panel:var(--ui-panel);--parchment-deep:var(--ui-soft);--parchment-soft:var(--ui-soft);
@@ -59,9 +78,13 @@ html[data-vtt-theme] .mm-global-nav {background:var(--ui-paper);border-color:var
 html[data-vtt-theme] .vtt-map-nav {background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);}
 html[data-vtt-theme] .vtt-map-nav .book-dashboard-ribbon-btn {background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);}
 html[data-vtt-theme] .vtt-map-nav .book-dashboard-ribbon-btn.is-active {background:var(--ui-action-bg);color:var(--ui-action-text);border-color:var(--ui-accent);}
-html[data-vtt-theme=night] .mm-app {--chrome:#211310;--chrome-2:#442822;--chrome-hover:#59322c;--chrome-text:#f5ecda;--chrome-muted:#d4c6b2;--chrome-line:#9e7465;--gold-on-chrome:var(--ui-accent);--gold:var(--ui-accent);}
-html[data-vtt-theme=night] :is(.mm-top,.mm-tools,.mm-panel,.mm-sheet,.mm-dialog) {border-color:var(--ui-line);box-shadow:inset 0 0 16px #100906;}
+/* Night editor chrome: Edo top bar, Ink rail, Natural text; map canvas and stage backdrop unchanged. */
+html[data-vtt-theme=night] .mm-app {--chrome:var(--night-ink);--chrome-2:var(--night-edo-deep);--chrome-hover:var(--night-edo);--chrome-text:var(--night-natural);--chrome-muted:var(--night-chrome-muted);--chrome-line:var(--night-gray);--gold-on-chrome:var(--night-natural);--gold:var(--ui-accent);--success:var(--ui-success);--danger:var(--ui-danger);}
+html[data-vtt-theme=night] :is(.mm-top,.mm-tools,.mm-panel,.mm-sheet,.mm-dialog) {border-color:var(--ui-line);box-shadow:none;}
 html[data-vtt-theme=night] .mm-app :is(.mm-tool[aria-pressed=true],.mm-tabs [role=tab][aria-selected=true],.mm-group-head h2,.mm-dialog h2) {color:var(--ui-accent);}
+html[data-vtt-theme=night] .mm-dialog h2 {color:var(--ui-accent);}
+html[data-vtt-theme=night] .mm-btn-primary {background:var(--ui-action-bg);color:var(--ui-action-text);border-color:var(--ui-accent);}
+html[data-vtt-theme=night] .mm-btn-primary:hover:not(:disabled) {background:var(--ui-action-bg);color:var(--ui-action-text);border-color:var(--ui-ink);}
 /* C01 book overviews, hub, quick launch and ribbon: text uses semantic tokens on the
    surface actually painted (solid colors, no gradient behind text) in both themes. */
 html[data-vtt-theme] :is(.book-scene-panel-kicker,.book-dashboard-eyebrow,.book-scene-ledger-head span:not(.play-launch-status-dot),.book-home-hero-kicker,.book-home-section-kicker,.book-home-feed-kicker,.book-frame-eyebrow) {color:var(--ui-muted);}
@@ -77,7 +100,9 @@ html[data-vtt-theme=night] :is(.book-scene-ledger-item,.book-scene-note,.book-sc
 }
 html[data-vtt-theme=night] :is(.book-spread-page-title,.book-dashboard-title,.book-scene-panel-title,.book-scene-stat-value,.book-scene-ledger-head strong,.book-scene-widget-card span,.book-home-hero-title,.book-home-section-title,.book-home-feed-title,.book-shell-placeholder-title,.play-launch-header h2,.play-launch-close,.play-launch-card-title,.play-launch-empty h3,.book-toc-row,.book-toc-row:hover,.book-toc-row:focus-visible) {color:var(--ui-ink);}
 html[data-vtt-theme=night] :is(.book-spread-page-copy,.book-scene-panel-copy,.book-scene-ledger-meta,.book-scene-ledger-copy,.book-scene-stat-label,.book-scene-widget-card small,.book-home-hero-copy,.book-home-feed-copy,.book-toc-count,.book-page-folio,.book-scene-loading,.play-launch-header p,.play-launch-card-meta,.play-launch-card-session,.play-launch-empty p,.book-scene-ledger-item.is-empty) {color:var(--ui-muted);}
-html[data-vtt-theme=night] :is(.book-dashboard-ribbon-btn.is-active,.book-dashboard-ribbon-btn[aria-current=page],.vtt-map-nav .book-dashboard-ribbon-btn.is-active) {background:var(--ui-action-bg);color:var(--ui-action-text);border-color:var(--ui-line);}
+/* The active entry is an Edo fill (2.30:1 against Ink): a light accent border and the underline above
+   carry the state independently of the fill. */
+html[data-vtt-theme=night] :is(.book-dashboard-ribbon-btn.is-active,.book-dashboard-ribbon-btn[aria-current=page],.vtt-map-nav .book-dashboard-ribbon-btn.is-active) {background:var(--ui-action-bg);color:var(--ui-action-text);border-color:var(--ui-accent);}
 html[data-vtt-theme=night] :is(.play-launch-status.is-error,.book-form-banner.is-error) {color:var(--ui-danger);border-color:var(--ui-danger);}
 html[data-vtt-theme=night] .book-form-banner.is-success {color:var(--ui-success);}
 /* Campaign hub and required session-preparation surface (night only; paper keeps the page's own
@@ -93,6 +118,13 @@ html[data-vtt-theme=night] #book-dashboard-scene .hub-step-state.state-todo {col
 html[data-vtt-theme=night] #book-dashboard-scene .hub-step-state.state-live {color:var(--ui-accent) !important;border-color:var(--ui-accent) !important;}
 html[data-vtt-theme] .play-launch-status-dot.is-live {color:var(--ui-success);}
 html[data-vtt-theme] .play-launch-status-dot.is-paused {color:var(--ui-warning);}
+/* Atlas authoring/reading chrome in night: semantic Sumi/Edo pair instead of the page's warm browns.
+   Pins, map images and the map viewport backdrop belong to the map document and are not re-colored. */
+html[data-vtt-theme=night] body .atlas-panel {background:var(--ui-soft);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme=night] body .atlas-dialog {background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme=night] body :is(.atlas-layout,.atlas-dialog) :is(input,select,textarea) {background:var(--ui-paper);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme=night] body .atlas-layout a:not(.btn):not(.atlas-pin) {color:var(--ui-accent);}
+html[data-vtt-theme=night] body :is(.atlas-layout,.atlas-dialog) :focus-visible {outline-color:var(--ui-accent);}
 .vtt-display-open {white-space:nowrap;min-height:40px;}
 .vtt-display-dialog {width:min(92vw,34rem);max-height:88vh;overflow:auto;border:2px solid var(--ui-line);border-radius:12px;background:var(--ui-panel);color:var(--ui-ink);padding:1.2rem;font:1rem/1.5 var(--vtt-font-ui,system-ui,sans-serif);}
 .vtt-display-dialog::backdrop {background:rgba(0,0,0,.65);}
@@ -102,6 +134,7 @@ html[data-vtt-theme] .play-launch-status-dot.is-paused {color:var(--ui-warning);
 .vtt-display-actions {display:flex;justify-content:flex-end;flex-wrap:wrap;gap:.7rem;margin-top:1rem;}
 .vtt-display-actions button {font:inherit;min-height:44px;padding:.5rem .9rem;border:1px solid var(--ui-line);border-radius:7px;background:var(--ui-soft);color:var(--ui-ink);}
 .vtt-display-actions button:last-child {background:var(--ui-action-bg);color:var(--ui-action-text);border-width:2px;}
+html[data-vtt-theme=night] .vtt-display-actions button:last-child {border-color:var(--ui-accent);}
 .sf-layout {min-width:0;}
 .sf-sticky-portrait {display:none;}
 @media(min-width:960px){
@@ -118,6 +151,7 @@ html[data-vtt-theme] :is(.ce-help,.ce-empty) {opacity:1;color:var(--ui-muted);}
 html[data-vtt-theme] .ce-species-ok {color:var(--ui-success);}
 html[data-vtt-theme] :is(.ce-species-blocked,.ce-authoring button.ce-danger) {color:var(--ui-danger);}
 html[data-vtt-theme=night] :is(.eh-window,.eh-window .window-header,.eh-window .window-content,.eh-window .standard-form,.eh-window fieldset,.eh-window nav) {background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme=night] .eh-window .window-header {background:var(--night-edo-deep);}
 html[data-vtt-theme=night] .eh-window :is(label,legend,h1,h2,h3,p,small,.hint) {color:var(--ui-ink);opacity:1;}
 /* Play table chrome (toolbar, sidebar, panels, controls). Play paints its own dark navy and plum
    surfaces in BOTH themes, so inside .tabletop-shell the semantic tokens are re-bound to a matching
@@ -159,10 +193,55 @@ html[data-vtt-theme] body.play-workspace-realign .tabletop-shell select option {
 /* Plum / selected / danger controls: light text on the painted plum at rest, hover, focus and active. */
 html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(.tool-btn,.sidebar-tab):is(.active,:hover,:focus-visible) {color:#fdfaf3 !important;}
 html[data-vtt-theme] body.play-workspace-realign .tabletop-shell :is(button,.mini-control,button.secondary,button.danger):is(:hover,:focus-visible) {color:#fdfaf3;}
-/* Warm night materials on table chrome, preserving the scene and the proven light text pair. */
+/* Night table chrome: re-bound at the same time as the semantic tokens and the dynamic default accent.
+   The semantic pair, the text color of Edo controls and play.html's own chrome variables (navy in both
+   themes before) all move to Ink/Edo/Gray/Natural. The stage backdrop, map world, grid, fog, walls,
+   measurement SVG, tokens and user images keep their own literal colors. */
 html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell {
-  --ui-paper:#211a17;--ui-panel:#2b221d;--ui-soft:#352b25;--ui-ink:#f5ecda;--ui-muted:#d4c6b2;--ui-line:#b38d7b;
+  --ui-paper:var(--night-ink);--ui-panel:var(--night-panel);--ui-soft:var(--night-soft);--ui-ink:var(--night-natural);--ui-muted:var(--night-muted);--ui-line:var(--night-gray);
+  --vtt-paper-panel:var(--night-natural);
+  --panel:rgba(35,33,39,.94);--panel-soft:rgba(248,244,233,.05);--line:var(--night-gray);--line-strong:var(--night-edo-light);--text:var(--night-natural);--muted:var(--night-muted);
 }
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell :is(.tool-btn,.sidebar-tab):is(.active,:hover,:focus-visible) {color:var(--night-natural) !important;}
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell :is(button,.mini-control,button.secondary,button.danger):is(:hover,:focus-visible) {color:var(--night-natural);}
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell :is(.tool-btn,.sidebar-tab,.mini-control,button.secondary):is(:hover,:focus-visible):not(.active) {background:var(--night-edo-deep);border-color:var(--ui-accent);}
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell button:is(:hover,:focus-visible) {box-shadow:0 0 0 2px var(--ui-accent);}
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell :is(.tool-btn,.sidebar-tab).active {border-color:var(--ui-accent);box-shadow:0 0 0 2px var(--ui-accent);}
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell button.secondary {background:var(--night-soft);border-color:var(--night-gray);color:var(--night-natural);}
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell .mini-control {background:rgba(28,28,28,.82);}
+html[data-vtt-theme=night] body.play-workspace-realign .tabletop-shell > .left-toolbar {background:rgba(28,28,28,.96);}
 html[data-vtt-theme=night] .tabletop-shell :is(.right-sidebar,.left-chat-sidebar,.table-sheet,.app-menu) {background-color:var(--ui-paper);color:var(--ui-ink);border-color:var(--ui-line);}
-html[data-vtt-theme=night] body.play-fullscreen .tabletop-shell > .left-toolbar {background:rgba(33,26,23,.94);}
-html[data-vtt-theme=night] body.play-fullscreen .play-status-strip :is(.book-dashboard-chip,.mini-control) {background:rgba(43,34,29,.94);color:var(--ui-ink);border-color:var(--ui-line);}
+html[data-vtt-theme=night] body.play-fullscreen .tabletop-shell > .left-toolbar {background:rgba(28,28,28,.94);}
+html[data-vtt-theme=night] body.play-fullscreen .play-status-strip :is(.book-dashboard-chip,.mini-control) {background:rgba(35,33,39,.94);color:var(--ui-ink);border-color:var(--ui-line);}
+/* Movable windows deliberately live directly under body. Bind chrome tokens there too;
+   the earlier tabletop-only rules cannot reach a relocated toolbar, chat or token form. */
+html[data-vtt-theme=night] body.play-workspace-realign {
+  --bg-a:var(--night-ink);--bg-b:var(--night-panel);
+  --panel:var(--night-panel);--panel-soft:var(--night-soft);--line:var(--night-gray);--line-strong:var(--night-edo-light);
+  --text:var(--night-natural);--muted:var(--night-muted);--primary:var(--night-edo-light);--primary-hover:var(--night-edo-deep);
+  --vtt-plum:var(--night-edo);--vtt-plum-deep:var(--night-edo-deep);
+}
+html[data-vtt-theme=night] body.play-workspace-realign :is(.play-window,.play-window-body,.app-menu,.conditions-popover,.personal-action-bar,#actionHotbar,#tokenCreatePanel,#tokenSelectionBar) {
+  background-color:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);
+}
+html[data-vtt-theme=night] body.play-free-windows > .left-toolbar {background:var(--ui-panel) !important;border-color:var(--ui-line);}
+html[data-vtt-theme=night] body.play-free-windows > :is(.left-toolbar,#personalActionBar,#actionHotbar) .tool-btn.active {
+  background:var(--night-edo) !important;color:var(--night-natural) !important;
+  border-color:var(--ui-accent);box-shadow:inset 0 -3px var(--ui-accent);
+}
+html[data-vtt-theme=night] body.play-workspace-realign :is(.play-window,.app-menu,.conditions-popover,.personal-action-bar,#tokenCreatePanel,#tokenSelectionBar) :is(input:not([type=color]):not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select) {
+  background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);
+}
+html[data-vtt-theme=night] body.play-workspace-realign :is(.play-window,.personal-action-bar,.pa-dialog,#tokenCreatePanel,#tokenSelectionBar) button {
+  color:var(--ui-ink);background:var(--ui-soft);border-color:var(--ui-line);
+}
+html[data-vtt-theme=night] body.play-workspace-realign :is(.play-window,.app-menu,.personal-action-bar,.pa-dialog,#tokenCreatePanel,#tokenSelectionBar) button:is(:hover,:focus-visible) {
+  color:var(--night-natural);background:var(--night-edo-deep);border-color:var(--ui-accent);
+}
+html[data-vtt-theme=night] body.play-workspace-realign :is(#chatLog,#diceLog,#activityLog,#campaignRoomLog) {
+  color:var(--ui-ink);background-color:var(--ui-panel);
+  background-image:linear-gradient(var(--ui-panel) 30%,transparent),linear-gradient(transparent,var(--ui-panel) 70%),radial-gradient(farthest-side at 50% 0,#0006,transparent),radial-gradient(farthest-side at 50% 100%,#0006,transparent);
+}
+html[data-vtt-theme=night] body.play-workspace-realign :is(.chat-meta,.chat-roll-breakdown,.chat-roll-hidden,.ext-roll-source,.ext-roll-info) {color:var(--ui-muted);}
+html[data-vtt-theme=night] body.play-workspace-realign :is(.chat-entry,.chat-roll-summary,.ext-roll-total,.turn-score,.active-page-pill) {color:var(--ui-ink);}
+html[data-vtt-theme=night] body.play-workspace-realign :is(.active-page-pill,.play-status-strip) {background-color:var(--ui-panel);border-color:var(--ui-line);}

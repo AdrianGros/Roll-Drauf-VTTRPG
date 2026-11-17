@@ -1,0 +1,71 @@
+{
+  "status": "candidate_palette_from_matching_primary_publisher; not yet an approved token mapping",
+  "retrieved_at": "2026-11-16T21:02:17.776791+00:00",
+  "palette_source": "https://colorcombinations.org/palettes/edo-murasaki-nezumi/",
+  "source_note": "All four names match the Owner feedback; identifying this as the intended website is an inference. This is the publishers own editorial palette, not a historical Wada plate.",
+  "colors": {
+    "Edo Purple": "#5E4A8C",
+    "Mouse Gray": "#8A8A8A",
+    "Ink Black": "#1C1C1C",
+    "Natural": "#F8F4E9"
+  },
+  "method": "sRGB linearization and WCAG relative luminance; opaque hex pairs only; thresholds checked before rounding",
+  "wcag_sources": [
+    "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+    "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast"
+  ],
+  "pairs": [
+    {
+      "first": "Edo Purple",
+      "second": "Mouse Gray",
+      "ratio": 2.1463461143002043,
+      "display_ratio": 2.15,
+      "normal_text_AA": false,
+      "large_text_and_non_text_threshold": false
+    },
+    {
+      "first": "Edo Purple",
+      "second": "Ink Black",
+      "ratio": 2.299979789586922,
+      "display_ratio": 2.3,
+      "normal_text_AA": false,
+      "large_text_and_non_text_threshold": false
+    },
+    {
+      "first": "Edo Purple",
+      "second": "Natural",
+      "ratio": 6.742156198464146,
+      "display_ratio": 6.74,
+      "normal_text_AA": true,
+      "large_text_and_non_text_threshold": true
+    },
+    {
+      "first": "Mouse Gray",
+      "second": "Ink Black",
+      "ratio": 4.936552684348891,
+      "display_ratio": 4.94,
+      "normal_text_AA": true,
+      "large_text_and_non_text_threshold": true
+    },
+    {
+      "first": "Mouse Gray",
+      "second": "Natural",
+      "ratio": 3.1412250585047707,
+      "display_ratio": 3.14,
+      "normal_text_AA": false,
+      "large_text_and_non_text_threshold": true
+    },
+    {
+      "first": "Ink Black",
+      "second": "Natural",
+      "ratio": 15.506822994705729,
+      "display_ratio": 15.51,
+      "normal_text_AA": true,
+      "large_text_and_non_text_threshold": true
+    }
+  ],
+  "limits": [
+    "Not a measurement of rendered page CSS, opacity, anti-aliasing, gradients or images.",
+    "Palette-source match does not decide semantic tokens or status colors."
+  ]
+}

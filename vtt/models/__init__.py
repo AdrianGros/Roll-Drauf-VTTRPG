@@ -73,3 +73,5 @@ from vtt.models.campaign_map_scale import CampaignMapScale
 
 from vtt.models.atlas import AtlasWorld, AtlasMember, AtlasMap, AtlasPublication
 from vtt.models.session_feedback import TokenTemplate, CampaignChatMessage
+
+from vtt.models.ui_playtable import MapViewSettings, PageHierarchyState, MapPageParent, InitiativeRound, InitiativeCandidate

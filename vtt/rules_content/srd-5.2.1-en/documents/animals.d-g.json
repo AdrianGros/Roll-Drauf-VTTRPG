@@ -1,0 +1,2821 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "animals.d-g",
+      "text": "Animals D–G",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "animals.d-g.roll-drauf-note",
+      "text": "Animals D–G: beasts and dinosaurs that serve as mounts, companions, Wild Shape forms or threats.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "4 (1d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Deer",
+      "ruleId": "animals.d-g.deer",
+      "sections": [
+        {
+          "text": "Agile. The deer doesn’t provoke an Opportunity Attack when it moves out of an enemy’s reach.",
+          "title": "Traits"
+        },
+        {
+          "text": "Ram. Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Bludgeoning damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "22 (3d10 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5, Stealth +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Dire Wolf",
+      "ruleId": "animals.d-g.dire-wolf",
+      "sections": [
+        {
+          "text": "Pack Tactics. The wolf has Advantage on an attack roll against a creature if at least one of the wolf’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +5, reach 5 ft. Hit: 8 (1d10 + 3) Piercing damage. If the target is a Large or smaller creature, it has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "15 (2d10 + 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Draft Horse",
+      "ruleId": "animals.d-g.draft-horse",
+      "sections": [
+        {
+          "text": "Hooves. Melee Attack Roll: +6, reach 5 ft. Hit: 6 (1d4 + 4) Bludgeoning damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "4 (1d6 + 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +6"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 16"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Eagle",
+      "ruleId": "animals.d-g.eagle",
+      "sections": [
+        {
+          "text": "Talons. Melee Attack Roll: +4, reach 5 feet. Hit: 4 (1d4 + 2) Slashing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "−1 (9)"
+        },
+        {
+          "label": "HP",
+          "value": "76 (8d12 + 24)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "22 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "4 (XP 1,100; PB +2)"
+        }
+      ],
+      "name": "Elephant",
+      "ruleId": "animals.d-g.elephant",
+      "sections": [
+        {
+          "text": "Multiattack. The elephant makes two Gore attacks.\nGore. Melee Attack Roll: +8, reach 5 ft. Hit: 15 (2d8 + 6) Piercing damage. If the target is a Huge or smaller creature and the elephant moved 20+ feet straight toward it immediately before the hit, the target has the Prone condition.",
+          "title": "Actions"
+        },
+        {
+          "text": "Trample. Dexterity Saving Throw: DC 16, one creature within 5 feet that has the Prone condition. Failure: 17 (2d10 + 6) Bludgeoning damage. Success: Half damage.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "11 (2d10)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Elk",
+      "ruleId": "animals.d-g.elk",
+      "sections": [
+        {
+          "text": "Ram. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage. If the target is a Large or smaller creature and the elk moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 (1d6) Bludgeoning damage and has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Monstrosity, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "5 (2d4)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 60 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Flying Snake",
+      "ruleId": "animals.d-g.flying-snake",
+      "sections": [
+        {
+          "text": "Flyby. The snake doesn’t provoke an Opportunity Attack when it flies out of an enemy’s reach.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage plus 5 (2d4) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "1 (1d4 − 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Swim 20 ft."
+        },
+        {
+          "label": "Str",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +1, Stealth +3"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 30 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Frog",
+      "ruleId": "animals.d-g.frog",
+      "sections": [
+        {
+          "text": "Amphibious. The frog can breathe air and water.\nStanding Leap. The frog’s Long Jump is up to 10 feet and its High Jump is up to 5 feet with or without a running start.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +3, reach 5 ft. Hit: 1 Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "HP",
+          "value": "168 (16d12 + 64)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "23 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Int",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Athletics +9, Perception +4, Survival +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "7 (XP 2,900; PB +3)"
+        }
+      ],
+      "name": "Giant Ape",
+      "ruleId": "animals.d-g.giant-ape",
+      "sections": [
+        {
+          "text": "Multiattack. The ape makes two Fist attacks.\nFist. Melee Attack Roll: +9, reach 10 ft. Hit: 22 (3d10 + 6) Bludgeoning damage.\nBoulder Toss (Recharge 6). The ape hurls a boulder at a point it can see within 90 feet. Dexterity Saving Throw: DC 17, each creature in a 5-foot-radius Sphere centered on that point. Failure: 24 (7d6) Bludgeoning damage. If the target is a Large or smaller creature, it has the Prone condition. Success: Half damage only.",
+          "title": "Actions"
+        },
+        {
+          "text": "Leap. The ape jumps up to 30 feet by spending 10 feet of movement.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "15 (2d8 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Burrow 10 ft."
+        },
+        {
+          "label": "Str",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3"
+        },
+        {
+          "label": "Resistances",
+          "value": "Poison"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Giant Badger",
+      "ruleId": "animals.d-g.giant-badger",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +3, reach 5 ft. Hit: 6 (2d4 + 1) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "22 (4d10)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 120 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Giant Bat",
+      "ruleId": "animals.d-g.giant-bat",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "42 (5d10 + 15)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +5"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 8"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Giant Boar",
+      "ruleId": "animals.d-g.giant-boar",
+      "sections": [
+        {
+          "text": "Bloodied Fury. The boar has Advantage on melee attack rolls while it is Bloodied.",
+          "title": "Traits"
+        },
+        {
+          "text": "Gore. Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Piercing damage. If the target is a Large or smaller creature and the boar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 7 (2d6) Piercing damage and has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "9 (2d6 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 30 ft.; Passive Perception 8"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Giant Centipede",
+      "ruleId": "animals.d-g.giant-centipede",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Piercing damage, and the target has the Poisoned condition until the start of the centipede’s next turn.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "60 (8d12 + 8)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "19 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Giant Constrictor Snake",
+      "ruleId": "animals.d-g.giant-constrictor-snake",
+      "sections": [
+        {
+          "text": "Multiattack. The snake makes one Bite attack and uses Constrict.\nBite. Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6 + 4) Piercing damage.\nConstrict. Strength Saving Throw: DC 14, one Large or smaller creature the snake can see within 10 feet. Failure: 13 (2d8 + 4) Bludgeoning damage, and the target has the Grappled condition (escape DC 14).",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "13 (3d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +3"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 30 ft.; Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Giant Crab",
+      "ruleId": "animals.d-g.giant-crab",
+      "sections": [
+        {
+          "text": "Amphibious. The crab can breathe air and water.",
+          "title": "Traits"
+        },
+        {
+          "text": "Claw. Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Bludgeoning damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 11) from one of two claws.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "−1 (9)"
+        },
+        {
+          "label": "HP",
+          "value": "85 (9d12 + 27)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "21 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Dex",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "5 (XP 1,800; PB +3)"
+        }
+      ],
+      "name": "Giant Crocodile",
+      "ruleId": "animals.d-g.giant-crocodile",
+      "sections": [
+        {
+          "text": "Hold Breath. The crocodile can hold its breath for 1 hour.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The crocodile makes one Bite attack and one Tail attack.\nBite. Melee Attack Roll: +8, reach 5 ft. Hit: 21 (3d10 + 5) Piercing damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 15). While Grappled, the target has the Restrained condition and can’t be targeted by the crocodile’s Tail.\nTail. Melee Attack Roll: +8, reach 10 ft. Hit: 18 (3d8 + 5) Bludgeoning damage. If the target is a Large or smaller creature, it has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Celestial, Neutral Good"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "26 (4d10 + 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 80 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +6"
+        },
+        {
+          "label": "Resistances",
+          "value": "Necrotic, Radiant"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 16"
+        },
+        {
+          "label": "Languages",
+          "value": "Celestial; understands Common and Primordial (Auran) but can’t speak them"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Giant Eagle",
+      "ruleId": "animals.d-g.giant-eagle",
+      "sections": [
+        {
+          "text": "Multiattack. The eagle makes two Rend attacks.\nRend. Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Slashing damage plus 3 (1d6) Radiant damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Celestial, Neutral Good"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+6 (16)"
+        },
+        {
+          "label": "HP",
+          "value": "42 (5d12 + 10)"
+        },
+        {
+          "label": "Speed",
+          "value": "60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "19 · MOD +4 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "18 · MOD +4 · SAVE +6"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +4"
+        },
+        {
+          "label": "Resistances",
+          "value": "Necrotic, Radiant"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 90 ft.; Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "Celestial; understands Common, Elvish, and Sylvan but can’t speak them"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Giant Elk",
+      "ruleId": "animals.d-g.giant-elk",
+      "sections": [
+        {
+          "text": "Ram. Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6 + 4) Bludgeoning damage plus 5 (2d4) Radiant damage. If the target is a Huge or smaller creature and the elk moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 (2d4) Bludgeoning damage and has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "4 (1d6 + 1)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Resistances",
+          "value": "Fire"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 30 ft.; Passive Perception 8"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Giant Fire Beetle",
+      "ruleId": "animals.d-g.giant-fire-beetle",
+      "sections": [
+        {
+          "text": "Illumination. The beetle sheds Bright Light in a 10-foot radius and Dim Light for an additional 10 feet.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +1, reach 5 ft. Hit: 1 Fire damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "18 (4d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2, Stealth +4"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 30 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Giant Frog",
+      "ruleId": "animals.d-g.giant-frog",
+      "sections": [
+        {
+          "text": "Amphibious. The frog can breathe air and water.\nStanding Leap. The frog’s Long Jump is up to 20 feet and its High Jump is up to 10 feet with or without a running start.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +3, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 11).\nSwallow. The frog swallows a Small or smaller target it is grappling. While swallowed, the target isn’t Grappled but has the Blinded and Restrained conditions, and it has Total Cover against attacks and other effects outside the frog. While swallowing the target, the frog can’t use Bite, and if the frog dies, the swallowed target is no longer Restrained and can escape from the corpse using 5 feet of movement, exiting with the Prone condition.\nAt the end of the frog’s next turn, the swallowed target takes 5 (2d4) Acid damage. If that damage doesn’t kill it, the frog disgorges it, causing it to exit Prone.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "19 (3d10 + 3)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +5"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Giant Goat",
+      "ruleId": "animals.d-g.giant-goat",
+      "sections": [
+        {
+          "text": "Ram. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage. If the target is a Large or smaller creature and the goat moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 (2d4) Bludgeoning damage and has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "45 (6d10 + 12)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Giant Hyena",
+      "ruleId": "animals.d-g.giant-hyena",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Piercing damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Rampage (1/Day). Immediately after dealing damage to a creature that was already Bloodied, the hyena can move up to half its Speed, and it makes one Bite attack.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "19 (3d10 + 3)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Giant Lizard",
+      "ruleId": "animals.d-g.giant-lizard",
+      "sections": [
+        {
+          "text": "Spider Climb. The lizard can climb difficult surfaces, including along ceilings, without needing to make an ability check.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "45 (7d10 + 7)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Swim 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +4, Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Giant Octopus",
+      "ruleId": "animals.d-g.giant-octopus",
+      "sections": [
+        {
+          "text": "Water Breathing. The octopus can breathe only underwater. It can hold its breath for 1 hour outside water.",
+          "title": "Traits"
+        },
+        {
+          "text": "Tentacles. Melee Attack Roll: +5, reach 10 ft. Hit: 10 (2d6 + 3) Bludgeoning damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 13) from all eight tentacles. While Grappled, the target has the Restrained condition.",
+          "title": "Actions"
+        },
+        {
+          "text": "Ink Cloud (1/Day). Trigger: The octopus takes damage while underwater. Response: The octopus releases ink that fills a 10-foot Cube centered on itself, and the octopus moves up to its Swim Speed. The Cube is Heavily Obscured for 1 minute or until a strong current or similar effect disperses the ink.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Celestial, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "19 (3d10 + 3)"
+        },
+        {
+          "label": "Speed",
+          "value": "5 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +4"
+        },
+        {
+          "label": "Cha",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +6, Stealth +6"
+        },
+        {
+          "label": "Resistances",
+          "value": "Necrotic, Radiant"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft.; Passive Perception 16"
+        },
+        {
+          "label": "Languages",
+          "value": "Celestial; understands Common, Elvish, and Sylvan but can’t speak them"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Giant Owl",
+      "ruleId": "animals.d-g.giant-owl",
+      "sections": [
+        {
+          "text": "Flyby. The owl doesn’t provoke an Opportunity Attack when it flies out of an enemy’s reach.",
+          "title": "Traits"
+        },
+        {
+          "text": "Talons. Melee Attack Roll: +4, reach 5 ft. Hit: 7 (1d10 + 2) Slashing damage.\nSpellcasting. The owl casts one of the following spells, requiring no spell components and using Wisdom as the spellcasting ability:\nAt Will: Detect Evil and Good, Detect Magic 1/Day: Clairvoyance",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "7 (2d6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +5"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Giant Rat",
+      "ruleId": "animals.d-g.giant-rat",
+      "sections": [
+        {
+          "text": "Pack Tactics. The rat has Advantage on an attack roll against a creature if at least one of the rat’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +5, reach 5 feet. Hit: 5 (1d4 + 3) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "52 (7d10 + 14)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 60 ft.; Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Giant Scorpion",
+      "ruleId": "animals.d-g.giant-scorpion",
+      "sections": [
+        {
+          "text": "Multiattack. The scorpion makes two Claw attacks and one Sting attack.\nClaw. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 13) from one of two claws.\nSting. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage plus 11 (2d10) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "16 (3d10)"
+        },
+        {
+          "label": "Speed",
+          "value": "5 ft., Swim 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Giant Seahorse",
+      "ruleId": "animals.d-g.giant-seahorse",
+      "sections": [
+        {
+          "text": "Water Breathing. The seahorse can breathe only underwater.",
+          "title": "Traits"
+        },
+        {
+          "text": "Ram. Melee Attack Roll: +4, reach 5 ft. Hit: 9 (2d6 + 2) Bludgeoning damage, or 11 (2d8 + 2) Bludgeoning damage if the seahorse moved 20+ feet straight toward the target immediately before the hit.",
+          "title": "Actions"
+        },
+        {
+          "text": "Bubble Dash. While underwater, the seahorse moves up to half its Swim Speed without provoking Opportunity Attacks.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "92 (8d12 + 40)"
+        },
+        {
+          "label": "Speed",
+          "value": "5 ft., Swim 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "23 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "21 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "5 (XP 1,800; PB +3)"
+        }
+      ],
+      "name": "Giant Shark",
+      "ruleId": "animals.d-g.giant-shark",
+      "sections": [
+        {
+          "text": "Water Breathing. The shark can breathe only underwater.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The shark makes two Bite attacks.\nBite. Melee Attack Roll: +9 (with Advantage if the target doesn’t have all its Hit Points), reach 5 ft. Hit: 22 (3d10 + 6) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "26 (4d10 + 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +4, Stealth +7"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Giant Spider",
+      "ruleId": "animals.d-g.giant-spider",
+      "sections": [
+        {
+          "text": "Spider Climb. The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check.\nWeb Walker. The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage plus 7 (2d6) Poison damage.\nWeb (Recharge 5–6). Dexterity Saving Throw: DC 13, one creature the spider can see within 60 feet. Failure: The target has the Restrained condition until the web is destroyed (AC 10; HP 5; Vulnerability to Fire damage; Immunity to Poison and Psychic damage).",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "39 (6d10 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Giant Toad",
+      "ruleId": "animals.d-g.giant-toad",
+      "sections": [
+        {
+          "text": "Amphibious. The toad can breathe air and water.\nStanding Leap. The toad’s Long Jump is up to 20 feet and its High Jump is up to 10 feet with or without a running start.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage plus 5 (2d4) Poison damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 12).\nSwallow. The toad swallows a Medium or smaller target it is grappling. While swallowed, the target isn’t Grappled but has the Blinded and Restrained conditions, and it has Total Cover against attacks and other effects outside the toad. In addition, the target takes 10 (3d6) Acid damage at the end of each of the toad’s turns. The toad can have only one target swallowed at a time, and it can’t use Bite while it has a swallowed target. If the toad dies, a swallowed creature is no longer Restrained and can escape from the corpse using 5 feet of movement, exiting with the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "HP",
+          "value": "11 (2d8 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Swim 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Giant Venomous Snake",
+      "ruleId": "animals.d-g.giant-venomous-snake",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +6, reach 10 ft. Hit: 6 (1d4 + 4) Piercing damage plus 4 (1d8) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Monstrosity, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "25 (3d10 + 9)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3"
+        },
+        {
+          "label": "Resistances",
+          "value": "Necrotic"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Common but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Giant Vulture",
+      "ruleId": "animals.d-g.giant-vulture",
+      "sections": [
+        {
+          "text": "Pack Tactics. The vulture has Advantage on an attack roll against a creature if at least one of the vulture’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Gouge. Melee Attack Roll: +4, reach 5 ft. Hit: 9 (2d6 + 2) Piercing damage, and the target has the Poisoned condition until the end of its next turn.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "22 (5d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Giant Wasp",
+      "ruleId": "animals.d-g.giant-wasp",
+      "sections": [
+        {
+          "text": "Flyby. The wasp doesn’t provoke an Opportunity Attack when it flies out of an enemy’s reach.",
+          "title": "Traits"
+        },
+        {
+          "text": "Sting. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage plus 5 (2d4) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "9 (2d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Acrobatics +5, Perception +3, Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Giant Weasel",
+      "ruleId": "animals.d-g.giant-weasel",
+      "sections": [
+        {
+          "text": "Bite. Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "11 (2d8 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3, Stealth +7"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft., Darkvision 60 ft.; Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Giant Wolf Spider",
+      "ruleId": "animals.d-g.giant-wolf-spider",
+      "sections": [
+        {
+          "text": "Spider Climb. The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Piercing damage plus 5 (2d4) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "4 (1d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "11 · MOD +0 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Goat",
+      "ruleId": "animals.d-g.goat",
+      "sections": [
+        {
+          "text": "Ram. Melee Attack Roll: +2, reach 5 ft. Hit: 1 Bludgeoning damage, or 2 (1d4) Bludgeoning damage if the goat moved 20+ feet straight toward the target immediately before the hit.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "animals.d-g",
+  "editorialBlocks": [
+    "animals.d-g",
+    "animals.d-g.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Animals",
+    "Animals D–G"
+  ],
+  "order": 4902,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "animals-d-g",
+  "sourcePages": [
+    347,
+    348,
+    349,
+    350,
+    351,
+    352,
+    353,
+    354,
+    355
+  ],
+  "title": "Animals D–G"
+}

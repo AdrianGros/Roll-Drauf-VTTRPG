@@ -1,0 +1,80 @@
+{
+  "scope": "pure current geometry module only; no Flask, DB, application initialization or production mutation",
+  "source_sha256": "5f758ac77a859229d0f2c65d70470a1693f8670c1f30da0b425d5a5c463dfe26",
+  "cases": {
+    "light_wall_flag_changes_visibility": false,
+    "light_wall_flag_sets_identical": true,
+    "cell_4_0_behind_light_blocking_wall_visible": true,
+    "sight_normal_wall_blocks_cell_4_0": true
+  },
+  "timings": [
+    {
+      "lights": 0,
+      "walls": 20,
+      "token_sight_range": 500,
+      "grid_size": 32,
+      "ray_count": 180,
+      "iterations": 3,
+      "median_ms": 15.211,
+      "visible_cell_count": 818
+    },
+    {
+      "lights": 10,
+      "walls": 20,
+      "token_sight_range": 500,
+      "grid_size": 32,
+      "ray_count": 180,
+      "iterations": 3,
+      "median_ms": 53.922,
+      "visible_cell_count": 818
+    },
+    {
+      "lights": 40,
+      "walls": 20,
+      "token_sight_range": 500,
+      "grid_size": 32,
+      "ray_count": 180,
+      "iterations": 3,
+      "median_ms": 222.937,
+      "visible_cell_count": 818
+    }
+  ],
+  "limits": [
+    "Synthetic inputs; not a browser/rendering benchmark.",
+    "Current engine only; no alternative algorithm implemented or benchmarked.",
+    "Timings are host-specific and not a live latency or frame-rate claim.",
+    "sight=none/light=normal demonstrates absent independent light-wall computation, not a new authorization bypass."
+  ],
+  "visibility_case_inputs": {
+    "origin": [
+      0,
+      0
+    ],
+    "sight_range": 1,
+    "grid_size": 16,
+    "wall": {
+      "x0": 32,
+      "y0": -200,
+      "x1": 32,
+      "y1": 200,
+      "sight": "none",
+      "light_variants": [
+        "normal",
+        "none"
+      ]
+    },
+    "light": {
+      "x": 0,
+      "y": 0,
+      "bright_radius": 100,
+      "dim_radius": 100,
+      "provides_vision": true,
+      "light_type": "light"
+    },
+    "checked_cell": [
+      4,
+      0
+    ],
+    "sight_control": "same wall with sight=normal and light=normal"
+  }
+}

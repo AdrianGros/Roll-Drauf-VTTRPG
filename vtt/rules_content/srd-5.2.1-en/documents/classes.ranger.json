@@ -1,0 +1,1115 @@
+{
+  "blocks": [
+    {
+      "level": 2,
+      "ruleId": "classes.ranger",
+      "text": "Ranger",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "classes.ranger.roll-drauf-note",
+      "text": "This chapter presents the Ranger. Start with the Core Ranger Traits table and the Ranger Features table, then read the class features in level order. The Ranger Spell List names every spell the class can prepare. The Hunter subclass follows at the end.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "caption": "Core Ranger Traits",
+      "columns": [
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "Primary Ability",
+          "Dexterity and Wisdom"
+        ],
+        [
+          "Hit Point Die",
+          "D10 per Ranger level"
+        ],
+        [
+          "Saving Throw Proficiencies",
+          "Strength and Dexterity"
+        ],
+        [
+          "Skill Proficiencies",
+          "Choose 3: Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, or Survival"
+        ],
+        [
+          "Weapon Proficiencies Simple and Martial weapons",
+          ""
+        ],
+        [
+          "Armor Training",
+          "Light and Medium armor and Shields"
+        ],
+        [
+          "Starting Equipment",
+          "Choose A or B: (A) Studded Leather Armor, Scimitar, Shortsword, Longbow, 20 Arrows, Quiver, Druidic Focus (sprig of mistletoe), Explorer’s Pack, and 7 GP; or (B) 150 GP"
+        ]
+      ],
+      "ruleId": "classes.ranger.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "classes.ranger.becoming-a-ranger",
+      "text": "Becoming a Ranger …",
+      "type": "heading"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.becoming-a-ranger.as-a-level-1-character",
+      "text": "As a Level 1 Character",
+      "type": "heading"
+    },
+    {
+      "items": [
+        "Gain all the traits in the Core Ranger Traits table.",
+        "Gain the Ranger’s level 1 features, which are listed in the Ranger Features table."
+      ],
+      "ruleId": "classes.ranger.becoming-a-ranger.as-a-level-1-character.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.becoming-a-ranger.as-a-multiclass-character",
+      "text": "As a Multiclass Character",
+      "type": "heading"
+    },
+    {
+      "items": [
+        "Gain the following traits from the Core Ranger Traits table: Hit Point Die, proficiency with Martial weapons, proficiency in one skill of your choice from the Ranger’s skill list, and training with Light and Medium armor and Shields.",
+        "Gain the Ranger’s level 1 features, which are listed in the Ranger Features table. See the multiclassing rules in “Character Creation” to determine your available spell slots."
+      ],
+      "ruleId": "classes.ranger.becoming-a-ranger.as-a-multiclass-character.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "classes.ranger.ranger-class-features",
+      "text": "Ranger Class Features",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.p-1",
+      "text": "As a Ranger, you gain the following class features when you reach the specified Ranger levels. These features are listed in the Ranger Features table.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-1-spellcasting",
+      "text": "Level 1: Spellcasting",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-1-spellcasting.p-1",
+      "text": "You have learned to channel the magical essence of nature to cast spells. See “Spells” for the rules on spellcasting. The information below details how you use those rules with Ranger spells, which appear in the Ranger spell list later in the class’s description.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-1-spellcasting.p-2",
+      "text": "Spell Slots. The Ranger Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features",
+      "text": "Ranger Features",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.p-1",
+      "text": "Proficiency",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "Level",
+        "Bonus",
+        "Class Features"
+      ],
+      "rows": [
+        [
+          "1",
+          "+2",
+          "Spellcasting, Favored Enemy, Weapon Mastery"
+        ],
+        [
+          "2",
+          "+2",
+          "Deft Explorer, Fighting Style"
+        ],
+        [
+          "3",
+          "+2",
+          "Ranger Subclass"
+        ],
+        [
+          "4",
+          "+2",
+          "Ability Score Improvement"
+        ],
+        [
+          "5",
+          "+3",
+          "Extra Attack"
+        ],
+        [
+          "6",
+          "+3",
+          "Roving"
+        ],
+        [
+          "7",
+          "+3",
+          "Subclass feature"
+        ],
+        [
+          "8",
+          "+3",
+          "Ability Score Improvement"
+        ],
+        [
+          "9",
+          "+4",
+          "Expertise"
+        ],
+        [
+          "10",
+          "+4",
+          "Tireless"
+        ],
+        [
+          "11",
+          "+4",
+          "Subclass feature"
+        ],
+        [
+          "12",
+          "+4",
+          "Ability Score Improvement"
+        ],
+        [
+          "13",
+          "+5",
+          "Relentless Hunter"
+        ],
+        [
+          "14",
+          "+5",
+          "Nature’s Veil"
+        ],
+        [
+          "15",
+          "+5",
+          "Subclass feature"
+        ],
+        [
+          "16",
+          "+5",
+          "Ability Score Improvement"
+        ],
+        [
+          "17",
+          "+6",
+          "Precise Hunter"
+        ],
+        [
+          "18",
+          "+6",
+          "Feral Senses"
+        ],
+        [
+          "19",
+          "+6",
+          "Epic Boon"
+        ],
+        [
+          "20",
+          "+6",
+          "Foe Slayer"
+        ]
+      ],
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.p-2",
+      "text": "Prepared Spells of Level 1+. You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose two level 1 Ranger spells. Cure Wounds and Ensnaring Strike are recommended.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.p-3",
+      "text": "The number of spells on your list increases as you gain Ranger levels, as shown in the Prepared Spells column of the Ranger Features table. Whenever that number increases, choose additional Ranger spells until the number of spells on your list matches the number in the Ranger Features table. The chosen spells must be of a level for which you have spell slots. For example, if you’re a level 5 Ranger, your list of prepared spells can include six Ranger spells of level 1 or 2 in any combination.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.p-4",
+      "text": "If another Ranger feature gives you spells that you always have prepared, those spells don’t count against the number of spells you can prepare with this feature, but those spells otherwise count as Ranger spells for you.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "Favored",
+        "Prepared",
+        "—Spell",
+        "Slots",
+        "per Spell Level—",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "Enemy",
+          "Spells",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        [
+          "2",
+          "2",
+          "2",
+          "—",
+          "—",
+          "—",
+          "—"
+        ],
+        [
+          "2",
+          "3",
+          "2",
+          "—",
+          "—",
+          "—",
+          "—"
+        ],
+        [
+          "2",
+          "4",
+          "3",
+          "—",
+          "—",
+          "—",
+          "—"
+        ],
+        [
+          "2",
+          "5",
+          "3",
+          "—",
+          "—",
+          "—",
+          "—"
+        ],
+        [
+          "3",
+          "6",
+          "4",
+          "2",
+          "—",
+          "—",
+          "—"
+        ],
+        [
+          "3",
+          "6",
+          "4",
+          "2",
+          "—",
+          "—",
+          "—"
+        ],
+        [
+          "3",
+          "7",
+          "4",
+          "3",
+          "—",
+          "—",
+          "—"
+        ],
+        [
+          "3",
+          "7",
+          "4",
+          "3",
+          "—",
+          "—",
+          "—"
+        ],
+        [
+          "4",
+          "9",
+          "4",
+          "3",
+          "2",
+          "—",
+          "—"
+        ],
+        [
+          "4",
+          "9",
+          "4",
+          "3",
+          "2",
+          "—",
+          "—"
+        ],
+        [
+          "4",
+          "10",
+          "4",
+          "3",
+          "3",
+          "—",
+          "—"
+        ],
+        [
+          "4",
+          "10",
+          "4",
+          "3",
+          "3",
+          "—",
+          "—"
+        ],
+        [
+          "5",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "—"
+        ],
+        [
+          "5",
+          "11",
+          "4",
+          "3",
+          "3",
+          "1",
+          "—"
+        ],
+        [
+          "5",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "—"
+        ],
+        [
+          "5",
+          "12",
+          "4",
+          "3",
+          "3",
+          "2",
+          "—"
+        ],
+        [
+          "6",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1"
+        ],
+        [
+          "6",
+          "14",
+          "4",
+          "3",
+          "3",
+          "3",
+          "1"
+        ],
+        [
+          "6",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2"
+        ],
+        [
+          "6",
+          "15",
+          "4",
+          "3",
+          "3",
+          "3",
+          "2"
+        ]
+      ],
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.table-2",
+      "type": "table"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.p-5",
+      "text": "Changing Your Prepared Spells. Whenever you finish a Long Rest, you can replace one spell on your list with another Ranger spell for which you have spell slots.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.p-6",
+      "text": "Spellcasting Ability. Wisdom is your spellcasting ability for your Ranger spells.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.ranger-features.p-7",
+      "text": "Spellcasting Focus. You can use a Druidic Focus as a Spellcasting Focus for your Ranger spells.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-1-favored-enemy",
+      "text": "Level 1: Favored Enemy",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-1-favored-enemy.p-1",
+      "text": "You always have the Hunter’s Mark spell prepared. You can cast it twice without expending a spell slot, and you regain all expended uses of this ability when you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-1-favored-enemy.p-2",
+      "text": "The number of times you can cast the spell without a spell slot increases when you reach certain Ranger levels, as shown in the Favored Enemy column of the Ranger Features table.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-1-weapon-mastery",
+      "text": "Level 1: Weapon Mastery",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-1-weapon-mastery.p-1",
+      "text": "Your training with weapons allows you to use the mastery properties of two kinds of weapons of your choice with which you have proficiency, such as Longbows and Shortswords.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-1-weapon-mastery.p-2",
+      "text": "Whenever you finish a Long Rest, you can change the kinds of weapons you chose. For example, you could switch to using the mastery properties of Scimitars and Longswords.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-2-deft-explorer",
+      "text": "Level 2: Deft Explorer",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-2-deft-explorer.p-1",
+      "text": "Thanks to your travels, you gain the following benefits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-2-deft-explorer.p-2",
+      "text": "Expertise. Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-2-deft-explorer.p-3",
+      "text": "Languages. You know two languages of your choice from the language tables in “Character Creation.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-2-fighting-style",
+      "text": "Level 2: Fighting Style",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-2-fighting-style.p-1",
+      "text": "You gain a Fighting Style feat of your choice (see “Feats”). Instead of choosing one of those feats, you can choose the option below.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-2-fighting-style.p-2",
+      "text": "Druidic Warrior. You learn two Druid cantrips of your choice (see the Druid class’s section for a list of Druid spells). Guidance and Starry Wisp are recommended. The chosen cantrips count as Ranger spells for you, and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these cantrips with another Druid cantrip.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-3-ranger-subclass",
+      "text": "Level 3: Ranger Subclass",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-3-ranger-subclass.p-1",
+      "text": "You gain a Ranger subclass of your choice. The Hunter subclass is detailed after this class’s description. A subclass is a specialization that grants you features at certain Ranger levels. For the rest of your career, you gain each of your subclass’s features that are of your Ranger level or lower.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-4-ability-score-improvement",
+      "text": "Level 4: Ability Score Improvement",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-4-ability-score-improvement.p-1",
+      "text": "You gain the Ability Score Improvement feat (see “Feats”) or another feat of your choice for which you qualify. You gain this feature again at Ranger levels 8, 12, and 16.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-5-extra-attack",
+      "text": "Level 5: Extra Attack",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-5-extra-attack.p-1",
+      "text": "You can attack twice instead of once whenever you take the Attack action on your turn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-6-roving",
+      "text": "Level 6: Roving",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-6-roving.p-1",
+      "text": "Your Speed increases by 10 feet while you aren’t wearing Heavy armor. You also have a Climb Speed and a Swim Speed equal to your Speed.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-9-expertise",
+      "text": "Level 9: Expertise",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-9-expertise.p-1",
+      "text": "Choose two of your skill proficiencies with which you lack Expertise. You gain Expertise in those skills.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-10-tireless",
+      "text": "Level 10: Tireless",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-10-tireless.p-1",
+      "text": "Primal forces now help fuel you on your journeys, granting you the following benefits.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-10-tireless.p-2",
+      "text": "Temporary Hit Points. As a Magic action, you can give yourself a number of Temporary Hit Points equal to 1d8 plus your Wisdom modifier (minimum of 1). You can use this action a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-10-tireless.p-3",
+      "text": "Decrease Exhaustion. Whenever you finish a Short Rest, your Exhaustion level, if any, decreases by 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-13-relentless-hunter",
+      "text": "Level 13: Relentless Hunter",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-13-relentless-hunter.p-1",
+      "text": "Taking damage can’t break your Concentration on Hunter’s Mark.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-14-natures-veil",
+      "text": "Level 14: Nature’s Veil",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-14-natures-veil.p-1",
+      "text": "You invoke spirits of nature to magically hide yourself. As a Bonus Action, you can give yourself the Invisible condition until the end of your next turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-14-natures-veil.p-2",
+      "text": "You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-17-precise-hunter",
+      "text": "Level 17: Precise Hunter",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-17-precise-hunter.p-1",
+      "text": "You have Advantage on attack rolls against the creature currently marked by your Hunter’s Mark.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-18-feral-senses",
+      "text": "Level 18: Feral Senses",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-18-feral-senses.p-1",
+      "text": "Your connection to the forces of nature grants you Blindsight with a range of 30 feet.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-19-epic-boon",
+      "text": "Level 19: Epic Boon",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-19-epic-boon.p-1",
+      "text": "You gain an Epic Boon feat (see “Feats”) or another feat of your choice for which you qualify. Boon of Dimensional Travel is recommended.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-class-features.level-20-foe-slayer",
+      "text": "Level 20: Foe Slayer",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-class-features.level-20-foe-slayer.p-1",
+      "text": "The damage die of your Hunter’s Mark is a d10 rather than a d6.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "classes.ranger.ranger-spell-list",
+      "text": "Ranger Spell List",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-spell-list.p-1",
+      "text": "This section presents the Ranger spell list. The spells are organized by spell level and then alphabetized, and each spell’s school of magic is listed. In the Special column, C means the spell requires Concentration, R means it’s a Ritual, and M means it requires a specific Material component.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Level 1 Ranger Spells",
+      "columns": [
+        "Spell",
+        "School",
+        "Special"
+      ],
+      "rows": [
+        [
+          "Alarm",
+          "Abjuration",
+          "R"
+        ],
+        [
+          "Animal Friendship",
+          "Enchantment",
+          "—"
+        ],
+        [
+          "Cure Wounds",
+          "Abjuration",
+          "—"
+        ],
+        [
+          "Detect Magic",
+          "Divination",
+          "C, R"
+        ],
+        [
+          "Detect Poison and Disease",
+          "Divination",
+          "C, R"
+        ],
+        [
+          "Ensnaring Strike",
+          "Conjuration",
+          "C"
+        ],
+        [
+          "Entangle",
+          "Conjuration",
+          "C"
+        ],
+        [
+          "Fog Cloud",
+          "Conjuration",
+          "C"
+        ],
+        [
+          "Goodberry",
+          "Conjuration",
+          "—"
+        ],
+        [
+          "Hunter’s Mark",
+          "Divination",
+          "C"
+        ],
+        [
+          "Jump",
+          "Transmutation",
+          "—"
+        ],
+        [
+          "Longstrider",
+          "Transmutation",
+          "—"
+        ],
+        [
+          "Speak with Animals",
+          "Divination",
+          "R"
+        ]
+      ],
+      "ruleId": "classes.ranger.ranger-spell-list.table-1",
+      "type": "table"
+    },
+    {
+      "caption": "Level 2 Ranger Spells",
+      "columns": [
+        "Spell",
+        "School",
+        "Special"
+      ],
+      "rows": [
+        [
+          "Aid",
+          "Abjuration",
+          "—"
+        ],
+        [
+          "Animal Messenger",
+          "Enchantment",
+          "R"
+        ],
+        [
+          "Barkskin",
+          "Transmutation",
+          "—"
+        ],
+        [
+          "Darkvision",
+          "Transmutation",
+          "—"
+        ],
+        [
+          "Enhance Ability",
+          "Transmutation",
+          "C"
+        ],
+        [
+          "Find Traps",
+          "Divination",
+          "—"
+        ],
+        [
+          "Gust of Wind",
+          "Evocation",
+          "C"
+        ],
+        [
+          "Lesser Restoration",
+          "Abjuration",
+          "—"
+        ],
+        [
+          "Locate Animals or Plants",
+          "Divination",
+          "R"
+        ],
+        [
+          "Locate Object",
+          "Divination",
+          "C"
+        ],
+        [
+          "Magic Weapon",
+          "Transmutation",
+          "—"
+        ],
+        [
+          "Pass without Trace",
+          "Abjuration",
+          "C"
+        ],
+        [
+          "Protection from Poison",
+          "Abjuration",
+          "—"
+        ],
+        [
+          "Silence",
+          "Illusion",
+          "C, R"
+        ],
+        [
+          "Spike Growth",
+          "Transmutation",
+          "C"
+        ]
+      ],
+      "ruleId": "classes.ranger.ranger-spell-list.table-2",
+      "type": "table"
+    },
+    {
+      "caption": "Level 3 Ranger Spells",
+      "columns": [
+        "Spell",
+        "School",
+        "Special"
+      ],
+      "rows": [
+        [
+          "Conjure Animals",
+          "Conjuration",
+          "C"
+        ],
+        [
+          "Daylight",
+          "Evocation",
+          "—"
+        ],
+        [
+          "Dispel Magic",
+          "Abjuration",
+          "—"
+        ],
+        [
+          "Meld into Stone",
+          "Transmutation",
+          "R"
+        ],
+        [
+          "Nondetection",
+          "Abjuration",
+          "M"
+        ],
+        [
+          "Plant Growth",
+          "Transmutation",
+          "—"
+        ],
+        [
+          "Protection from Energy",
+          "Abjuration",
+          "C"
+        ],
+        [
+          "Revivify",
+          "Necromancy",
+          "M"
+        ],
+        [
+          "Speak with Plants",
+          "Transmutation",
+          "—"
+        ],
+        [
+          "Water Breathing",
+          "Transmutation",
+          "R"
+        ],
+        [
+          "Water Walk",
+          "Transmutation",
+          "R"
+        ],
+        [
+          "Wind Wall",
+          "Evocation",
+          "C"
+        ]
+      ],
+      "ruleId": "classes.ranger.ranger-spell-list.table-3",
+      "type": "table"
+    },
+    {
+      "caption": "Level 4 Ranger Spells",
+      "columns": [
+        "Spell",
+        "School",
+        "Special"
+      ],
+      "rows": [
+        [
+          "Conjure Woodland Beings",
+          "Conjuration",
+          "C"
+        ],
+        [
+          "Dominate Beast",
+          "Enchantment",
+          "C"
+        ],
+        [
+          "Freedom of Movement",
+          "Abjuration",
+          "—"
+        ],
+        [
+          "Locate Creature",
+          "Divination",
+          "C"
+        ],
+        [
+          "Stoneskin",
+          "Transmutation",
+          "C, M"
+        ]
+      ],
+      "ruleId": "classes.ranger.ranger-spell-list.table-4",
+      "type": "table"
+    },
+    {
+      "caption": "Level 5 Ranger Spells",
+      "columns": [
+        "Spell",
+        "School",
+        "Special"
+      ],
+      "rows": [
+        [
+          "Commune with Nature",
+          "Divination",
+          "R"
+        ],
+        [
+          "Greater Restoration",
+          "Abjuration",
+          "M"
+        ],
+        [
+          "Tree Stride",
+          "Conjuration",
+          "C"
+        ]
+      ],
+      "ruleId": "classes.ranger.ranger-spell-list.table-5",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "classes.ranger.ranger-subclass-hunter",
+      "text": "Ranger Subclass: Hunter",
+      "type": "heading"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-subclass-hunter.protect-nature-and-people-from-destruction",
+      "text": "Protect Nature and People from Destruction",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.protect-nature-and-people-from-destruction.p-1",
+      "text": "You stalk prey in the wilds and elsewhere, using your abilities as a Hunter to protect nature and people everywhere from forces that would destroy them.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-3-hunters-lore",
+      "text": "Level 3: Hunter’s Lore",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-3-hunters-lore.p-1",
+      "text": "You can call on the forces of nature to reveal certain strengths and weaknesses of your prey. While a creature is marked by your Hunter’s Mark, you know whether that creature has any Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-3-hunters-prey",
+      "text": "Level 3: Hunter’s Prey",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-3-hunters-prey.p-1",
+      "text": "You gain one of the following feature options of your choice. Whenever you finish a Short or Long Rest, you can replace the chosen option with the other one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-3-hunters-prey.p-2",
+      "text": "Colossus Slayer. Your tenacity can wear down even the most resilient foes. When you hit a creature with a weapon, the weapon deals an extra 1d8 damage to the target if it’s missing any of its Hit Points. You can deal this extra damage only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-3-hunters-prey.p-3",
+      "text": "Horde Breaker. Once on each of your turns when you make an attack with a weapon, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target, that is within the weapon’s range, and that you haven’t attacked this turn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-7-defensive-tactics",
+      "text": "Level 7: Defensive Tactics",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-7-defensive-tactics.p-1",
+      "text": "You gain one of the following feature options of your choice. Whenever you finish a Short or Long Rest, you can replace the chosen option with the other one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-7-defensive-tactics.p-2",
+      "text": "Escape the Horde. Opportunity Attacks have Disadvantage against you.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-7-defensive-tactics.p-3",
+      "text": "Multiattack Defense. When a creature hits you with an attack roll, that creature has Disadvantage on all other attack rolls against you this turn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-11-superior-hunters-prey",
+      "text": "Level 11: Superior Hunter’s Prey",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-11-superior-hunters-prey.p-1",
+      "text": "Once per turn when you deal damage to a creature marked by your Hunter’s Mark, you can also deal that spell’s extra damage to a different creature that you can see within 30 feet of the first creature.",
+      "type": "paragraph"
+    },
+    {
+      "level": 4,
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-15-superior-hunters-defense",
+      "text": "Level 15: Superior Hunter’s Defense",
+      "type": "heading"
+    },
+    {
+      "ruleId": "classes.ranger.ranger-subclass-hunter.level-15-superior-hunters-defense.p-1",
+      "text": "When you take damage, you can take a Reaction to give yourself Resistance to that damage and any other damage of the same type until the end of the current turn.",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "classes.ranger",
+  "editorialBlocks": [
+    "classes.ranger.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Classes",
+    "Ranger"
+  ],
+  "order": 2000,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "ranger",
+  "sourcePages": [
+    57,
+    58,
+    59,
+    60,
+    61
+  ],
+  "title": "Ranger"
+}

@@ -1,0 +1,356 @@
+{
+  "status": "discover_only",
+  "report_date": "2026-11-16",
+  "captured_at_host_utc": "2026-11-16T20:51:54.607489+00:00",
+  "input": {
+    "original_path": "/home/admin/projects/roll-drauf-vtt/infra/docker/.codex-attachments/99aba4bb-d402-4d01-b029-b9d18bf500c5/9e1e20cc-b041-44ef-8323-6e72ac2ef643/2026-11-16-1727-vtt-uberarbeitung-ui-und-playtable.txt",
+    "preserved_copy": "transcript.txt",
+    "sha256": "6a0992a8859c2552788a0b25224a0841ec595947d60ccc2df3fa77db4474be96",
+    "started": "2026-11-16T17:27:48.045Z",
+    "duration": "12:30"
+  },
+  "checkout": {
+    "path": "/home/admin/projects/roll-drauf-vtt",
+    "commit": "66edde994cd72479df62fd2a1593c4fda382ba1e",
+    "preexisting_tracked_changes": true
+  },
+  "source": {
+    "path": "/home/admin/projects/roll-drauf-vtt-session-feedback-20261116",
+    "commit": "3939766e72a2cd72bc7e69fb0382c9fc96d2edba",
+    "tracked_status": "",
+    "application_diff_from_image_revision": ""
+  },
+  "runtime": {
+    "container": "roll-drauf-vtt-app-1",
+    "image_tag": "roll-drauf-vtt-app:feedback-session-feedback-20261116-20261111-d4ff7e4fe",
+    "image_id": "sha256:7d8f4a54b36b125611ac116b37d10c09632dbea9a920c8c5b0413ea63efd4617",
+    "source_revision_label": "d4ff7e4fe2ef77a4a36ca41fa205ef5db2ad5b02",
+    "compose_project": "migration-production",
+    "compose_working_dir": "/srv/migration/2026-10-07/setup",
+    "compose_files": "/srv/migration/2026-10-07/setup/production.compose.json,/srv/migration/2026-10-07/setup/production.duck-species.override.yml",
+    "mounts": [
+      {
+        "type": "volume",
+        "destination": "/data/vtt-assets"
+      }
+    ]
+  },
+  "selected_source_runtime_comparison": {
+    "checked": 30,
+    "matched": 30,
+    "files": [
+      {
+        "path": "vtt/campaign_rooms.py",
+        "source_sha256": "be9796a3f744c93f8547ed2bad1d518008fc30320ec11ca070632998adb34195",
+        "running_sha256": "be9796a3f744c93f8547ed2bad1d518008fc30320ec11ca070632998adb34195",
+        "matches": true
+      },
+      {
+        "path": "vtt/rules.py",
+        "source_sha256": "437a3e6bd9f0955bb77a089c6dcab5d4feb650193635b1728a1a15e0af6fa0dc",
+        "running_sha256": "437a3e6bd9f0955bb77a089c6dcab5d4feb650193635b1728a1a15e0af6fa0dc",
+        "matches": true
+      },
+      {
+        "path": "vtt/play/vision.py",
+        "source_sha256": "5f758ac77a859229d0f2c65d70470a1693f8670c1f30da0b425d5a5c463dfe26",
+        "running_sha256": "5f758ac77a859229d0f2c65d70470a1693f8670c1f30da0b425d5a5c463dfe26",
+        "matches": true
+      },
+      {
+        "path": "vtt/play/rolls.py",
+        "source_sha256": "7e8b1430348b72507697fb3e187cbe5534adf4cc659ebf3b9b3a18b60ac95918",
+        "running_sha256": "7e8b1430348b72507697fb3e187cbe5534adf4cc659ebf3b9b3a18b60ac95918",
+        "matches": true
+      },
+      {
+        "path": "vtt/play/contexts.py",
+        "source_sha256": "316c07ebafb41ef45600734426dca02b7511c74917bb5e1f76b3a68df69c0779",
+        "running_sha256": "316c07ebafb41ef45600734426dca02b7511c74917bb5e1f76b3a68df69c0779",
+        "matches": true
+      },
+      {
+        "path": "vtt/play/token_library.py",
+        "source_sha256": "49a6114254267d315f3dc639a6f57e64d1956c37077a852068e90650046caf95",
+        "running_sha256": "49a6114254267d315f3dc639a6f57e64d1956c37077a852068e90650046caf95",
+        "matches": true
+      },
+      {
+        "path": "vtt/play/surfaces/dm.json",
+        "source_sha256": "e3d50d176b75e88fe9e033df0f1dc7d13a0d7a3078a6868e6aa6f53d3645062c",
+        "running_sha256": "e3d50d176b75e88fe9e033df0f1dc7d13a0d7a3078a6868e6aa6f53d3645062c",
+        "matches": true
+      },
+      {
+        "path": "vtt/play/presentation.py",
+        "source_sha256": "627528a35e55f6c8f8663dc51bf0282f40e9b6ea38b55e7e19bb6f60bb2fd29e",
+        "running_sha256": "627528a35e55f6c8f8663dc51bf0282f40e9b6ea38b55e7e19bb6f60bb2fd29e",
+        "matches": true
+      },
+      {
+        "path": "vtt/models/campaign_map.py",
+        "source_sha256": "02f1b374aa873715dceeef4894c43ab6b2804a8de521104fa41c74e3def65f82",
+        "running_sha256": "02f1b374aa873715dceeef4894c43ab6b2804a8de521104fa41c74e3def65f82",
+        "matches": true
+      },
+      {
+        "path": "vtt/models/session_feedback.py",
+        "source_sha256": "8c10f3c0b741f83725dd70663f8bfe7e35af667ab9eb505305d71d90d879efe7",
+        "running_sha256": "8c10f3c0b741f83725dd70663f8bfe7e35af667ab9eb505305d71d90d879efe7",
+        "matches": true
+      },
+      {
+        "path": "vtt/characters/sheet_link.py",
+        "source_sha256": "7d9b333ca35ca769c689a64f9d3c1ddc03b09410bf05e62314f178912659ba8a",
+        "running_sha256": "7d9b333ca35ca769c689a64f9d3c1ddc03b09410bf05e62314f178912659ba8a",
+        "matches": true
+      },
+      {
+        "path": "vtt/templates/play.html",
+        "source_sha256": "15e15d44eb68f69c445eaf4b364792351c7d98bf01c0bb1e34d1aa23fbb54a5a",
+        "running_sha256": "15e15d44eb68f69c445eaf4b364792351c7d98bf01c0bb1e34d1aa23fbb54a5a",
+        "matches": true
+      },
+      {
+        "path": "vtt/templates/conversations.html",
+        "source_sha256": "af2d210309da7485e97a02233323ef1290fcceea1520d04e55a527e28c65e2ac",
+        "running_sha256": "af2d210309da7485e97a02233323ef1290fcceea1520d04e55a527e28c65e2ac",
+        "matches": true
+      },
+      {
+        "path": "vtt/templates/atlas.html",
+        "source_sha256": "024123308ee5d549ef3cfa6822039f9c99256fdddc04bc0261a20f30ee41aaad",
+        "running_sha256": "024123308ee5d549ef3cfa6822039f9c99256fdddc04bc0261a20f30ee41aaad",
+        "matches": true
+      },
+      {
+        "path": "vtt/templates/mapmaker.html",
+        "source_sha256": "a26a10d17b84fc3fc13db50366ec09a6cb8ec2aa8e2f9d7a806c32e095ce0622",
+        "running_sha256": "a26a10d17b84fc3fc13db50366ec09a6cb8ec2aa8e2f9d7a806c32e095ce0622",
+        "matches": true
+      },
+      {
+        "path": "vtt/templates/creation-engine.html",
+        "source_sha256": "26038a251f52f49e84ae263b3cb44a424ce82a1fe1bd25155b2b1d5d8baefadc",
+        "running_sha256": "26038a251f52f49e84ae263b3cb44a424ce82a1fe1bd25155b2b1d5d8baefadc",
+        "matches": true
+      },
+      {
+        "path": "vtt/templates/regelwerk.html",
+        "source_sha256": "51e3579dc4582c2c9907e3c5d5955727e850440048f2e97b49531c08d7da7ad2",
+        "running_sha256": "51e3579dc4582c2c9907e3c5d5955727e850440048f2e97b49531c08d7da7ad2",
+        "matches": true
+      },
+      {
+        "path": "vtt/templates/regelwerk-en.html",
+        "source_sha256": "fda54cad158f09cddb7089e9d3b686c4ab3eed6bfb6e8c8b9b6eb657d7b1c7a4",
+        "running_sha256": "fda54cad158f09cddb7089e9d3b686c4ab3eed6bfb6e8c8b9b6eb657d7b1c7a4",
+        "matches": true
+      },
+      {
+        "path": "vtt/templates/regelwerk-compendium.html",
+        "source_sha256": "739adb1a55280772b7fd0d1973dc192c758bc0aeb557feb013c0b0db104a75e0",
+        "running_sha256": "739adb1a55280772b7fd0d1973dc192c758bc0aeb557feb013c0b0db104a75e0",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/js/play-ui.js",
+        "source_sha256": "3de39af70f6acb9ec76731fdf8c809a7f629e0d4dc9519dfa82c87150592573d",
+        "running_sha256": "3de39af70f6acb9ec76731fdf8c809a7f629e0d4dc9519dfa82c87150592573d",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/js/play-dm.js",
+        "source_sha256": "cb1324a698e441066d4792e99eda886948759dcd39266b2ef5c956bf98dfbca1",
+        "running_sha256": "cb1324a698e441066d4792e99eda886948759dcd39266b2ef5c956bf98dfbca1",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/js/play-token-library.js",
+        "source_sha256": "2b111bff763d41be2ca8e887a892166e3e77079cdd26f729c901878614b5b920",
+        "running_sha256": "2b111bff763d41be2ca8e887a892166e3e77079cdd26f729c901878614b5b920",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/js/private-conversations.js",
+        "source_sha256": "7ab92abba7def1d5338a4fddd101c57f6ef5deb245b311f6f616c9482a96a0c7",
+        "running_sha256": "7ab92abba7def1d5338a4fddd101c57f6ef5deb245b311f6f616c9482a96a0c7",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/js/book-scene.js",
+        "source_sha256": "984a1eb786d9f4824aee770dacf916a6bff10f8094c27536667015237bc351b0",
+        "running_sha256": "984a1eb786d9f4824aee770dacf916a6bff10f8094c27536667015237bc351b0",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/js/book-routes.js",
+        "source_sha256": "918fc821459f3bf844c4a9dd9b6e35f5cd62a6029abef1912b2eee68d54b1015",
+        "running_sha256": "918fc821459f3bf844c4a9dd9b6e35f5cd62a6029abef1912b2eee68d54b1015",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/js/vtt-main-nav.js",
+        "source_sha256": "97bbe9cafb670b84cfcb7aa3dacb4b4f85b250410527e7be148f21d00a07c0ac",
+        "running_sha256": "97bbe9cafb670b84cfcb7aa3dacb4b4f85b250410527e7be148f21d00a07c0ac",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/js/regelwerk-compendium.js",
+        "source_sha256": "c2ad3c0567b8f400a5ece198f68321e6b5540bb5bdd12b0a37bc03a291a66a13",
+        "running_sha256": "c2ad3c0567b8f400a5ece198f68321e6b5540bb5bdd12b0a37bc03a291a66a13",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/css/display-preferences.css",
+        "source_sha256": "87ae028377489e64430c3a95724eeed2e9194810370974436e728970b65a5c1c",
+        "running_sha256": "87ae028377489e64430c3a95724eeed2e9194810370974436e728970b65a5c1c",
+        "matches": true
+      },
+      {
+        "path": "vtt/static/css/theme.css",
+        "source_sha256": "da8814ee1d29573120be7d53caf23bde33e0e353456d2373cce418abd9e116ac",
+        "running_sha256": "da8814ee1d29573120be7d53caf23bde33e0e353456d2373cce418abd9e116ac",
+        "matches": true
+      },
+      {
+        "path": "vtt/rules_content/srd-5.2.1-de/manifest.json",
+        "source_sha256": "a173b462eb98221fd3bd40a91bc604580faf95652dd6adb9c14f8c87021fdf31",
+        "running_sha256": "a173b462eb98221fd3bd40a91bc604580faf95652dd6adb9c14f8c87021fdf31",
+        "matches": true
+      }
+    ]
+  },
+  "source_observations": [
+    {
+      "id": "german_compendium_endpoint",
+      "path": "vtt/static/js/regelwerk-compendium.js",
+      "needle": "const API = '/api/rulesets/srd-5.2.1-de/compendium'",
+      "matches": [
+        {
+          "line": 4,
+          "text": "const API = '/api/rulesets/srd-5.2.1-de/compendium';"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "campaign_history_reads_new_table",
+      "path": "vtt/campaign_rooms.py",
+      "needle": "CampaignChatMessage.query.filter_by(campaign_id=campaign.id)",
+      "matches": [
+        {
+          "line": 56,
+          "text": "query = CampaignChatMessage.query.filter_by(campaign_id=campaign.id)"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "new_token_bypasses_library_selection",
+      "path": "vtt/static/js/play-token-library.js",
+      "needle": "place.onclick = () => { ui.pendingTokenTemplate = null;",
+      "matches": [
+        {
+          "line": 13,
+          "text": "place.onclick = () => { ui.pendingTokenTemplate = null; ui._setTool('token'); ui.windows.close('tokenWidget'); ui._showMessage(t('Klicke auf die Karte, um einen Token zu platzieren.')); };"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "measurement_snaps_by_default",
+      "path": "vtt/static/js/play-ui.js",
+      "needle": "this.measureSnapEnabled = true;",
+      "matches": [
+        {
+          "line": 107,
+          "text": "this.measureSnapEnabled = true;"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "shape_label_near_origin",
+      "path": "vtt/static/js/play-ui.js",
+      "needle": "x=\"${a.x + 10}\" y=\"${a.y - 10}\"",
+      "matches": [
+        {
+          "line": 1470,
+          "text": "svg.innerHTML = `<g class=\"measure-shape\" data-shape=\"${this.measureShape}\">${geometry}</g><text class=\"measure-label\" x=\"${a.x + 10}\" y=\"${a.y - 10}\">${safeLabel}: ${distance}</text>`;"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "initiative_updates_current_value",
+      "path": "vtt/play/rolls.py",
+      "needle": "token.initiative = int(total)",
+      "matches": [
+        {
+          "line": 41,
+          "text": "token.initiative = int(total)"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "sight_button_toggles_geometry_layer",
+      "path": "vtt/static/js/play-dm.js",
+      "needle": "svg.hidden = !svg.hidden;",
+      "matches": [
+        {
+          "line": 157,
+          "text": "svg.hidden = !svg.hidden;"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "wall_sight_edit_handler",
+      "path": "vtt/static/js/play-dm.js",
+      "needle": "document.getElementById(\"wallEditSight\")?.addEventListener",
+      "matches": [
+        {
+          "line": 165,
+          "text": "document.getElementById(\"wallEditSight\")?.addEventListener(\"change\", () => this._saveWallEdit());"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "wall_delete_handler",
+      "path": "vtt/static/js/play-dm.js",
+      "needle": "document.getElementById(\"btnWallDelete\")?.addEventListener",
+      "matches": [
+        {
+          "line": 167,
+          "text": "document.getElementById(\"btnWallDelete\")?.addEventListener(\"click\", () => this._deleteSelectedWall());"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "map_grid_size",
+      "path": "vtt/models/campaign_map.py",
+      "needle": "grid_size = db.Column",
+      "matches": [
+        {
+          "line": 19,
+          "text": "grid_size = db.Column(db.Integer, default=32, nullable=False)"
+        }
+      ],
+      "confirmed": true
+    }
+  ],
+  "prior_delivery_reference": {
+    "path": "/home/admin/projects/roll-drauf-vtt-session-feedback-20261116/docs/proofs/session-feedback-2026-11-16/delivery.json",
+    "sha256": "9e97ddee373a906c7d262d2a3822e11243a6aca66748fa37dcc46a9388820b6c"
+  },
+  "verification_limits": [
+    "Selected files only; no new complete-image audit.",
+    "No authenticated browser journey, new functional test run, DB query or migration.",
+    "No application edit, image build, deployment or external communication.",
+    "Previous release checks are historical evidence, not new verification."
+  ]
+}

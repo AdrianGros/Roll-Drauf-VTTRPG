@@ -645,6 +645,9 @@ def _parse_token_patch(data: dict, is_dm_member: bool):
         if key in data:
             patch[key] = data[key]
 
+    if not is_dm_member and "initiative" in patch:
+        return None, {"code": "forbidden", "message": "Use the authorized initiative roll tracker."}
+
     numeric_fields = {
         "x",
         "y",
@@ -1055,6 +1058,9 @@ def register_socket_handlers(socketio):
                 _emit_error(parse_error["code"], parse_error["message"])
                 return
 
+        if token_payload.get("initiative") is not None and not is_dm_member:
+            _emit_error("forbidden", "Initiative uses the authorized roll tracker.")
+            return
         visibility = str(token_payload.get("visibility", "public")).strip().lower()
         if visibility not in {"public", "dm_only", "owner_only"}:
             _emit_error("bad_request", "invalid visibility")
@@ -1077,6 +1083,11 @@ def register_socket_handlers(socketio):
                 return
             linked_character = db.session.get(Character, character_id)
 
+        sight_range = token_payload.get('sight_range')
+        if sight_range is not None and (type(sight_range) is not int or sight_range < 0):
+            _emit_error('bad_request','invalid sight_range')
+            return
+
         _remember_client_event(campaign.id, game_session.id, user.id, client_event_id)
 
         token = TokenState(
@@ -1095,6 +1106,7 @@ def register_socket_handlers(socketio):
             hp_current=hp_current,
             hp_max=hp_max,
             initiative=initiative,
+            sight_range=sight_range,
             visibility=visibility,
             metadata_json=token_payload.get("metadata_json") or {},
             updated_by=user.id,
@@ -1726,7 +1738,7 @@ def register_socket_handlers(socketio):
                 token = actor_token(campaign.id, game_session.id, user.id, roll.get("token_id"))
                 character = token.name
                 if roll_type == "initiative":
-                    apply_initiative(token, total, user.id)
+                    apply_initiative(token, total, user.id, event_id=payload.get("client_event_id"), source="external")
         except ValueError as error:
             db.session.rollback()
             _emit_error("roll_rejected", str(error))

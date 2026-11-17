@@ -1,0 +1,24 @@
+{
+  "status": "failed",
+  "started_at": "2026-11-17T06:01:46.419774+00:00",
+  "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Edit",
+    "Write"
+  ],
+  "prompt_sha256": "f2b6f4bd259c0abc4540d57cce4556d807f8a8a924e3f01a9e587edfbbb82cba",
+  "mode": "authorized implementation on disjoint file ownership",
+  "subscription": "claude.ai Pro, Extra Usage disabled",
+  "timeout_seconds": 3600,
+  "exit_code": 1,
+  "is_error": true,
+  "models": [
+    "claude-opus-5-5"
+  ],
+  "num_turns": 82,
+  "stdout_bytes": 1982,
+  "stderr_bytes": 0,
+  "finished_at": "2026-11-17T06:32:16.075049+00:00"
+}

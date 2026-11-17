@@ -32,6 +32,14 @@ export class ConversationSurface {
         this.older = make('button', this.right, ui('Ältere Nachrichten'), {type: 'button', class: 'btn btn-secondary', hidden: ''});
         this.older.onclick = () => this.read('older');
         this.history = make('ol', this.right, null, {class: 'private-history', id: 'conversationHistory', 'aria-label': ui('Nachrichten')});
+        this.legacy = make('details', this.right, null, {id:'previousSessions', hidden:''});
+        make('summary', this.legacy, document.documentElement.lang === 'en' ? 'Previous sessions' : 'Frühere Sitzungen');
+        this.legacyStatus = make('p', this.legacy, '', {role:'status'});
+        this.legacyList = make('ol', this.legacy, null, {class:'private-history'});
+        this.legacyMore = make('button', this.legacy, document.documentElement.lang === 'en' ? 'Load older session messages' : 'Ältere Sitzungsnachrichten laden', {type:'button',class:'btn btn-secondary'});
+        this.legacyBefore = null; this.legacyLoaded = false;
+        this.legacy.ontoggle = () => { if (this.legacy.open && !this.legacyLoaded) this.readLegacy(); };
+        this.legacyMore.onclick = () => this.readLegacy();
         this.form = make('form', this.right, null, {hidden: ''});
         make('label', this.form, ui('Nachricht'), {for: 'privateMessage'});
         this.input = make('textarea', this.form, null, {id: 'privateMessage', maxlength: 2000, rows: 3, required: ''});
@@ -45,7 +53,7 @@ export class ConversationSurface {
         });
         window.addEventListener('pagehide', () => {
             this.pause(); this.sendAbort?.abort(); this.listAbort?.abort(); this.version++; this.listVersion++;
-            this.pending.clear(); this.messages.clear(); this.history.replaceChildren(); this.list.replaceChildren();
+            this.pending.clear(); this.messages.clear(); this.history.replaceChildren(); this.list.replaceChildren(); this.legacyList.replaceChildren();
             this.input.value = ''; this.form.hidden = true;
         });
         window.addEventListener('pageshow', event => {
@@ -56,7 +64,7 @@ export class ConversationSurface {
     denied() {
         this.pause(); this.sendAbort?.abort(); this.listAbort?.abort(); this.listVersion++; this.version++; if (this.id) this.pending.delete(this.id);
         this.id = null; this.messages.clear(); this.history.replaceChildren(); this.list.replaceChildren();
-        this.form.hidden = true; this.input.value = ''; this.older.hidden = true;
+        this.form.hidden = true; this.input.value = ''; this.older.hidden = true; this.legacy.hidden = true; this.legacyList.replaceChildren();
         this.title.textContent = ui('Gespräch nicht verfügbar');
         this.info.textContent = ui('Der Zugriff auf dieses Gespräch ist nicht mehr verfügbar.');
     }
@@ -92,12 +100,34 @@ export class ConversationSurface {
         } catch (error) { if (error.name !== 'AbortError' && version === this.listVersion) this.error(error); }
     }
     async open(id) {
-        this.pause(); this.sendAbort?.abort(); this.version++; this.id = id; this.messages.clear(); this.sending = false;
+        this.pause(); this.sendAbort?.abort(); this.legacyAbort?.abort(); this.legacyBusy=false; this.version++; this.id = id; this.messages.clear(); this.sending = false;
+        this.legacy.hidden = !(typeof id === 'string' && id.startsWith('campaign:')); this.legacy.open = false; this.legacyBefore = null; this.legacyLoaded = false; this.legacyList.replaceChildren(); this.legacyStatus.textContent = ''; this.legacyMore.hidden = false;
         this.history.replaceChildren(); this.form.hidden = true; this.title.textContent = ui('Gespräch wird geladen …'); this.info.textContent = '';
         this.input.value = this.pending.get(id)?.content || '';
         history.replaceState(null, '', typeof id === 'string' ? '/conversations?campaign_id=' + id.split(':')[1] : '/conversations?id=' + id);
         this.list.querySelectorAll('[data-conversation-id]').forEach(button => button.setAttribute('aria-current', String(Number(button.dataset.conversationId) === id)));
         await this.read('initial');
+    }
+    async readLegacy() {
+        const id = this.id, version = this.version;
+        if (!(typeof id === 'string' && id.startsWith('campaign:')) || this.legacyBusy) return;
+        this.legacyBusy = true; this.legacyMore.disabled = true;
+        const controller=this.legacyAbort=new AbortController();
+        try {
+            const result = await api(this.roomPath(id) + '/history' + (this.legacyBefore ? '?before=' + this.legacyBefore : ''), 'GET', undefined, controller.signal);
+            if (version !== this.version || id !== this.id) return;
+            const fragment = document.createDocumentFragment();
+            for (const message of result.messages) {
+                const row = make('li', fragment, null, {class:'private-message','data-legacy-id':message.source_key});
+                make('strong', row, `${message.session_name} · ${message.author_name}`);
+                make('p', row, message.content);
+                if (message.created_at) make('time', row, new Date(message.created_at).toLocaleString(), {datetime:message.created_at});
+            }
+            this.legacyList.prepend(fragment); this.legacyBefore = result.next_before; this.legacyLoaded = true;
+            this.legacyMore.hidden = !result.more;
+            this.legacyStatus.textContent = this.legacyList.children.length ? '' : (document.documentElement.lang === 'en' ? 'No earlier public session messages.' : 'Keine früheren öffentlichen Sitzungsnachrichten.');
+        } catch (error) { if (error.name!=='AbortError' && version === this.version) this.error(error); }
+        finally { if(version===this.version){this.legacyBusy = false; this.legacyMore.disabled = false;} }
     }
     render() {
         this.history.replaceChildren();

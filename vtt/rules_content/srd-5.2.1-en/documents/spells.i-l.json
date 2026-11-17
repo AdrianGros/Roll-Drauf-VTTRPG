@@ -1,0 +1,1036 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "spells.i-l",
+      "text": "Spells I–L",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "spells.i-l.roll-drauf-note",
+      "text": "Spells I–L in alphabetical order. Under each name you find the spell level, school and the classes that can prepare it, followed by casting time, range, components and duration.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.ice-knife",
+      "text": "Ice Knife",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.ice-knife.p-1",
+      "text": "Level 1 Conjuration (Druid, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "S, M (a drop of water or a piece of ice)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.ice-knife.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.ice-knife.p-2",
+      "text": "You create a shard of ice and fling it at one creature within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 Piercing damage. Hit or miss, the shard then explodes. The target and each creature within 5 feet of it must succeed on a Dexterity saving throw or take 2d6 Cold damage.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.ice-knife.p-3",
+      "text": "Using a Higher-Level Spell Slot. The Cold damage increases by 1d6 for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.ice-storm",
+      "text": "Ice Storm",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.ice-storm.p-1",
+      "text": "Level 4 Evocation (Druid, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "300 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a mitten)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.ice-storm.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.ice-storm.p-2",
+      "text": "Hail falls in a 20-foot-radius, 40-foot-high Cylinder centered on a point within range. Each creature in the Cylinder makes a Dexterity saving throw. A creature takes 2d10 Bludgeoning damage and 4d6 Cold damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.ice-storm.p-3",
+      "text": "Hailstones turn ground in the Cylinder into Difficult Terrain until the end of your next turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.ice-storm.p-4",
+      "text": "Using a Higher-Level Spell Slot. The Bludgeoning damage increases by 1d10 for each spell slot level above 4.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.identify",
+      "text": "Identify",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.identify.p-1",
+      "text": "Level 1 Divination (Bard, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a pearl worth 100+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.identify.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.identify.p-2",
+      "text": "You touch an object throughout the spell’s casting. If the object is a magic item or some other magical object, you learn its properties and how to use them, whether it requires Attunement, and how many charges it has, if any. You learn whether any ongoing spells are affecting the item and what they are. If the item was created by a spell, you learn that spell’s name.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.identify.p-3",
+      "text": "If you instead touch a creature throughout the casting, you learn which ongoing spells, if any, are currently affecting it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.illusory-script",
+      "text": "Illusory Script",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.illusory-script.p-1",
+      "text": "Level 1 Illusion (Bard, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "S, M (ink worth 10+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "10 days",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.illusory-script.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.illusory-script.p-2",
+      "text": "You write on parchment, paper, or another suitable material and imbue it with an illusion that lasts for the duration. To you and any creatures you designate when you cast the spell, the writing appears normal, seems to be written in your hand, and conveys whatever meaning you intended when you wrote the text. To all others, the writing appears as if it were written in an unknown or magical script that is unintelligible. Alternatively, the illusion can alter the meaning, handwriting, and language of the text, though the language must be one you know.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.illusory-script.p-3",
+      "text": "If the spell is dispelled, the original script and the illusion both disappear.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.illusory-script.p-4",
+      "text": "A creature that has Truesight can read the hidden message.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.imprisonment",
+      "text": "Imprisonment",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.imprisonment.p-1",
+      "text": "Level 9 Abjuration (Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a statuette of the target worth 5,000+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Until dispelled",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.imprisonment.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.imprisonment.p-2",
+      "text": "You create a magical restraint to hold a creature that you can see within range. The target must make a Wisdom saving throw. On a successful save, the target is unaffected, and it is immune to this spell for the next 24 hours. On a failed save, the target is imprisoned. While imprisoned, the target doesn’t need to breathe, eat, or drink, and it doesn’t age. Divination spells can’t locate or perceive the imprisoned target, and the target can’t teleport.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.imprisonment.p-3",
+      "text": "Until the spell ends, the target is also affected by one of the following effects of your choice: Burial. The target is entombed beneath the earth in a hollow globe of magical force that is just large enough to contain the target. Nothing can pass into or out of the globe. Chaining. Chains firmly rooted in the ground hold the target in place. The target has the Restrained condition and can’t be moved by any means. Hedged Prison. The target is trapped in a demiplane that is warded against teleportation and planar travel. The demiplane is your choice of a labyrinth, a cage, a tower, or the like. Minimus Containment. The target becomes 1 inch tall and is trapped inside an indestructible gemstone or a similar object. Light can pass through the gemstone (allowing the target to see out and other creatures to see in), but nothing else can pass through by any means. Slumber. The target has the Unconscious condition and can’t be awoken. Ending the Spell. When you cast the spell, specify a trigger that will end it. The trigger can be as simple or as elaborate as you choose, but the GM must agree that it has a high likelihood of happening within the next decade. The trigger must be an observable action, such as someone making a particular offering at the temple of your god, saving your true love, or defeating a specific monster.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.imprisonment.p-4",
+      "text": "A Dispel Magic spell can end the spell only if it is cast with a level 9 spell slot, targeting either the prison or the component used to create it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.incendiary-cloud",
+      "text": "Incendiary Cloud",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.incendiary-cloud.p-1",
+      "text": "Level 8 Conjuration (Druid, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "150 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.incendiary-cloud.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.incendiary-cloud.p-2",
+      "text": "A swirling cloud of embers and smoke fills a 20-foot-radius Sphere centered on a point within range. The cloud’s area is Heavily Obscured. It lasts for the duration or until a strong wind (like that created by Gust of Wind) disperses it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.incendiary-cloud.p-3",
+      "text": "When the cloud appears, each creature in it makes a Dexterity saving throw, taking 10d8 Fire damage on a failed save or half as much damage on a successful one. A creature must also make this save when the Sphere moves into its space and when it enters the Sphere or ends its turn there. A creature makes this save only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.incendiary-cloud.p-4",
+      "text": "The cloud moves 10 feet away from you in a direction you choose at the start of each of your turns.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.inflict-wounds",
+      "text": "Inflict Wounds",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.inflict-wounds.p-1",
+      "text": "Level 1 Necromancy (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.inflict-wounds.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.inflict-wounds.p-2",
+      "text": "A creature you touch makes a Constitution saving throw, taking 2d10 Necrotic damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.inflict-wounds.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d10 for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.insect-plague",
+      "text": "Insect Plague",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.insect-plague.p-1",
+      "text": "Level 5 Conjuration (Cleric, Druid, Sorcerer)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "300 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a locust)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.insect-plague.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.insect-plague.p-2",
+      "text": "Swarming locusts fill a 20-foot-radius Sphere centered on a point you choose within range. The Sphere remains for the duration, and its area is Lightly Obscured and Difficult Terrain.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.insect-plague.p-3",
+      "text": "When the swarm appears, each creature in it makes a Constitution saving throw, taking 4d10 Piercing damage on a failed save or half as much damage on a successful one. A creature also makes this save when it enters the spell’s area for the first time on a turn or ends its turn there. A creature makes this save only once per turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.insect-plague.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d10 for each spell slot level above 5.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.instant-summons",
+      "text": "Instant Summons",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.instant-summons.p-1",
+      "text": "Level 6 Conjuration (Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a sapphire worth 1,000+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Until dispelled",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.instant-summons.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.instant-summons.p-2",
+      "text": "You touch the sapphire used in the casting and an object weighing 10 pounds or less whose longest dimension is 6 feet or less. The spell leaves an Invisible mark on that object and invisibly inscribes the object’s name on the sapphire. Each time you cast this spell, you must use a different sapphire.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.instant-summons.p-3",
+      "text": "Thereafter, you can take a Magic action to speak the object’s name and crush the sapphire. The object instantly appears in your hand regardless of physical or planar distances, and the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.instant-summons.p-4",
+      "text": "If another creature is holding or carrying the object, crushing the sapphire doesn’t transport it, but instead you learn who that creature is and where that creature is currently located.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.irresistible-dance",
+      "text": "Irresistible Dance",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.irresistible-dance.p-1",
+      "text": "Level 6 Enchantment (Bard, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.irresistible-dance.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.irresistible-dance.p-2",
+      "text": "One creature that you can see within range must make a Wisdom saving throw. On a successful save, the target dances comically until the end of its next turn, during which it must spend all its movement to dance in place.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.irresistible-dance.p-3",
+      "text": "On a failed save, the target has the Charmed condition for the duration. While Charmed, the target dances comically, must use all its movement to dance in place, and has Disadvantage on Dexterity saving throws and attack rolls, and other creatures have Advantage on attack rolls against it. On each of its turns, the target can take an action to collect itself and repeat the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.invisibility",
+      "text": "Invisibility",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.invisibility.p-1",
+      "text": "Level 2 Illusion (Bard, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (an eyelash in gum arabic)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.invisibility.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.invisibility.p-2",
+      "text": "A creature you touch has the Invisible condition until the spell ends. The spell ends early immediately after the target makes an attack roll, deals damage, or casts a spell.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.invisibility.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 2.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.jump",
+      "text": "Jump",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.jump.p-1",
+      "text": "Level 1 Transmutation (Druid, Ranger, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a grasshopper’s hind leg)",
+          "term": "Components"
+        },
+        {
+          "definition": "1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.jump.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.jump.p-2",
+      "text": "You touch a willing creature. Once on each of its turns until the spell ends, that creature can jump up to 30 feet by spending 10 feet of movement.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.jump.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.knock",
+      "text": "Knock",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.knock.p-1",
+      "text": "Level 2 Transmutation (Bard, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.knock.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.knock.p-2",
+      "text": "Choose an object that you can see within range. The object can be a door, a box, a chest, a set of manacles, a padlock, or another object that contains a mundane or magical means that prevents access.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.knock.p-3",
+      "text": "A target that is held shut by a mundane lock or that is stuck or barred becomes unlocked, unstuck, or unbarred. If the object has multiple locks, only one of them is unlocked.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.knock.p-4",
+      "text": "If the target is held shut by Arcane Lock, that spell is suppressed for 10 minutes, during which time the target can be opened and closed.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.knock.p-5",
+      "text": "When you cast the spell, a loud knock, audible up to 300 feet away, emanates from the target.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.legend-lore",
+      "text": "Legend Lore",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.legend-lore.p-1",
+      "text": "Level 5 Divination (Bard, Cleric, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "10 minutes",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (incense worth 250+ GP, which the spell consumes, and four ivory strips worth 50+ GP each)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.legend-lore.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.legend-lore.p-2",
+      "text": "Name or describe a famous person, place, or object. The spell brings to your mind a brief summary of the significant lore about that famous thing, as described by the GM.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.legend-lore.p-3",
+      "text": "The lore might consist of important details, amusing revelations, or even secret lore that has never been widely known. The more information you already know about the thing, the more precise and detailed the information you receive is. That information is accurate but might be couched in figurative language or poetry, as determined by the GM.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.legend-lore.p-4",
+      "text": "If the famous thing you chose isn’t actually famous, you hear sad musical notes played on a trombone, and the spell fails.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.lesser-restoration",
+      "text": "Lesser Restoration",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.lesser-restoration.p-1",
+      "text": "Level 2 Abjuration (Bard, Cleric, Druid, Paladin, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.lesser-restoration.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.lesser-restoration.p-2",
+      "text": "You touch a creature and end one condition on it: Blinded, Deafened, Paralyzed, or Poisoned.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.levitate",
+      "text": "Levitate",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.levitate.p-1",
+      "text": "Level 2 Transmutation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a metal spring)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.levitate.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.levitate.p-2",
+      "text": "One creature or loose object of your choice that you can see within range rises vertically up to 20 feet and remains suspended there for the duration. The spell can levitate an object that weighs up to 500 pounds. An unwilling creature that succeeds on a Constitution saving throw is unaffected.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.levitate.p-3",
+      "text": "The target can move only by pushing or pulling against a fixed object or surface within reach (such as a wall or a ceiling), which allows it to move as if it were climbing. You can change the target’s altitude by up to 20 feet in either direction on your turn. If you are the target, you can move up or down as part of your move. Otherwise, you can take a Magic action to move the target, which must remain within the spell’s range.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.levitate.p-4",
+      "text": "When the spell ends, the target floats gently to the ground if it is still aloft.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.light",
+      "text": "Light",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.light.p-1",
+      "text": "Evocation Cantrip (Bard, Cleric, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, M (a firefly or phosphorescent moss)",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.light.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.light.p-2",
+      "text": "You touch one Large or smaller object that isn’t being worn or carried by someone else. Until the spell ends, the object sheds Bright Light in a 20-foot radius and Dim Light for an additional 20 feet. The light can be colored as you like.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.light.p-3",
+      "text": "Covering the object with something opaque blocks the light. The spell ends if you cast it again.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.lightning-bolt",
+      "text": "Lightning Bolt",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.lightning-bolt.p-1",
+      "text": "Level 3 Evocation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a bit of fur and a crystal rod)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.lightning-bolt.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.lightning-bolt.p-2",
+      "text": "A stroke of lightning forming a 100-foot-long, 5-foot-wide Line blasts out from you in a direction you choose. Each creature in the Line makes a Dexterity saving throw, taking 8d6 Lightning damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.lightning-bolt.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 3.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.locate-animals-or-plants",
+      "text": "Locate Animals or Plants",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.locate-animals-or-plants.p-1",
+      "text": "Level 2 Divination (Bard, Druid, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (fur from a bloodhound)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.locate-animals-or-plants.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.locate-animals-or-plants.p-2",
+      "text": "Describe or name a specific kind of Beast, Plant creature, or nonmagical plant. You learn the direction and distance to the closest creature or plant of that kind within 5 miles, if any are present.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.locate-creature",
+      "text": "Locate Creature",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.locate-creature.p-1",
+      "text": "Level 4 Divination (Bard, Cleric, Druid, Paladin, Ranger, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (fur from a bloodhound)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.locate-creature.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.locate-creature.p-2",
+      "text": "Describe or name a creature that is familiar to you. You sense the direction to the creature’s location if that creature is within 1,000 feet of you. If the creature is moving, you know the direction of its movement.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.locate-creature.p-3",
+      "text": "The spell can locate a specific creature known to you or the nearest creature of a specific kind (such as a human or a unicorn) if you have seen such a creature up close—within 30 feet—at least once. If the creature you described or named is in a different form, such as under the effects of a Flesh to Stone or Polymorph spell, this spell doesn’t locate the creature.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.locate-creature.p-4",
+      "text": "This spell can’t locate a creature if any thickness of lead blocks a direct path between you and the creature.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.locate-object",
+      "text": "Locate Object",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.locate-object.p-1",
+      "text": "Level 2 Divination (Bard, Cleric, Druid, Paladin, Ranger, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a forked twig)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.locate-object.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.locate-object.p-2",
+      "text": "Describe or name an object that is familiar to you. You sense the direction to the object’s location if that object is within 1,000 feet of you. If the object is in motion, you know the direction of its movement.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.locate-object.p-3",
+      "text": "The spell can locate a specific object known to you if you have seen it up close—within 30 feet—at least once. Alternatively, the spell can locate the nearest object of a particular kind, such as a certain kind of apparel, jewelry, furniture, tool, or weapon.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.locate-object.p-4",
+      "text": "This spell can’t locate an object if any thickness of lead blocks a direct path between you and the object.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.i-l.longstrider",
+      "text": "Longstrider",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.i-l.longstrider.p-1",
+      "text": "Level 1 Transmutation (Bard, Druid, Ranger, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a pinch of dirt)",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.i-l.longstrider.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.i-l.longstrider.p-2",
+      "text": "You touch a creature. The target’s Speed increases by 10 feet until the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.i-l.longstrider.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 1.",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "spells.i-l",
+  "editorialBlocks": [
+    "spells.i-l",
+    "spells.i-l.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Spells",
+    "Spells I–L"
+  ],
+  "order": 3605,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "spells-i-l",
+  "sourcePages": [
+    141,
+    142,
+    143,
+    144,
+    145
+  ],
+  "title": "Spells I–L"
+}

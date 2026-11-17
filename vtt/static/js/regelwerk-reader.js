@@ -1,12 +1,18 @@
 (function () {
     'use strict';
 
-    const SRD_RULESET_ID = 'srd-5.2.1-de';
+    const routeLocale = window.location.pathname.match(/^\/regelwerk\/5\.2\.1\/(de|en)(?:\/|$)/)?.[1];
+    const requestedLocale = new URLSearchParams(window.location.search).get('locale');
+    const contentLocale = routeLocale || (['de', 'en'].includes(requestedLocale) ? requestedLocale
+        : globalThis.VTTI18n?.locale?.() === 'en' ? 'en' : 'de');
+    const SRD_RULESET_ID = `srd-5.2.1-${contentLocale}`;
     // The SRD is the main book; Roll Drauf's own books live under their readerUrl.
-    let book = { rulesetId: SRD_RULESET_ID, kind: 'srd', readerUrl: '/regelwerk' };
+    let book = { rulesetId: SRD_RULESET_ID, kind: 'srd', readerUrl: contentLocale === 'en' ? '/regelwerk/5.2.1/en' : '/regelwerk?locale=de' };
     let API_ROOT = `/api/rulesets/${SRD_RULESET_ID}`;
     const article = document.getElementById('regelwerkArticle');
     const toc = document.getElementById('regelwerkToc');
+    article.lang = contentLocale;
+    toc.lang = contentLocale;
     const searchForm = document.getElementById('regelwerkSearch');
     const searchInput = document.getElementById('regelwerkSearchInput');
     const searchStatus = document.getElementById('regelwerkSearchStatus');
@@ -136,7 +142,7 @@
     }
 
     const RANGE = /^(.+?) ([A-ZÄÖÜ](?:–[A-ZÄÖÜ])?)$/;
-    const RULE_GROUPS = { 'magic-items': 'Regeln für magische Gegenstände' };
+    const RULE_GROUPS = { 'magic-items': contentLocale === 'en' ? 'Using Magic Items' : 'Regeln für magische Gegenstände' };
     const LABELS = {
         'magic-items.intro': 'Überblick',
         'magic-items.az-intro': 'Hinweise zum Katalog',
@@ -270,7 +276,7 @@
         clear(article);
         article.appendChild(element('h2', '', ui('Quelle & Lizenz')));
         article.appendChild(element('p', 'regelwerk-document-meta', `${data.source.title} · ${data.license.id}`));
-        const sourceLink = element('a', '', ui('Offizielles deutsches SRD 5.2.1 öffnen'));
+        const sourceLink = element('a', '', contentLocale === 'en' ? 'Open the official English SRD 5.2.1' : ui('Offizielles deutsches SRD 5.2.1 öffnen'));
         sourceLink.href = data.source.url;
         sourceLink.rel = 'noreferrer';
         article.appendChild(sourceLink);
@@ -282,6 +288,10 @@
         article.appendChild(licenseParagraph);
         article.appendChild(element('h3', '', ui('Vorgeschriebene Quellenangabe')));
         article.appendChild(element('p', 'regelwerk-license-text', data.attribution));
+        if (data.editorialPolicy) {
+            article.appendChild(element('h3', '', 'How this edition was made'));
+            article.appendChild(element('p', '', data.editorialPolicy.statement));
+        }
         article.setAttribute('aria-busy', 'false');
         document.title = `${ui('Quelle & Lizenz')} · ${ui('Regelwerk')} · Roll Drauf VTT`;
     }
@@ -342,7 +352,7 @@
         nav.hidden = false;
         books.forEach((entry) => {
             const link = element('a', '', entry.status === 'preview' ? ui('{title} · Vorschau', { title: entry.title }) : entry.title);
-            link.href = entry.readerUrl;
+            link.href = entry.rulesetId === 'srd-5.2.1-de' ? '/regelwerk?locale=de' : entry.readerUrl;
             if (entry.rulesetId === book.rulesetId) link.setAttribute('aria-current', 'page');
             nav.appendChild(link);
         });
@@ -365,6 +375,11 @@
         if (own) {
             book = own;
             API_ROOT = `/api/rulesets/${encodeURIComponent(own.rulesetId)}`;
+        } else {
+            book = books.find((entry) => entry.rulesetId === SRD_RULESET_ID) || book;
+            if (contentLocale === 'en' && path === '/regelwerk') {
+                window.history.replaceState(null, '', `${book.readerUrl}${window.location.hash}`);
+            }
         }
         renderBooks(books);
     }
@@ -372,6 +387,14 @@
     function applyBookChrome() {
         const licenseLink = document.getElementById('regelwerkLicenseLink');
         if (licenseLink) licenseLink.href = navigation.licenseUrl;
+        const compendiumLink = document.querySelector('.regelwerk-sidebar-actions a[href^="/regelwerk/compendium"]');
+        if (compendiumLink) compendiumLink.href = `/regelwerk/compendium?locale=${contentLocale}`;
+        if (book.rulesetId === 'srd-5.2.1-en') {
+            setText('regelwerkTitle', navigation.title);
+            setText('regelwerkFooterSource', 'System Reference Document 5.2.1 (English) · Complete rules text with separate Roll Drauf reading notes.');
+            const footer = document.getElementById('regelwerkFooterLicense');
+            if (footer) footer.href = navigation.licenseUrl;
+        }
         if (book.kind !== 'original') return;
         setText('regelwerkTitle', navigation.title);
         setText('regelwerkSearchLabel', ui('In diesem Buch suchen'));

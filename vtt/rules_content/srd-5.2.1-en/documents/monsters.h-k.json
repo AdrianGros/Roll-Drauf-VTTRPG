@@ -1,0 +1,1669 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "monsters.h-k",
+      "text": "Monsters H–K",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "monsters.h-k.roll-drauf-note",
+      "text": "Monsters H–K. Related creatures are grouped under a shared heading.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.half-dragon",
+      "text": "Half-Dragon",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Dragon, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "HP",
+          "value": "105 (14d8 + 42)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "19 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +5"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "15 · MOD +2 · SAVE +5"
+        },
+        {
+          "label": "Cha",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Skills",
+          "value": "Athletics +7, Perception +5, Stealth +5"
+        },
+        {
+          "label": "Resistances",
+          "value": "Damage type chosen for the Draconic Origin trait below"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft., Darkvision 60 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Draconic"
+        },
+        {
+          "label": "CR",
+          "value": "5 (XP 1,800; PB +3)"
+        }
+      ],
+      "name": "Half-Dragon",
+      "ruleId": "monsters.h-k.half-dragon.half-dragon",
+      "sections": [
+        {
+          "text": "Draconic Origin. The half-dragon is related to a type of dragon associated with one of the following damage types (GM’s choice): Acid, Cold, Fire, Lightning, or Poison. This choice affects other aspects of the stat block.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The half-dragon makes two Claw attacks.\nClaw. Melee Attack Roll: +7, reach 10 ft. Hit: 6 (1d4 + 4) Slashing damage plus 7 (2d6) damage of the type chosen for the Draconic Origin trait.\nDragon’s Breath (Recharge 5–6). Dexterity Saving Throw: DC 14, each creature in a 30-foot Cone. Failure: 28 (8d6) damage of the type chosen for the Draconic Origin trait. Success: Half damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Leap. The half-dragon jumps up to 30 feet by spending 10 feet of movement.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.harpy",
+      "text": "Harpy",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Monstrosity, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "38 (7d8 + 7)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Fly 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Common"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Harpy",
+      "ruleId": "monsters.h-k.harpy.harpy",
+      "sections": [
+        {
+          "text": "Claw. Melee Attack Roll: +3, reach 5 ft. Hit: 6 (2d4 + 1) Slashing damage.\nLuring Song. The harpy sings a magical melody, which lasts until the harpy’s Concentration ends on it. Wisdom Saving Throw: DC 11, each Humanoid and Giant in a 300-foot Emanation originating from the harpy when the song starts. Failure: The target has the Charmed condition until the song ends and repeats the save at the end of each of its turns. While Charmed, the target has the Incapacitated condition and ignores the Luring Song of other harpies. If the target is more than 5 feet from the harpy, the target moves on its turn toward the harpy by the most direct route, trying to get within 5 feet of the harpy. It doesn’t avoid Opportunity Attacks; however, before moving into damaging terrain (such as lava or a pit) and whenever it takes damage from a source other than the harpy, the target repeats the save. Success: The target is immune to this harpy’s Luring Song for 24 hours.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.hell-hound",
+      "text": "Hell Hound",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fiend, Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "58 (9d8 + 18)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Infernal but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Hell Hound",
+      "ruleId": "monsters.h-k.hell-hound.hell-hound",
+      "sections": [
+        {
+          "text": "Pack Tactics. The hound has Advantage on an attack roll against a creature if at least one of the hound’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The hound makes two Bite attacks.\nBite. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage plus 3 (1d6) Fire damage.\nFire Breath (Recharge 5–6). Dexterity Saving Throw:\nDC 12, each creature in a 15-foot Cone. Failure: 17 (5d6) Fire damage. Success: Half damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.hezrou",
+      "text": "Hezrou",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Fiend (Demon), Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+6 (16)"
+        },
+        {
+          "label": "HP",
+          "value": "157 (15d10 + 75)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "19 · MOD +4 · SAVE +7"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "20 · MOD +5 · SAVE +8"
+        },
+        {
+          "label": "Int",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +4"
+        },
+        {
+          "label": "Cha",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold, Fire, Lightning"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal; telepathy 120 ft."
+        },
+        {
+          "label": "CR",
+          "value": "8 (XP 3,900; PB +3)"
+        }
+      ],
+      "name": "Hezrou",
+      "ruleId": "monsters.h-k.hezrou.hezrou",
+      "sections": [
+        {
+          "text": "Demonic Restoration. If the hezrou dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Abyss.\nMagic Resistance. The hezrou has Advantage on saving throws against spells and other magical effects.\nStench. Constitution Saving Throw: DC 16, any creature that starts its turn in a 10-foot Emanation originating from the hezrou. Failure: The target has the Poisoned condition until the start of its next turn.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The hezrou makes three Rend attacks.\nRend. Melee Attack Roll: +7, reach 5 ft. Hit: 6 (1d4 + 4) Slashing damage plus 9 (2d8) Poison damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Leap. The hezrou jumps up to 30 feet by spending 10 feet of movement.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.hill-giant",
+      "text": "Hill Giant",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Giant, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "105 (10d12 + 40)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "21 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Dex",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "19 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Int",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Giant"
+        },
+        {
+          "label": "CR",
+          "value": "5 (XP 1,800; PB +3)"
+        }
+      ],
+      "name": "Hill Giant",
+      "ruleId": "monsters.h-k.hill-giant.hill-giant",
+      "sections": [
+        {
+          "text": "Multiattack. The giant makes two attacks, using Tree Club or Trash Lob in any combination.\nTree Club. Melee Attack Roll: +8, reach 10 ft. Hit: 18 (3d8 + 5) Bludgeoning damage. If the target is a Large or smaller creature, it has the Prone condition.\nTrash Lob. Ranged Attack Roll: +8, range 60/240 ft. Hit: 16 (2d10 + 5) Bludgeoning damage, and the target has the Poisoned condition until the end of its next turn.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.hippogriff",
+      "text": "Hippogriff",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Monstrosity, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "26 (4d10 + 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Hippogriff",
+      "ruleId": "monsters.h-k.hippogriff.hippogriff",
+      "sections": [
+        {
+          "text": "Flyby. The hippogriff doesn’t provoke an Opportunity Attack when it flies out of an enemy’s reach.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The hippogriff makes two Rend attacks.\nRend. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Slashing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.hobgoblins",
+      "text": "Hobgoblins",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fey (Goblinoid), Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "11 (2d8 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Gear",
+          "value": "Half Plate Armor, Longbow, Longsword, Shield"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Goblin"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Hobgoblin Warrior",
+      "ruleId": "monsters.h-k.hobgoblins.hobgoblin-warrior",
+      "sections": [
+        {
+          "text": "Pack Tactics. The hobgoblin has Advantage on an attack roll against a creature if at least one of the hobgoblin’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Longsword. Melee Attack Roll: +3, reach 5 ft. Hit: 12 (2d10 + 1) Slashing damage.\nLongbow. Ranged Attack Roll: +3, range 150/600 ft. Hit: 5 (1d8 + 1) Piercing damage plus 7 (3d4) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fey (Goblinoid), Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "HP",
+          "value": "58 (9d8 + 18)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Gear",
+          "value": "Greatsword, Half Plate Armor, Longbow"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Goblin"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Hobgoblin Captain",
+      "ruleId": "monsters.h-k.hobgoblins.hobgoblin-captain",
+      "sections": [
+        {
+          "text": "Aura of Authority. While in a 10-foot Emanation originating from the hobgoblin, the hobgoblin and its allies have Advantage on attack rolls and saving throws, provided the hobgoblin doesn’t have the Incapacitated condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The hobgoblin makes two attacks, using Greatsword or Longbow in any combination.\nGreatsword. Melee Attack Roll: +4, reach 5 ft. Hit: 9 (2d6 + 2) Slashing damage plus 3 (1d6) Poison damage.\nLongbow. Ranged Attack Roll: +4, range 150/600 ft. Hit: 6 (1d8 + 2) Piercing damage plus 5 (2d4) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.homunculus",
+      "text": "Homunculus",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Construct, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "4 (1d4 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Fly 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE +0"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Charmed, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Common plus one other language but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Homunculus",
+      "ruleId": "monsters.h-k.homunculus.homunculus",
+      "sections": [
+        {
+          "text": "Telepathic Bond. While the homunculus is on the same plane of existence as its master, the two of them can communicate telepathically with each other.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage, and the target is subjected to the following effect. Constitution Saving Throw: DC 12. Failure: The target has the Poisoned condition until the end of the homunculus’s next turn. Failure by 5 or More: The target has the Poisoned condition for 1 minute. While Poisoned, the target has the Unconscious condition, which ends early if the target takes any damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.horned-devil",
+      "text": "Horned Devil",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Fiend (Devil), Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "HP",
+          "value": "199 (19d10 + 95)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "22 · MOD +6 · SAVE +10"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +7"
+        },
+        {
+          "label": "Con",
+          "value": "21 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "16 · MOD +3 · SAVE +7"
+        },
+        {
+          "label": "Cha",
+          "value": "18 · MOD +4 · SAVE +8"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire, Poison; Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 150 ft. (unimpeded by magical Darkness); Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "Infernal; telepathy 120 ft."
+        },
+        {
+          "label": "CR",
+          "value": "11 (XP 7,200; PB +4)"
+        }
+      ],
+      "name": "Horned Devil",
+      "ruleId": "monsters.h-k.horned-devil.horned-devil",
+      "sections": [
+        {
+          "text": "Diabolical Restoration. If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Nine Hells.\nMagic Resistance. The devil has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The devil makes three attacks, using Searing Fork or Hurl Flame in any combination. It can replace one attack with a use of Infernal Tail.\nSearing Fork. Melee Attack Roll: +10, reach 10 ft. Hit: 15 (2d8 + 6) Piercing damage plus 9 (2d8) Fire damage.\nHurl Flame. Ranged Attack Roll: +8, range 150 ft. Hit:\n26 (5d8 + 4) Fire damage. If the target is a flammable object that isn’t being worn or carried, it starts burning.\nInfernal Tail. Dexterity Saving Throw: DC 17, one creature the devil can see within 10 feet. Failure: 10 (1d8 + 6) Necrotic damage, and the target receives an infernal wound if it doesn’t have one. While wounded, the target loses 10 (3d6) Hit Points at the start of each of its turns. The wound closes after 1 minute, after a spell restores Hit Points to the target, or after the target or a creature within 5 feet of it takes an action to stanch the wound, doing so by succeeding on a DC 17 Wisdom (Medicine) check.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.hydra",
+      "text": "Hydra",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Monstrosity, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "HP",
+          "value": "184 (16d12 + 80)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Swim 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "20 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "20 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +6"
+        },
+        {
+          "label": "Immunities",
+          "value": "Blinded, Charmed, Deafened, Frightened, Stunned, Unconscious"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 16"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "8 (XP 3,900; PB +3)"
+        }
+      ],
+      "name": "Hydra",
+      "ruleId": "monsters.h-k.hydra.hydra",
+      "sections": [
+        {
+          "text": "Hold Breath. The hydra can hold its breath for 1 hour.\nMultiple Heads. The hydra has five heads. Whenever the hydra takes 25 damage or more on a single turn, one of its heads dies. The hydra dies if all its heads are dead. At the end of each of its turns when it has at least one living head, the hydra grows two heads for each of its heads that died since its last turn, unless it has taken Fire damage since its last turn. The hydra regains 20 Hit Points when it grows new heads.\nReactive Heads. For each head the hydra has beyond one, it gets an extra Reaction that can be used only for Opportunity Attacks.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The hydra makes as many Bite attacks as it has heads.\nBite. Melee Attack Roll: +8, reach 10 ft. Hit: 10 (1d10 + 5) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.ice-devil",
+      "text": "Ice Devil",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Fiend (Devil), Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "HP",
+          "value": "228 (24d10 + 96)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "21 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +7"
+        },
+        {
+          "label": "Con",
+          "value": "18 · MOD +4 · SAVE +9"
+        },
+        {
+          "label": "Int",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Wis",
+          "value": "15 · MOD +2 · SAVE +7"
+        },
+        {
+          "label": "Cha",
+          "value": "18 · MOD +4 · SAVE +9"
+        },
+        {
+          "label": "Skills",
+          "value": "Insight +7, Perception +7, Persuasion +9"
+        },
+        {
+          "label": "Immunities",
+          "value": "Cold, Fire, Poison; Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 120 ft.; Passive Perception 17"
+        },
+        {
+          "label": "Languages",
+          "value": "Infernal; telepathy 120 ft."
+        },
+        {
+          "label": "CR",
+          "value": "14 (XP 11,500; PB +5)"
+        }
+      ],
+      "name": "Ice Devil",
+      "ruleId": "monsters.h-k.ice-devil.ice-devil",
+      "sections": [
+        {
+          "text": "Diabolical Restoration. If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Nine Hells.\nMagic Resistance. The devil has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The devil makes three Ice Spear attacks. It can replace one attack with a Tail attack.\nIce Spear. Melee or Ranged Attack Roll: +10, reach 5 ft. or range 30/120 ft. Hit: 14 (2d8 + 5) Piercing damage plus 10 (3d6) Cold damage. Until the end of its next turn, the target can’t take a Bonus Action or Reaction, its Speed decreases by 10 feet, and it can move or take one action on its turn, not both. Hit or Miss: The spear magically returns to the devil’s hand immediately after a ranged attack.\nTail. Melee Attack Roll: +10, reach 10 ft. Hit: 15 (3d6 + 5) Bludgeoning damage plus 18 (4d8) Cold damage.\nIce Wall (Recharge 6). The devil casts Wall of Ice (level 8 version), requiring no spell components and using Intelligence as the spellcasting ability (spell save DC 17).",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.imp",
+      "text": "Imp",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Fiend (Devil), Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "21 (6d4 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Fly 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Skills",
+          "value": "Deception +4, Insight +3, Stealth +5"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire, Poison; Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft. (unimpeded by magical Darkness); Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Infernal"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Imp",
+      "ruleId": "monsters.h-k.imp.imp",
+      "sections": [
+        {
+          "text": "Magic Resistance. The imp has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Sting. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Piercing damage plus 7 (2d6) Poison damage.\nInvisibility. The imp casts Invisibility on itself, requiring no spell components and using Charisma as the spellcasting ability.\nShape-Shift. The imp shape-shifts to resemble a rat (Speed 20 ft.), a raven (20 ft., Fly 60 ft.), or a spider (20 ft., Climb 20 ft.), or it returns to its true form. Its game statistics are the same in each form, except for its Speed. Any equipment it is wearing or carrying isn’t transformed.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.incubus",
+      "text": "Incubus",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fiend, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "66 (12d8 + 12)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "20 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Skills",
+          "value": "Deception +9, Insight +5, Perception +5, Persuasion +9, Stealth +7"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold, Fire, Poison, Psychic"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal, Common, Infernal; telepathy 60 ft."
+        },
+        {
+          "label": "CR",
+          "value": "4 (XP 1,100; PB +2)"
+        }
+      ],
+      "name": "Incubus",
+      "ruleId": "monsters.h-k.incubus.incubus",
+      "sections": [
+        {
+          "text": "Succubus Form. When the incubus finishes a Long Rest, it can shape-shift into a Succubus, using that stat block instead of this one. Any equipment it is wearing or carrying isn’t transformed.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The incubus makes two Restless Touch attacks.\nRestless Touch. Melee Attack Roll: +7, reach 5 ft. Hit: 15 (3d6 + 5) Psychic damage, and the target is cursed for 24 hours or until the incubus dies. Until the curse ends, the target gains no benefit from finishing Short Rests.\nSpellcasting. The incubus casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 15):\nAt Will: Disguise Self, Etherealness 1/Day Each: Dream, Hypnotic Pattern",
+          "title": "Actions"
+        },
+        {
+          "text": "Nightmare (Recharge 6). Wisdom Saving Throw: DC 15, one creature the incubus can see within 60 feet. Failure: If the target has 20 Hit Points or fewer, it has the Unconscious condition for 1 hour, until it takes damage, or until a creature within 5 feet of it takes an action to wake it. Otherwise, the target takes 18 (4d8) Psychic damage.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.invisible-stalker",
+      "text": "Invisible Stalker",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Elemental, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (22)"
+        },
+        {
+          "label": "HP",
+          "value": "97 (13d10 + 26)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft., Fly 50 ft. (hover)"
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "19 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +8, Stealth +10"
+        },
+        {
+          "label": "Resistances",
+          "value": "Bludgeoning, Piercing, Slashing"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Exhaustion, Grappled, Paralyzed, Petrified, Poisoned, Prone, Restrained, Unconscious"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 18"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Primordial (Auran)"
+        },
+        {
+          "label": "CR",
+          "value": "6 (XP 2,300; PB +3)"
+        }
+      ],
+      "name": "Invisible Stalker",
+      "ruleId": "monsters.h-k.invisible-stalker.invisible-stalker",
+      "sections": [
+        {
+          "text": "Air Form. The stalker can enter an enemy’s space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so.\nInvisibility. The stalker has the Invisible condition.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The stalker makes three Wind Swipe attacks. It can replace one attack with a use of Vortex.\nWind Swipe. Melee Attack Roll: +7, reach 5 ft. Hit: 11 (2d6 + 4) Force damage.\nVortex. Constitution Saving Throw: DC 14, one Large or smaller creature in the stalker’s space. Failure: 7 (1d8 + 3) Thunder damage, and the target has the Grappled condition (escape DC 13). Until the grapple ends, the target can’t cast spells with a Verbal component and takes 7 (2d6) Thunder damage at the start of each of the stalker’s turns.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.iron-golem",
+      "text": "Iron Golem",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Construct, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "20"
+        },
+        {
+          "label": "Initiative",
+          "value": "+9 (19)"
+        },
+        {
+          "label": "HP",
+          "value": "252 (24d10 + 120)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "24 · MOD +7 · SAVE +7"
+        },
+        {
+          "label": "Dex",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "20 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire, Poison, Psychic; Charmed, Exhaustion, Frightened, Paralyzed, Petrified, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Common plus two other languages but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "16 (XP 15,000; PB +5)"
+        }
+      ],
+      "name": "Iron Golem",
+      "ruleId": "monsters.h-k.iron-golem.iron-golem",
+      "sections": [
+        {
+          "text": "Fire Absorption. Whenever the golem is subjected to Fire damage, it regains a number of Hit Points equal to the Fire damage dealt.\nImmutable Form. The golem can’t shape-shift.\nMagic Resistance. The golem has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The golem makes two attacks, using Bladed Arm or Fiery Bolt in any combination.\nBladed Arm. Melee Attack Roll: +12, reach 10 ft. Hit: 20 (3d8 + 7) Slashing damage plus 10 (3d6) Fire damage.\nFiery Bolt. Ranged Attack Roll: +10, range 120 ft. Hit: 36 (8d8) Fire damage.\nPoison Breath (Recharge 6). Constitution Saving Throw: DC 18, each creature in a 60-foot Cone. Failure: 55 (10d10) Poison damage. Success: Half damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.knight",
+      "text": "Knight",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium or Small Humanoid, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "52 (8d8 + 16)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +4"
+        },
+        {
+          "label": "Int",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Immunities",
+          "value": "Frightened"
+        },
+        {
+          "label": "Gear",
+          "value": "Greatsword, Heavy Crossbow, Plate Armor"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus one other language"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Knight",
+      "ruleId": "monsters.h-k.knight.knight",
+      "sections": [
+        {
+          "text": "Multiattack. The knight makes two attacks, using Greatsword or Heavy Crossbow in any combination.\nGreatsword. Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage plus 4 (1d8) Radiant damage.\nHeavy Crossbow. Ranged Attack Roll: +2, range 100/400 ft. Hit: 11 (2d10) Piercing damage plus 4 (1d8) Radiant damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Parry. Trigger: The knight is hit by a melee attack roll while holding a weapon. Response: The knight adds 2 to its AC against that attack, possibly causing it to miss.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.kobold",
+      "text": "Kobold",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Dragon, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "7 (3d6 − 3)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Int",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Wis",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Cha",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Gear",
+          "value": "Daggers (3)"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 8"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Draconic"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Kobold Warrior",
+      "ruleId": "monsters.h-k.kobold.kobold-warrior",
+      "sections": [
+        {
+          "text": "Pack Tactics. The kobold has Advantage on an attack roll against a creature if at least one of the kobold’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition.\nSunlight Sensitivity. While in sunlight, the kobold has Disadvantage on ability checks and attack rolls.",
+          "title": "Traits"
+        },
+        {
+          "text": "Dagger. Melee or Ranged Attack Roll: +4, reach 5 ft. or range 20/60 ft. Hit: 4 (1d4 + 2) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.h-k.kraken",
+      "text": "Kraken",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Gargantuan Monstrosity (Titan), Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+14 (24)"
+        },
+        {
+          "label": "HP",
+          "value": "481 (26d20 + 208)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 120 ft."
+        },
+        {
+          "label": "Str",
+          "value": "30 · MOD +10 · SAVE +17"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +7"
+        },
+        {
+          "label": "Con",
+          "value": "26 · MOD +8 · SAVE +15"
+        },
+        {
+          "label": "Int",
+          "value": "22 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Wis",
+          "value": "18 · MOD +4 · SAVE +11"
+        },
+        {
+          "label": "Cha",
+          "value": "20 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Skills",
+          "value": "History +13, Perception +11"
+        },
+        {
+          "label": "Immunities",
+          "value": "Cold, Lightning; Frightened, Grappled, Paralyzed, Restrained"
+        },
+        {
+          "label": "Senses",
+          "value": "Truesight 120 ft.; Passive Perception 21"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Abyssal, Celestial, Infernal, and Primordial but can’t speak; telepathy 120 ft."
+        },
+        {
+          "label": "CR",
+          "value": "23 (XP 50,000, or 62,000 in lair; PB +7)"
+        }
+      ],
+      "name": "Kraken",
+      "ruleId": "monsters.h-k.kraken.kraken",
+      "sections": [
+        {
+          "text": "Amphibious. The kraken can breathe air and water.\nLegendary Resistance (4/Day, or 5/Day in Lair). If the kraken fails a saving throw, it can choose to succeed instead.\nSiege Monster. The kraken deals double damage to objects and structures.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The kraken makes two Tentacle attacks and uses Fling, Lightning Strike, or Swallow.\nTentacle. Melee Attack Roll: +17, reach 30 ft. Hit: 24 (4d6 + 10) Bludgeoning damage. The target has the Grappled condition (escape DC 20) from one of ten tentacles, and it has the Restrained condition until the grapple ends.\nFling. The kraken throws a Large or smaller creature Grappled by it to a space it can see within 60 feet of itself that isn’t in the air. Dexterity Saving Throw: DC 25, the creature thrown and each creature in the destination space. Failure: 18 (4d8) Bludgeoning damage, and the target has the Prone condition. Success: Half damage only.\nLightning Strike. Dexterity Saving Throw: DC 23, one creature the kraken can see within 120 feet. Failure: 33 (6d10) Lightning damage. Success: Half damage.\nSwallow. Dexterity Saving Throw: DC 25, one creature Grappled by the kraken (it can have up to four creatures swallowed at a time). Failure: 23 (3d8 + 10) Piercing damage. If the target is Large or smaller, it is swallowed and no longer Grappled. A swallowed creature has the Restrained condition, has Total Cover against attacks and other effects outside the kraken, and takes 24 (7d6) Acid damage at the start of each of its turns.\nIf the kraken takes 50 damage or more on a single turn from a creature inside it, the kraken must succeed on a DC 25 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, each of which falls in a space within 10 feet of the kraken with the Prone condition. If the kraken dies, any swallowed creature no longer has the Restrained condition and can escape from the corpse using 15 feet of movement, exiting Prone.",
+          "title": "Actions"
+        },
+        {
+          "text": "Legendary Action Uses: 3 (4 in Lair). Immediately after another creature’s turn, the kraken can expend a use to take one of the following actions. The kraken regains all expended uses at the start of each of its turns.\nStorm Bolt. The kraken uses Lightning Strike.\nToxic Ink. Constitution Saving Throw: DC 23, each creature in a 15-foot Emanation originating from the kraken while it is underwater. Failure: The target has the Blinded and Poisoned conditions until the end of the kraken’s next turn. The kraken then moves up to its Speed. Failure or Success: The kraken can’t take this action again until the start of its next turn.",
+          "title": "Legendary Actions"
+        }
+      ],
+      "type": "stat-block"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "monsters.h-k",
+  "editorialBlocks": [
+    "monsters.h-k",
+    "monsters.h-k.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Monsters",
+    "Monsters H–K"
+  ],
+  "order": 4804,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "monsters-h-k",
+  "sourcePages": [
+    297,
+    298,
+    299,
+    300,
+    301,
+    302,
+    303
+  ],
+  "title": "Monsters H–K"
+}

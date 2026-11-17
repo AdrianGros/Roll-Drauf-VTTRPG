@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "phase": "discover",
+  "validated_at": "2026-11-16T21:15:39.141644+00:00",
+  "scope": "documentation, delegation evidence and isolated research experiments",
+  "checks": {
+    "feedback_packages": 14,
+    "claude_run_completed": true,
+    "claude_prompt_hash_matches": true,
+    "claude_report_saved": true,
+    "coordinator_review_saved": true,
+    "verified_review_observations": 8,
+    "palette_pairs": 6,
+    "geometry_probes": true,
+    "official_english_pdf_hash_matches": true,
+    "extra_usage_disabled_before_run": true,
+    "local_links_validated": 15,
+    "distinct_external_references": 23,
+    "source_tracked_status_clean": true,
+    "running_image_unchanged": true,
+    "whitespace": true
+  },
+  "application_tests_run": false,
+  "browser_reproduction_run": false,
+  "application_deployed": false,
+  "product_changes": false,
+  "source_observations_file": "review-observations.json"
+}

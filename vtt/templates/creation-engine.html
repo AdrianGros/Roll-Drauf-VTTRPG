@@ -24,10 +24,15 @@
   <script type="module" src="{{ url_for('static', filename='eagle-homebrew/creation-engine.js') }}"></script>
     <link rel="stylesheet" href="/static/css/vtt-main-nav.css">
     <link rel="stylesheet" href="/static/css/display-preferences.css">
+    <link rel="stylesheet" href="/static/css/document-book-frame.css">
 </head>
 <body class="ce-authoring">
-  <div class="ce-page">
+  <!-- Book frame around the page only: Eagle windows mount in #ce-eagle-mount outside the book. -->
+  <div class="dbf-book" data-book-frame="studio" data-book-chapter="creation">
+  <div class="dbf-spine" aria-hidden="true"></div>
+  <div class="ce-page dbf-page">
     <a class="ce-skip" href="#main"><span data-ui-key="u_e2b85f019f0d">Zum Inhalt</span></a>
+    <div class="dbf-running-head" data-book-running-head></div>
     <header>
       <div class="book-dashboard-topbar">
         <nav class="book-dashboard-ribbon" aria-label="Buchnavigation" data-ui-aria-label="u_c1626b86894a">
@@ -142,6 +147,8 @@
         <div id="ce-origin-report" role="status" aria-live="polite"></div>
       </section>
     </main>
+    <div class="dbf-folio" data-book-folio aria-hidden="true"></div>
+  </div>
   </div>
   <div id="ce-eagle-mount"></div>
   <script>
@@ -155,5 +162,6 @@
     }());
   </script>
     <script src="/static/js/creation-engine-nav.js"></script>
+    <script src="/static/js/document-book-frame.js"></script>
 </body>
 </html>

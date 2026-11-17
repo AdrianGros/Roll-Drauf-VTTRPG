@@ -1,0 +1,2052 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "monsters.l-n",
+      "text": "Monsters L–N",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "monsters.l-n.roll-drauf-note",
+      "text": "Monsters L–N. Related creatures are grouped under a shared heading.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.lamia",
+      "text": "Lamia",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Fiend, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "97 (13d10 + 26)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Wis",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Skills",
+          "value": "Deception +7, Insight +4, Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal, Common"
+        },
+        {
+          "label": "CR",
+          "value": "4 (XP 1,100; PB +2)"
+        }
+      ],
+      "name": "Lamia",
+      "ruleId": "monsters.l-n.lamia.lamia",
+      "sections": [
+        {
+          "text": "Multiattack. The lamia makes two Claw attacks. It can replace one attack with a use of Corrupting Touch.\nClaw. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Slashing damage plus 7 (2d6) Psychic damage.\nCorrupting Touch. Wisdom Saving Throw: DC 13, one creature the lamia can see within 5 feet. Failure: 13 (3d8) Psychic damage, and the target is cursed for 1 hour. Until the curse ends, the target has the Charmed and Poisoned conditions.\nSpellcasting. The lamia casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 13):\nAt Will: Disguise Self (can appear as a Large or Medium biped), Minor Illusion 1/Day Each: Geas, Major Image, Scrying",
+          "title": "Actions"
+        },
+        {
+          "text": "Leap. The lamia jumps up to 30 feet by spending 10 feet of movement.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.lemure",
+      "text": "Lemure",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fiend (Devil), Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "9"
+        },
+        {
+          "label": "Initiative",
+          "value": "−3 (7)"
+        },
+        {
+          "label": "HP",
+          "value": "9 (2d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire, Poison; Charmed, Frightened, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft. (unimpeded by magical Darkness); Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Infernal but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "0 (XP 10; PB +2)"
+        }
+      ],
+      "name": "Lemure",
+      "ruleId": "monsters.l-n.lemure.lemure",
+      "sections": [
+        {
+          "text": "Hellish Restoration. If the lemure dies in the Nine Hells, it revives with all its Hit Points in 1d10 days unless it is killed by a creature under the effects of a Bless spell or its remains are sprinkled with Holy Water.",
+          "title": "Traits"
+        },
+        {
+          "text": "Vile Slime. Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Poison damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.lich",
+      "text": "Lich",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Undead (Wizard), Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "20"
+        },
+        {
+          "label": "Initiative",
+          "value": "+17 (27)"
+        },
+        {
+          "label": "HP",
+          "value": "315 (42d8 + 126)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +10"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +10"
+        },
+        {
+          "label": "Int",
+          "value": "21 · MOD +5 · SAVE +12"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +9"
+        },
+        {
+          "label": "Cha",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Skills",
+          "value": "Arcana +19, History +12, Insight +9, Perception +9"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold, Lightning"
+        },
+        {
+          "label": "Immunities",
+          "value": "Necrotic, Poison; Charmed, Exhaustion, Frightened, Paralyzed, Poisoned"
+        },
+        {
+          "label": "Gear",
+          "value": "Component Pouch"
+        },
+        {
+          "label": "Senses",
+          "value": "Truesight 120 ft.; Passive Perception 19"
+        },
+        {
+          "label": "Languages",
+          "value": "All"
+        },
+        {
+          "label": "CR",
+          "value": "21 (XP 33,000, or 41,000 in lair; PB +7)"
+        }
+      ],
+      "name": "Lich",
+      "ruleId": "monsters.l-n.lich.lich",
+      "sections": [
+        {
+          "text": "Legendary Resistance (4/Day, or 5/Day in Lair). If the lich fails a saving throw, it can choose to succeed instead.\nSpirit Jar. If destroyed, the lich reforms in 1d10 days if it has a spirit jar, reviving with all its Hit Points. The new body appears in an unoccupied space within the lich’s lair.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The lich makes three attacks, using Eldritch Burst or Paralyzing Touch in any combination.\nEldritch Burst. Melee or Ranged Attack Roll: +12, reach 5 ft. or range 120 ft. Hit: 31 (4d12 + 5) Force damage.\nParalyzing Touch. Melee Attack Roll: +12, reach 5 ft. Hit: 15 (3d6 + 5) Cold damage, and the target has the Paralyzed condition until the start of the lich’s next turn.\nSpellcasting. The lich casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 20):\nAt Will: Detect Magic, Detect Thoughts, Dispel Magic, Fireball (level 5 version), Invisibility, Lightning Bolt (level 5 version), Mage Hand, Prestidigitation 2/Day Each: Animate Dead, Dimension Door, Plane Shift 1/Day Each: Chain Lightning, Finger of Death, Power Word Kill, Scrying",
+          "title": "Actions"
+        },
+        {
+          "text": "Protective Magic. The lich casts Counterspell or Shield in response to the spell’s trigger, using the same spellcasting ability as Spellcasting.",
+          "title": "Reactions"
+        },
+        {
+          "text": "Legendary Action Uses: 3 (4 in Lair). Immediately after another creature’s turn, the lich can expend a use to take one of the following actions. The lich regains all expended uses at the start of each of its turns.\nDeathly Teleport. The lich teleports up to 60 feet to an unoccupied space it can see, and each creature within 10 feet of the space it left takes 11 (2d10) Necrotic damage.\nDisrupt Life. Constitution Saving Throw: DC 20, each creature that isn’t an Undead in a 20-foot Emanation originating from the lich. Failure: 31 (9d6) Necrotic damage. Success: Half damage. Failure or Success: The lich can’t take this action again until the start of its next turn.\nFrightening Gaze. The lich casts Fear, using the same spellcasting ability as Spellcasting. The lich can’t take this action again until the start of its next turn.",
+          "title": "Legendary Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.mages",
+      "text": "Mages",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium or Small Humanoid (Wizard), Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "81 (18d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "17 · MOD +3 · SAVE +6"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +4"
+        },
+        {
+          "label": "Cha",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Arcana +6, History +6, Perception +4"
+        },
+        {
+          "label": "Gear",
+          "value": "Wand"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus three other languages"
+        },
+        {
+          "label": "CR",
+          "value": "6 (XP 2,300; PB +3)"
+        }
+      ],
+      "name": "Mage",
+      "ruleId": "monsters.l-n.mages.mage",
+      "sections": [
+        {
+          "text": "Multiattack. The mage makes three Arcane Burst attacks.\nArcane Burst. Melee or Ranged Attack Roll: +6, reach 5 ft. or range 120 ft. Hit: 16 (3d8 + 3) Force damage.\nSpellcasting. The mage casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 14):\nAt Will: Detect Magic, Light, Mage Armor (included in AC), Mage Hand, Prestidigitation 2/Day Each: Fireball (level 4 version), Invisibility 1/Day Each: Cone of Cold, Fly",
+          "title": "Actions"
+        },
+        {
+          "text": "Misty Step (3/Day). The mage casts Misty Step, using the same spellcasting ability as Spellcasting.",
+          "title": "Bonus Actions"
+        },
+        {
+          "text": "Protective Magic (3/Day). The mage casts Counterspell or Shield in response to the spell’s trigger, using the same spellcasting ability as Spellcasting.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium or Small Humanoid (Wizard), Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "HP",
+          "value": "170 (31d8 + 31)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "20 · MOD +5 · SAVE +9"
+        },
+        {
+          "label": "Wis",
+          "value": "15 · MOD +2 · SAVE +6"
+        },
+        {
+          "label": "Cha",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Skills",
+          "value": "Arcana +13, History +9, Perception +6"
+        },
+        {
+          "label": "Immunities",
+          "value": "Psychic; Charmed (with Mind Blank)"
+        },
+        {
+          "label": "Gear",
+          "value": "Wand"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 16"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus five other languages"
+        },
+        {
+          "label": "CR",
+          "value": "12 (XP 8,000; PB +4)"
+        }
+      ],
+      "name": "Archmage",
+      "ruleId": "monsters.l-n.mages.archmage",
+      "sections": [
+        {
+          "text": "Magic Resistance. The archmage has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The archmage makes four Arcane Burst attacks.\nArcane Burst. Melee or Ranged Attack Roll: +9, reach 5 ft. or range 150 ft. Hit: 27 (4d10 + 5) Force damage.\nSpellcasting. The archmage casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 17):\nAt Will: Detect Magic, Detect Thoughts, Disguise Self, Invisibility, Light, Mage Armor (included in AC), Mage Hand, Prestidigitation 2/Day Each: Fly, Lightning Bolt (level 7 version) 1/Day Each: Cone of Cold (level 9 version), Mind Blank (cast before combat), Scrying, Teleport",
+          "title": "Actions"
+        },
+        {
+          "text": "Misty Step (3/Day). The mage casts Misty Step, using the same spellcasting ability as Spellcasting.",
+          "title": "Bonus Actions"
+        },
+        {
+          "text": "Protective Magic (3/Day). The archmage casts Counterspell or Shield in response to the spell’s trigger, using the same spellcasting ability as Spellcasting.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.magmin",
+      "text": "Magmin",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Elemental, Chaotic Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "13 (3d6 + 3)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Primordial (Ignan)"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Magmin",
+      "ruleId": "monsters.l-n.magmin.magmin",
+      "sections": [
+        {
+          "text": "Death Burst. The magmin explodes when it dies. Dexterity Saving Throw: DC 11, each creature in a 10-foot Emanation originating from the magmin. Failure: 7 (2d6) Fire damage. Success: Half damage.",
+          "title": "Traits"
+        },
+        {
+          "text": "Touch. Melee Attack Roll: +4, reach 5 ft. Hit: 7 (2d4 + 2) Fire damage. If the target is a creature or a flammable object that isn’t being worn or carried, it starts burning.",
+          "title": "Actions"
+        },
+        {
+          "text": "Ignited Illumination. The magmin sets itself ablaze or extinguishes its flames. While ablaze, the magmin sheds Bright Light in a 10-foot radius and Dim Light for an additional 10 feet.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.manticore",
+      "text": "Manticore",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Monstrosity, Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "68 (8d10 + 24)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "Common"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Manticore",
+      "ruleId": "monsters.l-n.manticore.manticore",
+      "sections": [
+        {
+          "text": "Multiattack. The manticore makes three attacks, using Rend or Tail Spike in any combination.\nRend. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Slashing damage.\nTail Spike. Ranged Attack Roll: +5, range 100/200 ft. Hit: 7 (1d8 + 3) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.marilith",
+      "text": "Marilith",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Fiend (Demon), Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "HP",
+          "value": "220 (21d10 + 105)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +9"
+        },
+        {
+          "label": "Dex",
+          "value": "20 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Con",
+          "value": "20 · MOD +5 · SAVE +10"
+        },
+        {
+          "label": "Int",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Wis",
+          "value": "16 · MOD +3 · SAVE +8"
+        },
+        {
+          "label": "Cha",
+          "value": "20 · MOD +5 · SAVE +10"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +8"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold, Fire, Lightning"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Truesight 120 ft.; Passive Perception 18"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal; telepathy 120 ft."
+        },
+        {
+          "label": "CR",
+          "value": "16 (XP 15,000; PB +5)"
+        }
+      ],
+      "name": "Marilith",
+      "ruleId": "monsters.l-n.marilith.marilith",
+      "sections": [
+        {
+          "text": "Demonic Restoration. If the marilith dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Abyss.\nMagic Resistance. The marilith has Advantage on saving throws against spells and other magical effects.\nReactive. The marilith can take one Reaction on every turn of combat.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The marilith makes six Pact Blade attacks and uses Constrict.\nPact Blade. Melee Attack Roll: +10, reach 5 ft. Hit: 10 (1d10 + 5) Slashing damage plus 7 (2d6) Necrotic damage.\nConstrict. Strength Saving Throw: DC 17, one Medium or smaller creature the marilith can see within 5 feet. Failure: 15 (2d10 + 4) Bludgeoning damage. The target has the Grappled condition (escape DC 14), and it has the Restrained condition until the grapple ends.",
+          "title": "Actions"
+        },
+        {
+          "text": "Teleport (Recharge 5–6). The marilith teleports up to 120 feet to an unoccupied space it can see.",
+          "title": "Bonus Actions"
+        },
+        {
+          "text": "Parry. Trigger: The marilith is hit by a melee attack roll while holding a weapon. Response: The marilith adds 5 to its AC against that attack, possibly causing it to miss.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.medusa",
+      "text": "Medusa",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Monstrosity, Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+6 (16)"
+        },
+        {
+          "label": "HP",
+          "value": "127 (17d8 + 51)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +4"
+        },
+        {
+          "label": "Cha",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Skills",
+          "value": "Deception +5, Perception +4, Stealth +6"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 150 ft.; Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus one other language"
+        },
+        {
+          "label": "CR",
+          "value": "6 (XP 2,300; PB +3)"
+        }
+      ],
+      "name": "Medusa",
+      "ruleId": "monsters.l-n.medusa.medusa",
+      "sections": [
+        {
+          "text": "Multiattack. The medusa makes two Claw attacks and one Snake Hair attack, or it makes three Poison Ray attacks.\nClaw. Melee Attack Roll: +6, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage.\nSnake Hair. Melee Attack Roll: +6, reach 5 ft. Hit: 5 (1d4 + 3) Piercing damage plus 14 (4d6) Poison damage.\nPoison Ray. Ranged Attack Roll: +5, range 150 ft. Hit: 11 (2d8 + 2) Poison damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Petrifying Gaze (Recharge 5–6). Constitution Saving Throw: DC 13, each creature in a 30-foot Cone. If the medusa sees its reflection in the Cone, the medusa must make this save. First Failure: The target has the Restrained condition and repeats the save at the end of its next turn if it is still Restrained, ending the effect on itself on a success. Second Failure: The target has the Petrified condition instead of the Restrained condition.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.mephits",
+      "text": "Mephits",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Elemental, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "17 (5d6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2, Stealth +4"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Fire"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Exhaustion, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Primordial (Auran, Terran)"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Dust Mephit",
+      "ruleId": "monsters.l-n.mephits.dust-mephit",
+      "sections": [
+        {
+          "text": "Death Burst. The mephit explodes when it dies. Dexterity Saving Throw: DC 10, each creature in a 5-foot Emanation originating from the mephit. Failure: 5 (2d4) Bludgeoning damage. Success: Half damage.",
+          "title": "Traits"
+        },
+        {
+          "text": "Claw. Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Slashing damage.\nBlinding Breath (Recharge 6). Dexterity Saving Throw:\nDC 10, each creature in a 15-foot Cone. Failure: The target has the Blinded condition until the end of the mephit’s next turn.\nSleep (1/Day). The mephit casts the Sleep spell, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 10).",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Elemental, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "21 (6d6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2, Stealth +3"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Fire"
+        },
+        {
+          "label": "Immunities",
+          "value": "Cold, Poison; Exhaustion, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Primordial (Aquan, Auran)"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Ice Mephit",
+      "ruleId": "monsters.l-n.mephits.ice-mephit",
+      "sections": [
+        {
+          "text": "Death Burst. The mephit explodes when it dies. Constitution Saving Throw: DC 10, each creature in a 5-foot Emanation originating from the mephit. Failure: 5 (2d4) Cold damage. Success: Half damage.",
+          "title": "Traits"
+        },
+        {
+          "text": "Claw. Melee Attack Roll: +3, reach 5 ft. Hit: 3 (1d4 + 1) Slashing damage plus 2 (1d4) Cold damage.\nFog Cloud (1/Day). The mephit casts Fog Cloud, requiring no spell components and using Charisma as the spellcasting ability.\nFrost Breath (Recharge 6). Constitution Saving Throw:\nDC 10, each creature in a 15-foot Cone. Failure: 7 (3d4) Cold damage. Success: Half damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Elemental, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "18 (4d6 + 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +3"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Cold"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire, Poison; Exhaustion, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Primordial (Ignan, Terran)"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Magma Mephit",
+      "ruleId": "monsters.l-n.mephits.magma-mephit",
+      "sections": [
+        {
+          "text": "Death Burst. The mephit explodes when it dies. Dexterity Saving Throw: DC 11, each creature in a 5-foot Emanation originating from the mephit. Failure: 7 (2d6) Fire damage. Success: Half damage.",
+          "title": "Traits"
+        },
+        {
+          "text": "Claw. Melee Attack Roll: +3, reach 5 ft. Hit: 3 (1d4 + 1) Slashing damage plus 3 (1d6) Fire damage.\nFire Breath (Recharge 6). Dexterity Saving Throw: DC 11, each creature in a 15-foot Cone. Failure: 7 (2d6) Fire damage. Success: Half damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Small Elemental, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "10"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "17 (5d6)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +2"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire, Poison; Exhaustion, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Primordial (Aquan, Ignan)"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Steam Mephit",
+      "ruleId": "monsters.l-n.mephits.steam-mephit",
+      "sections": [
+        {
+          "text": "Blurred Form. Attack rolls against the mephit are made with Disadvantage unless the mephit has the Incapacitated condition.\nDeath Burst. The mephit explodes when it dies. Dexterity Saving Throw: DC 10, each creature in a 5-foot Emanation originating from the mephit. Failure: 5 (2d4) Fire damage. Success: Half damage.",
+          "title": "Traits"
+        },
+        {
+          "text": "Claw. Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Slashing damage plus 2 (1d4) Fire damage.\nSteam Breath (Recharge 6). Constitution Saving Throw:\nDC 10, each creature in a 15-foot Cone. Failure: 5 (2d4) Fire damage, and the target’s Speed decreases by 10 feet until the end of the mephit’s next turn. Success:\nHalf damage only. Failure or Success: Being underwater doesn’t grant Resistance to this Fire damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.merfolk",
+      "text": "Merfolk",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Elemental, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "11 (2d8 + 2)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Swim 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Primordial (Aquan)"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Merfolk Skirmisher",
+      "ruleId": "monsters.l-n.merfolk.merfolk-skirmisher",
+      "sections": [
+        {
+          "text": "Amphibious. The merfolk can breathe air and water.",
+          "title": "Traits"
+        },
+        {
+          "text": "Ocean Spear. Melee or Ranged Attack Roll: +2, reach 5 ft. or range 20/60 ft. Hit: 3 (1d6) Piercing damage plus 2 (1d4) Cold damage. If the target is a creature, its Speed decreases by 10 feet until the end of its next turn. Hit or Miss: The spear magically returns to the merfolk’s hand immediately after a ranged attack.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.merrow",
+      "text": "Merrow",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Monstrosity, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "45 (6d10 + 12)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Swim 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal, Primordial (Aquan)"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Merrow",
+      "ruleId": "monsters.l-n.merrow.merrow",
+      "sections": [
+        {
+          "text": "Amphibious. The merrow can breathe air and water.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The merrow makes two attacks, using Bite, Claw, or Harpoon in any combination.\nBite. Melee Attack Roll: +6, reach 5 ft. Hit: 6 (1d4 + 4) Piercing damage, and the target has the Poisoned condition until the end of the merrow’s next turn.\nClaw. Melee Attack Roll: +6, reach 5 ft. Hit: 9 (2d4 + 4) Slashing damage.\nHarpoon. Melee or Ranged Attack Roll: +6, reach 5 ft. or range 20/60 ft. Hit: 11 (2d6 + 4) Piercing damage. If the target is a Large or smaller creature, the merrow pulls the target up to 15 feet straight toward itself.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.mimic",
+      "text": "Mimic",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Monstrosity, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "58 (9d8 + 18)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft."
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +5"
+        },
+        {
+          "label": "Immunities",
+          "value": "Acid; Prone"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Mimic",
+      "ruleId": "monsters.l-n.mimic.mimic",
+      "sections": [
+        {
+          "text": "Adhesive (Object Form Only). The mimic adheres to anything that touches it. A Huge or smaller creature adhered to the mimic has the Grappled condition (escape DC 13). Ability checks made to escape this grapple have Disadvantage.",
+          "title": "Traits"
+        },
+        {
+          "text": "Bite. Melee Attack Roll: +5 (with Advantage if the target is Grappled by the mimic), reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage—or 12 (2d8 + 3) Piercing damage if the target is Grappled by the mimic—plus 4 (1d8) Acid damage.\nPseudopod. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Bludgeoning damage plus 4 (1d8) Acid damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 13). Ability checks made to escape this grapple have Disadvantage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Shape-Shift. The mimic shape-shifts to resemble a Medium or Small object while retaining its game statistics, or it returns to its true blob form. Any equipment it is wearing or carrying isn’t transformed.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.minotaur-of-baphomet",
+      "text": "Minotaur of Baphomet",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Monstrosity, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "85 (10d10 + 30)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Cha",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +7, Survival +7"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 17"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Minotaur of Baphomet",
+      "ruleId": "monsters.l-n.minotaur-of-baphomet.minotaur-of-baphomet",
+      "sections": [
+        {
+          "text": "Abyssal Glaive. Melee Attack Roll: +6, reach 10 ft. Hit: 10 (1d12 + 4) Slashing damage plus 10 (3d6) Necrotic damage.\nGore (Recharge 5–6). Melee Attack Roll: +6, reach 5 ft. Hit: 18 (4d6 + 4) Piercing damage. If the target is a Large or smaller creature and the minotaur moved 10+ feet straight toward it immediately before the hit, the target takes an extra 10 (3d6) Piercing damage and has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.mummies",
+      "text": "Mummies",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium or Small Undead, Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "11"
+        },
+        {
+          "label": "Initiative",
+          "value": "−1 (9)"
+        },
+        {
+          "label": "HP",
+          "value": "58 (9d8 + 18)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +3"
+        },
+        {
+          "label": "Cha",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Fire"
+        },
+        {
+          "label": "Immunities",
+          "value": "Necrotic, Poison; Charmed, Exhaustion, Frightened, Paralyzed, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus two other languages"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Mummy",
+      "ruleId": "monsters.l-n.mummies.mummy",
+      "sections": [
+        {
+          "text": "Multiattack. The mummy makes two Rotting Fist attacks and uses Dreadful Glare.\nRotting Fist. Melee Attack Roll: +5, reach 5 ft. Hit: 8 (1d10 + 3) Bludgeoning damage plus 10 (3d6) Necrotic damage. If the target is a creature, it is cursed. While cursed, the target can’t regain Hit Points, its Hit Point maximum doesn’t return to normal when finishing a Long Rest, and its Hit Point maximum decreases by 10 (3d6) every 24 hours that elapse. A creature dies and turns to dust if reduced to 0 Hit Points by this attack.\nDreadful Glare. Wisdom Saving Throw: DC 11, one creature the mummy can see within 60 feet. Failure: The target has the Frightened condition until the end of the mummy’s next turn. Success: The target is immune to this mummy’s Dreadful Glare for 24 hours.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium or Small Undead (Cleric), Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "HP",
+          "value": "187 (25d8 + 75)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "11 · MOD +0 · SAVE +5"
+        },
+        {
+          "label": "Wis",
+          "value": "19 · MOD +4 · SAVE +9"
+        },
+        {
+          "label": "Cha",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Skills",
+          "value": "History +5, Perception +9, Religion +5"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Fire"
+        },
+        {
+          "label": "Immunities",
+          "value": "Necrotic, Poison; Charmed, Exhaustion, Frightened, Paralyzed, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Truesight 60 ft.; Passive Perception 19"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus three other languages"
+        },
+        {
+          "label": "CR",
+          "value": "15 (XP 13,000, or 15,000 in lair; PB +5)"
+        }
+      ],
+      "name": "Mummy Lord",
+      "ruleId": "monsters.l-n.mummies.mummy-lord",
+      "sections": [
+        {
+          "text": "Legendary Resistance (3/Day, or 4/Day in Lair). If the mummy fails a saving throw, it can choose to succeed instead.\nMagic Resistance. The mummy has Advantage on saving throws against spells and other magical effects.\nUndead Restoration. If destroyed, the mummy gains a new body in 24 hours if its heart is intact, reviving with all its Hit Points. The new body appears in an unoccupied space within the mummy’s lair. The heart is a Tiny object that has AC 17, HP 10, and Immunity to all damage except Fire.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The mummy makes one Rotting Fist or Channel Negative Energy attack, and it uses Dreadful Glare.\nRotting Fist. Melee Attack Roll: +9, reach 5 ft. Hit: 15 (2d10 + 4) Bludgeoning damage plus 10 (3d6) Necrotic damage. If the target is a creature, it is cursed. While cursed, the target can’t regain Hit Points, it gains no benefit from finishing a Long Rest, and its Hit Point maximum decreases by 10 (3d6) every 24 hours that elapse. A creature dies and turns to dust if reduced to 0 Hit Points by this attack.\nChannel Negative Energy. Ranged Attack Roll: +9, range 60 ft. Hit: 25 (6d6 + 4) Necrotic damage.\nDreadful Glare. Wisdom Saving Throw: DC 17, one creature the mummy can see within 60 feet. Failure: 25 (6d6 + 4) Psychic damage, and the target has the Paralyzed condition until the end of the mummy’s next turn.\nSpellcasting. The mummy casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save DC 17, +9 to hit with spell attacks):\nAt Will: Dispel Magic, Thaumaturgy 1/Day Each: Animate Dead, Harm, Insect Plague (level 7 version)",
+          "title": "Actions"
+        },
+        {
+          "text": "Whirlwind of Sand. Trigger: The mummy is hit by an attack roll. Response: The mummy adds 2 to its AC against the attack, possibly causing the attack to miss, and the mummy teleports up to 60 feet to an unoccupied space it can see. Each creature of its choice that it can see within 5 feet of its destination space has the Blinded condition until the end of the mummy’s next turn.",
+          "title": "Reactions"
+        },
+        {
+          "text": "Legendary Action Uses: 3 (4 in Lair). Immediately after another creature’s turn, the mummy can expend a use to take one of the following actions. The mummy regains all expended uses at the start of each of its turns.\nDread Command. The mummy casts Command (level 2 version), using the same spellcasting ability as Spellcasting. The mummy can’t take this action again until the start of its next turn.\nGlare. The mummy uses Dreadful Glare. The mummy can’t take this action again until the start of its next turn.\nNecrotic Strike. The mummy makes one Rotting Fist or Channel Negative Energy attack.",
+          "title": "Legendary Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.nalfeshnee",
+      "text": "Nalfeshnee",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Fiend (Demon), Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "HP",
+          "value": "184 (16d10 + 96)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Fly 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "21 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "22 · MOD +6 · SAVE +11"
+        },
+        {
+          "label": "Int",
+          "value": "19 · MOD +4 · SAVE +9"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +6"
+        },
+        {
+          "label": "Cha",
+          "value": "15 · MOD +2 · SAVE +7"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold, Fire, Lightning"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Frightened, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Truesight 120 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal; telepathy 120 ft."
+        },
+        {
+          "label": "CR",
+          "value": "13 (XP 10,000; PB +5)"
+        }
+      ],
+      "name": "Nalfeshnee",
+      "ruleId": "monsters.l-n.nalfeshnee.nalfeshnee",
+      "sections": [
+        {
+          "text": "Demonic Restoration. If the nalfeshnee dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Abyss.\nMagic Resistance. The nalfeshnee has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The nalfeshnee makes three Rend attacks.\nRend. Melee Attack Roll: +10, reach 10 ft. Hit: 16 (2d10 + 5) Slashing damage plus 11 (2d10) Force damage.\nTeleport. The nalfeshnee teleports up to 120 feet to an unoccupied space it can see.",
+          "title": "Actions"
+        },
+        {
+          "text": "Horror Nimbus (Recharge 5–6). Wisdom Saving Throw: DC 15, each creature in a 15-foot Emanation originating from the nalfeshnee. Failure: 28 (8d6) Psychic damage, and the target has the Frightened condition for 1 minute, until it takes damage, or until it ends its turn with the nalfeshnee out of line of sight. Success: The target is immune to this nalfeshnee’s Horror Nimbus for 24 hours.",
+          "title": "Bonus Actions"
+        },
+        {
+          "text": "Pursuit. Trigger: Another creature the nalfeshnee can see ends its move within 120 feet of the nalfeshnee. Response: The nalfeshnee uses Teleport, but its destination space must be within 10 feet of the triggering creature.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.night-hag",
+      "text": "Night Hag",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fiend, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "HP",
+          "value": "112 (15d8 + 45)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Skills",
+          "value": "Deception +6, Insight +5, Perception +5, Stealth +5"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold, Fire"
+        },
+        {
+          "label": "Immunities",
+          "value": "Charmed"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal, Common, Infernal, Primordial"
+        },
+        {
+          "label": "CR",
+          "value": "5 (XP 1,800; PB +3)"
+        }
+      ],
+      "name": "Night Hag",
+      "ruleId": "monsters.l-n.night-hag.night-hag",
+      "sections": [
+        {
+          "text": "Coven Magic. While within 30 feet of at least two hag allies, the hag can cast one of the following spells, requiring no Material components, using the spell’s normal casting time, and using Intelligence as the spellcasting ability (spell save DC 14): Augury, Find Familiar, Identify, Locate Object, Scrying, or Unseen Servant. The hag must finish a Long Rest before using this trait to cast that spell again.\nMagic Resistance. The hag has Advantage on saving throws against spells and other magical effects.\nSoul Bag. The hag has a soul bag. While holding or carrying the bag, the hag can use its Nightmare Haunting action.\nThe bag has AC 15, HP 20, and Resistance to all damage. The bag turns to dust if reduced to 0 Hit Points. If the bag is destroyed, any souls the bag is holding are released. The hag can create a new bag after 7 days.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The hag makes two Claw attacks.\nClaw. Melee Attack Roll: +7, reach 5 ft. Hit: 13 (2d8 + 4) Slashing damage. Nightmare Haunting (1/Day; Requires Soul Bag). While on the Ethereal Plane, the hag casts Dream, using the same spellcasting ability as Spellcasting. Only the hag can serve as the spell’s messenger, and the target must be a creature the hag can see on the Material Plane. The spell fails and is wasted if the target is under the effect of the Protection from Evil and Good spell or within a Magic Circle spell.\nIf the target takes damage from the Dream spell, the target’s Hit Point maximum decreases by an amount equal to that damage. If the spell kills the target, its soul is trapped in the hag’s soul bag, and the target can’t be raised from the dead until its soul is released.\nSpellcasting. The hag casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save DC 14):\nAt Will: Detect Magic, Etherealness, Magic Missile (level 4 version) 2/Day Each: Phantasmal Killer, Plane Shift (self only)",
+          "title": "Actions"
+        },
+        {
+          "text": "Shape-Shift. The hag shape-shifts into a Small or Medium Humanoid, or it returns to its true form. Other than its size, its game statistics are the same in each form. Any equipment it is wearing or carrying isn’t transformed.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.nightmare",
+      "text": "Nightmare",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Fiend, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "68 (8d10 + 24)"
+        },
+        {
+          "label": "Speed",
+          "value": "60 ft., Fly 90 ft. (hover)"
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Abyssal, Common, and Infernal but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "3 (XP 700; PB +2)"
+        }
+      ],
+      "name": "Nightmare",
+      "ruleId": "monsters.l-n.nightmare.nightmare",
+      "sections": [
+        {
+          "text": "Confer Fire Resistance. The nightmare can grant Resistance to Fire damage to a rider while it is on the nightmare.\nIllumination. The nightmare sheds Bright Light in a 10- foot radius and Dim Light for an additional 10 feet.",
+          "title": "Traits"
+        },
+        {
+          "text": "Hooves. Melee Attack Roll: +6, reach 5 ft. Hit: 13 (2d8 + 4) Bludgeoning damage plus 10 (3d6) Fire damage.\nEthereal Stride. The nightmare and up to three willing creatures within 5 feet of it teleport to the Ethereal Plane from the Material Plane or vice versa.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.l-n.noble",
+      "text": "Noble",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium or Small Humanoid, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "9 (2d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Skills",
+          "value": "Deception +5, Insight +4, Persuasion +5"
+        },
+        {
+          "label": "Gear",
+          "value": "Breastplate, Rapier"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus two other languages"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Noble",
+      "ruleId": "monsters.l-n.noble.noble",
+      "sections": [
+        {
+          "text": "Rapier. Melee Attack Roll: +3, reach 5 ft. Hit: 5 (1d8 + 1) Piercing damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Parry. Trigger: The noble is hit by a melee attack roll while holding a weapon. Response: The noble adds 2 to its AC against that attack, possibly causing it to miss.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "monsters.l-n",
+  "editorialBlocks": [
+    "monsters.l-n",
+    "monsters.l-n.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Monsters",
+    "Monsters L–N"
+  ],
+  "order": 4805,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "monsters-l-n",
+  "sourcePages": [
+    303,
+    304,
+    305,
+    306,
+    307,
+    308,
+    309,
+    310,
+    311,
+    312
+  ],
+  "title": "Monsters L–N"
+}

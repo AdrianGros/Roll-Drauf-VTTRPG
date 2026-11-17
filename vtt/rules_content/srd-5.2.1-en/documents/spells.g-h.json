@@ -1,0 +1,1710 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "spells.g-h",
+      "text": "Spells G–H",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "spells.g-h.roll-drauf-note",
+      "text": "Spells G–H in alphabetical order. Under each name you find the spell level, school and the classes that can prepare it, followed by casting time, range, components and duration.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.gaseous-form",
+      "text": "Gaseous Form",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.gaseous-form.p-1",
+      "text": "Level 3 Transmutation (Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a bit of gauze)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.gaseous-form.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.gaseous-form.p-2",
+      "text": "A willing creature you touch shape-shifts, along with everything it’s wearing and carrying, into a misty cloud for the duration. The spell ends on the target if it drops to 0 Hit Points or if it takes a Magic action to end the spell on itself.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gaseous-form.p-3",
+      "text": "While in this form, the target’s only method of movement is a Fly Speed of 10 feet, and it can hover. The target can enter and occupy the space of another creature. The target has Resistance to Bludgeoning, Piercing, and Slashing damage; it has Immunity to the Prone condition; and it has Advantage on Strength, Dexterity, and Constitution saving throws. The target can pass through narrow openings, but it treats liquids as though they were solid surfaces.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gaseous-form.p-4",
+      "text": "The target can’t talk or manipulate objects, and any objects it was carrying or holding can’t be dropped, used, or otherwise interacted with. Finally, the target can’t attack or cast spells.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gaseous-form.p-5",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 3.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.gate",
+      "text": "Gate",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.gate.p-1",
+      "text": "Level 9 Conjuration (Cleric, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a diamond worth 5,000+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.gate.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.gate.p-2",
+      "text": "You conjure a portal linking an unoccupied space you can see within range to a precise location on a different plane of existence. The portal is a circular opening, which you can make 5 to 20 feet in diameter. You can orient the portal in any direction you choose. The portal lasts for the duration, and the portal’s destination is visible through it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gate.p-3",
+      "text": "The portal has a front and a back on each plane where it appears. Travel through the portal is possible only by moving through its front. Anything that does so is instantly transported to the other plane, appearing in the unoccupied space nearest to the portal.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gate.p-4",
+      "text": "Deities and other planar rulers can prevent portals created by this spell from opening in their presence or anywhere within their domains.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gate.p-5",
+      "text": "When you cast this spell, you can speak the name of a specific creature (a pseudonym, title, or nickname doesn’t work). If that creature is on a plane other than the one you are on, the portal opens next to the named creature and transports it to the nearest unoccupied space on your side of the portal. You gain no special power over the creature, and it is free to act as the GM deems appropriate. It might leave, attack you, or help you.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.geas",
+      "text": "Geas",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.geas.p-1",
+      "text": "Level 5 Enchantment (Bard, Cleric, Druid, Paladin, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 minute",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "30 days",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.geas.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.geas.p-2",
+      "text": "You give a verbal command to a creature that you can see within range, ordering it to carry out some service or refrain from an action or a course of activity as you decide. The target must succeed on a Wisdom saving throw or have the Charmed condition for the duration. The target automatically succeeds if it can’t understand your command.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.geas.p-3",
+      "text": "While Charmed, the creature takes 5d10 Psychic damage if it acts in a manner directly counter to your command. It takes this damage no more than once each day.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.geas.p-4",
+      "text": "You can issue any command you choose, short of an activity that would result in certain death. Should you issue a suicidal command, the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.geas.p-5",
+      "text": "A Remove Curse, Greater Restoration, or Wish spell ends this spell.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.geas.p-6",
+      "text": "Using a Higher-Level Spell Slot. If you use a level 7 or 8 spell slot, the duration is 365 days. If you use a level 9 spell slot, the spell lasts until it is ended by one of the spells mentioned above.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.gentle-repose",
+      "text": "Gentle Repose",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.gentle-repose.p-1",
+      "text": "Level 2 Necromancy (Cleric, Paladin, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action or Ritual",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (2 Copper Pieces, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "10 days",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.gentle-repose.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.gentle-repose.p-2",
+      "text": "You touch a corpse or other remains. For the duration, the target is protected from decay and can’t become Undead.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gentle-repose.p-3",
+      "text": "The spell also effectively extends the time limit on raising the target from the dead, since days spent under the influence of this spell don’t count against the time limit of spells such as Raise Dead.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.giant-insect",
+      "text": "Giant Insect",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.giant-insect.p-1",
+      "text": "Level 4 Conjuration (Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 10 minutes",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.giant-insect.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.giant-insect.p-2",
+      "text": "You summon a giant centipede, spider, or wasp (chosen when you cast the spell). It manifests in an unoccupied space you can see within range and uses the Giant Insect stat block. The form you choose determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.giant-insect.p-3",
+      "text": "The creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don’t issue any, it takes the Dodge action and uses its movement to avoid danger.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.giant-insect.p-4",
+      "text": "Using a Higher-Level Spell Slot. Use the spell slot’s level for the spell’s level in the stat block.",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Beast, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "11 + the spell’s level"
+        },
+        {
+          "label": "HP",
+          "value": "30 + 10 for each spell level above 4"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Climb 40 ft., Fly 40 ft. (Wasp only)"
+        },
+        {
+          "label": "Str",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands the languages you know"
+        },
+        {
+          "label": "CR",
+          "value": "None (XP 0; PB equals your Proficiency Bonus)"
+        }
+      ],
+      "name": "Giant Insect",
+      "ruleId": "spells.g-h.giant-insect.giant-insect",
+      "sections": [
+        {
+          "text": "Spider Climb. The insect can climb difficult surfaces, including along ceilings, without needing to make an ability check.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The insect makes a number of attacks equal to half this spell’s level (round down).\nPoison Jab. Melee Attack Roll: Bonus equals your spell attack modifier, reach 10 ft. Hit: 1d6 + 3 plus the spell’s level Piercing damage plus 1d4 Poison damage.\nWeb Bolt (Spider Only). Ranged Attack Roll: Bonus equals your spell attack modifier, range 60 ft. Hit: 1d10 + 3 plus the spell’s level Bludgeoning damage, and the target’s Speed is reduced to 0 until the start of the insect’s next turn.",
+          "title": "Actions"
+        },
+        {
+          "text": "Venomous Spew (Centipede Only). Constitution Saving Throw: Your spell save DC, one creature the insect can see within 10 feet. Failure: The target has the Poisoned condition until the start of the insect’s next turn.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.glibness",
+      "text": "Glibness",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.glibness.p-1",
+      "text": "Level 8 Enchantment (Bard, Warlock)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.glibness.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.glibness.p-2",
+      "text": "Until the spell ends, when you make a Charisma check, you can replace the number you roll with a 15. Additionally, no matter what you say, magic that would determine if you are telling the truth indicates that you are being truthful.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.globe-of-invulnerability",
+      "text": "Globe of Invulnerability",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.globe-of-invulnerability.p-1",
+      "text": "Level 6 Abjuration (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a glass bead)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.globe-of-invulnerability.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.globe-of-invulnerability.p-2",
+      "text": "An immobile, shimmering barrier appears in a 10- foot Emanation around you and remains for the duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.globe-of-invulnerability.p-3",
+      "text": "Any spell of level 5 or lower cast from outside the barrier can’t affect anything within it. Such a spell can target creatures and objects within the barrier, but the spell has no effect on them. Similarly, the area within the barrier is excluded from areas of effect created by such spells.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.globe-of-invulnerability.p-4",
+      "text": "Using a Higher-Level Spell Slot. The barrier blocks spells of 1 level higher for each spell slot level above 6.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.glyph-of-warding",
+      "text": "Glyph of Warding",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-1",
+      "text": "Level 3 Abjuration (Bard, Cleric, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 hour",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (powdered diamond worth 200+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Until dispelled or triggered",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.glyph-of-warding.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-2",
+      "text": "You inscribe a glyph that later unleashes a magical effect. You inscribe it either on a surface (such as a table or a section of floor) or within an object that can be closed (such as a book or chest) to conceal the glyph. The glyph can cover an area no larger than 10 feet in diameter. If the surface or object is moved more than 10 feet from where you cast this spell, the glyph is broken, and the spell ends without being triggered.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-3",
+      "text": "The glyph is nearly imperceptible and requires a successful Wisdom (Perception) check against your spell save DC to notice.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-4",
+      "text": "When you inscribe the glyph, you set its trigger and choose whether it’s an explosive rune or a spell glyph, as explained below.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-5",
+      "text": "Set the Trigger. You decide what triggers the glyph when you cast the spell. For glyphs inscribed on a surface, common triggers include touching or stepping on the glyph, removing another object covering it, or approaching within a certain distance of it. For glyphs inscribed within an object, common triggers include opening that object or seeing the glyph. Once a glyph is triggered, this spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-6",
+      "text": "You can refine the trigger so that only creatures of certain types activate it (for example, the glyph could be set to affect Aberrations). You can also set conditions for creatures that don’t trigger the glyph, such as those who say a certain password.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-7",
+      "text": "Explosive Rune. When triggered, the glyph erupts with magical energy in a 20-foot-radius Sphere centered on the glyph. Each creature in the area makes a Dexterity saving throw. A creature takes 5d8 Acid, Cold, Fire, Lightning, or Thunder damage (your choice when you create the glyph) on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-8",
+      "text": "Spell Glyph. You can store a prepared spell of level 3 or lower in the glyph by casting it as part of creating the glyph. The spell must target a single creature or an area. The spell being stored has no immediate effect when cast in this way.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-9",
+      "text": "When the glyph is triggered, the stored spell takes effect. If the spell has a target, it targets the creature that triggered the glyph. If the spell affects an area, the area is centered on that creature. If the spell summons Hostile creatures or creates harmful objects or traps, they appear as close as possible to the intruder and attack it. If the spell requires Concentration, it lasts until the end of its full duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.glyph-of-warding.p-10",
+      "text": "Using a Higher-Level Spell Slot. The damage of an explosive rune increases by 1d8 for each spell slot level above 3. If you create a spell glyph, you can store any spell of up to the same level as the spell slot you use for the Glyph of Warding.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.goodberry",
+      "text": "Goodberry",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.goodberry.p-1",
+      "text": "Level 1 Conjuration (Druid, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a sprig of mistletoe)",
+          "term": "Components"
+        },
+        {
+          "definition": "24 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.goodberry.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.goodberry.p-2",
+      "text": "Ten berries appear in your hand and are infused with magic for the duration. A creature can take a Bonus Action to eat one berry. Eating a berry restores 1 Hit Point, and the berry provides enough nourishment to sustain a creature for one day.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.goodberry.p-3",
+      "text": "Uneaten berries disappear when the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.grease",
+      "text": "Grease",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.grease.p-1",
+      "text": "Level 1 Conjuration (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a bit of pork rind or butter)",
+          "term": "Components"
+        },
+        {
+          "definition": "1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.grease.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.grease.p-2",
+      "text": "Nonflammable grease covers the ground in a 10- foot square centered on a point within range and turns it into Difficult Terrain for the duration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.grease.p-3",
+      "text": "When the grease appears, each creature standing in its area must succeed on a Dexterity saving throw or have the Prone condition. A creature that enters the area or ends its turn there must also succeed on that save or fall Prone.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.greater-invisibility",
+      "text": "Greater Invisibility",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.greater-invisibility.p-1",
+      "text": "Level 4 Illusion (Bard, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.greater-invisibility.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.greater-invisibility.p-2",
+      "text": "A creature you touch has the Invisible condition until the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.greater-restoration",
+      "text": "Greater Restoration",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.greater-restoration.p-1",
+      "text": "Level 5 Abjuration (Bard, Cleric, Druid, Paladin, Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (diamond dust worth 100+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.greater-restoration.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.greater-restoration.p-2",
+      "text": "You touch a creature and magically remove one of the following effects from it:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "1 Exhaustion level",
+        "The Charmed or Petrified condition",
+        "A curse, including the target’s Attunement to a cursed magic item",
+        "Any reduction to one of the target’s ability scores",
+        "Any reduction to the target’s Hit Point maximum"
+      ],
+      "ruleId": "spells.g-h.greater-restoration.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.guardian-of-faith",
+      "text": "Guardian of Faith",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.guardian-of-faith.p-1",
+      "text": "Level 4 Conjuration (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "8 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.guardian-of-faith.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.guardian-of-faith.p-2",
+      "text": "A Large spectral guardian appears and hovers for the duration in an unoccupied space that you can see within range. The guardian occupies that space and is invulnerable, and it appears in a form appropriate for your deity or pantheon.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.guardian-of-faith.p-3",
+      "text": "Any enemy that moves to a space within 10 feet of the guardian for the first time on a turn or starts its turn there makes a Dexterity saving throw, taking 20 Radiant damage on a failed save or half as much damage on a successful one. The guardian vanishes when it has dealt a total of 60 damage.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.guards-and-wards",
+      "text": "Guards and Wards",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.guards-and-wards.p-1",
+      "text": "Level 6 Abjuration (Bard, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "1 hour",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a silver rod worth 10+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "24 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.guards-and-wards.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.guards-and-wards.p-2",
+      "text": "You create a ward that protects up to 2,500 square feet of floor space. The warded area can be up to 20 feet tall, and you shape it as one 50-foot square, one hundred 5-foot squares that are contiguous, or twenty-five 10-foot squares that are contiguous.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.guards-and-wards.p-3",
+      "text": "When you cast this spell, you can specify individuals that are unaffected by the spell’s effects. You can also specify a password that, when spoken aloud within 5 feet of the warded area, makes the speaker immune to its effects.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.guards-and-wards.p-4",
+      "text": "The spell creates the effects below within the warded area. Dispel Magic has no effect on Guards and Wards itself, but each of the following effects can be dispelled. If all four are dispelled, Guards and Wards ends. If you cast the spell every day for 365 days on the same area, the spell thereafter lasts until all its effects are dispelled.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.guards-and-wards.p-5",
+      "text": "Corridors. Fog fills all the warded corridors, making them Heavily Obscured. In addition, at each intersection or branching passage offering a choice of direction, there is a 50 percent chance that a creature other than you believes it is going in the opposite direction from the one it chooses.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.guards-and-wards.p-6",
+      "text": "Doors. All doors in the warded area are magically locked, as if sealed by the Arcane Lock spell. In addition, you can cover up to ten doors with an illusion to make them appear as plain sections of wall.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.guards-and-wards.p-7",
+      "text": "Stairs. Webs fill all stairs in the warded area from top to bottom, as in the Web spell. These strands regrow in 10 minutes if they are destroyed while Guards and Wards lasts.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.guards-and-wards.p-8",
+      "text": "Other Spell Effect. Place one of the following magical effects within the warded area:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Dancing Lights in four corridors, with a simple program that the lights repeat as long as Guards and Wards lasts",
+        "Magic Mouth in two locations",
+        "Stinking Cloud in two locations (the vapors return within 10 minutes if dispersed while Guards and Wards lasts)",
+        "Gust of Wind in one corridor or room (the wind blows continuously while the spell lasts)",
+        "Suggestion in one 5-foot square; any creature that enters that square receives the suggestion mentally"
+      ],
+      "ruleId": "spells.g-h.guards-and-wards.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.guidance",
+      "text": "Guidance",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.guidance.p-1",
+      "text": "Divination Cantrip (Cleric, Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.guidance.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.guidance.p-2",
+      "text": "You touch a willing creature and choose a skill. Until the spell ends, the creature adds 1d4 to any ability check using the chosen skill.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.guiding-bolt",
+      "text": "Guiding Bolt",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.guiding-bolt.p-1",
+      "text": "Level 1 Evocation (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "1 round",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.guiding-bolt.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.guiding-bolt.p-2",
+      "text": "You hurl a bolt of light toward a creature within range. Make a ranged spell attack against the target. On a hit, it takes 4d6 Radiant damage, and the next attack roll made against it before the end of your next turn has Advantage.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.guiding-bolt.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.gust-of-wind",
+      "text": "Gust of Wind",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.gust-of-wind.p-1",
+      "text": "Level 2 Evocation (Druid, Ranger, Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a legume seed)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.gust-of-wind.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.gust-of-wind.p-2",
+      "text": "A Line of strong wind 60 feet long and 10 feet wide blasts from you in a direction you choose for the duration. Each creature in the Line must succeed on a Strength saving throw or be pushed 15 feet away from you in a direction following the Line. A creature that ends its turn in the Line must make the same save.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gust-of-wind.p-3",
+      "text": "Any creature in the Line must spend 2 feet of movement for every 1 foot it moves when moving closer to you.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gust-of-wind.p-4",
+      "text": "The gust disperses gas or vapor, and it extinguishes candles and similar unprotected flames in the area. It causes protected flames, such as those of lanterns, to dance wildly and has a 50 percent chance to extinguish them.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.gust-of-wind.p-5",
+      "text": "As a Bonus Action on your later turns, you can change the direction in which the Line blasts from you.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hallow",
+      "text": "Hallow",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hallow.p-1",
+      "text": "Level 5 Abjuration (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "24 hours",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (incense worth 1,000+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Until dispelled",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hallow.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hallow.p-2",
+      "text": "You touch a point and infuse an area around it with holy or unholy power. The area can have a radius up to 60 feet, and the spell fails if the radius includes an area already under the effect of Hallow. The affected area has the following effects.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hallow.p-3",
+      "text": "Hallowed Ward. Choose any of these creature types: Aberration, Celestial, Elemental, Fey, Fiend, or Undead. Creatures of the chosen types can’t willingly enter the area, and any creature that is possessed by or that has the Charmed or Frightened condition from such creatures isn’t possessed, Charmed, or Frightened by them while in the area.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hallow.p-4",
+      "text": "Extra Effect. You bind an extra effect to the area from the list below: Courage. Creatures of any types you choose can’t gain the Frightened condition while in the area. Darkness. Darkness fills the area. Normal light, as well as magical light created by spells of a level lower than this spell, can’t illuminate the area. Daylight. Bright light fills the area. Magical Darkness created by spells of a level lower than this spell can’t extinguish the light. Peaceful Rest. Dead bodies interred in the area can’t be turned into Undead. Extradimensional Interference. Creatures of any types you choose can’t enter or exit the area using teleportation or interplanar travel. Fear. Creatures of any types you choose have the Frightened condition while in the area. Resistance. Creatures of any types you choose have Resistance to one damage type of your choice while in the area. Silence. No sound can emanate from within the area, and no sound can reach into it. Tongues. Creatures of any types you choose can communicate with any other creature in the area even if they don’t share a common language. Vulnerability. Creatures of any types you choose have Vulnerability to one damage type of your choice while in the area.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hallucinatory-terrain",
+      "text": "Hallucinatory Terrain",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hallucinatory-terrain.p-1",
+      "text": "Level 4 Illusion (Bard, Druid, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "10 minutes",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "300 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a mushroom)",
+          "term": "Components"
+        },
+        {
+          "definition": "24 hours",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hallucinatory-terrain.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hallucinatory-terrain.p-2",
+      "text": "You make natural terrain in a 150-foot Cube in range look, sound, and smell like another sort of natural terrain. Thus, open fields or a road can be made to resemble a swamp, hill, crevasse, or some other difficult or impassable terrain. A pond can be made to seem like a grassy meadow, a precipice like a gentle slope, or a rock-strewn gully like a wide and smooth road. Manufactured structures, equipment, and creatures within the area aren’t changed.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hallucinatory-terrain.p-3",
+      "text": "The tactile characteristics of the terrain are unchanged, so creatures entering the area are likely to notice the illusion. If the difference isn’t obvious by touch, a creature examining the illusion can take the Study action to make an Intelligence (Investigation) check against your spell save DC to disbelieve it. If a creature discerns that the terrain is illusory, the creature sees a vague image superimposed on the real terrain.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.harm",
+      "text": "Harm",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.harm.p-1",
+      "text": "Level 6 Necromancy (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.harm.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.harm.p-2",
+      "text": "You unleash virulent magic on a creature you can see within range. The target makes a Constitution saving throw. On a failed save, it takes 14d6 Necrotic damage, and its Hit Point maximum is reduced by an amount equal to the Necrotic damage it took. On a successful save, it takes half as much damage only. This spell can’t reduce a target’s Hit Point maximum below 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.haste",
+      "text": "Haste",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.haste.p-1",
+      "text": "Level 3 Transmutation (Sorcerer, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a shaving of licorice root)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.haste.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.haste.p-2",
+      "text": "Choose a willing creature that you can see within range. Until the spell ends, the target’s Speed is doubled, it gains a +2 bonus to Armor Class, it has Advantage on Dexterity saving throws, and it gains an additional action on each of its turns. That action can be used to take only the Attack (one attack only), Dash, Disengage, Hide, or Utilize action.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.haste.p-3",
+      "text": "When the spell ends, the target is Incapacitated and has a Speed of 0 until the end of its next turn, as a wave of lethargy washes over it.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.heal",
+      "text": "Heal",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.heal.p-1",
+      "text": "Level 6 Abjuration (Cleric, Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.heal.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.heal.p-2",
+      "text": "Choose a creature that you can see within range. Positive energy washes through the target, restoring 70 Hit Points. This spell also ends the Blinded, Deafened, and Poisoned conditions on the target.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.heal.p-3",
+      "text": "Using a Higher-Level Spell Slot. The healing increases by 10 for each spell slot level above 6.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.healing-word",
+      "text": "Healing Word",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.healing-word.p-1",
+      "text": "Level 1 Abjuration (Bard, Cleric, Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.healing-word.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.healing-word.p-2",
+      "text": "A creature of your choice that you can see within range regains Hit Points equal to 2d4 plus your spellcasting ability modifier.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.healing-word.p-3",
+      "text": "Using a Higher-Level Spell Slot. The healing increases by 2d4 for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.heat-metal",
+      "text": "Heat Metal",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.heat-metal.p-1",
+      "text": "Level 2 Transmutation (Bard, Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a piece of iron and a flame)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.heat-metal.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.heat-metal.p-2",
+      "text": "Choose a manufactured metal object, such as a metal weapon or a suit of Heavy or Medium metal armor, that you can see within range. You cause the object to glow red-hot. Any creature in physical contact with the object takes 2d8 Fire damage when you cast the spell. Until the spell ends, you can take a Bonus Action on each of your later turns to deal this damage again if the object is within range.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.heat-metal.p-3",
+      "text": "If a creature is holding or wearing the object and takes the damage from it, the creature must succeed on a Constitution saving throw or drop the object if it can. If it doesn’t drop the object, it has Disadvantage on attack rolls and ability checks until the start of your next turn.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.heat-metal.p-4",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 2.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hellish-rebuke",
+      "text": "Hellish Rebuke",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hellish-rebuke.p-1",
+      "text": "Level 1 Evocation (Warlock)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Reaction, which you take in response to taking damage from a creature that you can see within 60 feet of yourself",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hellish-rebuke.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hellish-rebuke.p-2",
+      "text": "The creature that damaged you is momentarily surrounded by green flames. It makes a Dexterity saving throw, taking 2d10 Fire damage on a failed save or half as much damage on a successful one.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hellish-rebuke.p-3",
+      "text": "Using a Higher-Level Spell Slot. The damage increases by 1d10 for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.heroes-feast",
+      "text": "Heroes’ Feast",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.heroes-feast.p-1",
+      "text": "Level 6 Conjuration (Bard, Cleric, Druid)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "10 minutes",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a gem-encrusted bowl worth 1,000+ GP, which the spell consumes)",
+          "term": "Components"
+        },
+        {
+          "definition": "Instantaneous",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.heroes-feast.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.heroes-feast.p-2",
+      "text": "You conjure a feast that appears on a surface in an unoccupied 10-foot Cube next to you. The feast takes 1 hour to consume and disappears at the end of that time, and the beneficial effects don’t set in until this hour is over. Up to twelve creatures can partake of the feast.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.heroes-feast.p-3",
+      "text": "A creature that partakes gains several benefits, which last for 24 hours. The creature has Resistance to Poison damage, and it has Immunity to the Frightened and Poisoned conditions. Its Hit Point maximum also increases by 2d10, and it gains the same number of Hit Points.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.heroism",
+      "text": "Heroism",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.heroism.p-1",
+      "text": "Level 1 Enchantment (Bard, Paladin)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Touch",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.heroism.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.heroism.p-2",
+      "text": "A willing creature you touch is imbued with bravery. Until the spell ends, the creature is immune to the Frightened condition and gains Temporary Hit Points equal to your spellcasting ability modifier at the start of each of its turns.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.heroism.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hex",
+      "text": "Hex",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hex.p-1",
+      "text": "Level 1 Enchantment (Warlock)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (the petrified eye of a newt)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hex.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hex.p-2",
+      "text": "You place a curse on a creature that you can see within range. Until the spell ends, you deal an extra 1d6 Necrotic damage to the target whenever you hit it with an attack roll. Also, choose one ability when you cast the spell. The target has Disadvantage on ability checks made with the chosen ability.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hex.p-3",
+      "text": "If the target drops to 0 Hit Points before this spell ends, you can take a Bonus Action on a later turn to curse a new creature.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hex.p-4",
+      "text": "Using a Higher-Level Spell Slot. Your Concentration can last longer with a spell slot of level 2 (up to 4 hours), 3–4 (up to 8 hours), or 5+ (24 hours).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hideous-laughter",
+      "text": "Hideous Laughter",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hideous-laughter.p-1",
+      "text": "Level 1 Enchantment (Bard, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "30 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a tart and a feather)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hideous-laughter.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hideous-laughter.p-2",
+      "text": "One creature of your choice that you can see within range makes a Wisdom saving throw. On a failed save, it has the Prone and Incapacitated conditions for the duration. During that time, it laughs uncontrollably if it’s capable of laughter, and it can’t end the Prone condition on itself.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hideous-laughter.p-3",
+      "text": "At the end of each of its turns and each time it takes damage, it makes another Wisdom saving throw. The target has Advantage on the save if the save is triggered by damage. On a successful save, the spell ends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hideous-laughter.p-4",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 1.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hold-monster",
+      "text": "Hold Monster",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hold-monster.p-1",
+      "text": "Level 5 Enchantment (Bard, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a straight piece of iron)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hold-monster.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hold-monster.p-2",
+      "text": "Choose a creature that you can see within range. The target must succeed on a Wisdom saving throw or have the Paralyzed condition for the duration. At the end of each of its turns, the target repeats the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hold-monster.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional creature for each spell slot level above 5.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hold-person",
+      "text": "Hold Person",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hold-person.p-1",
+      "text": "Level 2 Enchantment (Bard, Cleric, Druid, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "60 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a straight piece of iron)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hold-person.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hold-person.p-2",
+      "text": "Choose a Humanoid that you can see within range. The target must succeed on a Wisdom saving throw or have the Paralyzed condition for the duration. At the end of each of its turns, the target repeats the save, ending the spell on itself on a success.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hold-person.p-3",
+      "text": "Using a Higher-Level Spell Slot. You can target one additional Humanoid for each spell slot level above 2.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.holy-aura",
+      "text": "Holy Aura",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.holy-aura.p-1",
+      "text": "Level 8 Abjuration (Cleric)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "Self",
+          "term": "Range"
+        },
+        {
+          "definition": "V, S, M (a reliquary worth 1,000+ GP)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.holy-aura.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.holy-aura.p-2",
+      "text": "For the duration, you emit an aura in a 30-foot Emanation. While in the aura, creatures of your choice have Advantage on all saving throws, and other creatures have Disadvantage on attack rolls against them. In addition, when a Fiend or an Undead hits an affected creature with a melee attack roll, the attacker must succeed on a Constitution saving throw or have the Blinded condition until the end of its next turn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hunters-mark",
+      "text": "Hunter’s Mark",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hunters-mark.p-1",
+      "text": "Level 1 Divination (Ranger)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Bonus Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "90 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "V",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 hour",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hunters-mark.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hunters-mark.p-2",
+      "text": "You magically mark one creature you can see within range as your quarry. Until the spell ends, you deal an extra 1d6 Force damage to the target whenever you hit it with an attack roll. You also have Advantage on any Wisdom (Perception or Survival) check you make to find it.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hunters-mark.p-3",
+      "text": "If the target drops to 0 Hit Points before this spell ends, you can take a Bonus Action to move the mark to a new creature you can see within range.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hunters-mark.p-4",
+      "text": "Using a Higher-Level Spell Slot. Your Concentration can last longer with a spell slot of level 3–4 (up to 8 hours) or 5+ (up to 24 hours).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "spells.g-h.hypnotic-pattern",
+      "text": "Hypnotic Pattern",
+      "type": "heading"
+    },
+    {
+      "ruleId": "spells.g-h.hypnotic-pattern.p-1",
+      "text": "Level 3 Illusion (Bard, Sorcerer, Warlock, Wizard)",
+      "type": "paragraph"
+    },
+    {
+      "entries": [
+        {
+          "definition": "Action",
+          "term": "Casting Time"
+        },
+        {
+          "definition": "120 feet",
+          "term": "Range"
+        },
+        {
+          "definition": "S, M (a pinch of confetti)",
+          "term": "Components"
+        },
+        {
+          "definition": "Concentration, up to 1 minute",
+          "term": "Duration"
+        }
+      ],
+      "ruleId": "spells.g-h.hypnotic-pattern.dl-1",
+      "type": "definition-list"
+    },
+    {
+      "ruleId": "spells.g-h.hypnotic-pattern.p-2",
+      "text": "You create a twisting pattern of colors in a 30-foot Cube within range. The pattern appears for a moment and vanishes. Each creature in the area who can see the pattern must succeed on a Wisdom saving throw or have the Charmed condition for the duration. While Charmed, the creature has the Incapacitated condition and a Speed of 0.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "spells.g-h.hypnotic-pattern.p-3",
+      "text": "The spell ends for an affected creature if it takes any damage or if someone else uses an action to shake the creature out of its stupor.",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "spells.g-h",
+  "editorialBlocks": [
+    "spells.g-h",
+    "spells.g-h.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Spells",
+    "Spells G–H"
+  ],
+  "order": 3604,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "spells-g-h",
+  "sourcePages": [
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141
+  ],
+  "title": "Spells G–H"
+}

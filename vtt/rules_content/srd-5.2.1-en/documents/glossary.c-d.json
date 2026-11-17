@@ -1,0 +1,733 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "glossary.c-d",
+      "text": "Rules Glossary C–D",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "glossary.c-d.roll-drauf-note",
+      "text": "Rules Glossary C–D. A bracketed tag such as [Action] or [Condition] tells you what kind of rule a term defines.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.campaign",
+      "text": "Campaign",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.campaign.p-1",
+      "text": "A campaign is a series of adventures. See also “Adventure.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.cantrip",
+      "text": "Cantrip",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.cantrip.p-1",
+      "text": "A cantrip is a level 0 spell, which is cast without a spell slot. See also “Spells.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.carrying-capacity",
+      "text": "Carrying Capacity",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.carrying-capacity.p-1",
+      "text": "Your size and Strength score determine the maximum weight in pounds that you can carry, as shown in the Carrying Capacity table. The table also shows the maximum weight you can drag, lift, or push.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.carrying-capacity.p-2",
+      "text": "While dragging, lifting, or pushing weight in excess of the maximum weight you can carry, your Speed can be no more than 5 feet.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Carrying Capacity",
+      "columns": [
+        "Creature Size",
+        "Carry",
+        "Drag/Lift/Push"
+      ],
+      "rows": [
+        [
+          "Tiny",
+          "Str. × 7.5 lb.",
+          "Str. × 15 lb."
+        ],
+        [
+          "Small/Medium",
+          "Str. × 15 lb.",
+          "Str. × 30 lb."
+        ],
+        [
+          "Large",
+          "Str. × 30 lb.",
+          "Str. × 60 lb."
+        ],
+        [
+          "Huge",
+          "Str. × 60 lb.",
+          "Str. × 120 lb."
+        ],
+        [
+          "Gargantuan",
+          "Str. × 120 lb.",
+          "Str. × 240 lb."
+        ]
+      ],
+      "ruleId": "glossary.c-d.carrying-capacity.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.challenge-rating",
+      "text": "Challenge Rating",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.challenge-rating.p-1",
+      "text": "Challenge Rating (CR) summarizes the threat a monster poses to a group of four player characters. Compare a monster’s CR to the characters’ level. If the CR is higher, the monster is likely a danger. If the CR is lower, the monster likely poses little threat. But circumstances and the number of player characters can significantly alter how threatening a monster is in actual play. “Gameplay Toolbox” (“Combat Encounters”) provides guidance to the GM on using CR while planning potential combat encounters. See also “Stat Block.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.character-sheet",
+      "text": "Character Sheet",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.character-sheet.p-1",
+      "text": "A character sheet is a paper or digital record that you use to track your character’s information. See also “Character Creation.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.charmed-condition",
+      "text": "Charmed [Condition]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.charmed-condition.p-1",
+      "text": "While you have the Charmed condition, you experience the following effects.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.charmed-condition.p-2",
+      "text": "Can’t Harm the Charmer. You can’t attack the charmer or target the charmer with damaging abilities or magical effects.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.charmed-condition.p-3",
+      "text": "Social Advantage. The charmer has Advantage on any ability check to interact with you socially.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.climbing",
+      "text": "Climbing",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.climbing.p-1",
+      "text": "While you’re climbing, each foot of movement costs 1 extra foot (2 extra feet in Difficult Terrain). You ignore this extra cost if you have a Climb Speed and use it to climb. At the GM’s option, climbing a slippery surface or one with few handholds might require a successful DC 15 Strength (Athletics) check.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.climb-speed",
+      "text": "Climb Speed",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.climb-speed.p-1",
+      "text": "A Climb Speed can be used in place of Speed to traverse a vertical surface without expending the extra movement normally associated with climbing. See also “Climbing” and “Speed.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.concentration",
+      "text": "Concentration",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.concentration.p-1",
+      "text": "Some spells and other effects require Concentration to remain active, as specified in their descriptions. If the effect’s creator loses Concentration, the effect ends. If the effect has a maximum duration, the effect’s description specifies how long the creator can concentrate on it: up to 1 minute, 1 hour, or some other duration. The creator can end Concentration at any time (no action required). The following factors break Concentration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.concentration.p-2",
+      "text": "Another Concentration Effect. You lose Concentration on an effect the moment you start casting a spell that requires Concentration or activate another effect that requires Concentration.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.concentration.p-3",
+      "text": "Damage. If you take damage, you must succeed on a Constitution saving throw to maintain Concentration. The DC equals 10 or half the damage taken (round down), whichever number is higher, up to a maximum DC of 30.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.concentration.p-4",
+      "text": "Incapacitated or Dead. Your Concentration ends if you have the Incapacitated condition or you die.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.condition",
+      "text": "Condition",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.condition.p-1",
+      "text": "A condition is a temporary game state. The definition of a condition says how it affects its recipient, and various rules define how to end a condition. This glossary defines these conditions:",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "Blinded",
+        "Grappled",
+        "Poisoned"
+      ],
+      "rows": [
+        [
+          "Charmed",
+          "Incapacitated",
+          "Prone"
+        ],
+        [
+          "Deafened",
+          "Invisible",
+          "Restrained"
+        ],
+        [
+          "Exhaustion",
+          "Paralyzed",
+          "Stunned"
+        ],
+        [
+          "Frightened",
+          "Petrified",
+          "Unconscious"
+        ]
+      ],
+      "ruleId": "glossary.c-d.condition.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "glossary.c-d.condition.p-2",
+      "text": "A condition doesn’t stack with itself; a recipient either has a condition or doesn’t. The Exhaustion condition is an exception to that rule.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.cone-area-of-effect",
+      "text": "Cone [Area of Effect]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.cone-area-of-effect.p-1",
+      "text": "A Cone is an area of effect that extends in straight lines from a point of origin in a direction its creator chooses. A Cone’s width at any point along its length is equal to that point’s distance from the point of origin. For example, a Cone is 15 feet wide at a point along its length that is 15 feet from the point of origin. The effect that creates a Cone specifies its maximum length.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.cone-area-of-effect.p-2",
+      "text": "A Cone’s point of origin isn’t included in the area of effect unless its creator decides otherwise.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.cover",
+      "text": "Cover",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.cover.p-1",
+      "text": "Cover provides a degree of protection to a target behind it. There are three degrees of cover, each of which provides a different benefit to a target: Half Cover (+2 bonus to AC and Dexterity saving throws), Three-Quarters Cover (+5 bonus to AC and Dexterity saving throws), and Total Cover (can’t be targeted directly). If behind more than one degree of cover, a target benefits only from the most protective degree. See also “Playing the Game” (“Combat”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.crawling",
+      "text": "Crawling",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.crawling.p-1",
+      "text": "While you’re crawling, each foot of movement costs 1 extra foot (2 extra feet in Difficult Terrain). See also “Speed.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.creature",
+      "text": "Creature",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.creature.p-1",
+      "text": "Any being in the game, including a player’s character, is a creature. See also “Creature Type.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.creature-type",
+      "text": "Creature Type",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.creature-type.p-1",
+      "text": "Every creature, including every player character, has a tag in the rules that identifies the type of creature it is. Most player characters are of the Humanoid type. These are the game’s creature types:",
+      "type": "paragraph"
+    },
+    {
+      "caption": "",
+      "columns": [
+        "Aberration",
+        "Elemental",
+        "Monstrosity"
+      ],
+      "rows": [
+        [
+          "Beast",
+          "Fey",
+          "Ooze"
+        ],
+        [
+          "Celestial",
+          "Fiend",
+          "Plant"
+        ],
+        [
+          "Construct",
+          "Giant",
+          "Undead"
+        ],
+        [
+          "Dragon",
+          "Humanoid",
+          ""
+        ]
+      ],
+      "ruleId": "glossary.c-d.creature-type.table-1",
+      "type": "table"
+    },
+    {
+      "ruleId": "glossary.c-d.creature-type.p-2",
+      "text": "The types don’t have rules themselves, but some rules in the game affect creatures of certain types in different ways.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.critical-hit",
+      "text": "Critical Hit",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.critical-hit.p-1",
+      "text": "If you roll a 20 on the d20 for an attack roll, you score a Critical Hit, and the attack hits regardless of any modifiers or the target’s AC. A Critical Hit lets you roll extra dice for the attack’s damage against the target. Roll all of the attack’s damage dice twice and add them together. Then add any relevant modifiers. See also “Playing the Game” (“Damage and Healing”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.cube-area-of-effect",
+      "text": "Cube [Area of Effect]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.cube-area-of-effect.p-1",
+      "text": "A Cube is an area of effect that extends in straight lines from a point of origin located anywhere on a face of the Cube. The effect that creates a Cube specifies its size, which is the length of each side.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.cube-area-of-effect.p-2",
+      "text": "A Cube’s point of origin isn’t included in the area of effect unless its creator decides otherwise.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.curses",
+      "text": "Curses",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.curses.p-1",
+      "text": "Some game effects curse a creature or an object. The effect that confers a curse defines what the curse does. Curses can be removed by the Remove Curse and Greater Restoration spells or other magic that explicitly ends curses.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.cylinder-area-of-effect",
+      "text": "Cylinder [Area of Effect]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.cylinder-area-of-effect.p-1",
+      "text": "A Cylinder is an area of effect that extends in straight lines from a point of origin located at the center of the circular top or bottom of the Cylinder. The effect that creates a Cylinder specifies the radius of the Cylinder’s base and the Cylinder’s height.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.cylinder-area-of-effect.p-2",
+      "text": "A Cylinder’s point of origin is included in the area of effect.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.d20-test",
+      "text": "D20 Test",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.d20-test.p-1",
+      "text": "D20 Tests encompass the three main d20 rolls of the game: ability checks, attack rolls, and saving throws. If something in the game affects D20 Tests, it affects all three of these rolls. The GM determines whether a D20 Test is warranted in a given circumstance. See also “Playing the Game” (“D20 Tests”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.damage",
+      "text": "Damage",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.damage.p-1",
+      "text": "Damage represents harm that causes a creature or an object to lose Hit Points.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.damage-roll",
+      "text": "Damage Roll",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.damage-roll.p-1",
+      "text": "A damage roll is a die roll, adjusted by any applicable modifiers, that deals damage to a target. See also “Playing the Game” (“Damage and Healing”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.damage-threshold",
+      "text": "Damage Threshold",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.damage-threshold.p-1",
+      "text": "A creature or an object that has a damage threshold has Immunity to all damage unless it takes an amount of damage from a single attack or effect equal to or greater than its damage threshold, in which case it takes that entire instance of damage. Any damage that fails to meet or exceed the damage threshold is superficial and doesn’t reduce Hit Points. For example, if an object has a damage threshold of 10, the object takes no damage if 9 damage is dealt to it, since that damage fails to exceed the threshold. If the same object is dealt 11 damage, it takes all of that damage.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.damage-types",
+      "text": "Damage Types",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.damage-types.p-1",
+      "text": "Attacks and other harmful effects deal different types of damage. Damage types have no rules of their own, but other rules, such as Resistance, rely on the types. The Damage Types table offers examples to help a GM assign a type to a new effect.",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Damage Types",
+      "columns": [
+        "Type",
+        "Examples"
+      ],
+      "rows": [
+        [
+          "Acid",
+          "Corrosive liquids, digestive enzymes"
+        ],
+        [
+          "Bludgeoning",
+          "Blunt objects, constriction, falling"
+        ],
+        [
+          "Cold",
+          "Freezing water, icy blasts"
+        ],
+        [
+          "Fire",
+          "Flames, unbearable heat"
+        ],
+        [
+          "Force",
+          "Pure magical energy"
+        ],
+        [
+          "Lightning",
+          "Electricity"
+        ],
+        [
+          "Necrotic",
+          "Life-draining energy"
+        ],
+        [
+          "Piercing",
+          "Fangs, puncturing objects"
+        ],
+        [
+          "Poison",
+          "Toxic gas, venom"
+        ],
+        [
+          "Psychic",
+          "Mind-rending energy"
+        ],
+        [
+          "Radiant",
+          "Holy energy, searing radiation"
+        ],
+        [
+          "Slashing",
+          "Claws, cutting objects"
+        ],
+        [
+          "Thunder",
+          "Concussive sound"
+        ]
+      ],
+      "ruleId": "glossary.c-d.damage-types.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.darkness",
+      "text": "Darkness",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.darkness.p-1",
+      "text": "An area of Darkness is Heavily Obscured. See also “Heavily Obscured” and “Playing the Game” (“Exploration”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.darkvision",
+      "text": "Darkvision",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.darkvision.p-1",
+      "text": "If you have Darkvision, you can see in Dim Light within a specified range as if it were Bright Light and in Darkness within that range as if it were Dim Light. You discern colors in that Darkness only as shades of gray. See also “Playing the Game” (“Exploration”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.dash-action",
+      "text": "Dash [Action]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.dash-action.p-1",
+      "text": "When you take the Dash action, you gain extra movement for the current turn. The increase equals your Speed after applying any modifiers. With a Speed of 30 feet, for example, you can move up to 60 feet on your turn if you Dash. If your Speed of 30 feet is reduced to 15 feet, you can move up to 30 feet this turn if you Dash.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.dash-action.p-2",
+      "text": "If you have a special speed, such as a Fly Speed or Swim Speed, you can use that speed instead of your Speed when you take this action. You choose which speed to use each time you take it. See also “Speed.”",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.dead",
+      "text": "Dead",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.dead.p-1",
+      "text": "A dead creature has no Hit Points and can’t regain them unless it is first revived by magic such as the Raise Dead or Revivify spell. When such a spell is cast, the spirit knows who is casting it and can refuse. The spirit of a dead creature has left the body and departed for the Outer Planes, and reviving the creature requires calling the spirit back.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.dead.p-2",
+      "text": "If the creature returns to life, the revival effect determines the creature’s current Hit Points. Unless otherwise stated, the creature returns to life with any conditions, magical contagions, or curses that were affecting it at death if the durations of those effects are still ongoing. If the creature died with any Exhaustion levels, it returns with 1 fewer level. If the creature had Attunement to one or more magic items, it is no longer attuned to them.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.deafened-condition",
+      "text": "Deafened [Condition]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.deafened-condition.p-1",
+      "text": "While you have the Deafened condition, you experience the following effect.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.deafened-condition.p-2",
+      "text": "Can’t Hear. You can’t hear and automatically fail any ability check that requires hearing.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.death-saving-throw",
+      "text": "Death Saving Throw",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.death-saving-throw.p-1",
+      "text": "A player character must make a Death Saving Throw (also called a Death Save) if they start their turn with 0 Hit Points. See also “Playing the Game” (“Damage and Healing”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.dehydration-hazard",
+      "text": "Dehydration [Hazard]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.dehydration-hazard.p-1",
+      "text": "A creature requires an amount of water per day based on its size, as shown in the Water Needs per Day table. A creature that drinks less than half the required water for a day gains 1 Exhaustion level at the day’s end. Exhaustion caused by dehydration can’t be removed until the creature drinks the full amount of water required for a day. See also “Exhaustion.”",
+      "type": "paragraph"
+    },
+    {
+      "caption": "Water Needs per Day",
+      "columns": [
+        "Size",
+        "Water",
+        "Size",
+        "Water"
+      ],
+      "rows": [
+        [
+          "Tiny",
+          "1/4 gallon",
+          "Large",
+          "4 gallons"
+        ],
+        [
+          "Small",
+          "1 gallon",
+          "Huge",
+          "16 gallons"
+        ],
+        [
+          "Medium",
+          "1 gallon",
+          "Gargantuan 64",
+          "gallons"
+        ]
+      ],
+      "ruleId": "glossary.c-d.dehydration-hazard.table-1",
+      "type": "table"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.difficult-terrain",
+      "text": "Difficult Terrain",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.difficult-terrain.p-1",
+      "text": "If a space is Difficult Terrain, every foot of movement in that space costs 1 extra foot. For example, moving 5 feet through Difficult Terrain costs 10 feet of movement. Difficult Terrain isn’t cumulative; either a space is Difficult Terrain or it isn’t.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.difficult-terrain.p-2",
+      "text": "A space is Difficult Terrain if the space contains any of the following or something similar:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "A creature that isn’t Tiny or your ally",
+        "Furniture that is sized for creatures of your size or larger",
+        "Heavy snow, ice, rubble, or undergrowth",
+        "Liquid that’s between shin- and waist-deep",
+        "A narrow opening sized for a creature one size smaller than you",
+        "A slope of 20 degrees or more"
+      ],
+      "ruleId": "glossary.c-d.difficult-terrain.list-1",
+      "type": "unordered-list"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.difficulty-class",
+      "text": "Difficulty Class",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.difficulty-class.p-1",
+      "text": "A Difficulty Class (DC) is the target number for an ability check or a saving throw. See also “Playing the Game” (“D20 Tests”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.dim-light",
+      "text": "Dim Light",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.dim-light.p-1",
+      "text": "An area with Dim Light is Lightly Obscured. See also “Lightly Obscured” and “Playing the Game” (“Exploration”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.disadvantage",
+      "text": "Disadvantage",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.disadvantage.p-1",
+      "text": "If you have Disadvantage on a D20 Test, roll two d20s and use the lower roll. A roll can’t be affected by more than one Disadvantage, and Advantage and Disadvantage on the same roll cancel each other. See also “Playing the Game” (“D20 Tests”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.disengage-action",
+      "text": "Disengage [Action]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.disengage-action.p-1",
+      "text": "If you take the Disengage action, your movement doesn’t provoke Opportunity Attacks for the rest of the current turn.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.c-d.dodge-action",
+      "text": "Dodge [Action]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.c-d.dodge-action.p-1",
+      "text": "If you take the Dodge action, you gain the following benefits: until the start of your next turn, any attack roll made against you has Disadvantage if you can see the attacker, and you make Dexterity saving throws with Advantage.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.c-d.dodge-action.p-2",
+      "text": "You lose these benefits if you have the Incapacitated condition or if your Speed is 0.",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "glossary.c-d",
+  "editorialBlocks": [
+    "glossary.c-d",
+    "glossary.c-d.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Rules Glossary",
+    "Rules Glossary C–D"
+  ],
+  "order": 3702,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "rules-glossary-c-d",
+  "sourcePages": [
+    178,
+    179,
+    180,
+    181
+  ],
+  "title": "Rules Glossary C–D"
+}

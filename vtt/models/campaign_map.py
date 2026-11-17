@@ -40,8 +40,10 @@ class CampaignMap(db.Model):
 
     def serialize(self):
         from .campaign_map_scale import scale_for
+        from vtt.play.scene_settings import view_settings
         return {
             "measurement_scale":scale_for(self.id),
+            "presentation": view_settings(self.id),
             "id": self.id,
             "campaign_id": self.campaign_id,
             "name": self.name,

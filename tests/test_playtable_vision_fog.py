@@ -79,7 +79,7 @@ def _add_token(state_id, campaign, session, campaign_map, name, x, y, owner_user
     token = TokenState(
         session_state_id=state_id, campaign_id=campaign.id, game_session_id=session.id,
         map_id=campaign_map.id, name=name, token_type="npc", x=x, y=y,
-        owner_user_id=owner_user_id, sight_range=sight_range,
+        owner_user_id=owner_user_id, sight_range=sight_range, metadata_json={"position_mode":"pixel"},
     )
     db.session.add(token)
     db.session.commit()

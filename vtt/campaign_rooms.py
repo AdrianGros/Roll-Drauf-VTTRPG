@@ -103,3 +103,37 @@ def messages(campaign_id):
         if row is None or row.content != content.strip():
             return jsonify(error="event_conflict"), 409
     return jsonify(message=row.serialize()), 201
+
+
+@campaign_rooms_bp.get('/<int:campaign_id>/history')
+@jwt_required()
+@limiter.limit('120 per minute')
+def previous_session_messages(campaign_id):
+    """Public legacy history only; personal conversations never inherit DM authority."""
+    from vtt.models import ChatMessage, GameSession
+    user = actor()
+    campaign = room(user, campaign_id)
+    if not campaign:
+        return jsonify(error='not_found'), 404
+    if service.active_sanctions(campaign.id, user.id, {'ban'}):
+        return jsonify(error='forbidden'), 403
+    try:
+        before = int(request.args.get('before', 0))
+        if before < 0:
+            raise ValueError
+    except (ValueError, TypeError):
+        return jsonify(error='invalid_cursor'), 400
+    query = ChatMessage.query.join(GameSession, ChatMessage.game_session_id == GameSession.id).filter(
+        ChatMessage.campaign_id == campaign.id, GameSession.campaign_id == campaign.id,
+        ChatMessage.visibility == 'public', ChatMessage.moderation_state == 'visible',
+        ChatMessage.deleted_at.is_(None))
+    if before:
+        query = query.filter(ChatMessage.id < before)
+    rows = query.order_by(ChatMessage.id.desc()).limit(51).all()
+    more = len(rows) > 50
+    page = rows[:50]
+    return jsonify(messages=[dict(id=r.id, source='session', source_key=f'session:{r.id}',
+        session_id=r.game_session_id, session_name=r.game_session.name,
+        author_name=r.author.username if r.author else 'Player', content=r.content,
+        content_type=r.content_type, created_at=r.created_at.isoformat() if r.created_at else None)
+        for r in reversed(page)], more=more, next_before=page[-1].id if more and page else None)

@@ -1,0 +1,105 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "glossary.e-h",
+      "text": "Rules Glossary E–H",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "glossary.e-h.roll-drauf-note",
+      "text": "Rules Glossary E–H. A bracketed tag such as [Action] or [Condition] tells you what kind of rule a term defines.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.e-h.emanation-area-of-effect",
+      "text": "Emanation [Area of Effect]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.e-h.emanation-area-of-effect.p-1",
+      "text": "An Emanation is an area of effect that extends in straight lines from a creature or an object in all directions. The effect that creates an Emanation specifies the distance it extends.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.e-h.emanation-area-of-effect.p-2",
+      "text": "An Emanation moves with the creature or object that is its origin unless it is an instantaneous or a stationary effect.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.e-h.emanation-area-of-effect.p-3",
+      "text": "An Emanation’s origin (creature or object) isn’t included in the area of effect unless its creator decides otherwise.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.e-h.encounter",
+      "text": "Encounter",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.e-h.encounter.p-1",
+      "text": "An encounter is a scene in an adventure that is part of at least one of the game’s three pillars: social interaction, exploration, or combat. See also “Playing the Game” (“Social Interaction,” “Exploration,” and “Combat”).",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.e-h.enemy",
+      "text": "Enemy",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.e-h.enemy.p-1",
+      "text": "A creature is your enemy if it fights against you in combat, actively works to harm you, or is designated as your enemy by the rules or GM.",
+      "type": "paragraph"
+    },
+    {
+      "level": 3,
+      "ruleId": "glossary.e-h.exhaustion-condition",
+      "text": "Exhaustion [Condition]",
+      "type": "heading"
+    },
+    {
+      "ruleId": "glossary.e-h.exhaustion-condition.p-1",
+      "text": "While you have the Exhaustion condition, you experience the following effects.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.e-h.exhaustion-condition.p-2",
+      "text": "Exhaustion Levels. This condition is cumulative. Each time you receive it, you gain 1 Exhaustion level. You die if your Exhaustion level is 6.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.e-h.exhaustion-condition.p-3",
+      "text": "D20 Tests Affected. When you make a D20 Test, the roll is reduced by 2 times your Exhaustion level.",
+      "type": "paragraph"
+    },
+    {
+      "ruleId": "glossary.e-h.exhaustion-condition.p-4",
+      "text": "Speed Reduced. Your Speed is reduced by a number of feet equal to 5 times your Exhaustion level.",
+      "type": "paragraph"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "glossary.e-h",
+  "editorialBlocks": [
+    "glossary.e-h",
+    "glossary.e-h.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Rules Glossary",
+    "Rules Glossary E–H"
+  ],
+  "order": 3703,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "rules-glossary-e-h",
+  "sourcePages": [
+    181
+  ],
+  "title": "Rules Glossary E–H"
+}

@@ -1,0 +1,62 @@
+VTT-Überarbeitung: UI und Playtable
+
+Started: 2026-11-16T17:27:48.045Z
+Duration: 12:30
+Participants: Donut | Owner
+
+----
+
+[00:02] Donut | Owner: So, dann gucken wir uns mal die Änderungen am VTT an. So.
+[00:27] Donut | Owner: Das ist.
+[00:40] Donut | Owner: So schauen wir erstmal in die Oberfläche, so Einstellung, Einstie Modus.
+[00:48] Donut | Owner: Ja, der ist besser. Die Buchjei wird jetzt auf jeden Fall gekappt, was wir halt noch ändern müssten ist die Farbe, Farbwahl. Gerade haben wir so eine ledrige ähm Ausstattung. Ähm lass uns da, oh Gott, wie hieß denn dieses ganz bekannte Bild der Farbkombination? Der Farbcombi.
+[01:09] Donut | Owner: Nationen.
+[01:23] Donut | Owner: Danke, dass das.
+[01:26] Donut | Owner: Och, das fällt.
+[01:29] Donut | Owner: So paar Paletten.
+[01:33] Donut | Owner: Call of Pellets, no.
+[01:37] Donut | Owner: Und so weiter, das war ja alles klar dann.
+[01:49] Donut | Owner: Nehmen wir.
+[02:12] Donut | Owner: Danke. Dann lass uns doch mal für den Dark Mode die Kombination aus Edo Purple, Mouse Gray, Ink Black und Natural machen. Also.
+[02:25] Donut | Owner: Edo Murasaki.
+[02:28] Donut | Owner: Lesumi, Zumi und Kimi Mari.
+[02:35] Donut | Owner: Als erste Farbkombination für den neuen Dark Mode. Ähm.
+[02:44] Donut | Owner: Ja, das ist der Darkmoon sieht leider echt noch blöd aus, so wie er jetzt gerade ist. Dieses Pink ist leider echt.
+[02:51] Donut | Owner: Ungünstig, sage ich mal.
+[02:54] Donut | Owner: Ja, Character Importer äh ist, glaube ich, noch nicht mit drin und daher lassen wir das Conversations. Oh ja, das sieht gut aus. Bei Conversations ist der Chatraum zwar geladen, aber er muss auch den äh den historischen Chat aus den Kampagnen laden. Ähm.
+[03:13] Donut | Owner: Damit da auch die Nachrichten angezeigt werden kann. Außerdem bringt Conversations noch das Buch UI.
+[03:22] Donut | Owner: Ja, das Maps, die Buchjoei brechen, darauf haben wir ja gesagt, aber Atlas bricht die Buchjoei, äh die Creation Engine bricht die Buch. UI, das Rulebook-Buch UI und das Compendium bricht die Buch UI. Also das muss alles noch in Buch UI gerade gezogen werden.
+[03:45] Donut | Owner: So, aber warte, schauen wir mal, Compendium sollte jetzt auch auf Englisch da. Es gibt noch keine Möglichkeit, im Compendium auf Englisch umzustellen, nicht sehe. Ja, weil ich habe das Compendium, äh,
+[03:59] Donut | Owner: Ich habe die Sprache auf Englisch eingestellt, aber das Kompendium ist noch auf Deutsch, das heißt, da muss das auch noch mal alles in Englisch reingepackt werden. Äh.
+[04:09] Donut | Owner: Ja, okay, und ich glaube leider äh kommen wir nicht drum rum, das englische Srd ebenfalls komplett neu zu schreiben in unserem Style. Ähm.
+[04:23] Donut | Owner: Damit wir das im Kompendium auch gut einbauen können. Das muss kommen oder kommen wir nicht drumherum. So, dann gehen wir zum Playtable.
+[04:31] Donut | Owner: Gehen wir einfach mal, ja.
+[04:37] Donut | Owner: Ja, okay, das Menü so weiter zu haben ist schön.
+[04:46] Donut | Owner: Ja, das ist super. Der Farbspektrum muss aber ebenfalls dann in unserem neuen Farbspektrum sein, sowie die ganzen Designs von den Seiten. Es sollte uniform sein. Roll, du hast jetzt hier ein Roll Tool, da ist ein Tool, Chat. Ja, das ist okay. Ja, auch beim Chat sind die Kontrastfarben noch nicht so gut gewählt. Auch in unserem neuen Muster reinpacken, bitte. Side, das soll Side heißen, wusste auch nicht zwischen Side und Light. Außerdem kann ich bei Light, oh, okay, ja.
+[05:23] Donut | Owner: Ja, die Aura ist nett, aber wir brauchen bei Light noch äh ein wirkliches dynamisches Licht mit Ray Tracing auf dem Head. Äh sonst bringt das nicht, ne? Das muss das muss visuell sein. Ähm da müssen wir halt gucken ähm wie wir das einbauen. Ähm und bei Light muss dann auch der DM die Option haben, als Spieler sehen oder als DM sehen, weil als DM siehst du müsstest du natürlich logischerweise die ganze Karte unabhängig von den Light Kugeln sehen, aber die Lichtquelle muss ja trotzdem gesetzt werden und aus Spielerperspektive gut aussehen, damit der DM abschätzen kann, wie die Karte mit dem Licht dann aussieht. Das könnte vielleicht Vielleicht auch dann der Einstieg sein, wie wir in Foundry oder ein bisschen höherwertige Sachen wie zum Beispiel Animationen reinkriegen. Ähm mal reinschauen. Wall.
+[06:05] Donut | Owner: Ja, auch bei Wall sollte sich ein Submenü aufmachen, bei dem man das ein bisschen bearbeiten kann. Die Crud Option sollte da auch zugrifflich sein. Und bei Wall ist ja das wichtige nachher, dass es äh dass es vor allen Dingen die Sicht einschränkt. Ähm kriegen wir aber hin. Measure.
+[06:20] Donut | Owner: Measure öffnet.
+[06:23] Donut | Owner: Ja, okay, es öffnet ein kleines Menü, das ist soweit auch okay. Äh.
+[06:30] Donut | Owner: Ja.
+[06:32] Donut | Owner: Der Punkt.
+[06:37] Donut | Owner: Ja, und äh gerade nimmt er immer das Grid, nachher brauchen wir aber die reale Cursorposition für den Ausgang des Measurements, ne? Und auch bei den großen müsste am Mauszeiger angezeigt werden eine Distanz, wie weit das ist, das ist gerade noch ein bisschen zu klein und zu unphysisch. Äh Circle, ja, das ist okay, aber auch hier sollte ich finde ich der Radius außen dargestellt werden noch mal. Äh Square.
+[07:03] Donut | Owner: Ja, Square sollte sich quasi sollte.
+[07:08] Donut | Owner: Ja, also Square ist von der von der Findung, von der Selektion noch ein bisschen äh janky, aber das ist schon nicht schlecht. Grid, ja, Grid öffnet gerade noch kein Menü, das heißt, denn äh da sollten wir die Grid Einstellungen machen, dass man das Grid anpassen kann. Äh das fehlt gerade noch komplett, beziehungsweise ist vielleicht auch einfach noch tot. Äh Pen, ja, gut, da kann man jetzt hier hoch und runter bewegen. Um.
+[07:44] Donut | Owner: Vielleicht kann man das auch einfach mit Select kombinieren. Äh, nee, wobei brauchen wir, aber da müssen wir was anderes machen. Vielleicht einfach einen On-Off-Switch, damit man zwischen Select und Pen wechseln kann. Äh, Delay,
+[07:56] Donut | Owner: An sich öffnet, verschiebt den Chat. Ich denke mal, weil der irgendwo erstellt wird und dann hingebürt. Und.
+[08:08] Donut | Owner: Ja, ist in Ordnung, ist in Ordnung, kann man erstmal so machen. Äh Token, place a new Token, ja, upload Image.
+[08:19] Donut | Owner: Ja, wenn man Place a New Token macht, dann müsste sich quasi.
+[08:25] Donut | Owner: Ja, genau. Also, wenn man Place a Token macht, dann müsste sich erstmal die vorhandene Token Library öffnen von dem Spieler, damit er einen Token auswählen kann, dass er platzieren möchte. Und das sollte dann direkt platziert werden mit dem gleichen Namen und den gleichen Einstellungen wie die normale Token. Weil gerade ist das Sinn, ist das nur der Weg, wenn um dann linksklickmenü das Menü zu machen. Also, das ist noch nicht ganz sauber. Initiative, können wir mal eben schauen.
+[08:53] Donut | Owner: In combat.
+[08:57] Donut | Owner: Request failed. Ja, das klappt also noch nicht so ganz. Select your token first. Ja, hier nehmen wir mal den hier. Roll it initiative. Ja.
+[09:12] Donut | Owner: Es braucht im Prinzip keinen Button für Roll for Initiative, wenn kein Charakter Sheet hinterlegt ist. Das müssen wir vielleicht auch als Check machen, weil die meisten Leute benutzen gerade die Indivion mit 24 als Hookup und damit klicken sie auf Indivion, dementsprechend beim Charakter Sheet einfach direkt auf Initiative und das wird übertragen. Bedeutet, da muss weniger aktiv, sondern eher passiver Tracker sein, der abhört, wann der Initiative, wo auf welches Charakter Sheet hinterlegt ist. Das müssen wir vielleicht auch als Check machen, weil die meisten Leute benutzen gerade die Indivion mit
+[09:44] Donut | Owner: Direkt mitzufangen, wenn Spieler mehrfach rollen, dass der DMR mal kurz bestätigen muss, welcher Wurf denn da stimmt. Dann kriegen wir das alles gut in den Turnorder. Gleiches gilt auch für Monster oder andere Entitäten, die wir dafür haben, ne? Äh.
+[10:00] Donut | Owner: Ja.
+[10:03] Donut | Owner: Ja, das Seitending ist eigentlich ganz schick. Man könnte halt anfangen beim Seiten, äh beim Seitenlayout noch äh Subsites zu äh zu erlauben, also, dass du quasi Oberseiten hast, weil ich sehe gerade zum Beispiel, ich habe jetzt hier Tonia und dann habe ich angefangen, die ganzen Seiten für Netherwinter da zu machen, aber es wäre eigentlich sinnvoller, wenn ich unter, wenn ich bei Tonia die Auswahl habe, äh Städte da zu definieren und dann zu sagen, hey, hier ist äh äh, na, also hier ist Portaviola und wenn ich die Schwertküste ausgewählt habe, habe ich auch als Karte drin, hier ist Netherwinter und dann kann man bei Netherwinter. Reingehen, da nochmal Unterkarten machen, mit denen ich gemacht habe, Nether Winter City, Nether Winter Hafen, Nether Winter Board Battle und sowas alles. Also, dass wir quasi noch eine leichte Hierarchie da aufbauen können, die der User sich selbst aussuchen kann mit den Sachen. Können wir überlegen, ob man das vielleicht einfach mit ob man auf das Bild klickt und dann einfach quasi ein bisschen weiter nach links klickt, quasi die drei Ebenen, drei Ebenen nach rechts schiebt, kann das Bild um die Hierarchieebene einzuordnen und dass sich das dann automatisch quasi dazu snet. Das bedeutet, wenn ich jetzt hier, ich habe jetzt hier die Karte, ich habe jetzt hier die Karte Nether Winter, eine Schwertküste. Bedeutet, ich würde die Schwertküste als oberste Ebene machen und Nether Winter darunter, unter der Map, also. Das sollte man quasi, die Hierarchie geht quasi wie beim Programmieren, bis die nächste geschlossene Klammer, also bis der nächste Block abgeschlossen ist, würde ich Netherwinter unter die Schwertküste packen und leicht nach links verschieben, damit ich kennzeichnen, dass das da ist. Und dann könnte ich in Netherwinter wieder das gleiche machen. Und in der Darstellung Form müssten wir uns überlegen, auf welcher Hierarchie Form vielleicht, wenn man da müsste.
+[11:43] Donut | Owner: Eisbalkenpraxis ansetzen. Nachforschen, wird das konkret machen können. Aber das wäre auf jeden Fall noch ein nettes. Ja, die Page, ne? Ist okay, das ist sonst auch in Ordnung. Ähm.
+[11:55] Donut | Owner: Ja, insgesamt sehr, sehr, sehr schön.
+[12:06] Donut | Owner: Ja.
+[12:08] Donut | Owner: Ja. So viel dazu.
+[12:14] Donut | Owner: Muss gerade gucken.
+[12:17] Donut | Owner: Aber eigentlich.
+[12:26] Donut | Owner: Glaube ich, ist es das gerade erstmal an Feedback, das ich konkret geben kann.

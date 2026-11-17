@@ -1,0 +1,105 @@
+{
+  "blocks": {
+    "editorial": 109,
+    "official": 6887
+  },
+  "checks": {
+    "classSpellLists": {
+      "expected": 338,
+      "found": 338,
+      "missing": []
+    },
+    "fixedCounts": {
+      "background": {
+        "expected": 4,
+        "found": 4
+      },
+      "class": {
+        "expected": 12,
+        "found": 12
+      },
+      "feat": {
+        "expected": 17,
+        "found": 17
+      },
+      "species": {
+        "expected": 9,
+        "found": 9
+      },
+      "subclass": {
+        "expected": 12,
+        "found": 12
+      }
+    },
+    "statBlockIndex": {
+      "expected": 330,
+      "found": 330,
+      "missing": []
+    }
+  },
+  "complete": true,
+  "documents": 79,
+  "editorialPolicy": "All blocks except Roll Drauf reading notes are the official SRD 5.2.1 text, extracted from the text layer of the English PDF. Extraction restores the two-column reading order, joins line breaks, removes soft hyphens and structures the text into headings, paragraphs, lists, tables and stat blocks. The official text is not paraphrased, summarised or reworded. Blocks of type original-note with editorial=true are Roll Drauf's own explanatory English text and are not part of the SRD.",
+  "entityCounts": {
+    "armor": 13,
+    "background": 4,
+    "class": 12,
+    "class-feature": 232,
+    "class-option": 38,
+    "creature": 330,
+    "feat": 17,
+    "gear": 108,
+    "glossary": 155,
+    "magic-item": 258,
+    "mount": 8,
+    "service": 34,
+    "species": 9,
+    "spell": 339,
+    "subclass": 12,
+    "tool": 25,
+    "vehicle": 7,
+    "weapon": 38
+  },
+  "frontMatterPages": {
+    "contentsAndIndex": [
+      2,
+      3,
+      4
+    ],
+    "legal": [
+      1
+    ],
+    "treatment": "Page 1 is reproduced as the license page; pages 2–4 are replaced by navigation and used to verify the stat block inventory."
+  },
+  "missingPageRanges": [],
+  "packageDigest": "sha256:14d257a77de8a580dd4805b7f6db3856d02c469733b5abc607a937bcb31df15b",
+  "pageCount": 364,
+  "representedPageRanges": [
+    {
+      "first": 5,
+      "last": 364
+    }
+  ],
+  "rulesetId": "srd-5.2.1-en",
+  "rulesetVersion": "1.0.0",
+  "schemaVersion": "regelwerk.coverage.v1",
+  "sections": [
+    "Playing the Game",
+    "Character Creation",
+    "Classes",
+    "Character Origins",
+    "Feats",
+    "Equipment",
+    "Spells",
+    "Rules Glossary",
+    "Gameplay Toolbox",
+    "Magic Items",
+    "Monsters",
+    "Animals"
+  ],
+  "sourceLines": {
+    "consumed": 34350,
+    "total": 34350,
+    "unconsumed": 0
+  }
+}

@@ -1,11 +1,11 @@
-"""Warm night-book materials and editor presentation, preserving personal accents."""
+"""Edo night-book materials and editor presentation, preserving personal accents."""
 import pytest
 from tests.test_personal_actions_browser import action_site  # noqa: F401
 from tests.test_presentation_browser import preferences,contrast
 
 
 @pytest.mark.parametrize('engine,width,language',[('chromium',1440,'de'),('firefox',390,'en')])
-def test_night_materials_red_default_and_editor_controls(action_site,engine,width,language):
+def test_night_materials_edo_default_and_editor_controls(action_site,engine,width,language):
     from playwright.sync_api import sync_playwright,expect
     app,origin,info=action_site
     with sync_playwright() as p:
@@ -19,7 +19,7 @@ def test_night_materials_red_default_and_editor_controls(action_site,engine,widt
         expect(page.locator('.book-spread-page').first).to_be_visible()
         expect(page.locator('.book-scene-panel-title').first).to_be_visible()
         expect(page.locator('.book-scene-loading')).to_have_count(0)
-        assert page.locator('html').evaluate("e=>getComputedStyle(e).getPropertyValue('--ui-accent').trim()")=='#f29a90'
+        assert page.locator('html').evaluate("e=>getComputedStyle(e).getPropertyValue('--ui-accent').trim()")=='#ab9fbb'
         assert page.locator('.book-spread-page').first.evaluate("e=>getComputedStyle(e).backgroundImage!=='none'")
         contrast(page,'.book-spread-page h1,.book-spread-page h2,.book-spread-page p,.book-dashboard-ribbon-btn')
         page.goto(origin+'/srd-creator');page.locator('#scNewGuided').click()

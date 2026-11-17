@@ -11,3 +11,6 @@ from vtt.play import map_library  # noqa: F401,E402
 from vtt.play import token_library, rolls  # noqa: F401,E402
 
 __all__ = ["play_bp"]
+
+from vtt.play import scene_settings  # noqa: F401,E402
+from vtt.play import lighting_routes  # noqa: F401,E402

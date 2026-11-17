@@ -1,0 +1,2432 @@
+{
+  "blocks": [
+    {
+      "editorial": true,
+      "level": 2,
+      "ruleId": "monsters.s",
+      "text": "Monsters S",
+      "type": "heading"
+    },
+    {
+      "editorial": true,
+      "ruleId": "monsters.s.roll-drauf-note",
+      "text": "Monsters S. Related creatures are grouped under a shared heading.",
+      "title": "Roll Drauf reading note",
+      "type": "original-note"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.sahuagin",
+      "text": "Sahuagin",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fiend, Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "22 (4d8 + 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +5"
+        },
+        {
+          "label": "Resistances",
+          "value": "Acid, Cold"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "Sahuagin"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Sahuagin Warrior",
+      "ruleId": "monsters.s.sahuagin.sahuagin-warrior",
+      "sections": [
+        {
+          "text": "Blood Frenzy. The sahuagin has Advantage on attack rolls against any creature that doesn’t have all its Hit Points.\nLimited Amphibiousness. The sahuagin can breathe air and water, but it must be submerged at least once every 4 hours to avoid suffocating outside water.\nShark Telepathy. The sahuagin can magically control sharks within 120 feet of itself, using a special telepathy.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The sahuagin makes two Claw attacks.\nClaw. Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Slashing damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Aquatic Charge. The sahuagin swims up to its Swim Speed straight toward an enemy it can see.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.salamander",
+      "text": "Salamander",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Elemental, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "90 (12d10 + 24)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Cold"
+        },
+        {
+          "label": "Immunities",
+          "value": "Fire"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Primordial (Ignan)"
+        },
+        {
+          "label": "CR",
+          "value": "5 (XP 1,800; PB +3)"
+        }
+      ],
+      "name": "Salamander",
+      "ruleId": "monsters.s.salamander.salamander",
+      "sections": [
+        {
+          "text": "Fire Aura. At the end of each of the salamander’s turns, each creature of the salamander’s choice in a 5-foot Emanation originating from the salamander takes 7 (2d6) Fire damage.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The salamander makes two Flame Spear attacks. It can replace one attack with a use of Constrict.\nFlame Spear. Melee or Ranged Attack Roll: +7, reach 5 ft. or range 20/60 ft. Hit: 13 (2d8 + 4) Piercing damage plus 7 (2d6) Fire damage. Hit or Miss: The spear magically returns to the salamander’s hand immediately after a ranged attack.\nConstrict. Strength Saving Throw: DC 15, one Large or smaller creature the salamander can see within 10 feet. Failure: 11 (2d6 + 4) Bludgeoning damage plus 7 (2d6) Fire damage. The target has the Grappled condition (escape DC 14), and it has the Restrained condition until the grapple ends.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.satyr",
+      "text": "Satyr",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fey, Chaotic Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "31 (7d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +2, Performance +6, Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Elvish, Sylvan"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Satyr",
+      "ruleId": "monsters.s.satyr.satyr",
+      "sections": [
+        {
+          "text": "Magic Resistance. The satyr has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Hooves. Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Bludgeoning damage. If the target is a Medium or smaller creature, the satyr pushes the target up to 10 feet straight away from itself.\nMockery. Wisdom Saving Throw: DC 12, one creature the satyr can see within 90 feet. Failure: 5 (1d6 + 2) Psychic damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.scout",
+      "text": "Scout",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium or Small Humanoid, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "16 (3d8 + 3)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Nature +4, Perception +5, Stealth +6, Survival +5"
+        },
+        {
+          "label": "Gear",
+          "value": "Leather Armor, Longbow, Shortsword"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus one other language"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Scout",
+      "ruleId": "monsters.s.scout.scout",
+      "sections": [
+        {
+          "text": "Multiattack. The scout makes two attacks, using Shortsword and Longbow in any combination.\nShortsword. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage.\nLongbow. Ranged Attack Roll: +4, range 150/600 ft. Hit: 6 (1d8 + 2) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.sea-hag",
+      "text": "Sea Hag",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fey, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "52 (7d8 + 21)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Dex",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Giant, Primordial (Aquan)"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Sea Hag",
+      "ruleId": "monsters.s.sea-hag.sea-hag",
+      "sections": [
+        {
+          "text": "Amphibious. The hag can breathe air and water.\nCoven Magic. While within 30 feet of at least two hag allies, the hag can cast one of the following spells, requiring no Material components, using the spell’s normal casting time, and using Intelligence as the spellcasting ability (spell save DC 11): Augury, Find Familiar, Identify, Locate Object, Scrying, or Unseen Servant. The hag must finish a Long Rest before using this trait to cast that spell again.\nVile Appearance. Wisdom Saving Throw: DC 11, any Beast or Humanoid that starts its turn within 30 feet of the hag and can see the hag’s true form. Failure: The target has the Frightened condition until the start of its next turn. Success: The target is immune to this hag’s Vile Appearance for 24 hours.",
+          "title": "Traits"
+        },
+        {
+          "text": "Claw. Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage.\nDeath Glare (Recharge 5–6). Wisdom Saving Throw: DC 11, one Frightened creature the hag can see within 30 feet. Failure: If the target has 20 Hit Points or fewer, it drops to 0 Hit Points. Otherwise, the target takes 13 (3d8) Psychic damage.\nIllusory Appearance. The hag casts Disguise Self, using Constitution as the spellcasting ability (spell save DC 13). The spell’s duration is 24 hours.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.shadow",
+      "text": "Shadow",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Undead, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "27 (5d8 + 5)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +6"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Radiant"
+        },
+        {
+          "label": "Resistances",
+          "value": "Acid, Cold, Fire, Lightning, Thunder"
+        },
+        {
+          "label": "Immunities",
+          "value": "Necrotic, Poison; Exhaustion, Frightened, Grappled, Paralyzed, Petrified, Poisoned, Prone, Restrained, Unconscious"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Shadow",
+      "ruleId": "monsters.s.shadow.shadow",
+      "sections": [
+        {
+          "text": "Amorphous. The shadow can move through a space as narrow as 1 inch without expending extra movement to do so.\nSunlight Weakness. While in sunlight, the shadow has Disadvantage on D20 Tests.",
+          "title": "Traits"
+        },
+        {
+          "text": "Draining Swipe. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Necrotic damage, and the target’s Strength score decreases by 1d4. The target dies if this reduces that score to 0. If a Humanoid is slain by this attack, a Shadow rises from the corpse 1d4 hours later.",
+          "title": "Actions"
+        },
+        {
+          "text": "Shadow Stealth. While in Dim Light or Darkness, the shadow takes the Hide action.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.shambling-mound",
+      "text": "Shambling Mound",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Plant, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "−1 (9)"
+        },
+        {
+          "label": "HP",
+          "value": "110 (13d10 + 39)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Swim 20 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Skills",
+          "value": "Stealth +3"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold, Fire"
+        },
+        {
+          "label": "Immunities",
+          "value": "Lightning; Deafened, Exhaustion"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "5 (XP 1,800; PB +3)"
+        }
+      ],
+      "name": "Shambling Mound",
+      "ruleId": "monsters.s.shambling-mound.shambling-mound",
+      "sections": [
+        {
+          "text": "Lightning Absorption. Whenever the shambling mound is subjected to Lightning damage, it regains a number of Hit Points equal to the Lightning damage dealt.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The shambling mound makes three Charged Tendril attacks. It can replace one attack with a use of Engulf.\nCharged Tendril. Melee Attack Roll: +7, reach 10 ft. Hit: 7 (1d6 + 4) Bludgeoning damage plus 5 (2d4) Lightning damage. If the target is a Medium or smaller creature, the shambling mound pulls the target 5 feet straight toward itself.\nEngulf. Strength Saving Throw: DC 15, one Medium or smaller creature within 5 feet. Failure: The target is pulled into the shambling mound’s space and has the Grappled condition (escape DC 14). Until the grapple ends, the target has the Blinded and Restrained conditions, and it takes 10 (3d6) Lightning damage at the start of each of its turns. When the shambling mound moves, the Grappled target moves with it, costing it no extra movement. The shambling mound can have only one creature Grappled by this action at a time.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.shield-guardian",
+      "text": "Shield Guardian",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Construct, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "−1 (9)"
+        },
+        {
+          "label": "HP",
+          "value": "142 (15d10 + 60)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Int",
+          "value": "7 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Charmed, Exhaustion, Frightened, Paralyzed, Petrified, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft., Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands commands given in any language but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "7 (XP 2,900; PB +3)"
+        }
+      ],
+      "name": "Shield Guardian",
+      "ruleId": "monsters.s.shield-guardian.shield-guardian",
+      "sections": [
+        {
+          "text": "Bound. The guardian is magically bound to an amulet. While the guardian and its amulet are on the same plane of existence, the amulet’s wearer can telepathically call the guardian to travel to it, and the guardian knows the distance and direction to the amulet. If the guardian is within 60 feet of the amulet’s wearer, half of any damage the wearer takes (round up) is transferred to the guardian.\nRegeneration. The guardian regains 10 Hit Points at the start of each of its turns if it has at least 1 Hit Point.\nSpell Storing. A spellcaster who wears the guardian’s amulet can cause the guardian to store one spell of level 4 or lower. To do so, the wearer must cast the spell on the guardian while within 5 feet of it. The spell has no effect but is stored within the guardian. Any previously stored spell is lost when a new spell is stored. The guardian can cast the spell stored with any parameters set by the original caster, requiring no spell components and using the caster’s spellcasting ability. The stored spell is then lost.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The guardian makes two Fist attacks.\nFist. Melee Attack Roll: +7, reach 10 ft. Hit: 11 (2d6 + 4) Bludgeoning damage plus 7 (2d6) Force damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Protection. Trigger: An attack roll hits the wearer of the guardian’s amulet while the wearer is within 5 feet of the guardian. Response: The wearer gains a +5 bonus to AC, including against the triggering attack and possibly causing it to miss, until the start of the guardian’s next turn.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.silver-dragons",
+      "text": "Silver Dragons",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Dragon (Metallic), Lawful Good"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "45 (6d8 + 18)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "19 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +4, Stealth +2"
+        },
+        {
+          "label": "Immunities",
+          "value": "Cold"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 10 ft., Darkvision 60 ft.; Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "Draconic"
+        },
+        {
+          "label": "CR",
+          "value": "2 (450 XP; PB +2)"
+        }
+      ],
+      "name": "Silver Dragon Wyrmling",
+      "ruleId": "monsters.s.silver-dragons.silver-dragon-wyrmling",
+      "sections": [
+        {
+          "text": "Multiattack. The dragon makes two Rend attacks.\nRend. Melee Attack Roll: +6, reach 5 ft. Hit: 9 (1d10 + 4) Piercing damage.\nCold Breath (Recharge 5–6). Constitution Saving Throw: DC 13, each creature in a 15-foot Cone. Failure:\n18 (4d8) Cold damage. Success: Half damage.\nParalyzing Breath. Constitution Saving Throw: DC 13, each creature in a 15-foot Cone. First Failure: The target has the Incapacitated condition until the end of its next turn, when it repeats the save. Second Failure: The target has the Paralyzed condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Dragon (Metallic), Lawful Good"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "HP",
+          "value": "168 (16d10 + 80)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Fly 80 ft."
+        },
+        {
+          "label": "Str",
+          "value": "23 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +4"
+        },
+        {
+          "label": "Con",
+          "value": "21 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Int",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +4"
+        },
+        {
+          "label": "Cha",
+          "value": "19 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Skills",
+          "value": "History +6, Perception +8, Stealth +4"
+        },
+        {
+          "label": "Immunities",
+          "value": "Cold"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 30 ft., Darkvision 120 ft.; Passive Perception 18"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Draconic"
+        },
+        {
+          "label": "CR",
+          "value": "9 (XP 5,000; PB +4)"
+        }
+      ],
+      "name": "Young Silver Dragon",
+      "ruleId": "monsters.s.silver-dragons.young-silver-dragon",
+      "sections": [
+        {
+          "text": "Multiattack. The dragon makes three Rend attacks. It can replace one attack with a use of Paralyzing Breath.\nRend. Melee Attack Roll: +10, reach 10 ft. Hit: 15 (2d8 + 6) Slashing damage.\nCold Breath (Recharge 5–6). Constitution Saving Throw: DC 17, each creature in a 30-foot Cone. Failure:\n49 (11d8) Cold damage. Success: Half damage.\nParalyzing Breath. Constitution Saving Throw: DC 17, each creature in a 30-foot Cone. First Failure: The target has the Incapacitated condition until the end of its next turn, when it repeats the save. Second Failure: The target has the Paralyzed condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Dragon (Metallic), Lawful Good"
+        },
+        {
+          "label": "AC",
+          "value": "19"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "HP",
+          "value": "216 (16d12 + 112)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Fly 80 ft."
+        },
+        {
+          "label": "Str",
+          "value": "27 · MOD +8 · SAVE +8"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +5"
+        },
+        {
+          "label": "Con",
+          "value": "25 · MOD +7 · SAVE +7"
+        },
+        {
+          "label": "Int",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +6"
+        },
+        {
+          "label": "Cha",
+          "value": "22 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Skills",
+          "value": "History +8, Perception +11, Stealth +5"
+        },
+        {
+          "label": "Immunities",
+          "value": "Cold"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 60 ft., Darkvision 120 ft.; Passive Perception 21"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Draconic"
+        },
+        {
+          "label": "CR",
+          "value": "16 (XP 15,000, or 18,000 in lair; PB +5)"
+        }
+      ],
+      "name": "Adult Silver Dragon",
+      "ruleId": "monsters.s.silver-dragons.adult-silver-dragon",
+      "sections": [
+        {
+          "text": "Legendary Resistance (3/Day, or 4/Day in Lair). If the dragon fails a saving throw, it can choose to succeed instead.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The dragon makes three Rend attacks. It can replace one attack with a use of (A) Paralyzing Breath or (B) Spellcasting to cast Ice Knife.\nRend. Melee Attack Roll: +13, reach 10 ft. Hit: 17 (2d8 + 8) Slashing damage plus 4 (1d8) Cold damage.\nCold Breath (Recharge 5–6). Constitution Saving Throw: DC 20, each creature in a 60-foot Cone. Failure: 54 (12d8) Cold damage. Success: Half damage.\nParalyzing Breath. Constitution Saving Throw: DC 20, each creature in a 60-foot Cone. First Failure: The target has the Incapacitated condition until the end of its next turn, when it repeats the save. Second Failure: The target has the Paralyzed condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.\nSpellcasting. The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 19, +11 to hit with spell attacks):\nAt Will: Detect Magic, Hold Monster, Ice Knife, Shapechange (Beast or Humanoid form only, no Temporary Hit Points gained from the spell, and no Concentration or Temporary Hit Points required to maintain the spell) 1/Day Each: Ice Storm (level 5 version), Zone of Truth",
+          "title": "Actions"
+        },
+        {
+          "text": "Legendary Action Uses: 3 (4 in Lair). Immediately after another creature’s turn, the dragon can expend a use to take one of the following actions. The dragon regains all expended uses at the start of each of its turns.\nChill. The dragon uses Spellcasting to cast Hold Monster. The dragon can’t take this action again until the start of its next turn.\nCold Gale. Dexterity Saving Throw: DC 19, each creature in a 60-foot-long, 10-foot-wide Line. Failure: 14 (4d6) Cold damage, and the target is pushed up to 30 feet straight away from the dragon. Success: Half damage only. Failure or Success: The dragon can’t take this action again until the start of its next turn.\nPounce. The dragon moves up to half its Speed, and it makes one Rend attack.",
+          "title": "Legendary Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Gargantuan Dragon (Metallic), Lawful Good"
+        },
+        {
+          "label": "AC",
+          "value": "22"
+        },
+        {
+          "label": "Initiative",
+          "value": "+14 (24)"
+        },
+        {
+          "label": "HP",
+          "value": "468 (24d20 + 216)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Fly 80 ft."
+        },
+        {
+          "label": "Str",
+          "value": "30 · MOD +10 · SAVE +10"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +7"
+        },
+        {
+          "label": "Con",
+          "value": "29 · MOD +9 · SAVE +9"
+        },
+        {
+          "label": "Int",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Wis",
+          "value": "15 · MOD +2 · SAVE +9"
+        },
+        {
+          "label": "Cha",
+          "value": "26 · MOD +8 · SAVE +8"
+        },
+        {
+          "label": "Skills",
+          "value": "History +11, Perception +16, Stealth +7"
+        },
+        {
+          "label": "Immunities",
+          "value": "Cold"
+        },
+        {
+          "label": "Senses",
+          "value": "Blindsight 60 ft., Darkvision 120 ft.; Passive Perception 26"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Draconic"
+        },
+        {
+          "label": "CR",
+          "value": "23 (XP 50,000, or 62,000 in lair; PB +7)"
+        }
+      ],
+      "name": "Ancient Silver Dragon",
+      "ruleId": "monsters.s.silver-dragons.ancient-silver-dragon",
+      "sections": [
+        {
+          "text": "Legendary Resistance (4/Day, or 5/Day in Lair). If the dragon fails a saving throw, it can choose to succeed instead.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The dragon makes three Rend attacks. It can replace one attack with a use of (A) Paralyzing Breath or (B) Spellcasting to cast Ice Knife (level 2 version).\nRend. Melee Attack Roll: +17, reach 15 ft. Hit: 19 (2d8 + 10) Slashing damage plus 9 (2d8) Cold damage.\nCold Breath (Recharge 5–6). Constitution Saving Throw: DC 24, each creature in a 90-foot Cone. Failure: 67 (15d8) Cold damage. Success: Half damage.\nParalyzing Breath. Constitution Saving Throw: DC 24, each creature in a 90-foot Cone. First Failure: The target has the Incapacitated condition until the end of its next turn, when it repeats the save. Second Failure: The target has the Paralyzed condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.\nSpellcasting. The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 23, +15 to hit with spell attacks):\nAt Will: Detect Magic, Hold Monster, Ice Knife (level 2 version), Shapechange (Beast or Humanoid form only, no Temporary Hit Points gained from the spell, and no Concentration or Temporary Hit Points required to maintain the spell) 1/Day Each: Control Weather, Ice Storm (level 7 version), Teleport, Zone of Truth",
+          "title": "Actions"
+        },
+        {
+          "text": "Legendary Action Uses: 3 (4 in Lair). Immediately after another creature’s turn, the dragon can expend a use to take one of the following actions. The dragon regains all expended uses at the start of each of its turns.\nChill. The dragon uses Spellcasting to cast Hold Monster. The dragon can’t take this action again until the start of its next turn.\nCold Gale. Dexterity Saving Throw: DC 23, each creature in a 60-foot-long, 10-foot-wide Line. Failure: 14 (4d6) Cold damage, and the target is pushed up to 30 feet straight away from the dragon. Success: Half damage only. Failure or Success: The dragon can’t take this action again until the start of its next turn.\nPounce. The dragon moves up to half its Speed, and it makes one Rend attack.",
+          "title": "Legendary Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.skeletons",
+      "text": "Skeletons",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Undead, Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "14"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "13 (2d8 + 4)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Bludgeoning"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Exhaustion, Poisoned"
+        },
+        {
+          "label": "Gear",
+          "value": "Shortbow, Shortsword"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Common plus one other language but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Skeleton",
+      "ruleId": "monsters.s.skeletons.skeleton",
+      "sections": [
+        {
+          "text": "Shortsword. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Piercing damage.\nShortbow. Ranged Attack Roll: +5, range 80/320 ft. Hit: 6 (1d6 + 3) Piercing damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Undead, Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+1 (11)"
+        },
+        {
+          "label": "HP",
+          "value": "22 (3d10 + 6)"
+        },
+        {
+          "label": "Speed",
+          "value": "60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Bludgeoning"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Exhaustion, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/2 (XP 100; PB +2)"
+        }
+      ],
+      "name": "Warhorse Skeleton",
+      "ruleId": "monsters.s.skeletons.warhorse-skeleton",
+      "sections": [
+        {
+          "text": "Hooves. Melee Attack Roll: +6, reach 5 ft. Hit: 7 (1d6 + 4) Bludgeoning damage. If the target is a Large or smaller creature and the skeleton moved 20+ feet straight toward it immediately before the hit, the target has the Prone condition.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Undead, Lawful Evil"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+0 (10)"
+        },
+        {
+          "label": "HP",
+          "value": "45 (6d10 + 12)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Con",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Int",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Wis",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "5 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Vulnerabilities",
+          "value": "Bludgeoning"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Exhaustion, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Abyssal but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "2 (XP 450; PB +2)"
+        }
+      ],
+      "name": "Minotaur Skeleton",
+      "ruleId": "monsters.s.skeletons.minotaur-skeleton",
+      "sections": [
+        {
+          "text": "Gore. Melee Attack Roll: +6, reach 5 ft. Hit: 11 (2d6 + 4) Piercing damage. If the target is a Large or smaller creature and the skeleton moved 20+ feet straight toward it immediately before the hit, the target takes an extra 9 (2d8) Piercing damage and has the Prone condition.\nSlam. Melee Attack Roll: +6, reach 5 ft. Hit: 15 (2d10 + 4) Bludgeoning damage.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.solar",
+      "text": "Solar",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Celestial (Angel), Lawful Good"
+        },
+        {
+          "label": "AC",
+          "value": "21"
+        },
+        {
+          "label": "Initiative",
+          "value": "+20 (30)"
+        },
+        {
+          "label": "HP",
+          "value": "297 (22d10 + 176)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft., Fly 150 ft. (hover)"
+        },
+        {
+          "label": "Str",
+          "value": "26 · MOD +8 · SAVE +8"
+        },
+        {
+          "label": "Dex",
+          "value": "22 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Con",
+          "value": "26 · MOD +8 · SAVE +8"
+        },
+        {
+          "label": "Int",
+          "value": "25 · MOD +7 · SAVE +7"
+        },
+        {
+          "label": "Wis",
+          "value": "25 · MOD +7 · SAVE +7"
+        },
+        {
+          "label": "Cha",
+          "value": "30 · MOD +10 · SAVE +10"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +14"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison, Radiant; Charmed, Exhaustion, Frightened, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Truesight 120 ft.; Passive Perception 24"
+        },
+        {
+          "label": "Languages",
+          "value": "All; telepathy 120 ft."
+        },
+        {
+          "label": "CR",
+          "value": "21 (XP 33,000; PB +7)"
+        }
+      ],
+      "name": "Solar",
+      "ruleId": "monsters.s.solar.solar",
+      "sections": [
+        {
+          "text": "Divine Awareness. The solar knows if it hears a lie.\nExalted Restoration. If the solar dies outside Mount Celestia, its body disappears, and it gains a new body instantly, reviving with all its Hit Points somewhere in Mount Celestia.\nLegendary Resistance (4/Day). If the solar fails a saving throw, it can choose to succeed instead.\nMagic Resistance. The solar has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The solar makes two Flying Sword attacks. It can replace one attack with a use of Slaying Bow.\nFlying Sword. Melee or Ranged Attack Roll: +15, reach 10 ft. or range 120 ft. Hit: 22 (4d6 + 8) Slashing damage plus 36 (8d8) Radiant damage. Hit or Miss: The sword magically returns to the solar’s hand or hovers within 5 feet of the solar immediately after a ranged attack.\nSlaying Bow. Dexterity Saving Throw: DC 21, one creature the solar can see within 600 feet. Failure: If the creature has 100 Hit Points or fewer, it dies. It otherwise takes 24 (4d8 + 6) Piercing damage plus 36 (8d8) Radiant damage.\nSpellcasting. The solar casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 25):\nAt Will: Detect Evil and Good 1/Day Each: Commune, Control Weather, Dispel Evil and Good, Resurrection",
+          "title": "Actions"
+        },
+        {
+          "text": "Divine Aid (3/Day). The solar casts Cure Wounds (level 2 version), Lesser Restoration, or Remove Curse, using the same spellcasting ability as Spellcasting.",
+          "title": "Bonus Actions"
+        },
+        {
+          "text": "Legendary Action Uses: 3. Immediately after another creature’s turn, the solar can expend a use to take one of the following actions. The solar regains all expended uses at the start of each of its turns.\nBlinding Gaze. Constitution Saving Throw: DC 25, one creature the solar can see within 120 feet. Failure: The target has the Blinded condition for 1 minute. Failure or Success: The solar can’t take this action again until the start of its next turn.\nRadiant Teleport. The solar teleports up to 60 feet to an unoccupied space it can see. Dexterity Saving Throw: DC 25, each creature in a 10-foot Emanation originating from the solar at its destination space. Failure: 11 (2d10) Radiant damage. Success: Half damage.",
+          "title": "Legendary Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.specter",
+      "text": "Specter",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Undead, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+2 (12)"
+        },
+        {
+          "label": "HP",
+          "value": "22 (5d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 50 ft. (hover)"
+        },
+        {
+          "label": "Str",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Resistances",
+          "value": "Acid, Bludgeoning, Cold, Fire, Lightning, Piercing, Slashing, Thunder"
+        },
+        {
+          "label": "Immunities",
+          "value": "Necrotic, Poison; Charmed, Exhaustion, Grappled, Paralyzed, Petrified, Poisoned, Prone, Restrained, Unconscious"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Common plus one other language but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Specter",
+      "ruleId": "monsters.s.specter.specter",
+      "sections": [
+        {
+          "text": "Incorporeal Movement. The specter can move through other creatures and objects as if they were Difficult Terrain. It takes 5 (1d10) Force damage if it ends its turn inside an object.\nSunlight Sensitivity. While in sunlight, the specter has Disadvantage on ability checks and attack rolls.",
+          "title": "Traits"
+        },
+        {
+          "text": "Life Drain. Melee Attack Roll: +4, reach 5 ft. Hit: 7 (2d6) Necrotic damage. If the target is a creature, its Hit Point maximum decreases by an amount equal to the damage taken.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.sphinxes",
+      "text": "Sphinxes",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Celestial, Lawful Good"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "24 (7d4 + 7)"
+        },
+        {
+          "label": "Speed",
+          "value": "20 ft., Fly 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Arcana +4, Religion +4, Stealth +5"
+        },
+        {
+          "label": "Resistances",
+          "value": "Necrotic, Psychic, Radiant"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 11"
+        },
+        {
+          "label": "Languages",
+          "value": "Celestial, Common"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Sphinx of Wonder",
+      "ruleId": "monsters.s.sphinxes.sphinx-of-wonder",
+      "sections": [
+        {
+          "text": "Magic Resistance. The sphinx has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Rend. Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Slashing damage plus 7 (2d6) Radiant damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Burst of Ingenuity (2/Day). Trigger: The sphinx or another creature within 30 feet makes an ability check or a saving throw. Response: The sphinx adds 2 to the roll.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Celestial, Lawful Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+10 (20)"
+        },
+        {
+          "label": "HP",
+          "value": "170 (20d10 + 60)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Int",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Wis",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Cha",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Skills",
+          "value": "Arcana +12, History +12, Perception +8, Religion +12"
+        },
+        {
+          "label": "Resistances",
+          "value": "Necrotic, Radiant"
+        },
+        {
+          "label": "Immunities",
+          "value": "Psychic; Charmed, Frightened"
+        },
+        {
+          "label": "Senses",
+          "value": "Truesight 120 ft.; Passive Perception 18"
+        },
+        {
+          "label": "Languages",
+          "value": "Celestial, Common"
+        },
+        {
+          "label": "CR",
+          "value": "11 (XP 7,200, or 8,400 in lair; PB +4)"
+        }
+      ],
+      "name": "Sphinx of Lore",
+      "ruleId": "monsters.s.sphinxes.sphinx-of-lore",
+      "sections": [
+        {
+          "text": "Inscrutable. No magic can observe the sphinx remotely or detect its thoughts without its permission. Wisdom (Insight) checks made to ascertain its intentions or sincerity are made with Disadvantage.\nLegendary Resistance (3/Day, or 4/Day in Lair). If the sphinx fails a saving throw, it can choose to succeed instead.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The sphinx makes three Claw attacks.\nClaw. Melee Attack Roll: +8, reach 5 ft. Hit: 14 (3d6 + 4) Slashing damage.\nMind-Rending Roar (Recharge 5–6). Wisdom Saving Throw: DC 16, each enemy in a 300-foot Emanation originating from the sphinx. Failure: 35 (10d6) Psychic damage, and the target has the Incapacitated condition until the start of the sphinx’s next turn.\nSpellcasting. The sphinx casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save DC 16):\nAt Will: Detect Magic, Identify, Mage Hand, Minor Illusion, Prestidigitation 1/Day Each: Dispel Magic, Legend Lore, Locate Object, Plane Shift, Remove Curse, Tongues",
+          "title": "Actions"
+        },
+        {
+          "text": "Legendary Action Uses: 3 (4 in Lair). Immediately after another creature’s turn, the sphinx can expend a use to take one of the following actions. The sphinx regains all expended uses at the start of each of its turns.\nArcane Prowl. The sphinx can teleport up to 30 feet to an unoccupied space it can see, and it makes one Claw attack.\nWeight of Years. Constitution Saving Throw: DC 16, one creature the sphinx can see within 120 feet. Failure:\nThe target gains 1 Exhaustion level. While the target has any Exhaustion levels, it appears 3d10 years older. Failure or Success: The sphinx can’t take this action again until the start of its next turn.",
+          "title": "Legendary Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Celestial, Lawful Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+12 (22)"
+        },
+        {
+          "label": "HP",
+          "value": "199 (19d10 + 95)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "22 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "10 · MOD +0 · SAVE +6"
+        },
+        {
+          "label": "Con",
+          "value": "20 · MOD +5 · SAVE +11"
+        },
+        {
+          "label": "Int",
+          "value": "16 · MOD +3 · SAVE +9"
+        },
+        {
+          "label": "Wis",
+          "value": "23 · MOD +6 · SAVE +12"
+        },
+        {
+          "label": "Cha",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Skills",
+          "value": "Arcana +9, Perception +12, Religion +15"
+        },
+        {
+          "label": "Resistances",
+          "value": "Necrotic, Radiant"
+        },
+        {
+          "label": "Immunities",
+          "value": "Psychic; Charmed, Frightened"
+        },
+        {
+          "label": "Senses",
+          "value": "Truesight 120 ft.; Passive Perception 22"
+        },
+        {
+          "label": "Languages",
+          "value": "Celestial, Common"
+        },
+        {
+          "label": "CR",
+          "value": "17 (XP 18,000, or 20,000 in lair; PB +6)"
+        }
+      ],
+      "name": "Sphinx of Valor",
+      "ruleId": "monsters.s.sphinxes.sphinx-of-valor",
+      "sections": [
+        {
+          "text": "Inscrutable. No magic can observe the sphinx remotely or detect its thoughts without its permission. Wisdom (Insight) checks made to ascertain its intentions or sincerity are made with Disadvantage.\nLegendary Resistance (3/Day, or 4/Day in Lair). If the sphinx fails a saving throw, it can choose to succeed instead.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The sphinx makes two Claw attacks and uses Roar.\nClaw. Melee Attack Roll: +12, reach 5 ft. Hit: 20 (4d6 + 6) Slashing damage.\nRoar (3/Day). The sphinx emits a magical roar. Whenever it roars, the roar has a different effect, as detailed below (the sequence resets when it takes a Long Rest):\nFirst Roar. Wisdom Saving Throw: DC 20, each enemy in a 500-foot Emanation originating from the sphinx.\nFailure: The target has the Frightened condition for 1 minute.\nSecond Roar. Wisdom Saving Throw: DC 20, each enemy in a 500-foot Emanation originating from the sphinx. Failure: The target has the Paralyzed condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.\nThird Roar. Constitution Saving Throw: DC 20, each enemy in a 500-foot Emanation originating from the sphinx. Failure: 44 (8d10) Thunder damage, and the target has the Prone condition. Success: Half damage only.\nSpellcasting. The sphinx casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save DC 20):\nAt Will: Detect Evil and Good, Thaumaturgy 1/Day Each: Detect Magic, Dispel Magic, Greater Restoration, Heroes’ Feast, Zone of Truth",
+          "title": "Actions"
+        },
+        {
+          "text": "Legendary Action Uses: 3 (4 in Lair). Immediately after another creature’s turn, the sphinx can expend a use to take one of the following actions. The sphinx regains all expended uses at the start of each of its turns.\nArcane Prowl. The sphinx can teleport up to 30 feet to an unoccupied space it can see, and it makes one Claw attack.\nWeight of Years. Constitution Saving Throw: DC 16, one creature the sphinx can see within 120 feet. Failure:\nThe target gains 1 Exhaustion level. While the target has any Exhaustion levels, it appears 3d10 years older. Failure or Success: The sphinx can’t take this action again until the start of its next turn.",
+          "title": "Legendary Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.spirit-naga",
+      "text": "Spirit Naga",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Fiend, Chaotic Evil"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "135 (18d10 + 36)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +6"
+        },
+        {
+          "label": "Con",
+          "value": "14 · MOD +2 · SAVE +5"
+        },
+        {
+          "label": "Int",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Wis",
+          "value": "15 · MOD +2 · SAVE +5"
+        },
+        {
+          "label": "Cha",
+          "value": "16 · MOD +3 · SAVE +6"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison; Charmed, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 12"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal, Common"
+        },
+        {
+          "label": "CR",
+          "value": "8 (XP 3,900; PB +3)"
+        }
+      ],
+      "name": "Spirit Naga",
+      "ruleId": "monsters.s.spirit-naga.spirit-naga",
+      "sections": [
+        {
+          "text": "Fiendish Restoration. If it dies, the naga returns to life in 1d6 days and regains all its Hit Points. Only a Wish spell can prevent this trait from functioning.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The naga makes three attacks, using Bite or Necrotic Ray in any combination.\nBite. Melee Attack Roll: +7, reach 10 ft. Hit: 7 (1d6 + 4) Piercing damage plus 14 (4d6) Poison damage.\nNecrotic Ray. Ranged Attack Roll: +6, range 60 ft. Hit: 21 (6d6) Necrotic damage.\nSpellcasting. The naga casts one of the following spells, requiring no Somatic or Material components and using Intelligence as the spellcasting ability (spell save DC 14):\nAt Will: Detect Magic, Mage Hand, Minor Illusion, Water Breathing 2/Day Each: Detect Thoughts, Dimension Door, Hold Person (level 3 version), Lightning Bolt (level 4 version) Sprite",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Fey, Neutral Good"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "HP",
+          "value": "10 (4d4)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Dex",
+          "value": "18 · MOD +4 · SAVE +4"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Wis",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Skills",
+          "value": "Perception +3, Stealth +8"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 13"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Elvish, Sylvan"
+        },
+        {
+          "label": "CR",
+          "value": "1/4 (XP 50; PB +2)"
+        }
+      ],
+      "name": "Sprite",
+      "ruleId": "monsters.s.spirit-naga.sprite",
+      "sections": [
+        {
+          "text": "Needle Sword. Melee Attack Roll: +6, reach 5 ft. Hit: 6 (1d4 + 4) Piercing damage.\nEnchanting Bow. Ranged Attack Roll: +6, range 40/160 ft. Hit: 1 Piercing damage, and the target has the Charmed condition until the start of the sprite’s next turn.\nHeart Sight. Charisma Saving Throw: DC 10, one creature within 5 feet the sprite can see (Celestials, Fiends, and Undead automatically fail the save). Failure: The sprite knows the target’s emotions and alignment.\nInvisibility. The sprite casts Invisibility on itself, requiring no spell components and using Charisma as the spellcasting ability.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.spy",
+      "text": "Spy",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium or Small Humanoid, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "12"
+        },
+        {
+          "label": "Initiative",
+          "value": "+4 (14)"
+        },
+        {
+          "label": "HP",
+          "value": "27 (6d8)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Climb 30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Wis",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Cha",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Skills",
+          "value": "Deception +5, Insight +4, Investigation +5, Perception +6, Sleight of Hand +4, Stealth +6"
+        },
+        {
+          "label": "Gear",
+          "value": "Hand Crossbow, Shortsword, Thieves’ Tools"
+        },
+        {
+          "label": "Senses",
+          "value": "Passive Perception 16"
+        },
+        {
+          "label": "Languages",
+          "value": "Common plus one other language"
+        },
+        {
+          "label": "CR",
+          "value": "1 (XP 200; PB +2)"
+        }
+      ],
+      "name": "Spy",
+      "ruleId": "monsters.s.spy.spy",
+      "sections": [
+        {
+          "text": "Shortsword. Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage plus 7 (2d6) Poison damage.\nHand Crossbow. Ranged Attack Roll: +4, range 30/120 ft. Hit: 5 (1d6 + 2) Piercing damage plus 7 (2d6) Poison damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Cunning Action. The spy takes the Dash, Disengage, or Hide action.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.stirge",
+      "text": "Stirge",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Tiny Monstrosity, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "13"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "5 (2d4)"
+        },
+        {
+          "label": "Speed",
+          "value": "10 ft., Fly 40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "4 · MOD −3 · SAVE −3"
+        },
+        {
+          "label": "Dex",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Int",
+          "value": "2 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Cha",
+          "value": "6 · MOD −2 · SAVE −2"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 9"
+        },
+        {
+          "label": "Languages",
+          "value": "None"
+        },
+        {
+          "label": "CR",
+          "value": "1/8 (XP 25; PB +2)"
+        }
+      ],
+      "name": "Stirge",
+      "ruleId": "monsters.s.stirge.stirge",
+      "sections": [
+        {
+          "text": "Proboscis. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Piercing damage, and the stirge attaches to the target. While attached, the stirge can’t make Proboscis attacks, and the target takes 5 (2d4) Necrotic damage at the start of each of the stirge’s turns.\nThe stirge can detach itself by spending 5 feet of its movement. The target or a creature within 5 feet of it can detach the stirge as an action.",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.stone-giant",
+      "text": "Stone Giant",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Giant, Neutral"
+        },
+        {
+          "label": "AC",
+          "value": "17"
+        },
+        {
+          "label": "Initiative",
+          "value": "+5 (15)"
+        },
+        {
+          "label": "HP",
+          "value": "126 (11d12 + 55)"
+        },
+        {
+          "label": "Speed",
+          "value": "40 ft."
+        },
+        {
+          "label": "Str",
+          "value": "23 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "15 · MOD +2 · SAVE +5"
+        },
+        {
+          "label": "Con",
+          "value": "20 · MOD +5 · SAVE +8"
+        },
+        {
+          "label": "Int",
+          "value": "10 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +4"
+        },
+        {
+          "label": "Cha",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Skills",
+          "value": "Athletics +12, Perception +4, Stealth +5"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 14"
+        },
+        {
+          "label": "Languages",
+          "value": "Giant"
+        },
+        {
+          "label": "CR",
+          "value": "7 (XP 2,900; PB +3)"
+        }
+      ],
+      "name": "Stone Giant",
+      "ruleId": "monsters.s.stone-giant.stone-giant",
+      "sections": [
+        {
+          "text": "Multiattack. The giant makes two attacks, using Stone Club or Boulder in any combination.\nStone Club. Melee Attack Roll: +9, reach 15 ft. Hit: 22 (3d10 + 6) Bludgeoning damage.\nBoulder. Ranged Attack Roll: +9, range 60/240 ft. Hit:\n15 (2d8 + 6) Bludgeoning damage. If the target is a Large or smaller creature, it has the Prone condition.",
+          "title": "Actions"
+        },
+        {
+          "text": "Deflect Missile (Recharge 5–6). Trigger: The giant is hit by a ranged attack roll and takes Bludgeoning, Piercing, or Slashing damage from it. Response: The giant reduces the damage it takes from the attack by 11 (1d10 + 6), and if that damage is reduced to 0, the giant can redirect some of the attack’s force. Dexterity Saving Throw: DC 17, one creature the giant can see within 60 feet. Failure: 11 (1d10 + 6) Force damage.",
+          "title": "Reactions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.stone-golem",
+      "text": "Stone Golem",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Large Construct, Unaligned"
+        },
+        {
+          "label": "AC",
+          "value": "18"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "220 (21d10 + 105)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft."
+        },
+        {
+          "label": "Str",
+          "value": "22 · MOD +6 · SAVE +6"
+        },
+        {
+          "label": "Dex",
+          "value": "9 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Con",
+          "value": "20 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Int",
+          "value": "3 · MOD −4 · SAVE −4"
+        },
+        {
+          "label": "Wis",
+          "value": "11 · MOD +0 · SAVE +0"
+        },
+        {
+          "label": "Cha",
+          "value": "1 · MOD −5 · SAVE −5"
+        },
+        {
+          "label": "Immunities",
+          "value": "Poison, Psychic; Charmed, Exhaustion, Frightened, Paralyzed, Petrified, Poisoned"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft.; Passive Perception 10"
+        },
+        {
+          "label": "Languages",
+          "value": "Understands Common plus two other languages but can’t speak"
+        },
+        {
+          "label": "CR",
+          "value": "10 (XP 5,900; PB +4)"
+        }
+      ],
+      "name": "Stone Golem",
+      "ruleId": "monsters.s.stone-golem.stone-golem",
+      "sections": [
+        {
+          "text": "Immutable Form. The golem can’t shape-shift.\nMagic Resistance. The golem has Advantage on saving throws against spells and other magical effects.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The golem makes two attacks, using Slam or Force Bolt in any combination.\nSlam. Melee Attack Roll: +10, reach 5 ft. Hit: 15 (2d8 + 6) Bludgeoning damage plus 9 (2d8) Force damage.\nForce Bolt. Ranged Attack Roll: +9, range 120 ft. Hit: 22 (4d10) Force damage.",
+          "title": "Actions"
+        },
+        {
+          "text": "Slow (Recharge 5–6). The golem casts the Slow spell, requiring no spell components and using Constitution as the spellcasting ability (spell save DC 17).",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "level": 3,
+      "ruleId": "monsters.s.storm-giant",
+      "text": "Storm Giant",
+      "type": "heading"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Huge Giant, Chaotic Good"
+        },
+        {
+          "label": "AC",
+          "value": "16"
+        },
+        {
+          "label": "Initiative",
+          "value": "+7 (17)"
+        },
+        {
+          "label": "HP",
+          "value": "230 (20d12 + 100)"
+        },
+        {
+          "label": "Speed",
+          "value": "50 ft., Fly 25 ft. (hover), Swim 50 ft."
+        },
+        {
+          "label": "Str",
+          "value": "29 · MOD +9 · SAVE +14"
+        },
+        {
+          "label": "Dex",
+          "value": "14 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Con",
+          "value": "20 · MOD +5 · SAVE +10"
+        },
+        {
+          "label": "Int",
+          "value": "16 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Wis",
+          "value": "20 · MOD +5 · SAVE +10"
+        },
+        {
+          "label": "Cha",
+          "value": "18 · MOD +4 · SAVE +9"
+        },
+        {
+          "label": "Skills",
+          "value": "Arcana +8, Athletics +14, History +8, Perception +10"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold"
+        },
+        {
+          "label": "Immunities",
+          "value": "Lightning, Thunder"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 120 ft., Truesight 30 ft.; Passive Perception 20"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Giant"
+        },
+        {
+          "label": "CR",
+          "value": "13 (XP 10,000; PB +5)"
+        }
+      ],
+      "name": "Storm Giant",
+      "ruleId": "monsters.s.storm-giant.storm-giant",
+      "sections": [
+        {
+          "text": "Amphibious. The giant can breathe air and water.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The giant makes two attacks, using Storm Sword or Thunderbolt in any combination.\nStorm Sword. Melee Attack Roll: +14, reach 10 ft. Hit: 23 (4d6 + 9) Slashing damage plus 13 (3d8) Lightning damage.\nThunderbolt. Ranged Attack Roll: +14, range 500 ft. Hit: 22 (2d12 + 9) Lightning damage, and the target has the Blinded and Deafened conditions until the start of the giant’s next turn.\nLightning Storm (Recharge 5–6). Dexterity Saving Throw: DC 18, each creature in a 10-foot-radius, 40-foot-high Cylinder originating from a point the giant can see within 500 feet. Failure: 55 (10d10) Lightning damage. Success: Half damage.\nSpellcasting. The giant casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save DC 18):\nAt Will: Detect Magic, Light 1/Day: Control Weather Succubus",
+          "title": "Actions"
+        }
+      ],
+      "type": "stat-block"
+    },
+    {
+      "entries": [
+        {
+          "label": "Type",
+          "value": "Medium Fiend, Neutral Evil"
+        },
+        {
+          "label": "AC",
+          "value": "15"
+        },
+        {
+          "label": "Initiative",
+          "value": "+3 (13)"
+        },
+        {
+          "label": "HP",
+          "value": "71 (13d8 + 13)"
+        },
+        {
+          "label": "Speed",
+          "value": "30 ft., Fly 60 ft."
+        },
+        {
+          "label": "Str",
+          "value": "8 · MOD −1 · SAVE −1"
+        },
+        {
+          "label": "Dex",
+          "value": "17 · MOD +3 · SAVE +3"
+        },
+        {
+          "label": "Con",
+          "value": "13 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Int",
+          "value": "15 · MOD +2 · SAVE +2"
+        },
+        {
+          "label": "Wis",
+          "value": "12 · MOD +1 · SAVE +1"
+        },
+        {
+          "label": "Cha",
+          "value": "20 · MOD +5 · SAVE +5"
+        },
+        {
+          "label": "Skills",
+          "value": "Deception +9, Insight +5, Perception +5, Persuasion +9, Stealth +7"
+        },
+        {
+          "label": "Resistances",
+          "value": "Cold, Fire, Poison, Psychic"
+        },
+        {
+          "label": "Senses",
+          "value": "Darkvision 60 ft.; Passive Perception 15"
+        },
+        {
+          "label": "Languages",
+          "value": "Abyssal, Common, Infernal; telepathy 60 ft."
+        },
+        {
+          "label": "CR",
+          "value": "4 (XP 1,100; PB +2)"
+        }
+      ],
+      "name": "Succubus",
+      "ruleId": "monsters.s.storm-giant.succubus",
+      "sections": [
+        {
+          "text": "Incubus Form. When the succubus finishes a Long Rest, it can shape-shift into an Incubus, using that stat block instead of this one.",
+          "title": "Traits"
+        },
+        {
+          "text": "Multiattack. The succubus makes one Fiendish Touch attack and uses Charm or Draining Kiss.\nFiendish Touch. Melee Attack Roll: +7, reach 5 ft. Hit: 16 (2d10 + 5) Psychic damage.\nCharm. The succubus casts Dominate Person (level 8 version), requiring no spell components and using Charisma as the spellcasting ability (spell save DC 15).\nDraining Kiss. Constitution Saving Throw: DC 15, one creature Charmed by the succubus within 5 feet. Failure: 13 (3d8) Psychic damage. Success: Half damage. Failure or Success: The target’s Hit Point maximum decreases by an amount equal to the damage taken.",
+          "title": "Actions"
+        },
+        {
+          "text": "Shape-Shift. The succubus shape-shifts into a Medium or Small Humanoid, or it returns to its true form. Its game statistics are the same in each form, except its Fly Speed is available only in its true form. Any equipment it is wearing or carrying isn’t transformed.",
+          "title": "Bonus Actions"
+        }
+      ],
+      "type": "stat-block"
+    }
+  ],
+  "contentStatus": "extracted",
+  "documentId": "monsters.s",
+  "editorialBlocks": [
+    "monsters.s",
+    "monsters.s.roll-drauf-note"
+  ],
+  "navigationPath": [
+    "Monsters",
+    "Monsters S"
+  ],
+  "order": 4807,
+  "rulesetId": "srd-5.2.1-en",
+  "schemaVersion": "regelwerk.document.v1",
+  "slug": "monsters-s",
+  "sourcePages": [
+    321,
+    322,
+    323,
+    324,
+    325,
+    326,
+    327,
+    328,
+    329,
+    330,
+    331
+  ],
+  "title": "Monsters S"
+}

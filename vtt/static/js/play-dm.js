@@ -241,7 +241,7 @@ _bindTokenClipboard() {
                 this._pasteAnchor = overMap ? this._worldPointFromEvent(event) : null;
             });
             viewport.addEventListener("pointerdown", (event) => {
-                if (event.pointerType === "touch" || this._mapTouchGesture || this.currentTool !== "select" || event.button !== 0 || this.readOnly || this._pendingTarget) return;
+                if (event.pointerType === "touch" || this._mapTouchGesture || this.currentTool !== "select" || !event.shiftKey || event.button !== 0 || this.readOnly || this._pendingTarget) return;
                 if (event.target.closest?.(".token-marker, .floating, .stage-topbar, .vision-light-marker, .vision-wall-line, button, input, select, textarea, a")) return;
                 const start = this._worldPointFromEvent(event);
                 if (!start) return;

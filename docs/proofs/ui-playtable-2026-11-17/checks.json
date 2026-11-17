@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "environment": "isolated roll-drauf-vtt-mobile-tests:20261115; no production data; existing browser cache mounted read-only",
+  "suites": [
+    {
+      "log": "backend-regression.log",
+      "passed": 92,
+      "scope": "context authority, map scale, vision/fog, scene-stack and session-feedback regressions",
+      "sha256": "9cc37b4c13e13bda8b999d2e6e5c09c5788edf554530d9dfecea182e0757a68c"
+    },
+    {
+      "log": "playtable-roles-final.log",
+      "passed": 12,
+      "scope": "new backend contracts, three real Playtable journeys, Chromium/Firefox owner-as-Player compositions and reload",
+      "sha256": "93633d20c8360295253ff4e0b6d15fa45cbfefb9cda58e777d61acbb8f5aba9c"
+    },
+    {
+      "log": "grid-reset-confirm-browser.log",
+      "passed": 1,
+      "scope": "real destructive-fog-reset confirmation and stable API-code handling",
+      "sha256": "ddf1962c2ee249d9682d5dca4cd4e3eca20130ff844d243dbb7c7de2bbf9a733"
+    },
+    {
+      "log": "book-browser.log",
+      "passed": 8,
+      "scope": "six document surfaces; paper/night; DE/EN;1440/390/320; Eagle lifecycle, contrast, canvas",
+      "sha256": "ab3d81270b1eea816bd706455455986b3b6293df813444ffd7e5d540eace13dd"
+    },
+    {
+      "log": "english-tests.log",
+      "passed": 57,
+      "scope": "English source/API/browser and existing DE routes/compendium/TOC regressions",
+      "sha256": "ef4727a2741a0dfb6ca8b2eb4793c52ea4bb8a6a54a6e6565d590489d18ded81"
+    }
+  ],
+  "counts_note": "Suites overlap; counts are not a unique total. Warnings remain in existing dependencies/fixtures.",
+  "build": "english-deterministic-build.log",
+  "independent_review": "review.md",
+  "not_run": [
+    "installed Beyond20 extension in a real user browser",
+    "rollback execution (prior image and guarded rollback script retained)"
+  ]
+}
