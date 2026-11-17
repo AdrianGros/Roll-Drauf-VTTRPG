@@ -151,3 +151,26 @@ def test_darkness_matches_fog_exclusion_and_large_light_radius_is_bounded():
     assert len(render_overlay(200,100,[],[huge],[token],ambient=25,grid_size=10))<100000
     assert map_world_size(Row(width=20,height=15,grid_size=70))==(1400,1050)
     assert map_world_size(Row(width=128,height=96,grid_size=96,light_rules={'dimensions_mode':'pixel'}))==(128,96)
+
+
+def test_walls_work_without_lights_and_disabled_lighting_retains_fog(table,play_player_client,play_dm_client,play_dm_user):
+    from vtt.models.ui_playtable import MapViewSettings
+    campaign,session,member,hero,secret=table
+    map_=db.session.get(CampaignMap,session.map_id);map_.width=400;map_.height=300
+    hero.x=30;hero.y=50;hero.metadata_json={'position_mode':'pixel'}
+    db.session.add(SceneWall(campaign_map_id=map_.id,x0=90,y0=0,x1=90,y1=300,sight='normal',light='normal',created_by=play_dm_user.id))
+    db.session.commit()
+    player=enter(play_player_client,campaign,session);dm=enter(play_dm_client,campaign,session,'dm')
+    path=base(table)+'/vision/illumination'
+    def alpha(result,x,y):
+        return Image.open(io.BytesIO(base64.b64decode(result['overlay'].split(',')[1]))).getpixel((x,y))[3]
+    result=play_player_client.get(path,headers=player).json
+    assert result['overlay'] and alpha(result,130,50)==255
+    settings=MapViewSettings(map_id=map_.id,dynamic_lighting=False,grid_visible=True,ambient=25)
+    db.session.add(settings);db.session.commit()
+    assert play_player_client.get(path,headers=player).json['overlay'] is None
+    assert play_dm_client.get(path+f'?token_id={hero.id}',headers=dm).json['overlay'] is None
+    map_.fog_enabled=True;db.session.commit()
+    for suffix,context,client in [('',player,play_player_client),(f'?token_id={hero.id}',dm,play_dm_client)]:
+        result=client.get(path+suffix,headers=context).json
+        assert alpha(result,30,50)==0 and alpha(result,130,50)==255

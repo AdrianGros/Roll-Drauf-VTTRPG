@@ -167,3 +167,9 @@ Die Bildkontrolle fand eine bestehende DOM-Annahme: SVG unterstützt die
 Spielervorschau verwenden deshalb das tatsächliche `hidden`-Attribut mit einer
 expliziten SVG-CSS-Regel. Browser- und Live-Prüfung kontrollieren die berechnete
 Sichtbarkeit der Ebene, nicht nur eine JavaScript-Eigenschaft.
+
+Der Optionsvertrag wird auch ohne platzierte Lichter geprüft: Bei aktiviertem
+dynamischem Sichtmodell begrenzen vorhandene Wände die aktuelle Sicht. Ohne
+dynamisches Licht bleibt eingeschaltete Aufklärung eine Sichtmaske mit voller
+Helligkeit der sichtbaren Bereiche; DM-Tokenvorschau und Player verwenden dieselbe
+Bedeutung. Sind beide Optionen aus, wird die öffentliche Karte unmaskiert gezeigt.

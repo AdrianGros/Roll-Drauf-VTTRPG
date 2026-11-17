@@ -36,14 +36,15 @@ def illumination_projection(campaign_id,session_id):
         tokens=[t for t in tokens if t.owner_user_id==user.id and is_token_visible_to(t,role,user.id)]
     walls=SceneWall.query.filter_by(campaign_map_id=map_.id).all()
     lights=SceneLight.query.filter_by(campaign_map_id=map_.id).all()
+    projecting=map_.fog_enabled or options['dynamic_lighting'] and bool(lights or walls)
     if preview is not None:
         origin=tokens[0]
         others=TokenState.query.filter_by(campaign_id=campaign_id,game_session_id=session_id,map_id=map_.id,deleted_at=None).all()
-        visible=set(visible_token_ids(*token_world_xy(origin,map_.grid_size),origin.sight_range,walls,lights,others,map_.grid_size))
+        visible=set(visible_token_ids(*token_world_xy(origin,map_.grid_size),origin.sight_range,walls,lights,others,map_.grid_size)) if projecting else {t.id for t in others}
         response['visible_token_ids']=[t.id for t in others if t.id in visible and is_token_visible_to(t,'PLAYER',origin.owner_user_id)]
-    if not options['dynamic_lighting'] or not lights and not map_.fog_enabled:
+    if not projecting:
         return jsonify(response)
     fog=None if preview else FogOfWarState.query.filter_by(user_id=user.id,campaign_map_id=map_.id).first()
-    response['overlay']=render_overlay(*map_world_size(map_),walls,lights,tokens,ambient=options['ambient'],
+    response['overlay']=render_overlay(*map_world_size(map_),walls,lights,tokens,ambient=options['ambient'] if options['dynamic_lighting'] else 100,
         explored=fog.explored_cells if fog else (),grid_size=map_.grid_size,fog_enabled=map_.fog_enabled)
     return jsonify(response)

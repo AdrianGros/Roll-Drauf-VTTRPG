@@ -55,6 +55,12 @@
       "passed": 1,
       "scope": "actual SVG computed visibility in DM preview, manual marker toggle, restore and geometry editor layering",
       "sha256": "936ed6e6b612b74653a287cd03e0575bb93f3f94f720303d027cd3128ebfd67a"
+    },
+    {
+      "log": "vision-settings-final.log",
+      "passed": 8,
+      "scope": "complete new backend contracts including walls without lights, lighting disabled with fog, matching DM preview",
+      "sha256": "031dd237e6acfbfc84f764f07c9c36bc3edf2518098a6e2fd1927df52026a5ff"
     }
   ],
   "counts_note": "Suites overlap; counts are not a unique total. Warnings remain in existing dependencies/fixtures.",
