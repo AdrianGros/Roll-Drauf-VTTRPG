@@ -1,0 +1,398 @@
+{
+  "status": "complete",
+  "phase": "monitor",
+  "profile": "standard",
+  "retention": "permanent",
+  "validated_at": "2026-11-17T12:08:11.688192+00:00",
+  "input_summary": "Owner-Feedback VTT UI/Playtable vom 16.11.2026; Umsetzung und Live-Lieferung aller 14 Punkte ausdrücklich autorisiert.",
+  "origin": "https://vtt.roll-drauf.de",
+  "branch": "feat/ui-playtable-20261117",
+  "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+  "source_push": {
+    "status": "pass",
+    "remote": "origin",
+    "branch_head_observed_before_final_evidence_commit": "6a2fcedce2d2396a52109e1093194da902a7912e"
+  },
+  "deployed_image": "roll-drauf-vtt-app:feedback-ui-playtable-vision-20261117-20261111-6a2fcedce",
+  "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_unchanged": true,
+  "slices": [
+    {
+      "id": "U01",
+      "name": "Buchoberflächen",
+      "status": "pass",
+      "navigation": "Gemeinsame Navigation → Gespräche, Karten, Atlas, Creation Engine, Regelwerk, Compendium; bestehende Kontorechte",
+      "intended_roles": [
+        "bestehende Kontorechte"
+      ],
+      "acceptance_criteria": "Gemeinsamer Buchrahmen, Modul-/Dialogfunktion, DE/EN, Desktop/390/320",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "book-browser.log",
+        "english-tests.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          7
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U02",
+      "name": "Frühere Nachrichten",
+      "status": "pass",
+      "navigation": "Kampagnenchat → Conversations → Frühere Sitzungen; aktive Mitglieder",
+      "intended_roles": [
+        "aktives Kampagnenmitglied"
+      ],
+      "acceptance_criteria": "Öffentliche historische Sessiontexte mit Herkunft; kein Blind-/Privatinhalt; Entzug wird geprüft",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "vision-settings-final.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          6
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U03",
+      "name": "Englisches Compendium",
+      "status": "pass",
+      "navigation": "Einstellungen → English → Compendium; bestehender Regelzugang",
+      "intended_roles": [
+        "bestehender Regelzugang"
+      ],
+      "acceptance_criteria": "Englische Suche/Filter/Details, bewusster Editionswechsel, DE-Pins bleiben gültig",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "english-tests.log",
+        "settings-content-language-browser.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          7
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U04",
+      "name": "Englisches SRD",
+      "status": "pass",
+      "navigation": "Einstellungen → English → Regelwerk; bestehender Regelzugang",
+      "intended_roles": [
+        "bestehender Regelzugang"
+      ],
+      "acceptance_criteria": "Vollständige strukturierte native Edition mit eigenem Buchaufbau und Lesehinweisen; Originaltext/Attribution eindeutig",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "english-tests.log",
+        "english-deterministic-build.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          7
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U05",
+      "name": "Nachtfarben",
+      "status": "pass",
+      "navigation": "Einstellungen → Nacht → Standardakzent; alle Rollen",
+      "intended_roles": [
+        "DM",
+        "Player"
+      ],
+      "acceptance_criteria": "Edo/Gray/Ink/Natural; messbarer Text-/Chatkontrast, aktive Tischwerkzeuge sichtbar",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "book-browser.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          7
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U06",
+      "name": "Markierungen/Sicht",
+      "status": "pass",
+      "navigation": "Tisch → Markierungen und Raster & Licht; DM",
+      "intended_roles": [
+        "DM"
+      ],
+      "acceptance_criteria": "Markierungen schaltbar und von Licht/Sicht unterschieden; in Token-Spielervorschau tatsächlich verborgen",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "preview-svg-browser.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          2
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U07",
+      "name": "Dynamisches Licht",
+      "status": "pass",
+      "navigation": "Tisch → Raster & Licht → Perspektive; DM sowie gesonderter Player-Einstieg",
+      "intended_roles": [
+        "DM",
+        "Player"
+      ],
+      "acceptance_criteria": "Wandbegrenzte 2D-Strahlenprojektion, DM-Gesamtkarte und ausdrückliche Tokenvorschau; keine vollständige Geometrie für Player, keine Vorschau-Aufklärung",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "vision-settings-final.log",
+        "backend-regression.log",
+        "playtable-roles-final.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          1,
+          2
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U08",
+      "name": "Wanduntermenü",
+      "status": "pass",
+      "navigation": "Tisch → Raster & Licht → Wände und Lichter bearbeiten; DM",
+      "intended_roles": [
+        "DM"
+      ],
+      "acceptance_criteria": "Liste und vorhandene CRUD-Wege erreichbar, Editor über Fenster, Wand begrenzt Sicht",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "vision-settings-final.log",
+        "geometry-editor-window-browser.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          2
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U09",
+      "name": "Messung",
+      "status": "pass",
+      "navigation": "Tisch → Messen; alle Tischrollen",
+      "intended_roles": [
+        "DM",
+        "Player"
+      ],
+      "acceptance_criteria": "Freier Cursor als Standard, eigener Snap, lesbare Labels, Mittelpunktformen und Radius außen",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "playtable-roles-final.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          5
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U10",
+      "name": "Raster",
+      "status": "pass",
+      "navigation": "Tisch → Raster & Licht; DM",
+      "intended_roles": [
+        "DM"
+      ],
+      "acceptance_criteria": "Größe/Anzeige/Licht/Aufklärung, Revision und zweiter Client; alte Weltpositionen bleiben erhalten; Aufklärungsreset ausdrücklich",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "vision-settings-final.log",
+        "grid-reset-confirm-browser.log",
+        "backend-regression.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          2,
+          8
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U11",
+      "name": "Wählen/Bewegen",
+      "status": "pass",
+      "navigation": "Tisch → Wählen bzw. Bewegen; alle Tischrollen",
+      "intended_roles": [
+        "DM",
+        "Player"
+      ],
+      "acceptance_criteria": "Eigenständiger Schalter, Ziehen leerer Fläche mit Wählen, mittlere Maustaste; Token-Weltpositionen bleiben gleich",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [],
+      "live_verification": {
+        "file": "live-pan.json",
+        "role_journeys": [
+          "dm",
+          "player"
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U12",
+      "name": "Tokenbibliothek",
+      "status": "pass",
+      "navigation": "Tisch → Tokens → Vorlage → Kartenklick; eigene Bibliothek je Sitzmodus",
+      "intended_roles": [
+        "DM",
+        "Player"
+      ],
+      "acceptance_criteria": "Ein direkter neuer Token mit erlaubten Vorlagenwerten, keine alte Initiative/Zustände; neue Tokens/Uploads eigener Weg",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "vision-settings-final.log",
+        "playtable-roles-final.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          5
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U13",
+      "name": "Initiative/Kampf",
+      "status": "pass",
+      "navigation": "Eigener Bogen bzw. Beyond20 → Initiative; DM → Initiative-Fenster",
+      "intended_roles": [
+        "berechtigter Figurenbesitzer",
+        "DM"
+      ],
+      "acceptance_criteria": "Erster Wurf angenommen, weitere Kandidaten bestätigt, Wiederholung dedupliziert, neue Runde ausdrücklich; Kampfstart/-zug/-ende",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "vision-settings-final.log",
+        "beyond20-campaign-room-browser.log",
+        "backend-regression.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          4
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    },
+    {
+      "id": "U14",
+      "name": "Seitenhierarchie",
+      "status": "pass",
+      "navigation": "Tisch → Seiten → Unterseite von; DM, erlaubte Projektion für Player",
+      "intended_roles": [
+        "DM",
+        "Player-Projektion"
+      ],
+      "acceptance_criteria": "Kampagnenpersistenz, keine Zyklen/fremden Eltern, verborgene Eltern nicht verraten; Reload/Sitzungswechsel",
+      "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+      "deployed_image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+      "targeted_checks": [
+        "vision-settings-final.log",
+        "playtable-roles-final.log"
+      ],
+      "live_verification": {
+        "file": "live.json",
+        "journey_numbers_1_based": [
+          3
+        ]
+      },
+      "rollback_reference": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh"
+    }
+  ],
+  "proofs": {
+    "targeted_checks": "checks.json",
+    "source_inventory": "files-changed.json",
+    "initial_schema": "initial-release.json",
+    "final_release": "release.json",
+    "runtime": "runtime-source-verification.json",
+    "full_live": "live.json",
+    "pan_live": "live-pan.json",
+    "cleanup": [
+      "cleanup.json",
+      "cleanup-pan.json"
+    ],
+    "post_cleanup_health": "post-cleanup-health.json"
+  },
+  "rollback": {
+    "immediate_script": "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh",
+    "syntax_checked": true,
+    "executed": false,
+    "chain_to_before_feature_release": [
+      "/srv/migration/2026-11-11/feedback-ui-playtable-vision-20261117/6a2fcedce/rollback.sh",
+      "/srv/migration/2026-11-11/feedback-ui-playtable-dialog-20261117/236d1d6f6/rollback.sh",
+      "/srv/migration/2026-11-11/feedback-ui-playtable-20261117/c1df06b0c/rollback.sh"
+    ]
+  },
+  "risks_assumptions": [
+    {
+      "severity": "low",
+      "finding": "Very complex wall maps can take CPU time; cold 400-wall probe was 0.732s, bounded projection and cache."
+    },
+    {
+      "severity": "verification_gap",
+      "finding": "Beyond20 normalized DOM contract tested; installed browser extension not run."
+    },
+    {
+      "severity": "verification_gap",
+      "finding": "Database backups readable and rollback syntax checked; restore and actual rollback not exercised."
+    },
+    {
+      "severity": "content_scope",
+      "finding": "English SRD is complete licensed original rule text in native structured Roll Drauf presentation with authored reading notes; not a full paraphrase."
+    }
+  ],
+  "open_medium_or_high_findings": [],
+  "next_step": "Close this delivery cycle; normal production monitoring."
+}

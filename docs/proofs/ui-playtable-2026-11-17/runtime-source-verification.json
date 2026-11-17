@@ -1,0 +1,15 @@
+{
+  "checked": 129,
+  "mismatches": [],
+  "status": "pass",
+  "image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+  "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+  "image_full_source_check": {
+    "checked": 80959,
+    "actual": 80959,
+    "mismatches": [],
+    "uncommitted_files": []
+  },
+  "scope": "all changed application files across all three releases plus unchanged authorization/receipt/fog-delivery/DM-surface boundaries",
+  "source_bind_mounts": []
+}

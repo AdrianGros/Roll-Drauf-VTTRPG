@@ -1,0 +1,77 @@
+{
+  "origin": "https://vtt.roll-drauf.de",
+  "status": "pass",
+  "journeys": [
+    {
+      "role": "dm",
+      "status": "pass",
+      "pan": {
+        "before": {
+          "x": 0,
+          "y": 0
+        },
+        "after": {
+          "x": 120,
+          "y": 70
+        }
+      },
+      "empty_select": {
+        "before": {
+          "x": 120,
+          "y": 70
+        },
+        "after": {
+          "x": 210,
+          "y": 120
+        }
+      },
+      "middle_button": {
+        "before": {
+          "x": 210,
+          "y": 120
+        },
+        "after": {
+          "x": 150,
+          "y": 90
+        }
+      },
+      "token_world_positions_unchanged": true
+    },
+    {
+      "role": "player",
+      "status": "pass",
+      "pan": {
+        "before": {
+          "x": 0,
+          "y": 0
+        },
+        "after": {
+          "x": 120,
+          "y": 70
+        }
+      },
+      "empty_select": {
+        "before": {
+          "x": 120,
+          "y": 70
+        },
+        "after": {
+          "x": 210,
+          "y": 120
+        }
+      },
+      "middle_button": {
+        "before": {
+          "x": 210,
+          "y": 120
+        },
+        "after": {
+          "x": 150,
+          "y": 90
+        }
+      },
+      "token_world_positions_unchanged": true
+    }
+  ],
+  "page_errors": []
+}

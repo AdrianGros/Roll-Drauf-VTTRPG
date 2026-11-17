@@ -1,54 +1,26 @@
-[
-  {
-    "path": "/health/live",
-    "status": 200,
-    "data": {
-      "now": "2026-11-17T11:18:12.623459",
-      "service": "roll_drauf_vtt",
-      "started_at": "2026-11-17T11:15:55.822051",
-      "status": "ok"
+{
+  "status": "pass",
+  "origin": "https://vtt.roll-drauf.de",
+  "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+  "image_id": "sha256:3de96a3ce53034adc559e5bca92b27d6adcb571848b75022d0bf3735493b358d",
+  "checks": [
+    {
+      "path": "/health/live",
+      "status": 200,
+      "content_type": "application/json",
+      "json_valid": true
+    },
+    {
+      "path": "/api/rulesets/main?locale=en",
+      "status": 200,
+      "content_type": "application/json",
+      "json_valid": true
+    },
+    {
+      "path": "/api/rulesets/srd-5.2.1-en/compendium/summary",
+      "status": 200,
+      "content_type": "application/json",
+      "json_valid": true
     }
-  },
-  {
-    "path": "/api/rulesets/main?locale=en",
-    "status": 200,
-    "data": {
-      "available": true,
-      "locale": "en-US",
-      "readerUrl": "/regelwerk/5.2.1/en",
-      "rulesetId": "srd-5.2.1-en",
-      "rulesetVersion": "1.0.0",
-      "sourceVersion": "5.2.1",
-      "status": "published",
-      "title": "Roll Drauf Rulebook — SRD 5.2.1 (English)"
-    }
-  },
-  {
-    "path": "/api/rulesets/srd-5.2.1-en/compendium/summary",
-    "status": 200,
-    "data": {
-      "counts": {
-        "armor": 13,
-        "background": 4,
-        "class": 12,
-        "class-feature": 232,
-        "class-option": 38,
-        "creature": 330,
-        "feat": 17,
-        "gear": 108,
-        "glossary": 155,
-        "magic-item": 258,
-        "mount": 8,
-        "service": 34,
-        "species": 9,
-        "spell": 339,
-        "subclass": 12,
-        "tool": 25,
-        "vehicle": 7,
-        "weapon": 38
-      },
-      "rulesetId": "srd-5.2.1-en",
-      "rulesetVersion": "1.0.0"
-    }
-  }
-]
+  ]
+}

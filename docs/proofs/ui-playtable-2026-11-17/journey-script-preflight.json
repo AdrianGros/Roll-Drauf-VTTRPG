@@ -1,9 +1,9 @@
 {
   "status": "pass",
   "journeys": 8,
-  "environment": "isolated testing app with the application models on temporary SQLite; real Chromium DM/Firefox Player and CSRF cookies",
-  "origin": "http://127.0.0.1 (ephemeral port)",
+  "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+  "environment": "isolated production-journey script against TestingConfig SQLite and CSRF enabled; Chromium DM and Firefox Player; no network",
   "production_acceptance": false,
-  "script": "live-journey.py",
-  "log_sha256": "4cb34cf9d8eccd2afed88ab4aa13dc3576eed6600f82646a5eaa510376600cde"
+  "scope": "final journey script including actual SVG preview hiding and wall PATCH response readiness",
+  "log_sha256": "1f187d56c59b1bbe8e53b17eaa998ef2fc5d045e93bbd01449a0e420ec26348b"
 }

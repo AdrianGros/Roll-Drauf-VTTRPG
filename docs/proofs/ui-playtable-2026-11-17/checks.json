@@ -68,6 +68,26 @@
   "independent_review": "review.md",
   "not_run": [
     "installed Beyond20 extension in a real user browser",
-    "rollback execution (prior image and guarded rollback script retained)"
-  ]
+    "rollback execution (prior image and guarded rollback script retained)",
+    "database archive restore exercise (archive readability checked)"
+  ],
+  "live_acceptance": {
+    "origin": "https://vtt.roll-drauf.de",
+    "source_commit": "6a2fcedce2d2396a52109e1093194da902a7912e",
+    "journeys": 8,
+    "additional_pan_role_journeys": 2,
+    "status": "pass",
+    "proofs": [
+      "live.json",
+      "live-pan.json",
+      "runtime-source-verification.json",
+      "cleanup.json",
+      "cleanup-pan.json",
+      "post-cleanup-health.json"
+    ],
+    "logs": [
+      "production-live.log",
+      "production-pan.log"
+    ]
+  }
 }
