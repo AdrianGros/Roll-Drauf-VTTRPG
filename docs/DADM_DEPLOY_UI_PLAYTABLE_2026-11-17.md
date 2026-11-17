@@ -51,7 +51,9 @@ Risikoprüfung. Es wurde kein kostenpflichtiger Provider-Fallback aktiviert.
 Gezielte Backend-Suite: 92 bestanden. Buch-/Darstellungsprüfungen: 8 bestanden.
 Englische Inhalte/API/Desktop/Mobil und deutsche Regressionen: 57 bestanden.
 Abschließend: 12 Playtable-/Rollenprüfungen und eine gezielte Browserprüfung
-für die ausdrückliche Aufklärungsreset-Bestätigung bestanden; siehe `checks.json`.
+für die ausdrückliche Aufklärungsreset-Bestätigung bestanden. Zusätzlich sind
+der bewusste Editionswechsel im Einstellungsdialog und die bestehende
+Beyond20-/Kampagnenraum-Reise geprüft; siehe `checks.json`.
 Relevante Ausgangstests wurden auf den ausdrücklich autorisierten Tischkontext
 und die neue Farbentscheidung gebracht; Berechtigungen wurden nicht gelockert.
 

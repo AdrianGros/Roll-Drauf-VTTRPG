@@ -58,8 +58,14 @@ with sync_playwright() as p:
     player.locator(f".token-marker[data-token-id='{f['token_id']}']").click()
     player.locator('#btnSelectedInitiative').click();player.locator('#btnSelectedInitiative').click()
     dm.locator('#dock-turnOrderWidget').click();expect(dm.locator('#initiativeCandidates li')).to_have_count(1);dm.locator('#initiativeCandidates button').click();expect(dm.locator('#initiativeCandidates li')).to_have_count(0)
+    player.evaluate('''() => document.dispatchEvent(new CustomEvent('Beyond20_RenderedRoll',{detail:[{
+        title:'Initiative',character:'Live-Aktionsmagier',request:{type:'initiative',character:{name:'Live-Aktionsmagier'}},
+        attack_rolls:[{formula:'1d20+3',total:2,discarded:true,parts:[]},{formula:'1d20+3',total:18,discarded:false,parts:[]}]
+    }]}))''')
+    expect(player.locator('#beyond20Status')).to_contain_text('Wurf an dieser Sitzung angekommen')
+    expect(dm.locator('#initiativeCandidates li')).to_have_count(1);dm.locator('#initiativeCandidates button').click();expect(dm.locator('#initiativeCandidates li')).to_have_count(0)
     dm.locator('#btnStartCombat').click();expect(dm.locator('#btnNextTurn')).to_be_visible();dm.locator('#btnNextTurn').click();dm.locator('#btnEndCombat').click();close(dm);close(player)
-    passed('Native Player sheet initiative, pending reroll confirmation and real combat start/advance/end')
+    passed('Native Player initiative and normalized Beyond20 DOM roll, confirmed rerolls, combat start/advance/end; installed extension not run')
     # New token construction remains explicit; library choices place directly.
     player.locator('#dock-tokenWidget').click();player.locator('#btnPlaceNewToken').click();player.mouse.click(*point(player,420,420))
     expect(player.locator('#tokenCreatePanel')).to_be_visible();player.locator('#tokenCreateName').fill('QA Direct Library');player.locator('#btnTokenCreateConfirm').click()
@@ -78,7 +84,7 @@ with sync_playwright() as p:
     passed('Conversations loads public historical campaign-session chat with provenance and excludes blind history')
     # Each common ribbon link reaches a real document surface, including native English rules.
     for href,chapter in [('/mapmaker','maps'),('/atlas','atlas'),('/api/ce/authoring','creation'),('/regelwerk','rules'),('/regelwerk/compendium','compendium')]:
-        link=book.locator(f'nav[data-vtt-main-nav="true"] a[href="{href}"]').first
+        link=book.locator('nav[data-vtt-main-nav="true"] a[data-regelwerk-nav]').first if chapter=='rules' else book.locator(f'nav[data-vtt-main-nav="true"] a[href="{href}"]').first
         expect(link).to_be_visible();link.click();expect(book.locator(f'[data-book-chapter="{chapter}"]')).to_be_visible()
     book.locator('#vttDisplayOpen').click();book.locator('#vttDisplay-language').select_option('en');book.locator('#vttDisplay-theme').select_option('night');book.locator('#vttDisplayDialog button').filter(has_text='Anwenden').click()
     expect(book.locator('html')).to_have_attribute('lang','en');expect(book.locator('html')).to_have_attribute('data-vtt-theme','night')

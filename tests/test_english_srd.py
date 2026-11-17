@@ -145,3 +145,28 @@ def test_english_preferences_reader_search_compendium_and_explicit_de_links(site
         assert page.evaluate('document.documentElement.scrollWidth - document.documentElement.clientWidth') <= 1
         assert not errors, errors
         browser.close()
+
+
+def test_changing_language_in_settings_switches_an_open_compendium_edition(site):
+    from playwright.sync_api import sync_playwright,expect
+    app,origin,info=site
+    with sync_playwright() as p:
+        browser=p.chromium.launch(headless=True,args=['--no-sandbox'])
+        page=browser.new_page(viewport={'width':1280,'height':900})
+        page.goto(origin+'/regelwerk/compendium?locale=de&type=spell&q=Feuerball')
+        expect(page.locator('#cpLocale')).to_have_value('de')
+        page.locator('#vttDisplayOpen').click()
+        page.locator('#vttDisplay-language').select_option('en')
+        page.locator('.vtt-display-actions button').last.click()
+        expect(page.locator('#cpLocale')).to_have_value('en')
+        expect(page.locator('html')).to_have_attribute('lang','en')
+        page.locator('#cpQ').fill('Fireball')
+        expect(page.locator('#cpBody')).to_contain_text('Fireball')
+        page.locator('nav[data-vtt-main-nav] [data-regelwerk-nav]').click()
+        expect(page).to_have_url(origin+'/regelwerk/5.2.1/en')
+        page.locator('#vttDisplayOpen').click()
+        page.locator('#vttDisplay-language').select_option('de')
+        page.locator('.vtt-display-actions button').last.click()
+        expect(page).to_have_url(origin+'/regelwerk?locale=de')
+        expect(page.locator('html')).to_have_attribute('lang','de')
+        browser.close()

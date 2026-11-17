@@ -41,7 +41,7 @@ with app.app_context():
         if 'session_state_id' in table.c and state_ids:clauses.append(table.c.session_state_id.in_(state_ids))
         for name in ('game_session_id',):
             if name in table.c:clauses.append(table.c[name].in_(sids))
-        for name in ('user_id','owner_id','created_by','updated_by','author_user_id','published_by'):
+        for name in ('user_id','owner_id','owner_user_id','created_by','updated_by','author_user_id','published_by'):
             if name in table.c:clauses.append(table.c[name].in_(uids))
         if clauses:
             n=db.session.execute(delete(table).where(or_(*clauses))).rowcount

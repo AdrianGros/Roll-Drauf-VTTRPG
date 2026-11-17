@@ -143,3 +143,12 @@ Normalisierte Kartendimensionen tragen in der bestehenden JSON-Konfiguration
 werden dadurch beim nächsten Rendern nicht erneut als Rasteranzahl interpretiert.
 Bildantworten müssen außerdem zur lokalen aktiven Karten-ID passen; bei einem
 Kartenrennen wird konservativ abgedeckt und Bootstrap neu geladen.
+
+## Abschließender Sprachwechselvertrag
+
+Eine ausdrücklich im Einstellungsdialog geänderte Sprache wählt auf einer bereits
+geöffneten Regelwerk-/Compendium-Seite die entsprechende Edition. Dabei darf ein
+automatisch ergänzter `locale=de`-Parameter den Wechsel nicht verhindern. Die
+Compendium-Kategorie bleibt erhalten; sprachabhängige Detail-IDs und Filter werden
+beim bewussten Editionswechsel zurückgesetzt. Ohne diesen ausdrücklichen
+Einstellungswechsel bleiben direkte DE-/EN-Verweise sprachstabil.

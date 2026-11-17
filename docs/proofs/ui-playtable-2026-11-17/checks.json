@@ -31,6 +31,18 @@
       "passed": 57,
       "scope": "English source/API/browser and existing DE routes/compendium/TOC regressions",
       "sha256": "ef4727a2741a0dfb6ca8b2eb4793c52ea4bb8a6a54a6e6565d590489d18ded81"
+    },
+    {
+      "log": "settings-content-language-browser.log",
+      "passed": 1,
+      "scope": "changing DE/EN settings switches the already open Compendium and native rulebook; ordinary explicit links preserved",
+      "sha256": "e0ef84fec0ba469aeeb4745ea4e544934446a3d7cd4e78e4283f226750187b06"
+    },
+    {
+      "log": "beyond20-campaign-room-browser.log",
+      "passed": 1,
+      "scope": "normalized Beyond20 DOM initiative and shared Conversations campaign room",
+      "sha256": "3aa0771b9010d8b49b190b329e335efe4be74e145aa45bcf8de7508c4d5b8897"
     }
   ],
   "counts_note": "Suites overlap; counts are not a unique total. Warnings remain in existing dependencies/fixtures.",

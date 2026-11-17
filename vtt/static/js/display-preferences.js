@@ -96,7 +96,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const save=element('button',globalThis.VTTUi("Anwenden"));save.type='button';const explain=element('p');explain.setAttribute('role','status');
     const changed=()=>{const reload=values.language.value!==language;save.textContent=literal(reload?globalThis.VTTUi("Anwenden und Seite neu laden"):globalThis.VTTUi("Anwenden"));explain.textContent=literal(reload?globalThis.VTTUi("Für die neue UI-Sprache wird die Seite neu geladen."):globalThis.VTTUi("Darstellung und Entfernungen werden direkt angepasst."));};
     values.language.addEventListener('change',changed);changed();
-    save.addEventListener('click',()=>{const reload=values.language.value!==language;update(Object.fromEntries([...Object.entries(values).map(([key,node])=>[key,node.value]),['stickyPortrait',check.checked]]));dialog.close();if(reload)location.reload();});
+    save.addEventListener('click',()=>{const reload=values.language.value!==language;update(Object.fromEntries([...Object.entries(values).map(([key,node])=>[key,node.value]),['stickyPortrait',check.checked]]));dialog.close();if(reload){
+      // Changing language here is explicit; automatically pinned content URLs
+      // must not keep the previous edition. Ordinary deep links stay explicit.
+      const target=new URL(location.href),nextLanguage=values.language.value;
+      if(target.pathname==='/regelwerk/compendium'){
+        const type=target.searchParams.get('type');target.search='';
+        target.searchParams.set('locale',nextLanguage);if(type)target.searchParams.set('type',type);
+        target.hash='';location.assign(target.href);
+      }else if(target.pathname==='/regelwerk'||/^\/regelwerk\/5\.2\.1\/(?:de|en)(?:\/|$)/.test(target.pathname)){
+        location.assign('/regelwerk?locale='+nextLanguage);
+      }else location.reload();
+    }});
     actions.append(cancel,save);dialog.append(explain,actions);dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);dialog.showModal();
   }
   // These adapters consume only API diagnostics, never rule/user document fields.

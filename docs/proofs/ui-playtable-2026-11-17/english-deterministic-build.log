@@ -1,0 +1,61 @@
+English SRD package is current.
+{
+  "complete": true,
+  "entityCounts": {
+    "armor": 13,
+    "background": 4,
+    "class": 12,
+    "class-feature": 232,
+    "class-option": 38,
+    "creature": 330,
+    "feat": 17,
+    "gear": 108,
+    "glossary": 155,
+    "magic-item": 258,
+    "mount": 8,
+    "service": 34,
+    "species": 9,
+    "spell": 339,
+    "subclass": 12,
+    "tool": 25,
+    "vehicle": 7,
+    "weapon": 38
+  },
+  "sourceLines": {
+    "total": 34350,
+    "consumed": 34350,
+    "unconsumed": 0
+  },
+  "checks": {
+    "statBlockIndex": {
+      "expected": 330,
+      "found": 330
+    },
+    "classSpellLists": {
+      "expected": 338,
+      "found": 338
+    },
+    "fixedCounts": {
+      "class": {
+        "expected": 12,
+        "found": 12
+      },
+      "subclass": {
+        "expected": 12,
+        "found": 12
+      },
+      "species": {
+        "expected": 9,
+        "found": 9
+      },
+      "background": {
+        "expected": 4,
+        "found": 4
+      },
+      "feat": {
+        "expected": 17,
+        "found": 17
+      }
+    }
+  }
+}
