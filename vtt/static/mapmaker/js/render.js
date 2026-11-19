@@ -23,9 +23,22 @@ export const LABEL_FONTS = {
     feature: { weight: globalThis.VTTUi("italic 400"), family: globalThis.VTTUi("Literata, Georgia, serif"), spacing: 0.05, upper: false },
 };
 
+/**
+ * Optional family override (label.font). Only the five shipped faces exist:
+ * Cinzel 400/700 upright, Bad Script 400, Literata variable upright and italic.
+ * Weight and slant follow the style where the family has such a face.
+ */
+export const LABEL_FAMILY_FACES = {
+    cinzel: { family: "Cinzel, 'Times New Roman', serif", face: (weight) => (/700/.test(weight) ? "700" : "400") },
+    badscript: { family: "BadScript, 'Segoe Script', cursive", face: () => "400" },
+    literata: { family: "Literata, Georgia, serif", face: (weight) => weight },
+};
+
 function labelFont(item) {
     const f = LABEL_FONTS[item.style] || LABEL_FONTS.town;
-    return { font: `${f.weight} ${item.size}px ${f.family}`, spacing: f.spacing * item.size, upper: f.upper };
+    const family = item.font && LABEL_FAMILY_FACES[item.font];
+    const weight = family ? family.face(f.weight) : f.weight;
+    return { font: `${weight} ${item.size}px ${family ? family.family : f.family}`, spacing: f.spacing * item.size, upper: f.upper };
 }
 
 function labelText(item) {

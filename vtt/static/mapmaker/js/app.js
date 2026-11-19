@@ -6,8 +6,11 @@ import { renderPngBlob } from "./snapshot.js";
 
 import {
     LIMITS, LABEL_STYLES, TILE_GRID_DEFAULT, ValidationError, cellKey, cellOf, cleanText, clamp, collectIds, countItems,
-    countLayers, countTiles, createLayer, findItem, materialize, newId, serialize, tileGridSize, validateDocument,
+    countLayers, countTiles, createLayer, customAssetId, findItem, isCustomAsset, materialize, newId, referencedAssetIds,
+    serialize, tileGridSize, validateAssets, validateDocument,
 } from "./document.js";
+import { reorderItems } from "./selection.js";
+import { OwnImageDialogs } from "./asset-dialogs.js";
 import { History } from "./history.js";
 import { drawStampImage, stampExtent, loadPalette } from "./stamps.js";
 import { COAST_PAD, Renderer, drawPath, itemBounds, pathHit, replacedTitleLabel } from "./render.js";
@@ -26,6 +29,8 @@ const KIND_NAMES = { raster: globalThis.VTTUi("Malebene"), paths: globalThis.VTT
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4;
 export const MAX_EXPORT_PIXELS = 16777216; // same bound as the export dialog (ui.js openExport)
+export const PATH_SNAP = 32; // explicit endpoint connection: same layer and material, at most this many map pixels
+const AREA_MAX_ITEMS = 400; // one area fill never places more stamps than this
 
 function pad(rect, amount) {
     return { x: rect.x - amount, y: rect.y - amount, w: rect.w + amount * 2, h: rect.h + amount * 2 };
@@ -52,8 +57,12 @@ class Editor {
         this.tool = "brush";
         this.paintBrush = { material: "forest", size: 64, opacity: 0.9, softness: 45, pressureEnabled: true, shape: 'round', texture: 1, colorEnabled: false, color: '#8ea566', image: null };
         this.eraserBrush = { material: 'forest', size: 64, opacity: 1, softness: 0, pressureEnabled: true, shape: 'round' };
-        this.stampOpts = { asset: null, size: 88, rot: 0, flip: false, vary: false, scatter: false, grid: 0 };
-        this.labelOpts = { named: true, style: "town", kind: "landmark", pin: true, symbol: null, symbolSize: 56 };
+        this.stampOpts = { asset: null, size: 88, rot: 0, flip: false, vary: false, scatter: false, area: false, grid: 0 };
+        this.labelOpts = { named: true, style: "town", kind: "landmark", pin: true, symbol: null, symbolSize: 56, font: null };
+        // Brush clip: alpha of a chosen lower raster layer or the occupied cells of a tile layer (never the sea).
+        this.clipOpts = { layerId: null, notice: "" };
+        this.wheelOrder = null; // Alt+wheel reorder session: one undo step per gesture
+        this.areaPreview = null;
         this.pathOpts = { material: "road", width: 14, curve: true };
         this.tileOpts = { asset: null, erase: false, size: TILE_GRID_DEFAULT, radius: 0, variants: [] };
         this.tileGesture = null;
@@ -96,6 +105,7 @@ class Editor {
         registerMaterialTextures(this.palette.materialTextures);
         this.ui.bind();
         this.landmass = new LandmassDialog(this);
+        this.ownImages = new OwnImageDialogs(this);
         this.renderer = new Renderer(this.palette);
         this.ui.buildPalette();
         await Promise.race([
@@ -171,8 +181,14 @@ class Editor {
 
     loadDocument(doc) {
         this.landmass?.close();
+        this.ownImages?.close();
         this.cancelInteractions();
+        this.finishWheelOrder(false);
         this.doc = doc;
+        // Own images belong to exactly this project; the palette lists only these.
+        doc.assets ||= [];
+        this.palette.showDocumentAssets(doc);
+        this.clipOpts.layerId = null;
         // A replaced document is a new generation; it starts "clean" relative to
         // files (callers that consider it a change call markChanged afterwards).
         this.generation += 1;
@@ -185,8 +201,10 @@ class Editor {
         const raster = doc.layers.find((layer) => layer.id === "terrain")
             || [...doc.layers].reverse().find((layer) => layer.kind === "raster");
         this.activeLayerId = (raster || doc.layers[doc.layers.length - 1]).id;
+        this.sanitizeAssetChoices();
         this.fit();
         this.ui.refreshAll();
+        this.ui.refreshCustomAssets();
     }
 
     observeSize() {
@@ -347,8 +365,30 @@ class Editor {
             drawPath(ctx, this.previewPath);
             ctx.restore();
         }
+        if (this.areaPreview) {
+            const { a, b, count } = this.areaPreview;
+            ctx.save();
+            ctx.lineWidth = 2 / zoom;
+            ctx.setLineDash([8 / zoom, 5 / zoom]);
+            ctx.strokeStyle = count > 0 ? "#f2c66d" : "#e0806a";
+            ctx.fillStyle = "rgba(242,198,109,0.12)";
+            ctx.fillRect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+            ctx.strokeRect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+            ctx.restore();
+        }
         if (this.tool === "tile") this.drawTileOverlay(ctx, zoom);
         if (!this.cursor || this.strokeActive && this.tool === "stamp") return;
+        if (this.tool === "stamp" && (this.stampOpts.scatter || this.stampOpts.area)) {
+            // Visible scatter coverage: the spacing that separates scattered stamps.
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(this.cursor.x, this.cursor.y, this.scatterSpacing(), 0, Math.PI * 2);
+            ctx.setLineDash([5 / zoom, 4 / zoom]);
+            ctx.lineWidth = 1.5 / zoom;
+            ctx.strokeStyle = "rgba(255,255,255,0.75)";
+            ctx.stroke();
+            ctx.restore();
+        }
         if (this.tool === "brush" || this.tool === "eraser") {
             ctx.save();
             ctx.beginPath();
@@ -411,7 +451,8 @@ class Editor {
         } else if (stamp && !stamp.image) this.palette.loadStamp(stamp.id).catch(() => {});
         ctx.lineWidth = 2 / zoom;
         ctx.strokeStyle = this.tileOpts.erase ? "#e0806a" : "#f2c66d";
-        ctx.strokeRect(col * size, row * size, size, size);
+        // Full brush coverage, not only the centre cell.
+        for (const cell of this.tileBrushCells(col, row)) ctx.strokeRect(cell.col * size, cell.row * size, size, size);
         ctx.restore();
     }
 
@@ -426,6 +467,10 @@ class Editor {
         const erase = this.tileOpts.erase;
         if (!erase && !this.tileOpts.asset && !this.tileOpts.variants.length) {
             this.ui.toast(globalThis.VTTUi("Wähle zuerst eine Kachel aus der Kachelauswahl."));
+            return false;
+        }
+        if (!erase && ![this.tileOpts.asset, ...this.tileOpts.variants].filter(Boolean).every((id) => this.assetAvailable(id))) {
+            this.ui.toast(globalThis.VTTUi("Dieses eigene Bild gehört nicht zu dieser Karte. Bitte eine andere Kachel wählen."));
             return false;
         }
         const exists = this.doc.layers.some((layer) => layer.kind === "tiles");
@@ -606,8 +651,68 @@ class Editor {
     setActiveLayer(id) {
         if (!this.layerById(id)) return;
         this.activeLayerId = id;
+        this.validateClip();
         this.ui.refreshLayers();
         this.ui.updateTargets();
+    }
+
+    /** Layer kind a tool works on (null: select/pan/eraser work across kinds). */
+    toolKind(tool = this.tool) {
+        return { brush: "raster", stamp: "stamps", label: "labels", path: "paths", tile: "tiles" }[tool] || null;
+    }
+
+    /** Keyboard layer switch in the tool context: next/previous layer of the tool's kind (top = first). */
+    cycleLayer(step) {
+        if (!this.doc) return;
+        const kind = this.toolKind();
+        const eraser = this.tool === "eraser" ? new Set(["raster", "tiles", "stamps"]) : null;
+        const candidates = [...this.doc.layers].reverse().filter((layer) => (kind ? layer.kind === kind : !eraser || eraser.has(layer.kind)));
+        if (!candidates.length) {
+            this.ui.toast(globalThis.VTTUi("Keine passende Ebene für dieses Werkzeug."));
+            return;
+        }
+        const index = candidates.findIndex((layer) => layer.id === this.activeLayerId);
+        const next = candidates[(index + step + candidates.length) % candidates.length] || candidates[0];
+        this.setActiveLayer(next.id);
+        this.ui.toast(globalThis.VTTUi("Aktive Ebene: {name}", { name: next.name }));
+    }
+
+    // ---- brush clip (paint only inside a reference) --------------------------
+
+    /** Valid references for the active raster layer: lower raster layers and any tile layer. */
+    clipCandidates() {
+        const target = this.activeLayer();
+        if (!this.doc || !target || target.kind !== "raster") return [];
+        const index = this.doc.layers.indexOf(target);
+        return this.doc.layers.filter((layer, i) => (layer.kind === "raster" && i < index) || layer.kind === "tiles");
+    }
+
+    /** A missing, deleted or no longer lower reference switches the clip off with an explanation. */
+    validateClip() {
+        const id = this.clipOpts.layerId;
+        if (!id || !this.doc) return;
+        const target = this.activeLayer();
+        if (target && target.kind !== "raster") return; // kept for when a raster layer is active again
+        if (!this.clipCandidates().some((layer) => layer.id === id)) {
+            const layer = this.layerById(id);
+            this.clipOpts.layerId = null;
+            this.clipOpts.notice = layer
+                ? globalThis.VTTUi("Malbegrenzung aus: „{name}“ liegt nicht mehr unter der aktiven Malebene.", { name: layer.name })
+                : globalThis.VTTUi("Malbegrenzung aus: Die Bezugsebene wurde gelöscht.");
+        }
+    }
+
+    setClip(id) {
+        this.clipOpts.notice = "";
+        this.clipOpts.layerId = id && this.clipCandidates().some((layer) => layer.id === id) ? id : null;
+        this.ui.refreshClip();
+    }
+
+    clipReference() {
+        this.validateClip();
+        const layer = this.clipOpts.layerId && this.layerById(this.clipOpts.layerId);
+        if (!layer) return null;
+        return layer.kind === "tiles" ? { cells: layer.cells, size: layer.grid.size } : { canvas: layer.canvas };
     }
 
     /** Resolve the layer a tool works on; switches the active layer when needed. */
@@ -645,6 +750,7 @@ class Editor {
             const top = this.doc.layers[this.doc.layers.length - 1];
             this.activeLayerId = top ? top.id : null;
         }
+        this.validateClip();
         if (this.selection && !findItem(this.doc, this.selection)) this.selection = null;
         this.invalidate(null);
         this.ui.refreshLayers();
@@ -840,6 +946,288 @@ class Editor {
         if (this.selectionSet.count) this.selectionSet.remove();
     }
 
+    // ---- canonical object order (render = list order, hit test = reverse) ----
+
+    orderState(layers) {
+        return new Map([...layers].map((layer) => [layer, layer.items.slice()]));
+    }
+
+    applyOrder(state) {
+        for (const [layer, items] of state) layer.items.splice(0, layer.items.length, ...items);
+        this.invalidate(null);
+        this.afterItemChange();
+    }
+
+    /** Reorder the selected objects inside their layers without committing (returns changed). */
+    reorderLive(mode) {
+        const rows = this.selectionSet.objects;
+        const byLayer = new Map();
+        for (const { layer, item } of rows) {
+            if (!byLayer.has(layer)) byLayer.set(layer, new Set());
+            byLayer.get(layer).add(item);
+        }
+        let changed = false;
+        for (const [layer, chosen] of byLayer) {
+            const next = reorderItems(layer.items, chosen, mode);
+            if (next.some((item, index) => item !== layer.items[index])) changed = true;
+            layer.items.splice(0, layer.items.length, ...next);
+        }
+        if (changed) { this.invalidate(null); this.afterItemChange(); }
+        return { changed, layers: byLayer.keys() };
+    }
+
+    reorderSelection(mode) {
+        this.commitEdit();
+        if (this.selectionSet.tiles || !this.selectionSet.objects.length) {
+            this.ui.toast(globalThis.VTTUi("Wähle zuerst Symbole, Wege oder Beschriftungen aus."));
+            return false;
+        }
+        const layers = new Set(this.selectionSet.objects.map(({ layer }) => layer));
+        const before = this.orderState(layers);
+        const { changed } = this.reorderLive(mode);
+        if (!changed) {
+            this.ui.toast(mode === "forward" || mode === "front" ? globalThis.VTTUi("Die Auswahl liegt bereits ganz vorne.") : globalThis.VTTUi("Die Auswahl liegt bereits ganz hinten."));
+            return false;
+        }
+        const after = this.orderState(layers);
+        const labels = { forward: globalThis.VTTUi("Eine Stufe nach vorne"), backward: globalThis.VTTUi("Eine Stufe nach hinten"),
+            front: globalThis.VTTUi("Ganz nach vorne"), back: globalThis.VTTUi("Ganz nach hinten") };
+        this.commit({ label: labels[mode], bytes: 256 + [...after.values()].reduce((sum, list) => sum + list.length * 8, 0),
+            undo: () => this.applyOrder(before), redo: () => this.applyOrder(after) });
+        return true;
+    }
+
+    /** Alt+wheel: live steps, committed as one undo step when the wheel gesture pauses. */
+    wheelReorder(forward) {
+        if (this.selectionSet.tiles || !this.selectionSet.objects.length) return false;
+        if (!this.wheelOrder) {
+            this.commitEdit();
+            const layers = new Set(this.selectionSet.objects.map(({ layer }) => layer));
+            this.wheelOrder = { layers, before: this.orderState(layers), timer: 0 };
+        }
+        this.reorderLive(forward ? "forward" : "backward");
+        clearTimeout(this.wheelOrder.timer);
+        this.wheelOrder.timer = setTimeout(() => this.finishWheelOrder(true), 450);
+        return true;
+    }
+
+    finishWheelOrder(commit = true) {
+        const session = this.wheelOrder;
+        if (!session) return;
+        this.wheelOrder = null;
+        clearTimeout(session.timer);
+        const after = this.orderState(session.layers);
+        const changed = [...after].some(([layer, items]) => items.some((item, i) => item !== session.before.get(layer)[i]));
+        if (!changed) return;
+        if (!commit) { this.applyOrder(session.before); return; }
+        this.commit({ label: globalThis.VTTUi("Reihenfolge ändern"), bytes: 256 + [...after.values()].reduce((sum, list) => sum + list.length * 8, 0),
+            undo: () => this.applyOrder(session.before), redo: () => this.applyOrder(after) });
+        this.gestureEnded();
+    }
+
+    // ---- named paths and explicit endpoint connection ----
+
+    /**
+     * Join the selected path with the nearest endpoint of another path in the same
+     * layer and material within PATH_SNAP. Crossing paths are never joined implicitly.
+     */
+    connectPathEndpoints() {
+        this.commitEdit();
+        const found = this.selection && findItem(this.doc, this.selection);
+        if (!found || !("points" in found.item)) return false;
+        const { layer, item } = found;
+        const absolute = (path) => path.points.map((p) => ({ x: path.x + p.x, y: path.y + p.y }));
+        const own = absolute(item);
+        const ends = [{ at: "start", p: own[0] }, { at: "end", p: own[own.length - 1] }];
+        let best = null;
+        for (const other of layer.items) {
+            if (other === item || !("points" in other) || other.material !== item.material) continue;
+            const points = absolute(other);
+            for (const mine of ends) {
+                for (const theirs of [{ at: "start", p: points[0] }, { at: "end", p: points[points.length - 1] }]) {
+                    const distance = Math.hypot(mine.p.x - theirs.p.x, mine.p.y - theirs.p.y);
+                    if (distance <= PATH_SNAP && (!best || distance < best.distance)) best = { other, points, mine: mine.at, theirs: theirs.at, distance };
+                }
+            }
+        }
+        if (!best) {
+            this.ui.toast(globalThis.VTTUi("Kein passender Endpunkt in der Nähe (gleiche Ebene und Art, höchstens {px} px).", { px: PATH_SNAP }));
+            return false;
+        }
+        const theirs = best.theirs === "start" ? best.points : best.points.slice().reverse(); // starts at the joined end
+        const merged = best.mine === "end" ? [...own, ...theirs.slice(1)] : [...theirs.slice().reverse(), ...own.slice(1)];
+        if (merged.length > LIMITS.pathPoints) {
+            this.ui.toast(globalThis.VTTUi("Zusammen hätten die Wege mehr als {count} Punkte. Bitte einen Weg vereinfachen.", { count: LIMITS.pathPoints }));
+            return false;
+        }
+        const before = snapshot(item), other = best.other, otherIndex = layer.items.indexOf(other);
+        const after = { ...before, x: merged[0].x, y: merged[0].y, points: merged.map((p) => ({ x: p.x - merged[0].x, y: p.y - merged[0].y })),
+            ...(item.name || other.name ? { name: item.name || other.name } : {}) };
+        const apply = () => {
+            this.invalidateItem(item);
+            Object.assign(item, snapshot(after));
+            const index = layer.items.indexOf(other);
+            if (index >= 0) layer.items.splice(index, 1);
+            this.invalidate(null);
+            this.afterItemChange();
+        };
+        const revert = () => {
+            for (const key of Object.keys(item)) if (!(key in before)) delete item[key];
+            Object.assign(item, snapshot(before));
+            if (!layer.items.includes(other)) layer.items.splice(Math.min(otherIndex, layer.items.length), 0, other);
+            this.invalidate(null);
+            this.afterItemChange();
+        };
+        apply();
+        this.commit({ label: globalThis.VTTUi("Wege verbinden"), bytes: 1024 + merged.length * 32, undo: revert, redo: apply });
+        this.ui.toast(globalThis.VTTUi("Wege verbunden."));
+        return true;
+    }
+
+    // ---- stamp scatter coverage and area fill ----
+
+    scatterSpacing() {
+        return Math.max(12, this.stampOpts.size * 0.75);
+    }
+
+    /** Planned stamp count for an area, computed before anything is allocated. */
+    areaPlan(a, b) {
+        const spacing = this.scatterSpacing();
+        const x0 = clamp(Math.min(a.x, b.x), 0, this.doc.size.w), x1 = clamp(Math.max(a.x, b.x), 0, this.doc.size.w);
+        const y0 = clamp(Math.min(a.y, b.y), 0, this.doc.size.h), y1 = clamp(Math.max(a.y, b.y), 0, this.doc.size.h);
+        const cols = Math.max(1, Math.floor((x1 - x0) / spacing)), rows = Math.max(1, Math.floor((y1 - y0) / spacing));
+        return { x0, y0, x1, y1, cols, rows, spacing, count: cols * rows };
+    }
+
+    fillArea(a, b) {
+        const layer = this.targetLayer("stamps");
+        if (!layer) return false;
+        if (!this.stampOpts.asset || !this.assetAvailable(this.stampOpts.asset)) {
+            this.ui.toast(globalThis.VTTUi("Wähle zuerst ein Symbol aus der Palette."));
+            return false;
+        }
+        const plan = this.areaPlan(a, b);
+        if (plan.count > AREA_MAX_ITEMS || countItems(this.doc) + plan.count > LIMITS.items || !this.history.canFit(256 * plan.count)) {
+            this.ui.toast(globalThis.VTTUi("Diese Fläche bräuchte {count} Symbole und überschreitet das Budget (höchstens {max} je Fläche, {limit} pro Karte). Bitte kleiner ziehen oder Symbolgröße erhöhen.",
+                { count: plan.count, max: AREA_MAX_ITEMS, limit: LIMITS.items }));
+            return false;
+        }
+        this.commitEdit();
+        const items = [], used = new Set();
+        const cellW = (plan.x1 - plan.x0) / plan.cols, cellH = (plan.y1 - plan.y0) / plan.rows;
+        for (let row = 0; row < plan.rows; row += 1) {
+            for (let col = 0; col < plan.cols; col += 1) {
+                const jitter = this.stampOpts.vary ? 0.35 : 0.15;
+                const point = { x: plan.x0 + (col + 0.5 + (Math.random() - 0.5) * jitter) * cellW,
+                    y: plan.y0 + (row + 0.5 + (Math.random() - 0.5) * jitter) * cellH };
+                const item = this.createStamp(point, this.stampOpts.asset);
+                const key = `${item.x},${item.y}`;
+                if (used.has(key)) continue; // a stamp grid never stacks two stamps on one position
+                used.add(key);
+                items.push(item);
+            }
+        }
+        return this.addItems(layer, items, globalThis.VTTUi("Fläche füllen"));
+    }
+
+    // ---- own images: project-bound, content-addressed PNG assets ----
+
+    /** Catalog assets are always available; own images only when embedded in this document. */
+    assetAvailable(id) {
+        return !isCustomAsset(id) || !!this.doc?.assets?.some((asset) => asset.id === id);
+    }
+
+    /** Drop tool choices that point to own images of another (or no longer present) document. */
+    sanitizeAssetChoices() {
+        if (!this.doc || !this.palette) return;
+        if (this.stampOpts.asset && !this.assetAvailable(this.stampOpts.asset)) {
+            const fallback = this.palette.stamps.has("kenney:forest") ? "kenney:forest" : this.palette.groups.find((g) => !g.custom && g.ids.length)?.ids[0];
+            this.stampOpts.asset = null;
+            this.stampOpts.crop = null;
+            if (fallback) this.ui.chooseStamp(fallback, { openSheet: false });
+        }
+        if (this.tileOpts.asset && !this.assetAvailable(this.tileOpts.asset)) this.tileOpts.asset = null;
+        this.tileOpts.variants = this.tileOpts.variants.filter((id) => this.assetAvailable(id));
+        if (this.labelOpts.symbol && !this.assetAvailable(this.labelOpts.symbol)) this.labelOpts.symbol = null;
+        if (this.paintBrush.image?.asset && !this.assetAvailable(this.paintBrush.image.asset)) {
+            this.paintBrush.image = null;
+            if (this.paintBrush.shape === "image") this.paintBrush.shape = "round";
+        }
+    }
+
+    assetUsage() {
+        const list = this.doc?.assets || [];
+        return { count: list.length, bytes: list.reduce((sum, a) => sum + a.bytes.length, 0), pixels: list.reduce((sum, a) => sum + a.width * a.height, 0) };
+    }
+
+    /** Same bounds as both validators, checked before decoding or storing anything. */
+    assetBudgetProblem(byteLength, width, height) {
+        const usage = this.assetUsage();
+        if (usage.count + 1 > LIMITS.customAssets) return globalThis.VTTUi("Höchstens {count} eigene Bilder pro Karte. Entferne zuerst ein unbenutztes Bild.", { count: LIMITS.customAssets });
+        if (width < 1 || height < 1 || width > LIMITS.customAssetSide || height > LIMITS.customAssetSide) return globalThis.VTTUi("Eigene Bilder dürfen höchstens {px} Pixel je Seite haben.", { px: LIMITS.customAssetSide });
+        if (byteLength > LIMITS.customAssetBytes) return globalThis.VTTUi("Das PNG ist größer als 4 MiB. Bitte verkleinern oder zuschneiden.");
+        if (usage.bytes + byteLength > LIMITS.customAssetTotalBytes) return globalThis.VTTUi("Eigene Bilder wären zusammen größer als 12 MiB.");
+        if (usage.pixels + width * height > LIMITS.customAssetPixels) return globalThis.VTTUi("Eigene Bilder hätten zusammen mehr als 8 Millionen Pixel.");
+        return null;
+    }
+
+    /**
+     * Embed a finished PNG as own image (one undo step). A different image always
+     * gets a new id; identical bytes reuse the existing entry.
+     */
+    async addCustomAsset({ bytes, width, height, label, style, perspective, source, license }) {
+        const doc = this.doc;
+        if (!doc) return null;
+        const id = customAssetId(bytes);
+        const existing = doc.assets.find((asset) => asset.id === id);
+        if (existing) {
+            this.ui.chooseStamp(id, { openSheet: false });
+            this.ui.toast(globalThis.VTTUi("Dieses Bild ist bereits in der Karte vorhanden."));
+            return existing;
+        }
+        const problem = this.assetBudgetProblem(bytes.length, width, height);
+        if (problem) throw new ValidationError(problem);
+        if (!this.history.canFit(bytes.length + 512)) throw new ValidationError(globalThis.VTTUi("Das Bild ist zu groß für den Verlauf."));
+        const [entry] = validateAssets([{ id, label, width, height, style, perspective, source, license, pngBytes: bytes }], "binary");
+        await this.palette.registerCustomAssets([entry]);
+        if (this.doc !== doc) return null;
+        const apply = () => {
+            if (!doc.assets.includes(entry)) doc.assets.push(entry);
+            this.afterAssetChange();
+        };
+        const revert = () => {
+            const index = doc.assets.indexOf(entry);
+            if (index >= 0) doc.assets.splice(index, 1);
+            this.afterAssetChange();
+        };
+        apply();
+        this.commit({ label: globalThis.VTTUi("Eigenes Bild hinzufügen"), bytes: bytes.length + 512, undo: revert, redo: apply });
+        this.ui.chooseStamp(id, { openSheet: false });
+        return entry;
+    }
+
+    removeCustomAsset(id) {
+        const doc = this.doc, entry = doc.assets.find((asset) => asset.id === id);
+        if (!entry) return false;
+        this.commitEdit();
+        if (referencedAssetIds(doc).has(id)) {
+            this.ui.toast(globalThis.VTTUi("„{label}“ wird noch auf der Karte verwendet und bleibt erhalten.", { label: entry.label }));
+            return false;
+        }
+        const index = doc.assets.indexOf(entry);
+        const apply = () => { const at = doc.assets.indexOf(entry); if (at >= 0) doc.assets.splice(at, 1); this.afterAssetChange(); };
+        const revert = () => { if (!doc.assets.includes(entry)) doc.assets.splice(Math.min(index, doc.assets.length), 0, entry); this.afterAssetChange(); };
+        apply();
+        this.commit({ label: globalThis.VTTUi("Eigenes Bild entfernen"), bytes: entry.bytes.length + 512, undo: revert, redo: apply });
+        return true;
+    }
+
+    afterAssetChange() {
+        this.palette.showDocumentAssets(this.doc);
+        this.sanitizeAssetChoices();
+        this.ui.refreshCustomAssets();
+    }
+
     updateItem(item, before, after, label) {
         const set = (state) => {
             this.invalidateItem(item);
@@ -897,6 +1285,7 @@ class Editor {
     }
 
     commitEdit() {
+        if (this.wheelOrder) this.finishWheelOrder(true);
         const edit = this.pendingEdit;
         this.pendingEdit = null;
         if (!edit) return;
@@ -976,8 +1365,9 @@ class Editor {
             rot: 0,
             color: style === "water" ? "#1d4654" : "#3b2a1a",
             pin: this.labelOpts.pin,
-            symbol: kind && this.labelOpts.symbol ? { asset: this.labelOpts.symbol, size: this.labelOpts.symbolSize } : null,
+            symbol: kind && this.labelOpts.symbol && this.assetAvailable(this.labelOpts.symbol) ? { asset: this.labelOpts.symbol, size: this.labelOpts.symbolSize } : null,
             place: kind ? { kind, lore: "" } : null,
+            ...(this.labelOpts.font ? { font: this.labelOpts.font } : {}),
         };
     }
 
@@ -987,7 +1377,9 @@ class Editor {
         const layer = this.targetLayer("raster");
         if (!layer) return false;
         this.commitEdit();
-        this.engine.begin(layer, { ...this.brush, erase: this.tool === "eraser" });
+        // The clip reference is captured once at stroke start (frozen for this gesture).
+        const clip = this.tool === "brush" ? this.clipReference() : null;
+        this.engine.begin(layer, { ...this.brush, erase: this.tool === "eraser" }, clip);
         this.engine.addPoint(point.x, point.y, pressure);
         this.strokeActive = true;
         this.requestFrame();
@@ -1308,7 +1700,7 @@ class Editor {
 
     /** True while a gesture has live, not yet committed document changes. */
     isMutating() {
-        return this.strokeActive || !!this.eraseGesture || !!(this.input && this.input.mutating());
+        return this.strokeActive || !!this.eraseGesture || !!this.wheelOrder || !!(this.input && this.input.mutating());
     }
 
     /** Called by the input layer whenever a gesture ends or is cancelled. */
@@ -1468,7 +1860,8 @@ class Editor {
         this.commitEdit();
         if (this.isMutating()) { this.ui.toast(globalThis.VTTUi('Bitte die laufende Zeichenbewegung zuerst beenden.')); return; }
         const generation = this.generation;
-        const projectPromise = serialize(this.doc, "file");
+        // Portable package: only own images the map actually shows travel with it (credits follow).
+        const projectPromise = serialize(this.doc, "file", { referencedOnly: true });
         const pngPromise = this.renderPngBlob(scale);
         const [project, png] = await Promise.all([projectPromise, pngPromise]);
         const base = slugify(project.meta.title);
@@ -1515,7 +1908,7 @@ class Editor {
         try {
             const image = await this.palette.loadStamp(asset);
             if (this.doc !== doc) return;
-            this.paintBrush.image = imageBrush(image, crop, source.label);
+            this.paintBrush.image = { ...imageBrush(image, crop, source.label), asset };
             this.paintBrush.shape = 'image';
             this.setTool('brush');this.ui.syncBrush();
             this.ui.toast(globalThis.VTTUi('Bildpinsel gewählt: {p0}', { p0: source.label }));
@@ -1558,6 +1951,11 @@ function exposeApi(editor, ready) {
                 labels: labels.length,
                 places: labels.filter((i) => i.place).map((i) => i.text),
                 items: doc.layers.flatMap((l) => (l.items || []).map((i) => ({ layer: l.id, ...snapshot(i) }))),
+                assets: (doc.assets || []).map(({ id, label, width, height, style, perspective, source, license, bytes }) =>
+                    ({ id, label, width, height, style, perspective, source, license, bytes: bytes.length })),
+                clip: editor.clipOpts.layerId,
+                clipNotice: editor.clipOpts.notice,
+                stampAsset: editor.stampOpts.asset,
             };
         },
         catalogue() {

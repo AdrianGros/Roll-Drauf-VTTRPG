@@ -2,7 +2,7 @@
 // stroke mask at full strength, and the mask is composited onto the layer
 // once with the chosen opacity (no build-up where a stroke overlaps itself).
 
-import { createCanvas } from "./document.js";
+import { cellOf, createCanvas } from "./document.js";
 
 export const MATERIALS = [
     { id: "land", name: "Land", base: "#e6d5a8", ink: "#b89f6c", motif: "speckle" },
@@ -242,13 +242,32 @@ export class StrokeEngine {
         this.active = null;
     }
 
-    begin(layer, settings) {
+    /**
+     * `clip` (optional, painting only): {canvas} = alpha of a lower raster layer, or
+     * {cells: Map, size} = occupied cells of a tile layer. Its state is copied once
+     * here, so the reference is frozen for the whole stroke.
+     */
+    begin(layer, settings, clip = null) {
         const baseCtx = this.base.getContext("2d");
         baseCtx.clearRect(0, 0, this.w, this.h);
         baseCtx.drawImage(layer.canvas, 0, 0);
         this.mask.getContext("2d").clearRect(0, 0, this.w, this.h);
-        const frozen = { ...settings };
+        const frozen = { ...settings, clip: false };
         if (!frozen.erase && !frozen.image) frozen.materialCanvas = brushMaterial(frozen);
+        if (clip && !frozen.erase) {
+            if (!this.clip) this.clip = createCanvas(this.w, this.h);
+            const ctx = this.clip.getContext("2d");
+            ctx.clearRect(0, 0, this.w, this.h);
+            if (clip.canvas) ctx.drawImage(clip.canvas, 0, 0);
+            else if (clip.cells) {
+                ctx.fillStyle = "#fff";
+                for (const key of clip.cells.keys()) {
+                    const { col, row } = cellOf(key);
+                    ctx.fillRect(col * clip.size, row * clip.size, clip.size, clip.size);
+                }
+            }
+            frozen.clip = true;
+        }
         this.active = { layer, settings: frozen, last: null, carry: 0, total: null, pending: null };
     }
 
@@ -323,17 +342,27 @@ export class StrokeEngine {
         if (s.erase) {
             layerCtx.globalCompositeOperation = "destination-out";
             layerCtx.drawImage(this.mask, x, y, w, h, x, y, w, h);
-        } else if (s.image) {
+        } else if (s.image && !s.clip) {
             layerCtx.drawImage(this.mask, x, y, w, h, x, y, w, h);
         } else {
+            // The fresh stroke is built (and optionally clipped) in the temporary
+            // work canvas, then composited over the untouched base copy: pixels
+            // outside the clip keep their previous content.
             const workCtx = this.work.getContext("2d");
             workCtx.save();
             workCtx.globalCompositeOperation = "source-over";
             workCtx.clearRect(x, y, w, h);
-            workCtx.fillStyle = workCtx.createPattern(s.materialCanvas, "repeat");
-            workCtx.fillRect(x, y, w, h);
-            workCtx.globalCompositeOperation = "destination-in";
-            workCtx.drawImage(this.mask, x, y, w, h, x, y, w, h);
+            if (s.image) workCtx.drawImage(this.mask, x, y, w, h, x, y, w, h);
+            else {
+                workCtx.fillStyle = workCtx.createPattern(s.materialCanvas, "repeat");
+                workCtx.fillRect(x, y, w, h);
+                workCtx.globalCompositeOperation = "destination-in";
+                workCtx.drawImage(this.mask, x, y, w, h, x, y, w, h);
+            }
+            if (s.clip) {
+                workCtx.globalCompositeOperation = "destination-in";
+                workCtx.drawImage(this.clip, x, y, w, h, x, y, w, h);
+            }
             workCtx.restore();
             layerCtx.drawImage(this.work, x, y, w, h, x, y, w, h);
         }

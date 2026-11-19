@@ -2,11 +2,17 @@
 
 Keep limits in step with static/mapmaker/js/document.js. Only normalized fields
 are stored; image URLs, arbitrary paths and executable content are not accepted.
+
+Own images are embedded per project in the optional ``assets`` list: decoded
+single-frame PNG bytes only, identified by ``custom:<sha256 of the PNG bytes>``.
+They are never published as global assets; documents without ``assets`` keep
+exactly their previous normalized form.
 """
 
 import base64
 import binascii
 from functools import lru_cache
+import hashlib
 import io
 import json
 import math
@@ -20,6 +26,19 @@ MAX_TILES = 65536
 MAX_TILE_PALETTE = 256
 PREFIX = "data:image/png;base64,"
 CONTROL = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")
+
+# Project-bound own PNG images (document.js LIMITS.customAsset*).
+MAX_CUSTOM_ASSETS = 32
+MAX_CUSTOM_ASSET_BYTES = 4 * 1024 * 1024
+MAX_CUSTOM_TOTAL_BYTES = 12 * 1024 * 1024
+MAX_CUSTOM_SIDE = 2048
+MAX_CUSTOM_PIXELS = 8_000_000
+CUSTOM_ID = re.compile(r"custom:[0-9a-f]{64}")
+ASSET_STYLES = ("pixel", "painted", "ink", "other")
+ASSET_PERSPECTIVES = ("top", "side", "isometric", "other")
+LABEL_FAMILIES = ("cinzel", "badscript", "literata")
+# Base64 text of the largest accepted PNG; checked before decoding.
+MAX_CUSTOM_DATA_URL = len(PREFIX) + 4 * math.ceil(MAX_CUSTOM_ASSET_BYTES / 3)
 
 
 class InvalidDocument(ValueError):
@@ -73,6 +92,58 @@ def known_assets():
     return result
 
 
+def choice(value, allowed, fallback):
+    if value is None:
+        return fallback
+    require(isinstance(value, str) and value in allowed, "Ungültige Bildangabe.")
+    return value
+
+
+def custom_assets(entries):
+    """Validate embedded own PNG images; returns (normalized list, {id: (w, h)})."""
+    if entries is None:
+        return [], {}
+    require(isinstance(entries, list) and len(entries) <= MAX_CUSTOM_ASSETS,
+            f"Höchstens {MAX_CUSTOM_ASSETS} eigene Bilder pro Karte erlaubt.")
+    result, dims, total, pixels = [], {}, 0, 0
+    for entry in entries:
+        require(isinstance(entry, dict), "Ungültiges eigenes Bild.")
+        png = entry.get("png")
+        require(isinstance(png, str) and png.startswith(PREFIX) and len(png) <= MAX_CUSTOM_DATA_URL,
+                "Eigene Bilder müssen eingebettete PNG-Daten bis 4 MiB sein.")
+        width = integer(entry.get("width"), 1, MAX_CUSTOM_SIDE)
+        height = integer(entry.get("height"), 1, MAX_CUSTOM_SIDE)
+        pixels += width * height
+        require(pixels <= MAX_CUSTOM_PIXELS, "Eigene Bilder haben zusammen mehr als 8 Millionen Pixel.")
+        try:
+            data = base64.b64decode(png[len(PREFIX):], validate=True)
+        except (binascii.Error, ValueError) as error:
+            raise InvalidDocument("Beschädigtes eigenes Bild.") from error
+        require(len(data) <= MAX_CUSTOM_ASSET_BYTES, "Ein eigenes Bild ist größer als 4 MiB.")
+        total += len(data)
+        require(total <= MAX_CUSTOM_TOTAL_BYTES, "Eigene Bilder sind zusammen größer als 12 MiB.")
+        identity = "custom:" + hashlib.sha256(data).hexdigest()
+        require(entry.get("id") == identity and identity not in dims,
+                "Kennung eines eigenen Bilds passt nicht zu seinen Bilddaten oder ist doppelt.")
+        try:
+            with Image.open(io.BytesIO(data)) as image:
+                require(image.format == "PNG" and image.size == (width, height)
+                        and getattr(image, "n_frames", 1) == 1, "Eigenes Bild ist kein einzelnes PNG der angegebenen Größe.")
+                image.verify()
+            with Image.open(io.BytesIO(data)) as image:
+                image.load()
+        except (OSError, ValueError, Image.DecompressionBombError) as error:
+            raise InvalidDocument("Beschädigtes oder ungültiges eigenes Bild.") from error
+        dims[identity] = (width, height)
+        result.append({"id": identity, "label": text(entry.get("label"), 80, "Eigenes Bild"),
+                       "png": png, "width": width, "height": height,
+                       "style": choice(entry.get("style"), ASSET_STYLES, "other"),
+                       "perspective": choice(entry.get("perspective"), ASSET_PERSPECTIVES, "top"),
+                       "source": text(entry.get("source"), 200),
+                       "license": text(entry.get("license"), 120)})
+    return result, dims
+
+
 def normalize_document(raw):
     require(isinstance(raw, dict) and raw.get("format") == "rd-mapmaker"
             and type(raw.get("version")) is int and raw["version"] == 1,
@@ -99,6 +170,7 @@ def normalize_document(raw):
     require(isinstance(layers, list) and 1 <= len(layers) <= 32, "1 bis 32 Ebenen erwartet.")
     ids, raster_count, item_count, tile_count = set(), 0, 0, 0
     assets = known_assets()
+    own_assets, own_dims = custom_assets(raw.get("assets"))
 
     def identifier(value):
         require(isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_-]{1,40}", value)
@@ -107,8 +179,14 @@ def normalize_document(raw):
         return value
 
     def asset(value):
-        require(isinstance(value, str) and value in assets, "Unbekanntes Kartensymbol.")
+        # Own images resolve only against this document's embedded list.
+        known = value in own_dims if isinstance(value, str) and CUSTOM_ID.fullmatch(value) else (
+            isinstance(value, str) and value in assets)
+        require(known, "Unbekanntes Kartensymbol.")
         return value
+
+    def dimensions(value):
+        return own_dims[value] if value in own_dims else assets[value]
 
     for incoming in layers:
         require(isinstance(incoming, dict), "Ungültige Ebene.")
@@ -179,7 +257,7 @@ def normalize_document(raw):
                     item.update(asset=asset(entry.get("asset")), size=number(entry.get("size"), 4, 512),
                                 rot=number(entry.get("rot", 0), -360, 360), flip=boolean(entry.get("flip", False)))
                     if entry.get("crop") is not None:
-                        crop, dims = entry["crop"], assets[item["asset"]]
+                        crop, dims = entry["crop"], dimensions(item["asset"])
                         require(isinstance(crop, dict) and dims is not None, "Ungültiger Bildausschnitt.")
                         c = {k: integer(crop.get(k), 0 if k in ("x", "y") else 1, 65536) for k in ("x", "y", "w", "h")}
                         require(c["x"]+c["w"] <= dims[0] and c["y"]+c["h"] <= dims[1], "Bildausschnitt liegt außerhalb des Symbols.")
@@ -194,12 +272,19 @@ def normalize_document(raw):
                         clean_points.append({"x": number(point.get("x"), -2*w, 2*w), "y": number(point.get("y"), -2*h, 2*h)})
                     require(clean_points[0] == {"x": 0, "y": 0}, "Erster Wegpunkt muss 0,0 sein.")
                     item.update(material=entry["material"], width=number(entry.get("width"), 2, 80), points=clean_points, curve=boolean(entry.get("curve", False)))
+                    name = text(entry.get("name"), 80)
+                    if name:
+                        item["name"] = name
                 else:
                     label = text(entry.get("text"), 80)
                     require(entry.get("style") in ("realm", "region", "city", "town", "water", "feature"), "Ungültige Beschriftung.")
                     item.update(text=label, style=entry["style"], size=number(entry.get("size"), 8, 200),
                                 rot=number(entry.get("rot", 0), -360, 360), color=color(entry.get("color", "#3b2a1a")),
                                 pin=boolean(entry.get("pin", False)), place=None, symbol=None)
+                    if entry.get("font") is not None:
+                        # Family only; size/spacing/case stay with the style.
+                        require(entry["font"] in LABEL_FAMILIES, "Unbekannte Schriftfamilie.")
+                        item["font"] = entry["font"]
                     place = entry.get("place")
                     if place is not None:
                         require(isinstance(place, dict) and place.get("kind") in ("city", "town", "castle", "harbor", "ruin", "landmark"), "Ungültiger Ort.")
@@ -211,6 +296,8 @@ def normalize_document(raw):
                     require(label or item["pin"] or item["symbol"], "Leere Beschriftung braucht ein Symbol oder eine Ortsnadel.")
                 layer["items"].append(item)
         result["layers"].append(layer)
+    if own_assets:
+        result["assets"] = own_assets
     data = json.dumps(result, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode("utf-8")
     require(len(data) <= MAX_PROJECT_BYTES, "Das Kartenprojekt ist größer als 50 MiB.")
     return result, data

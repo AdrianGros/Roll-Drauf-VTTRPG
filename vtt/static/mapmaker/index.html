@@ -142,10 +142,12 @@
 
         <section class="mm-pane" id="pane-tool" role="tabpanel" aria-labelledby="tab-tool">
             <div class="mm-history-actions"><button id="undoVisible" type="button" class="mm-btn" disabled>Rückgängig</button><button id="redoVisible" type="button" class="mm-btn" disabled>Wiederholen</button></div>
+            <label class="mm-field mm-tool-layer" id="toolLayerField"><span id="toolLayerLabel">Ebene für dieses Werkzeug</span><select id="toolLayer"></select><small id="toolLayerHint">Alt+↑ / Alt+↓ wechselt die Ebene.</small></label>
             <div id="groupInspector" class="mm-group" hidden>
                 <h2 id="groupTitle"></h2><p id="groupHint" class="mm-hint"></p>
                 <label id="groupScaleRow" class="mm-field"><span id="groupScaleLabel">Gemeinsame Größe (%)</span><input id="groupScale" type="number" min="10" max="500" value="100" step="10"></label>
                 <button id="groupScaleApply" type="button" class="mm-btn">Größe anwenden</button>
+                <div class="mm-order-row" role="group" aria-label="Reihenfolge"><span class="mm-order-label">Reihenfolge</span><button type="button" class="mm-btn mm-btn-small" data-order="back">Ganz nach hinten</button><button type="button" class="mm-btn mm-btn-small" data-order="backward">Nach hinten</button><button type="button" class="mm-btn mm-btn-small" data-order="forward">Nach vorne</button><button type="button" class="mm-btn mm-btn-small" data-order="front">Ganz nach vorne</button></div>
                 <button id="groupDelete" type="button" class="mm-btn mm-btn-danger">Auswahl löschen</button><button id="groupClear" type="button" class="mm-btn">Auswahl aufheben</button>
             </div>
             <div id="inspector" class="mm-group mm-inspector" hidden>
@@ -165,6 +167,7 @@
                         <label class="mm-field"><span><span data-ui-key="u_820cfc2922d6">Stil</span></span><select id="selStyle"></select></label>
                         <label class="mm-field mm-field-color"><span><span data-ui-key="u_89b7957dae43">Farbe</span></span><input id="selColor" type="color"></label>
                     </div>
+                    <label class="mm-field"><span id="selFontLabel">Schriftfamilie</span><select id="selFont"></select></label>
                     <label class="mm-range"><span><span data-ui-key="u_d9130ae841c9">Größe</span></span><input id="selSize" type="range" min="8" max="200" step="1"><output id="selSizeOut"></output></label>
                     <label class="mm-range"><span><span data-ui-key="u_bb151d57d178">Drehung</span></span><input id="selRot" type="range" min="-180" max="180" step="1"><output id="selRotOut"></output></label>
                     <label class="mm-check"><input id="selPin" type="checkbox"> <span data-ui-key="u_3203ec4b4b77">Ortsnadel zeigen</span></label>
@@ -175,12 +178,17 @@
                     <p id="collisionHint" class="mm-hint" role="status" hidden></p>
                 </div>
                 <div id="inspectPath" hidden>
+                    <label class="mm-field"><span id="selPathNameLabel">Name des Wegs (optional)</span><input id="selPathName" type="text" maxlength="80" autocomplete="off"></label>
                     <label class="mm-field"><span><span data-ui-key="u_308e17d2200a">Art</span></span><select id="selPathMaterial"><option value="road" data-ui-key="u_d5c00e9a2be3">Weg</option><option value="river" data-ui-key="u_200b8c04671b">Fluss</option></select></label>
                     <div class="mm-range mm-range-edit"><label for="selPathWidth"><span data-ui-key="u_861387c8ffe9">Breite</span></label><input id="selPathWidth" type="range" min="2" max="80" step="1"><output id="selPathWidthOut"></output><input id="selPathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel" data-ui-aria-label="u_85804ab92648"></div>
                     <label class="mm-check"><input id="selPathCurve" type="checkbox"><span id="selPathCurveLabel">Geglätteter Verlauf</span></label>
                     <label class="mm-check"><input id="pathNodeMode" type="checkbox"><span id="pathNodeModeLabel">Wegpunkte bearbeiten</span></label>
                     <p id="pathEditHint" class="mm-hint">Wegpunkte bearbeiten einschalten und einen sichtbaren Punkt ziehen. Umschalt + Ziehen funktioniert ebenfalls.</p>
+                    <button id="selPathConnect" type="button" class="mm-btn mm-btn-small">Endpunkt mit Nachbarweg verbinden</button>
+                    <p id="selPathConnectHint" class="mm-hint">Verbindet nur mit einem Endpunkt derselben Ebene und Art in höchstens 32 px Abstand. Kreuzungen bleiben getrennt.</p>
                 </div>
+                <div class="mm-order-row" role="group" aria-label="Reihenfolge"><span class="mm-order-label">Reihenfolge</span><button type="button" class="mm-btn mm-btn-small" data-order="back">Ganz nach hinten</button><button type="button" class="mm-btn mm-btn-small" data-order="backward">Nach hinten</button><button type="button" class="mm-btn mm-btn-small" data-order="forward">Nach vorne</button><button type="button" class="mm-btn mm-btn-small" data-order="front">Ganz nach vorne</button></div>
+                <p class="mm-hint mm-order-hint">Bild↑/Bild↓ oder Alt+Mausrad ändern die Reihenfolge in der Ebene.</p>
                 <button id="showMapBtn" type="button" class="mm-btn mm-show-map"><span data-ui-key="u_5d10fb7dbb20">Ort auf Karte zeigen</span></button>
                 <button id="selDelete" type="button" class="mm-btn mm-btn-danger"><span data-ui-key="u_e65c67367259">Auswahl löschen</span></button>
             </div>
@@ -205,6 +213,8 @@
                         <label class="mm-field"><span id="brushCoastColorLabel" data-ui-key="u_560f5fae2297">Konturfarbe</span><input id="brushCoastColor" type="color" value="#3b2a1a"></label>
                         <label class="mm-range"><span id="brushCoastWidthLabel" data-ui-key="u_09844223e159">Konturbreite (px)</span><input id="brushCoastWidth" type="range" min="0" max="16" step="0.5" value="2.5"><output id="brushCoastWidthOut">2.5 px</output></label>
                     </div>
+                    <label class="mm-field" id="brushClipField"><span id="brushClipLabel">Malbegrenzung</span><select id="brushClip"></select></label>
+                    <p id="brushClipHint" class="mm-hint" role="status" aria-live="polite"></p>
                 </div>
                 <div class="mm-range mm-range-edit"><label for="brushSize"><span data-ui-key="u_d9130ae841c9">Größe</span></label><input id="brushSize" type="range" min="2" max="800" step="1"><output id="brushSizeOut"></output><input id="brushSizeNumber" class="mm-number" type="number" min="2" max="800" step="1" aria-label="Pinselgröße in Pixel" data-ui-aria-label="u_118420276fa1"></div>
                 <label class="mm-range"><span><span data-ui-key="u_3c11c68b55b1">Deckkraft</span></span><input id="brushOpacity" type="range" min="1" max="100" step="1"><output id="brushOpacityOut"></output></label>
@@ -225,9 +235,24 @@
 
             <div class="mm-group" data-options="stamp">
                 <p class="mm-target"><span data-ui-key="u_45cb873b428e">Setzt auf:</span> <strong id="stampTarget">–</strong></p>
+                <div class="mm-placement" role="group" aria-labelledby="stampPlacementLabel">
+                    <span id="stampPlacementLabel" class="mm-hint">Platzierung</span>
+                    <label class="mm-check"><input id="stampScatter" type="checkbox"> <span data-ui-key="u_dc2d7aed6213">Streuen beim Ziehen (Wälder, Gebirge)</span></label>
+                    <label class="mm-check"><input id="stampArea" type="checkbox"> <span id="stampAreaLabel">Fläche füllen (Rechteck ziehen)</span></label>
+                    <p id="stampAreaInfo" class="mm-hint" role="status" aria-live="polite"></p>
+                </div>
+                <div class="mm-own-assets" id="ownAssets">
+                    <div class="mm-own-actions"><button id="ownUploadBtn" type="button" class="mm-btn mm-btn-small">Eigenes Bild hochladen …</button><button id="ownPixelBtn" type="button" class="mm-btn mm-btn-small">Pixelbild zeichnen …</button></div>
+                    <p id="ownAssetUsage" class="mm-hint"></p>
+                    <details id="ownAssetManage"><summary id="ownAssetManageLabel">Eigene Bilder dieser Karte</summary><ul id="ownAssetList" class="mm-own-list"></ul></details>
+                </div>
                 <label class="mm-field"><span><span data-ui-key="u_43eb38124697">Symbole suchen</span></span><input id="stampSearch" type="search" placeholder="Berge, Wald, Burg …" data-ui-placeholder="u_5d3e37bd219a" autocomplete="off"></label>
                 <label class="mm-field"><span><span data-ui-key="u_acb5ce20a410">Asset-Paket</span></span><select id="stampPack"><option value="" data-ui-key="u_346513e2c8e9">Alle Pakete</option></select></label>
                 <label class="mm-field"><span><span data-ui-key="u_358210386a4f">Kategorie</span></span><select id="stampCategory"><option value="" data-ui-key="u_42f71f9dfcff">Alle Kategorien</option></select></label>
+                <div class="mm-field-row">
+                    <label class="mm-field"><span id="stampStyleLabel">Darstellung</span><select id="stampStyle"></select></label>
+                    <label class="mm-field"><span id="stampPerspectiveLabel">Perspektive</span><select id="stampPerspective"></select></label>
+                </div>
                 <p id="stampSelected" class="mm-meta"></p>
                     <button id="stampCrop" type="button" class="mm-btn mm-btn-small" disabled><span data-ui-key="u_edf8d44272c7">Ausschnitt wählen</span></button>
                 <button id="stampAsBrush" type="button" class="mm-btn mm-btn-small" data-ui-key="u_246ec4b59e56">Gewähltes Symbol als Bildpinsel</button>
@@ -242,7 +267,6 @@
                 <label class="mm-check"><input id="stampVary" type="checkbox"> <span data-ui-key="u_41cff9ab1c37">Leichte Variation (Größe, Drehung)</span></label>
                 <label class="mm-check"><input id="stampGridOn" type="checkbox"> <span data-ui-key="u_0f100e7a0d60">Stempelraster</span></label>
                 <label class="mm-field"><span data-ui-key="u_af799e55baf9">Rasterweite</span><input id="stampGridSize" class="mm-number" type="number" min="8" max="256" step="1" value="32" disabled></label>
-                <label class="mm-check"><input id="stampScatter" type="checkbox"> <span data-ui-key="u_dc2d7aed6213">Streuen beim Ziehen (Wälder, Gebirge)</span></label>
             </div>
 
             <div class="mm-group" data-options="tile">
@@ -273,6 +297,7 @@
                     <label class="mm-field"><span><span data-ui-key="u_820cfc2922d6">Stil</span></span><select id="labelStyle"></select></label>
                     <label class="mm-field"><span><span data-ui-key="u_bec9cc1234ae">Ortsart</span></span><select id="labelKind"></select></label>
                 </div>
+                <label class="mm-field"><span id="labelFontLabel">Schriftfamilie</span><select id="labelFont"></select></label>
                 <label class="mm-check"><input id="labelPin" type="checkbox" checked> <span data-ui-key="u_3203ec4b4b77">Ortsnadel zeigen</span></label>
                 <label class="mm-field"><span><span data-ui-key="u_e84a549a8c99">Ortssymbol</span></span><select id="placeSymbol"></select></label>
                 <div class="mm-range mm-range-edit"><label for="placeSymbolSize"><span data-ui-key="u_b19e01c58c59">Symbolgröße</span></label><input id="placeSymbolSize" type="range" min="16" max="320" step="1"><output id="placeSymbolSizeOut"></output><input id="placeSymbolSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Ortssymbolgröße in Pixel" data-ui-aria-label="u_28156ff5302d"></div>
@@ -381,6 +406,10 @@
         <label><span data-ui-key="u_f0c362add7fd">Höhe</span> <input id="sheetH" type="number" min="1" step="1"></label>
     </div>
     <div class="mm-sheet-image"><canvas id="sheetCanvas" aria-label="Bildblatt zur Ausschnittauswahl" data-ui-aria-label="u_ce35d5bcf9a1"></canvas></div>
+    <div class="mm-crop-compare">
+        <div class="mm-own-checker"><canvas id="sheetCropPreview" width="1" height="1"></canvas></div>
+        <div><p id="sheetCropInfo" class="mm-hint" role="status" aria-live="polite"></p><button id="sheetFitContent" type="button" class="mm-btn mm-btn-small">Zusammenhängenden Inhalt erfassen</button></div>
+    </div>
     <p id="sheetError" class="mm-error" role="alert" hidden><span data-ui-key="u_dfab4d2b3ee3">Ausschnitt muss innerhalb des Bildes liegen.</span></p>
     <div class="mm-dialog-actions">
         <button id="sheetCancel" type="button" class="mm-btn"><span data-ui-key="u_07af7cb30fca">Abbrechen</span></button>
@@ -441,6 +470,9 @@
                 <dt><kbd>Entf</kbd></dt><dd><span data-ui-key="u_e65c67367259">Auswahl löschen</span></dd>
                 <dt><kbd>Esc</kbd></dt><dd><span data-ui-key="u_b69fd3659c3a">Auswahl aufheben</span></dd>
                 <dt><kbd>Alt</kbd><span data-ui-key="u_9c3f7c8a779f">+Klick</span></dt><dd><span data-ui-key="u_343799a3778b">Überlappende Symbole und Beschriftungen durchgehen</span></dd>
+                <dt><kbd>Bild↑</kbd> <kbd>Bild↓</kbd></dt><dd id="helpOrder">Auswahl eine Stufe nach vorne/hinten (mit Umschalt: ganz)</dd>
+                <dt><kbd>Alt</kbd>+<span id="helpWheelKey">Mausrad</span></dt><dd id="helpWheel">Reihenfolge der Auswahl ändern (Auswählen-Werkzeug)</dd>
+                <dt><kbd>Alt</kbd>+<kbd>↑</kbd> <kbd>↓</kbd></dt><dd id="helpLayer">Ebene des Werkzeugs wechseln</dd>
             </dl>
         </div>
         <div>

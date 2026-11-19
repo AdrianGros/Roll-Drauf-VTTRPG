@@ -3,6 +3,23 @@ import {cellOf,cellKey,LIMITS} from './document.js';
 import {itemBounds,replacedTitleLabel} from './render.js';
 const copy = value => JSON.parse(JSON.stringify(value));
 const intersects = (a,b) => a.x <= b.x+b.w && a.x+a.w >= b.x && a.y <= b.y+b.h && a.y+a.h >= b.y;
+
+/**
+ * Canonical in-layer order: the item list is the render, hit-test (reverse) and
+ * export order; later entries are drawn on top. Returns a new list.
+ * mode: "forward" | "backward" (one step past a neighbour), "front" | "back".
+ */
+export function reorderItems(items, chosen, mode) {
+    const list = items.slice();
+    if (mode === 'front') return [...list.filter(i=>!chosen.has(i)),...list.filter(i=>chosen.has(i))];
+    if (mode === 'back') return [...list.filter(i=>chosen.has(i)),...list.filter(i=>!chosen.has(i))];
+    if (mode === 'forward') {
+        for (let i=list.length-2;i>=0;i-=1) if (chosen.has(list[i]) && !chosen.has(list[i+1])) [list[i],list[i+1]]=[list[i+1],list[i]];
+    } else if (mode === 'backward') {
+        for (let i=1;i<list.length;i+=1) if (chosen.has(list[i]) && !chosen.has(list[i-1])) [list[i],list[i-1]]=[list[i-1],list[i]];
+    }
+    return list;
+}
 export class Selection {
     constructor(ed) { this.ed=ed;this.reset();this.marquee=null; }
     reset(id=null) { this.ids=id?[id]:[];this.tiles=null; }

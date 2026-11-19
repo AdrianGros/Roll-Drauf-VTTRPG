@@ -1,6 +1,7 @@
 globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Document model, limits and import validation for the rd-mapmaker v1 format.
+import { sha256Hex } from "./sha256.js";
 
 export const FORMAT = "rd-mapmaker";
 export const VERSION = 1;
@@ -24,9 +25,47 @@ export const LIMITS = Object.freeze({
     labelSize: [8, 200],
     rotation: 360,
     pathPoints: 128,
+    pathName: 80,
+    // Project-bound own PNG images (vtt/mapmaker_document.py MAX_CUSTOM_*).
+    customAssets: 32,
+    customAssetBytes: 4 * 1024 * 1024,
+    customAssetTotalBytes: 12 * 1024 * 1024,
+    customAssetSide: 2048,
+    customAssetPixels: 8000000,
+    assetLabel: 80,
+    assetSource: 200,
+    assetLicense: 120,
 });
 
 export const LAYER_KINDS = ["raster", "paths", "stamps", "labels", "tiles"];
+export const ASSET_STYLES = ["pixel", "painted", "ink", "other"];
+export const ASSET_PERSPECTIVES = ["top", "side", "isometric", "other"];
+/** Shipped label families only (see snapshot.js FONT_FACES); the style keeps size, spacing and case. */
+export const LABEL_FAMILIES = ["cinzel", "badscript", "literata"];
+export const CUSTOM_ASSET_RE = /^custom:[0-9a-f]{64}$/;
+
+/** Content-addressed identity of an own PNG image. */
+export function customAssetId(bytes) {
+    return `custom:${sha256Hex(bytes)}`;
+}
+
+export function isCustomAsset(id) {
+    return typeof id === "string" && CUSTOM_ASSET_RE.test(id);
+}
+
+/** Every asset id a runtime or serialized document actually shows (stamps, place symbols, tiles). */
+export function referencedAssetIds(doc) {
+    const ids = new Set();
+    for (const layer of doc.layers || []) {
+        for (const item of layer.items || []) {
+            if (item.asset) ids.add(item.asset);
+            if (item.symbol && item.symbol.asset) ids.add(item.symbol.asset);
+        }
+        if (layer.cells instanceof Map) for (const asset of layer.cells.values()) ids.add(asset);
+        else for (const asset of layer.palette || []) ids.add(asset);
+    }
+    return ids;
+}
 export const TILE_GRID_DEFAULT = 32;
 export const LABEL_STYLES = {
     realm: { name: globalThis.VTTUi("Reich"), size: 72 },
@@ -47,7 +86,7 @@ export const PLACE_KINDS = {
 
 const ID_RE = /^[A-Za-z0-9_-]{1,40}$/;
 const COLOR_RE = /^#[0-9a-fA-F]{6}$/;
-const ASSET_RE = /^(builtin|kenney|kma|color):[a-z0-9_-]{1,40}$/;
+const ASSET_RE = /^(?:(?:builtin|kenney|kma|color):[a-z0-9_-]{1,40}|custom:[0-9a-f]{64})$/;
 const PNG_PREFIX = "data:image/png;base64,";
 const PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
 // Control characters except tab and newline (lore may contain line breaks).
@@ -207,7 +246,7 @@ function id(value, ids) {
  * `rasterSource` lets autosave pass already-binary PNG data
  * (layer.pngBytes as ArrayBuffer/Uint8Array) instead of a data URL.
  */
-export function validateDocument(raw, { knownAssets, rasterSource = "dataurl" }) {
+export function validateDocument(raw, { knownAssets: catalog, rasterSource = "dataurl" }) {
     if (!isPlainObject(raw)) fail("Die Datei enthält kein Kartenobjekt.");
     if (raw.format !== FORMAT) fail("Keine Roll-Drauf-Kartendatei (format fehlt oder falsch).");
     if (raw.version !== VERSION) fail(`Nicht unterstützte Version ${String(raw.version).slice(0, 10)}.`);
@@ -239,6 +278,8 @@ export function validateDocument(raw, { knownAssets, rasterSource = "dataurl" })
     if (!Array.isArray(raw.layers) || raw.layers.length < 1) fail("Die Karte hat keine Ebenen.");
     if (raw.layers.length > LIMITS.layers) fail(`Höchstens ${LIMITS.layers} Ebenen erlaubt.`);
 
+    const assets = validateAssets(raw.assets, rasterSource);
+    const knownAssets = assetLookup(catalog, assets);
     const ids = new Set();
     let rasterCount = 0;
     let itemCount = 0;
@@ -280,7 +321,88 @@ export function validateDocument(raw, { knownAssets, rasterSource = "dataurl" })
         return layer;
     });
 
-    return { meta, size: { w, h }, sea, layers };
+    return { meta, size: { w, h }, sea, layers, assets };
+}
+
+/**
+ * Catalog ids resolve against the loaded palette; own images only against this
+ * document's embedded list, never against images another document registered.
+ */
+function assetLookup(catalog, assets) {
+    const own = new Map(assets.map((asset) => [asset.id, { w: asset.width, h: asset.height }]));
+    return {
+        has: (id) => (CUSTOM_ASSET_RE.test(id) ? own.has(id) : catalog.has(id)),
+        get: (id) => (CUSTOM_ASSET_RE.test(id) ? own.get(id) : typeof catalog.get === "function" ? catalog.get(id) : null),
+    };
+}
+
+function choice(value, allowed, fallback, label) {
+    if (value === undefined || value === null) return fallback;
+    if (typeof value !== "string" || !allowed.includes(value)) fail(`${label}: unbekannter Wert.`);
+    return value;
+}
+
+function assetBytes(entry, source) {
+    if (source === "binary") {
+        const data = entry.pngBytes;
+        if (data instanceof Uint8Array) return data;
+        if (data instanceof ArrayBuffer) return new Uint8Array(data);
+        fail("Eigenes Bild ohne Bilddaten.");
+    }
+    const png = entry.png;
+    if (typeof png !== "string" || !png.startsWith(PNG_PREFIX)) fail("Eigene Bilder müssen eingebettete PNG-Daten enthalten (keine Links oder SVG).");
+    if (png.length > PNG_PREFIX.length + Math.ceil(LIMITS.customAssetBytes / 3) * 4) fail("Ein eigenes Bild ist größer als 4 MiB.");
+    const b64 = png.slice(PNG_PREFIX.length);
+    if (!/^[A-Za-z0-9+/]*={0,2}$/.test(b64)) fail("Beschädigtes eigenes Bild.");
+    try {
+        return base64ToBytes(b64);
+    } catch (_error) {
+        return fail("Beschädigtes eigenes Bild.");
+    }
+}
+
+/** Own PNG images: bounded count, bytes, sides and pixels; id = SHA-256 of the bytes. */
+export function validateAssets(list, source = "dataurl") {
+    if (list === undefined || list === null) return [];
+    if (!Array.isArray(list)) fail("Eigene Bilder: Liste erwartet.");
+    if (list.length > LIMITS.customAssets) fail(`Höchstens ${LIMITS.customAssets} eigene Bilder pro Karte erlaubt.`);
+    const seen = new Set();
+    let total = 0;
+    let pixels = 0;
+    return list.map((entry) => {
+        if (!isPlainObject(entry)) fail("Ungültiges eigenes Bild.");
+        const { width, height } = entry;
+        for (const side of [width, height]) {
+            if (!Number.isInteger(side) || side < 1 || side > LIMITS.customAssetSide) fail(`Eigene Bilder dürfen höchstens ${LIMITS.customAssetSide} Pixel je Seite haben.`);
+        }
+        pixels += width * height;
+        if (pixels > LIMITS.customAssetPixels) fail("Eigene Bilder haben zusammen mehr als 8 Millionen Pixel.");
+        const bytes = assetBytes(entry, source);
+        if (bytes.length > LIMITS.customAssetBytes) fail("Ein eigenes Bild ist größer als 4 MiB.");
+        total += bytes.length;
+        if (total > LIMITS.customAssetTotalBytes) fail("Eigene Bilder sind zusammen größer als 12 MiB.");
+        const dims = pngDimensions(bytes);
+        if (!dims || dims.w !== width || dims.h !== height) fail("Eigenes Bild ist kein PNG der angegebenen Größe.");
+        const id = customAssetId(bytes);
+        if (entry.id !== id || seen.has(id)) fail("Kennung eines eigenen Bilds passt nicht zu seinen Bilddaten oder ist doppelt.");
+        seen.add(id);
+        return {
+            id,
+            label: optionalText(entry.label, LIMITS.assetLabel) || "Eigenes Bild",
+            width,
+            height,
+            style: choice(entry.style, ASSET_STYLES, "other", "Bildstil"),
+            perspective: choice(entry.perspective, ASSET_PERSPECTIVES, "top", "Perspektive"),
+            source: optionalText(entry.source, LIMITS.assetSource),
+            license: optionalText(entry.license, LIMITS.assetLicense),
+            bytes,
+        };
+    });
+}
+
+function optionalText(value, max) {
+    if (value !== undefined && value !== null && typeof value !== "string") fail("Text erwartet.");
+    return cleanText(value, max);
 }
 
 function rasterBytes(layerIn, source, w, h) {
@@ -375,6 +497,7 @@ function validatePath(itemIn, ids, w, h) {
         return { x: num(point.x, -2 * w, 2 * w, "Wegpunkt"), y: num(point.y, -2 * h, 2 * h, "Wegpunkt") };
     });
     if (points[0].x !== 0 || points[0].y !== 0) fail("Der erste Wegpunkt muss bei 0,0 liegen.");
+    const name = optionalText(itemIn.name, LIMITS.pathName);
     return {
         id: id(itemIn.id, ids),
         x: num(itemIn.x, -w, 2 * w, "Position"),
@@ -383,6 +506,7 @@ function validatePath(itemIn, ids, w, h) {
         width: num(itemIn.width, 2, 80, "Wegbreite"),
         curve: bool(itemIn.curve,false),
         points,
+        ...(name ? { name } : {}),
     };
 }
 
@@ -405,6 +529,7 @@ function validateLabel(itemIn, ids, knownAssets, w, h) {
         symbol = { asset: itemIn.symbol.asset, size: num(itemIn.symbol.size, 16, 320, "Ortssymbolgröße") };
     }
     if(!text && !symbol && !bool(itemIn.pin,false))fail("Leere Beschriftung braucht ein Symbol oder eine Ortsnadel.");
+    const font = choice(itemIn.font, LABEL_FAMILIES, null, "Schriftfamilie");
     return {
         id: id(itemIn.id, ids),
         x: num(itemIn.x, -w, 2 * w, "Position"),
@@ -417,6 +542,7 @@ function validateLabel(itemIn, ids, knownAssets, w, h) {
         pin: bool(itemIn.pin, false),
         place,
         symbol,
+        ...(font ? { font } : {}),
     };
 }
 
@@ -439,7 +565,9 @@ export async function materialize(validated) {
         }
         layers.push(layer);
     }
-    return { meta: validated.meta, size: validated.size, sea: validated.sea, layers };
+    // Own images keep their immutable PNG bytes; pixels are registered by palette.ensureDocumentImages().
+    const assets = (validated.assets || []).map((asset) => ({ ...asset }));
+    return { meta: validated.meta, size: validated.size, sea: validated.sea, layers, assets };
 }
 
 // ---- serialization -------------------------------------------------------
@@ -497,7 +625,8 @@ function bytesToBase64(bytes) {
 
 function plainItem(item) {
     if ("points" in item) return { id: item.id, x: round(item.x), y: round(item.y), material: item.material,
-        width: round(item.width), curve: !!item.curve, points: item.points.map((p) => ({ x: round(p.x), y: round(p.y) })) };
+        width: round(item.width), curve: !!item.curve, points: item.points.map((p) => ({ x: round(p.x), y: round(p.y) })),
+        ...(item.name ? { name: item.name } : {}) };
     if ("asset" in item) {
         return { id: item.id, asset: item.asset, x: round(item.x), y: round(item.y), size: round(item.size), rot: round(item.rot), flip: item.flip, ...(item.crop ? { crop: { ...item.crop } } : {}) };
     }
@@ -505,6 +634,7 @@ function plainItem(item) {
         id: item.id, x: round(item.x), y: round(item.y), text: item.text, style: item.style, size: round(item.size),
         rot: round(item.rot), color: item.color, pin: item.pin, place: item.place ? { ...item.place } : null,
         ...(item.symbol ? { symbol: { ...item.symbol } } : {}),
+        ...(item.font ? { font: item.font } : {}),
     };
 }
 
@@ -533,8 +663,18 @@ function round(value) {
  * Serialize. mode "file" embeds data URLs; mode "binary" keeps PNG bytes (autosave).
  * Everything (meta, layers, items, raster pixels) is captured synchronously
  * when serialize() is called; only PNG encoding happens asynchronously.
+ * Project saves keep every embedded own image; `referencedOnly` (portable
+ * export) keeps only the own images the map actually shows.
  */
-export function serialize(doc, mode = "file") {
+export function serialize(doc, mode = "file", { referencedOnly = false } = {}) {
+    const used = referencedOnly ? referencedAssetIds(doc) : null;
+    const assets = (doc.assets || []).filter((asset) => !used || used.has(asset.id)).map((asset) => {
+        const out = { id: asset.id, label: asset.label, width: asset.width, height: asset.height, style: asset.style,
+            perspective: asset.perspective, source: asset.source, license: asset.license };
+        if (mode === "binary") out.pngBytes = asset.bytes;
+        else out.png = PNG_PREFIX + bytesToBase64(asset.bytes);
+        return out;
+    });
     const meta = { ...doc.meta, modified: new Date().toISOString() };
     const size = { ...doc.size };
     const sea = { ...doc.sea };
@@ -559,6 +699,6 @@ export function serialize(doc, mode = "file") {
             if (mode === "binary") out.pngBytes = bytes;
             else out.png = PNG_PREFIX + bytesToBase64(bytes);
         }
-        return { format: FORMAT, version: VERSION, meta, size, sea, layers };
+        return { format: FORMAT, version: VERSION, meta, size, sea, layers, ...(assets.length ? { assets } : {}) };
     })();
 }

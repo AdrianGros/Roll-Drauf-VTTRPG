@@ -2,6 +2,64 @@
 export const LANDMASS_VERSION = 'landmass-v1';
 const integer = (n, low, high) => Number.isInteger(n) && n >= low && n <= high;
 
+/**
+ * Named, versioned seed/parameter presets. A preset only reproduces its result
+ * with the generator version it names; other versions are shown but not applied.
+ */
+export const LANDMASS_PRESETS = Object.freeze([
+    {id: 'island', name: 'Inselreich', version: LANDMASS_VERSION, parameters: {seed: 1337, form: 'island', land: 45, roughness: 60, resolution: 256}},
+    {id: 'continent', name: 'Kontinent', version: LANDMASS_VERSION, parameters: {seed: 4242, form: 'continent', land: 62, roughness: 45, resolution: 256}},
+    {id: 'ragged', name: 'Zerklüftete Küste', version: LANDMASS_VERSION, parameters: {seed: 9001, form: 'island', land: 32, roughness: 95, resolution: 512}},
+]);
+
+/** Shape parameters accepted by normalizeLandmass (without map size). */
+export function validPresetParameters(p) {
+    return !!p && typeof p === 'object' && integer(p.seed, 0, 0xffffffff) && ['island', 'continent'].includes(p.form)
+        && integer(p.land, 10, 80) && integer(p.roughness, 0, 100) && [128, 256, 512].includes(p.resolution);
+}
+
+// Decoration uses its own random streams, never the shape noise: the same seed
+// always yields the same land and, independently, the same decoration.
+export const DECORATION_STREAMS = Object.freeze({mountains: 0x9e3779b9, forest: 0x85ebca6b});
+export const DECORATION_COUNTS = Object.freeze({mountains: 14, forest: 22});
+
+function stream(seed) {
+    let t = seed >>> 0;
+    return () => {
+        t += 0x6d2b79f5;
+        let r = Math.imul(t ^ (t >>> 15), 1 | t);
+        r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+        return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+    };
+}
+
+function interior(mask, w, h, x, y, inset) {
+    for (let dy = -inset; dy <= inset; dy++) for (let dx = -inset; dx <= inset; dx++) {
+        const px = x + dx, py = y + dy;
+        if (px < 0 || py < 0 || px >= w || py >= h || !mask[py * w + px]) return false;
+    }
+    return true;
+}
+
+/**
+ * Deterministic positions (0..1 map fractions) inside the land, away from the
+ * coast. `exclude` keeps a minimum distance to points of another kind.
+ */
+export function decorationPoints(mask, w, h, seed, kind, count = DECORATION_COUNTS[kind], exclude = []) {
+    const random = stream((seed ^ DECORATION_STREAMS[kind]) >>> 0);
+    const inset = Math.max(1, Math.round(Math.min(w, h) * 0.012));
+    const spacing = Math.max(2, Math.round(Math.min(w, h) * 0.035));
+    const points = [];
+    for (let attempt = 0; attempt < count * 60 && points.length < count; attempt++) {
+        const x = Math.floor(random() * w), y = Math.floor(random() * h);
+        if (!interior(mask, w, h, x, y, inset)) continue;
+        const near = (p) => Math.abs(p.cx - x) < spacing && Math.abs(p.cy - y) < spacing;
+        if (points.some(near) || exclude.some(near)) continue;
+        points.push({cx: x, cy: y, x: (x + 0.5) / w, y: (y + 0.5) / h});
+    }
+    return points;
+}
+
 export function normalizeLandmass(input, size) {
     const {seed, form, land, roughness, resolution} = input;
     if (!integer(seed, 0, 0xffffffff) || !['island', 'continent'].includes(form)

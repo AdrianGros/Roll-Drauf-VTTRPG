@@ -53,6 +53,7 @@ export function attachInput(ed) {
             ed.invalidateItem(gesture.item);
         }
         if (gesture.type === "path") ed.previewPath = null;
+        if (gesture.type === "area") ed.areaPreview = null;
         gesture = null;
         updateCursorClass();
         ed.requestFrame();
@@ -119,7 +120,7 @@ export function attachInput(ed) {
             ed.previewPath = item;
             gesture = { type: "path", pointerId: event.pointerId, item, spacing: 28 };
         } else if (ed.tool === "stamp") {
-            if (!ed.stampOpts.asset) {
+            if (!ed.stampOpts.asset || !ed.assetAvailable(ed.stampOpts.asset)) {
                 ed.ui.toast(globalThis.VTTUi("Wähle zuerst ein Symbol aus der Palette."));
                 return;
             }
@@ -129,6 +130,13 @@ export function attachInput(ed) {
             }
             const layer = ed.targetLayer("stamps");
             if (!layer) return;
+            if (ed.stampOpts.area) {
+                // Area fill: the rectangle is only previewed; stamps are created on release.
+                gesture = { type: "area", pointerId: event.pointerId, start: point, startLocal: local(event) };
+                ed.areaPreview = { a: point, b: point, count: ed.areaPlan(point, point).count };
+                ed.requestFrame();
+                return;
+            }
             ed.commitEdit();
             const item = ed.createStamp(point, ed.stampOpts.asset);
             if (!ed.placeLive(layer, item)) {
@@ -252,6 +260,11 @@ export function attachInput(ed) {
                 gesture.item.points[gesture.node] = { x: at.x - gesture.item.x, y: at.y - gesture.item.y };
             }
             ed.invalidateItem(gesture.item);
+        } else if (gesture.type === "area") {
+            ed.cursor = point;
+            ed.areaPreview = { a: gesture.start, b: point, count: ed.areaPlan(gesture.start, point).count };
+            ed.ui.showAreaPlan(ed.areaPreview.count);
+            ed.requestFrame();
         } else if (gesture.type === 'marquee') {
             ed.selectionSet.marquee={a:gesture.start,b:point};ed.requestFrame();
         } else if (gesture.type === 'groupDrag') {
@@ -309,7 +322,12 @@ export function attachInput(ed) {
         if (gesture.pointerId !== event.pointerId) return;
         const done = gesture;
         gesture = null;
-        if (done.type === 'marquee') {
+        if (done.type === "area") {
+            ed.areaPreview = null;
+            const now = local(event);
+            if (Math.hypot(now.x - done.startLocal.x, now.y - done.startLocal.y) < 6) ed.ui.toast(globalThis.VTTUi("Für „Fläche füllen“ ein Rechteck auf der Karte aufziehen."));
+            else ed.fillArea(done.start, ed.clientToDoc(event.clientX, event.clientY));
+        } else if (done.type === 'marquee') {
             ed.selectionSet.marquee=null;
             const p=ed.clientToDoc(event.clientX,event.clientY);
             if(Math.hypot(p.x-done.start.x,p.y-done.start.y)*ed.view.zoom>=3)ed.selectionSet.rectangle(done.start,p,done.add);
@@ -359,8 +377,21 @@ export function attachInput(ed) {
 
     canvas.addEventListener("contextmenu", (event) => event.preventDefault());
 
+    let wheelCarry = 0;
     canvas.addEventListener("wheel", (event) => {
         event.preventDefault();
+        // Optional Alt+wheel reorders a selection in the select tool; every other
+        // wheel (including Ctrl/pinch) keeps zooming as before.
+        if (event.altKey && !event.ctrlKey && !event.metaKey && ed.tool === "select" && ed.selectionSet.count && !ed.selectionSet.tiles) {
+            const pixels = event.deltaMode === 1 ? event.deltaY * 33 : event.deltaMode === 2 ? event.deltaY * 400 : event.deltaY;
+            wheelCarry += pixels || event.deltaX || 0;
+            while (Math.abs(wheelCarry) >= 60) {
+                ed.wheelReorder(wheelCarry < 0);
+                wheelCarry -= Math.sign(wheelCarry) * 60;
+            }
+            return;
+        }
+        wheelCarry = 0;
         const unit = event.deltaMode === 1 ? 0.05 : event.deltaMode === 2 ? 0.5 : 0.0015;
         const factor = Math.exp(-event.deltaY * unit * (event.ctrlKey ? 2.5 : 1));
         const p = local(event);
@@ -402,7 +433,21 @@ export function attachInput(ed) {
             ed.redo();
             return;
         }
+        // Layer switch in the tool context: Alt+↑ / Alt+↓ (top of the layer list first).
+        if (event.altKey && !mod && (event.key === "ArrowUp" || event.key === "ArrowDown")) {
+            event.preventDefault();
+            ed.cycleLayer(event.key === "ArrowUp" ? -1 : 1);
+            return;
+        }
         if (mod || event.altKey) return;
+        // Object order: Bild↑/Bild↓ one step, with Umschalt to front/back (selection, canvas focus).
+        if ((event.key === "PageUp" || event.key === "PageDown") && ed.tool === "select" && ed.selectionSet.count
+            && (event.target === canvas || event.target === document.body)) {
+            event.preventDefault();
+            const up = event.key === "PageUp";
+            ed.reorderSelection(event.shiftKey ? (up ? "front" : "back") : (up ? "forward" : "backward"));
+            return;
+        }
         if (toolKeys[key]) {
             ed.setTool(toolKeys[key]);
             return;

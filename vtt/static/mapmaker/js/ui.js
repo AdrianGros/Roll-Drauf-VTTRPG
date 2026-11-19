@@ -3,7 +3,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 // Panels, dialogs and status. All user-provided text is written via
 // textContent/value only.
 
-import { LABEL_STYLES, LIMITS, PLACE_KINDS, findItem, clamp } from "./document.js";
+import { ASSET_PERSPECTIVES, ASSET_STYLES, LABEL_FAMILIES, LABEL_STYLES, LIMITS, PLACE_KINDS, cleanText, findItem, clamp, referencedAssetIds } from "./document.js";
+import { CUSTOM_PACK } from "./stamps.js";
 import { MATERIALS, StrokeEngine, materialTile } from "./brush.js";
 import { labelBounds, pathBounds, replacedTitleLabel } from "./render.js";
 
@@ -44,6 +45,63 @@ const ICONS = {
 };
 
 const KIND_LABEL = { raster: globalThis.VTTUi("Malen"), paths: globalThis.VTTUi("Wege"), stamps: globalThis.VTTUi("Symbole"), labels: globalThis.VTTUi("Text"), tiles: globalThis.VTTUi("Kacheln") };
+
+/** Thumbnail without object URLs (CSP): catalog images by src, own and built-in images drawn to a canvas. */
+function stampThumb(stamp, size, label = null) {
+    if (stamp.src) return el("img", { src: stamp.src, width: size, height: size, alt: label || "", loading: "lazy", decoding: "async", class: stamp.pixelArt ? "mm-pixel" : null });
+    const canvas = el("canvas", { width: size, height: size, class: stamp.pixelArt ? "mm-pixel" : null, ...(label ? { role: "img", "aria-label": label } : { "aria-hidden": "true" }) });
+    if (stamp.image) {
+        const ctx = canvas.getContext("2d");
+        ctx.imageSmoothingEnabled = !stamp.pixelArt;
+        const scale = Math.min((size - 8) / stamp.w, (size - 8) / stamp.h);
+        const w = stamp.w * scale, h = stamp.h * scale;
+        ctx.drawImage(stamp.image, (size - w) / 2, (size - h) / 2, w, h);
+    }
+    return canvas;
+}
+
+/** Sides where opaque pixels inside the crop continue into opaque pixels just outside it. */
+export function cropCutSides(crop, { w, h, alpha }) {
+    const at = (x, y) => alpha[y * w + x];
+    const sides = [];
+    const row = (inside, outside) => { for (let x = crop.x; x < crop.x + crop.w; x += 1) if (at(x, inside) && at(x, outside)) return true; return false; };
+    const col = (inside, outside) => { for (let y = crop.y; y < crop.y + crop.h; y += 1) if (at(inside, y) && at(outside, y)) return true; return false; };
+    if (crop.y > 0 && row(crop.y, crop.y - 1)) sides.push("top");
+    if (crop.x + crop.w < w && col(crop.x + crop.w - 1, crop.x + crop.w)) sides.push("right");
+    if (crop.y + crop.h < h && row(crop.y + crop.h - 1, crop.y + crop.h)) sides.push("bottom");
+    if (crop.x > 0 && col(crop.x, crop.x - 1)) sides.push("left");
+    return sides;
+}
+
+/**
+ * Clean own crop: grow while visible content continues past an edge, then trim
+ * fully transparent margins. Returns null for an empty crop. A diagnosis aid,
+ * not a claim that every catalogue sheet is sliced correctly.
+ */
+export function fitCropToContent(crop, { w, h, alpha }) {
+    let { x, y, w: cw, h: ch } = crop;
+    const rowAny = (r, x0, x1) => { for (let i = Math.max(0, x0); i < Math.min(w, x1); i += 1) if (alpha[r * w + i]) return true; return false; };
+    const colAny = (c, y0, y1) => { for (let j = Math.max(0, y0); j < Math.min(h, y1); j += 1) if (alpha[j * w + c]) return true; return false; };
+    for (let guard = 0, changed = true; changed && guard < w + h; guard += 1) {
+        changed = false;
+        if (y > 0 && rowAny(y, x, x + cw) && rowAny(y - 1, x - 1, x + cw + 1)) { y -= 1; ch += 1; changed = true; }
+        if (y + ch < h && rowAny(y + ch - 1, x, x + cw) && rowAny(y + ch, x - 1, x + cw + 1)) { ch += 1; changed = true; }
+        if (x > 0 && colAny(x, y, y + ch) && colAny(x - 1, y - 1, y + ch + 1)) { x -= 1; cw += 1; changed = true; }
+        if (x + cw < w && colAny(x + cw - 1, y, y + ch) && colAny(x + cw, y - 1, y + ch + 1)) { cw += 1; changed = true; }
+    }
+    while (ch > 0 && !rowAny(y, x, x + cw)) { y += 1; ch -= 1; }
+    while (ch > 0 && !rowAny(y + ch - 1, x, x + cw)) ch -= 1;
+    while (cw > 0 && ch > 0 && !colAny(x, y, y + ch)) { x += 1; cw -= 1; }
+    while (cw > 0 && ch > 0 && !colAny(x + cw - 1, y, y + ch)) cw -= 1;
+    return cw > 0 && ch > 0 ? { x, y, w: cw, h: ch } : null;
+}
+
+const STYLE_FILTERS = () => ({ "": globalThis.VTTUi("Alle Darstellungen"), pixel: globalThis.VTTUi("Pixelgrafik"), painted: globalThis.VTTUi("Gemalt"),
+    ink: globalThis.VTTUi("Tusche/Linie"), other: globalThis.VTTUi("Sonstiges") });
+const PERSPECTIVE_FILTERS = () => ({ "": globalThis.VTTUi("Alle Perspektiven"), top: globalThis.VTTUi("Draufsicht"), side: globalThis.VTTUi("Seitenansicht"),
+    isometric: globalThis.VTTUi("Isometrisch"), other: globalThis.VTTUi("Sonstige") });
+const FONT_NAMES = () => ({ "": globalThis.VTTUi("Wie der Stil"), cinzel: globalThis.VTTUi("Cinzel (Antiqua-Versalien)"),
+    badscript: globalThis.VTTUi("Bad Script (Schreibschrift)"), literata: globalThis.VTTUi("Literata (Buchschrift)") });
 
 const STATUS_TEXT = {
     idle: globalThis.VTTUi("Noch keine Änderungen"),
@@ -147,11 +205,145 @@ export class UI {
         this.bindLabelTool();
         this.bindInspector();
         this.bindLayers();
+        this.bindReviewControls();
         $("addPlaceBtn").addEventListener("click", () => {
             ed.setTool("label");
             this.openPane("tool");
             this.toast(globalThis.VTTUi("Tippe auf die Karte, um den Ort zu setzen."));
         });
+    }
+
+    /** Tool-context layer choice, brush clip, object order, own images, style filters and help rows. */
+    bindReviewControls() {
+        const ed = this.ed, t = globalThis.VTTUi;
+        const labels = {
+            toolLayerLabel: t("Ebene für dieses Werkzeug"), toolLayerHint: t("Alt+↑ / Alt+↓ wechselt die Ebene."),
+            brushClipLabel: t("Malbegrenzung"), selFontLabel: t("Schriftfamilie"), labelFontLabel: t("Schriftfamilie"),
+            selPathNameLabel: t("Name des Wegs (optional)"), selPathConnect: t("Endpunkt mit Nachbarweg verbinden"),
+            selPathConnectHint: t("Verbindet nur mit einem Endpunkt derselben Ebene und Art in höchstens {px} px Abstand. Kreuzungen bleiben getrennt.", { px: 32 }),
+            stampPlacementLabel: t("Platzierung"), stampAreaLabel: t("Fläche füllen (Rechteck ziehen)"),
+            ownUploadBtn: t("Eigenes Bild hochladen …"), ownPixelBtn: t("Pixelbild zeichnen …"), ownAssetManageLabel: t("Eigene Bilder dieser Karte"),
+            stampStyleLabel: t("Darstellung"), stampPerspectiveLabel: t("Perspektive"), sheetFitContent: t("Zusammenhängenden Inhalt erfassen"),
+            helpOrder: t("Auswahl eine Stufe nach vorne/hinten (mit Umschalt: ganz)"), helpWheelKey: t("Mausrad"),
+            helpWheel: t("Reihenfolge der Auswahl ändern (Auswählen-Werkzeug)"), helpLayer: t("Ebene des Werkzeugs wechseln"),
+        };
+        Object.entries(labels).forEach(([id, text]) => { $(id).textContent = text; });
+        const orderNames = { back: t("Ganz nach hinten"), backward: t("Nach hinten"), forward: t("Nach vorne"), front: t("Ganz nach vorne") };
+        document.querySelectorAll(".mm-order-row").forEach((row) => row.setAttribute("aria-label", t("Reihenfolge")));
+        document.querySelectorAll(".mm-order-label").forEach((node) => { node.textContent = t("Reihenfolge"); });
+        document.querySelectorAll(".mm-order-hint").forEach((node) => { node.textContent = t("Bild↑/Bild↓ oder Alt+Mausrad ändern die Reihenfolge in der Ebene."); });
+        document.querySelectorAll("[data-order]").forEach((button) => {
+            button.textContent = orderNames[button.dataset.order];
+            button.addEventListener("click", () => ed.reorderSelection(button.dataset.order));
+        });
+        $("toolLayer").addEventListener("change", (event) => { if (event.target.value) ed.setActiveLayer(event.target.value); });
+        $("brushClip").addEventListener("change", (event) => ed.setClip(event.target.value || null));
+        for (const [id, names] of [["stampStyle", STYLE_FILTERS()], ["stampPerspective", PERSPECTIVE_FILTERS()]]) {
+            for (const [value, name] of Object.entries(names)) $(id).appendChild(el("option", { value }, name));
+            $(id).title = t("Stil- und Perspektivangaben gibt es für eigene Bilder; Pixelgrafik erkennt auch Katalogpakete.");
+            $(id).addEventListener("change", () => { this.palettePage = 0; this.renderPalette(); });
+        }
+        for (const select of [$("labelFont"), $("selFont")]) {
+            for (const [value, name] of Object.entries(FONT_NAMES())) select.appendChild(el("option", { value }, name));
+        }
+        $("labelFont").addEventListener("change", (event) => { ed.labelOpts.font = LABEL_FAMILIES.includes(event.target.value) ? event.target.value : null; });
+        $("selFont").addEventListener("change", (event) => {
+            ed.liveEdit({ font: LABEL_FAMILIES.includes(event.target.value) ? event.target.value : null });
+            ed.commitEdit();
+        });
+        $("selPathName").addEventListener("input", (event) => ed.liveEdit({ name: cleanText(event.target.value, LIMITS.pathName) }));
+        $("selPathName").addEventListener("change", () => ed.commitEdit());
+        $("selPathName").addEventListener("keydown", (event) => { if (event.key === "Enter") event.target.blur(); });
+        $("selPathConnect").addEventListener("click", () => ed.connectPathEndpoints());
+        $("stampArea").addEventListener("change", (event) => {
+            ed.stampOpts.area = event.target.checked;
+            if (event.target.checked) { ed.stampOpts.scatter = false; $("stampScatter").checked = false; }
+            this.showAreaPlan(null);
+            ed.requestFrame();
+        });
+        this.showAreaPlan(null);
+    }
+
+    showAreaPlan(count) {
+        const ed = this.ed, info = $("stampAreaInfo");
+        if (!ed.stampOpts.area) { info.textContent = ""; return; }
+        if (count === null) {
+            info.textContent = globalThis.VTTUi("Rechteck auf der Karte aufziehen. Abstand wie beim Streuen; ein Rückgängig-Schritt.");
+            return;
+        }
+        const free = LIMITS.items - (ed.doc ? ed.doc.layers.reduce((sum, layer) => sum + (layer.items ? layer.items.length : 0), 0) : 0);
+        info.textContent = count > 400 || count > free
+            ? globalThis.VTTUi("{count} Symbole – zu viele für diese Fläche (höchstens 400 je Fläche, frei: {free}).", { count, free })
+            : globalThis.VTTUi("{count} Symbole werden gesetzt.", { count });
+    }
+
+    refreshToolLayer() {
+        const ed = this.ed;
+        if (!ed.doc) return;
+        const select = $("toolLayer"), kind = ed.toolKind();
+        const eraser = ed.tool === "eraser" ? ["raster", "tiles", "stamps"] : null;
+        const layers = [...ed.doc.layers].reverse().filter((layer) => (kind ? layer.kind === kind : !eraser || eraser.includes(layer.kind)));
+        select.replaceChildren();
+        for (const layer of layers) {
+            select.appendChild(el("option", { value: layer.id }, layer.visible ? layer.name : globalThis.VTTUi("{name} (ausgeblendet)", { name: layer.name })));
+        }
+        if (!layers.length) select.appendChild(el("option", { value: "" }, kind === "tiles" || kind === "paths"
+            ? globalThis.VTTUi("Neue Ebene beim ersten Einsatz") : globalThis.VTTUi("Keine passende Ebene")));
+        const target = layers.find((layer) => layer.id === ed.activeLayerId) || (kind && ed.targetLayer(kind, { quiet: true })) || layers[0];
+        select.value = target ? target.id : "";
+        select.disabled = !layers.length;
+    }
+
+    refreshClip() {
+        const ed = this.ed;
+        if (!ed.doc) return;
+        const select = $("brushClip"), candidates = ed.clipCandidates();
+        select.replaceChildren(el("option", { value: "" }, globalThis.VTTUi("Keine Begrenzung")));
+        for (const layer of candidates) {
+            select.appendChild(el("option", { value: layer.id }, layer.kind === "tiles"
+                ? globalThis.VTTUi("Nur auf belegten Kacheln von „{name}“", { name: layer.name })
+                : globalThis.VTTUi("Nur auf der Deckung von „{name}“", { name: layer.name })));
+        }
+        select.value = ed.clipOpts.layerId || "";
+        select.disabled = !candidates.length;
+        const target = ed.activeLayer();
+        $("brushClipHint").textContent = ed.clipOpts.notice
+            || (!candidates.length ? (target && target.kind === "raster"
+                ? globalThis.VTTUi("Keine Bezugsebene: Eine Malebene darunter oder eine Kachelebene kann die Malfläche begrenzen.")
+                : globalThis.VTTUi("Malbegrenzung gilt für die aktive Malebene."))
+                : ed.clipOpts.layerId ? globalThis.VTTUi("Neue Striche erscheinen nur dort; vorhandene Pixel außerhalb bleiben unverändert.") : "");
+    }
+
+    refreshCustomAssets() {
+        const ed = this.ed;
+        if (!ed.doc || !ed.palette) return;
+        const usage = ed.assetUsage();
+        $("ownAssetUsage").textContent = globalThis.VTTUi("{count}/{max} eigene Bilder · {mib} von 12 MiB · nur in dieser Karte gespeichert", {
+            count: usage.count, max: LIMITS.customAssets, mib: `${(usage.bytes / 1048576).toLocaleString("de", { maximumFractionDigits: 2 })} MiB` });
+        const list = $("ownAssetList"), used = referencedAssetIds(ed.doc);
+        list.replaceChildren();
+        for (const asset of ed.doc.assets) {
+            const stamp = ed.palette.stamps.get(asset.id);
+            const item = el("li", { class: "mm-own-item", dataset: { asset: asset.id } });
+            if (stamp) item.appendChild(stampThumb(stamp, 40));
+            const text = el("div", { class: "mm-own-text" });
+            text.append(el("strong", {}, asset.label), el("span", { class: "mm-hint" },
+                `${asset.width}×${asset.height} px · ${STYLE_FILTERS()[asset.style] || asset.style} · ${asset.license || globalThis.VTTUi("ohne Lizenzangabe")}`));
+            const actions = el("div", { class: "mm-own-buttons" });
+            const choose = el("button", { type: "button", class: "mm-btn mm-btn-small", "aria-label": globalThis.VTTUi("„{label}“ als Stempel wählen", { label: asset.label }) }, globalThis.VTTUi("Verwenden"));
+            choose.addEventListener("click", () => { ed.setTool("stamp"); this.chooseStamp(asset.id, { openSheet: false }); });
+            const inUse = used.has(asset.id);
+            const remove = el("button", { type: "button", class: "mm-btn mm-btn-small", disabled: inUse, "aria-label": globalThis.VTTUi("„{label}“ aus der Karte entfernen", { label: asset.label }),
+                title: inUse ? globalThis.VTTUi("Wird auf der Karte verwendet") : "" }, globalThis.VTTUi("Entfernen"));
+            remove.addEventListener("click", () => ed.removeCustomAsset(asset.id));
+            actions.append(choose, remove);
+            item.append(text, actions);
+            list.appendChild(item);
+        }
+        if (!ed.doc.assets.length) list.appendChild(el("li", { class: "mm-empty" }, globalThis.VTTUi("Noch keine eigenen Bilder in dieser Karte.")));
+        this.renderPalette();
+        this.renderTilePalette();
+        this.renderTileVariants();
     }
 
     range(id, outId, format, onInput) {
@@ -303,7 +495,11 @@ export class UI {
         this.stampRot.set(ed.stampOpts.rot);
         $("stampFlip").addEventListener("change", (event) => { ed.stampOpts.flip = event.target.checked; ed.requestFrame(); });
         $("stampVary").addEventListener("change", (event) => { ed.stampOpts.vary = event.target.checked; });
-        $("stampScatter").addEventListener("change", (event) => { ed.stampOpts.scatter = event.target.checked; });
+        $("stampScatter").addEventListener("change", (event) => {
+            ed.stampOpts.scatter = event.target.checked;
+            if (event.target.checked && ed.stampOpts.area) { ed.stampOpts.area = false; $("stampArea").checked = false; this.showAreaPlan(null); }
+            ed.requestFrame();
+        });
         // Optional stamp grid: off by default; preview and placement share ed.stampPoint().
         $("stampGridOn").addEventListener("change", (event) => {
             ed.stampOpts.grid = event.target.checked ? ed.stampGridSize(Number($("stampGridSize").value)) : 0;
@@ -353,6 +549,7 @@ export class UI {
     buildTilePalette() {
         const { palette } = this.ed;
         const tileIds = palette.tileGroups.flatMap((group) => group.ids);
+        $("tilePack").appendChild(el("option", { value: CUSTOM_PACK }, palette.customGroupName));
         for (const pack of palette.packs) {
             if (tileIds.some((id) => palette.stamps.get(id).pack === pack.id)) $("tilePack").appendChild(el("option", { value: pack.id }, pack.name));
         }
@@ -394,7 +591,7 @@ export class UI {
             }
             const button = el("button", { type: "button", class: "mm-tile-btn", role: "radio", "aria-checked": String(this.ed.tileOpts.asset === id),
                 "aria-label": stamp.label, title: `${stamp.label} · ${stamp.packName}`, dataset: { tile: id } });
-            button.appendChild(el("img", { src: stamp.src, width: 48, height: 48, alt: "", loading: "lazy", decoding: "async", class: stamp.pixelArt ? "mm-pixel" : null }));
+            button.appendChild(stampThumb(stamp, 48));
             button.appendChild(el("span", {}, stamp.label));
             button.addEventListener("click", () => this.chooseTile(id));
             grid.appendChild(button);
@@ -409,7 +606,7 @@ export class UI {
             const stamp = ed.palette.stamps.get(id);
             if (!stamp) continue;
             const item = el("li", { class: "mm-variant-chip", dataset: { tile: id } });
-            item.appendChild(el("img", { src: stamp.src, width: 32, height: 32, alt: stamp.label, class: stamp.pixelArt ? "mm-pixel" : null }));
+            item.appendChild(stampThumb(stamp, 32, stamp.label));
             const remove = el("button", { type: "button", class: "mm-btn mm-btn-small", "aria-label": globalThis.VTTUi("Variante „{p0}“ entfernen", { p0: stamp.label }) }, "×");
             remove.addEventListener("click", () => { ed.tileOpts.variants = ed.tileOpts.variants.filter((entry) => entry !== id); this.renderTileVariants(); });
             item.appendChild(remove);
@@ -442,13 +639,16 @@ export class UI {
         const { palette } = this.ed;
         this.palettePage = 0;
         const packSelect = $("stampPack");
+        // Own images are listed per opened project; the option is always offered.
+        packSelect.appendChild(el("option", { value: CUSTOM_PACK }, palette.customGroupName));
+        $("stampCategory").appendChild(el("option", { value: palette.customGroupName }, palette.customGroupName));
         for (const pack of palette.packs) {
             if ([...palette.stamps.values()].some((stamp) => stamp.pack === pack.id)) {
                 packSelect.appendChild(el("option", { value: pack.id }, pack.name));
             }
         }
         for (const group of palette.groups) {
-            if (group.ids.length) $("stampCategory").appendChild(el("option", { value: group.name }, group.name));
+            if (group.ids.length && !group.custom) $("stampCategory").appendChild(el("option", { value: group.name }, group.name));
         }
         $("stampCrop").addEventListener("click", () => this.openSheet(this.ed.stampOpts.asset));
         this.bindSheet();
@@ -476,10 +676,14 @@ export class UI {
         const terms = normalize($("stampSearch").value).trim().split(/\s+/).filter(Boolean);
         const pack = $("stampPack").value;
         const category = $("stampCategory").value;
+        const style = $("stampStyle").value, perspective = $("stampPerspective").value;
         const ids = palette.groups.flatMap((group) => group.ids).filter((id) => {
             const stamp = palette.stamps.get(id);
             const text = stamp.searchText || normalize(`${stamp.label} ${stamp.group} ${stamp.packName} ${stamp.search}`);
-            return (!pack || stamp.pack === pack) && (!category || stamp.group === category) && terms.every((term) => text.includes(term));
+            // Style/perspective are only known for own images; catalogue pixel art is recognised by its flag.
+            const styleOk = !style || (stamp.custom ? stamp.style === style : style === "pixel" && stamp.pixelArt);
+            const perspectiveOk = !perspective || (stamp.custom && stamp.perspective === perspective);
+            return (!pack || stamp.pack === pack) && (!category || stamp.group === category) && styleOk && perspectiveOk && terms.every((term) => text.includes(term));
         });
         const pageSize = 64;
         const pageCount = Math.max(1, Math.ceil(ids.length / pageSize));
@@ -515,11 +719,7 @@ export class UI {
                     $("packNote").textContent = globalThis.VTTUi("Einige Symbolbilder fehlen. Bitte neu laden oder ein anderes Paket wählen.");
                 });
                 button.appendChild(thumb);
-            } else {
-                const thumb = el("canvas", { width: 56, height: 56, "aria-hidden": "true" });
-                thumb.getContext("2d").drawImage(stamp.image, 4, 4, 48, 48);
-                button.appendChild(thumb);
-            }
+            } else button.appendChild(stampThumb(stamp, 56));
             button.appendChild(el("span", {}, stamp.label));
             button.addEventListener("click", () => this.chooseStamp(id));
             grid.appendChild(button);
@@ -541,7 +741,7 @@ export class UI {
             document.querySelectorAll(".mm-stamp").forEach((button) => {
                 button.setAttribute("aria-checked", String(button.dataset.asset === id));
             });
-            $("stampCrop").disabled = !stamp.src;
+            $("stampCrop").disabled = !(stamp.src || stamp.custom); // built-ins have no source pixels to crop
             if (crop) $("stampSelected").textContent += globalThis.VTTUi(" · Ausschnitt {p0}×{p1}",{p0:(crop.w),p1:(crop.h)});
             ed.requestFrame();
             if (stamp.sheet && openSheet) this.openSheet(id);
@@ -576,6 +776,15 @@ export class UI {
             canvas.style.width = value === "fit" ? "" : `${stamp.w * Number(value)}px`;
         });
         $("sheetCancel").addEventListener("click", () => dialog.close());
+        dialog.addEventListener("close", () => { this.sheetAlphaCache = null; });
+        $("sheetFitContent").addEventListener("click", () => {
+            const stamp = this.ed.palette.stamps.get(this.sheetId), crop = this.readSheetCrop(), alpha = stamp && this.sheetAlpha(stamp);
+            if (!crop || !alpha) return;
+            const fitted = fitCropToContent(crop, alpha);
+            if (!fitted) { $("sheetCropInfo").textContent = globalThis.VTTUi("Der Ausschnitt enthält keine sichtbaren Pixel."); return; }
+            for (const key of ["x", "y", "w", "h"]) $("sheet" + key.toUpperCase()).value = fitted[key];
+            this.drawSheet();
+        });
         $("sheetWhole").addEventListener("click", () => { this.chooseStamp(this.sheetId, { openSheet: false }); dialog.close(); });
         $("sheetUse").addEventListener("click", () => {
             const crop = this.readSheetCrop();
@@ -620,6 +829,41 @@ export class UI {
             ctx.fillStyle = "rgba(220,170,40,0.25)"; ctx.fillRect(crop.x*sx, crop.y*sy, crop.w*sx, crop.h*sy);
             ctx.strokeStyle = "#ffca4b"; ctx.lineWidth = 2; ctx.strokeRect(crop.x*sx+1, crop.y*sy+1, Math.max(1,crop.w*sx-2), Math.max(1,crop.h*sy-2));
         }
+        this.drawCropCompare(stamp, crop);
+    }
+
+    /** Opaque-pixel map of the open source image (bounded), cached while the dialog is open. */
+    sheetAlpha(stamp) {
+        if (this.sheetAlphaCache && this.sheetAlphaCache.id === stamp.id) return this.sheetAlphaCache;
+        if (!stamp.image || stamp.w * stamp.h > 4096 * 4096) return null;
+        const canvas = document.createElement("canvas"); canvas.width = stamp.w; canvas.height = stamp.h;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true }); ctx.drawImage(stamp.image, 0, 0);
+        const data = ctx.getImageData(0, 0, stamp.w, stamp.h).data, alpha = new Uint8Array(stamp.w * stamp.h);
+        for (let i = 0; i < alpha.length; i += 1) alpha[i] = data[i * 4 + 3] > 8 ? 1 : 0;
+        canvas.width = 0; canvas.height = 0;
+        this.sheetAlphaCache = { id: stamp.id, w: stamp.w, h: stamp.h, alpha };
+        return this.sheetAlphaCache;
+    }
+
+    /** Source-versus-crop comparison: the crop at true pixels and whether content runs past an edge. */
+    drawCropCompare(stamp, crop) {
+        const preview = $("sheetCropPreview"), info = $("sheetCropInfo");
+        if (!crop) { preview.width = preview.height = 1; info.textContent = ""; return; }
+        const scale = Math.min(4, 160 / Math.max(crop.w, crop.h));
+        preview.width = Math.max(1, Math.round(crop.w * scale)); preview.height = Math.max(1, Math.round(crop.h * scale));
+        preview.style.imageRendering = stamp.pixelArt ? "pixelated" : "auto";
+        const pctx = preview.getContext("2d"); pctx.imageSmoothingEnabled = !stamp.pixelArt;
+        pctx.clearRect(0, 0, preview.width, preview.height);
+        pctx.drawImage(stamp.image, crop.x, crop.y, crop.w, crop.h, 0, 0, preview.width, preview.height);
+        const alpha = this.sheetAlpha(stamp);
+        const parts = [globalThis.VTTUi("Quelle {w}×{h} px · Ausschnitt {cw}×{ch} px ab {x},{y}", { w: stamp.w, h: stamp.h, cw: crop.w, ch: crop.h, x: crop.x, y: crop.y })];
+        if (alpha) {
+            const cut = cropCutSides(crop, alpha);
+            const names = { top: globalThis.VTTUi("oben"), right: globalThis.VTTUi("rechts"), bottom: globalThis.VTTUi("unten"), left: globalThis.VTTUi("links") };
+            parts.push(cut.length ? globalThis.VTTUi("Sichtbarer Inhalt läuft über den Rand ({sides}) – vermutlich abgeschnitten.", { sides: cut.map((side) => names[side]).join(", ") })
+                : globalThis.VTTUi("Kein sichtbarer Inhalt wird am Rand abgeschnitten."));
+        }
+        info.textContent = parts.join(" ");
     }
 
     sheetDefaultCrop(stamp) {
@@ -789,6 +1033,7 @@ export class UI {
             $('groupHint').textContent=ed.selectionSet.tiles?globalThis.VTTUi('Kacheln bewegen sich in ganzen Rasterzellen. Belegte Zielzellen bleiben geschützt.'):globalThis.VTTUi('Die Auswahl gemeinsam ziehen oder löschen. Größe ändert die einzelnen Symbole und Beschriftungen.');
             const canScale=!ed.selectionSet.tiles && ed.selectionSet.objects.every(({item})=>!('points' in item));
             $('groupScaleRow').hidden=!canScale;$('groupScaleApply').hidden=!canScale;
+            $('groupInspector').querySelector('.mm-order-row').hidden=!!ed.selectionSet.tiles;
             box.hidden=true;return;
         }
         if (!found) {
@@ -812,7 +1057,9 @@ export class UI {
             if (!editing("selStampRot")) this.selStampRot.set(Math.round(item.rot));
             $("selStampFlip").checked = !!item.flip;
         } else if (isPath) {
-            $("inspectorTitle").textContent = item.material === "river" ? globalThis.VTTUi("Fluss") : globalThis.VTTUi("Weg");
+            const kind = item.material === "river" ? globalThis.VTTUi("Fluss") : globalThis.VTTUi("Weg");
+            $("inspectorTitle").textContent = item.name ? `${kind}: ${item.name}` : kind;
+            if (!editing("selPathName")) $("selPathName").value = item.name || "";
             $("selPathMaterial").value = item.material;
             $("selPathCurve").checked=!!item.curve;$("pathNodeMode").checked=ed.editPathNodes;
             if (!editing("selPathWidth") && !editing("selPathWidthNumber")) this.selPathWidth.set(item.width);
@@ -820,6 +1067,7 @@ export class UI {
             $("inspectorTitle").textContent = item.place ? globalThis.VTTUi("Ort") : globalThis.VTTUi("Beschriftung");
             if (!editing("selText")) $("selText").value = item.text;
             $("selStyle").value = item.style;
+            $("selFont").value = item.font || "";
             if (!editing("selColor")) $("selColor").value = item.color;
             if (!editing("selSize")) this.selSize.set(Math.round(item.size));
             if (!editing("selRot")) this.selRot.set(Math.round(item.rot));
@@ -891,6 +1139,8 @@ export class UI {
     refreshLayers() {
         const ed = this.ed;
         if (!ed.doc) return;
+        this.refreshToolLayer();
+        this.refreshClip();
         const list = $("layerList");
         list.replaceChildren();
         const layers = [...ed.doc.layers].reverse();
@@ -1055,6 +1305,7 @@ export class UI {
         this.updateTargets();
         this.refreshInspector();
         this.refreshLayers();
+        this.showAreaPlan(null);
         this.syncBrush();
         if (!this.isNarrow()) this.openPane("tool");
     }
@@ -1074,6 +1325,8 @@ export class UI {
         const tiles = ed.targetLayer("tiles", { quiet: true });
         $("tileTarget").textContent = tiles ? tiles.name : globalThis.VTTUi("Neue Kachelebene bei der ersten Kachel");
         $("tileSize").value = String(tiles ? tiles.grid.size : ed.tileOpts.size);
+        this.refreshToolLayer();
+        this.refreshClip();
     }
 
     updateUndo() {

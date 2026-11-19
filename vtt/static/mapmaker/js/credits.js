@@ -1,6 +1,20 @@
 globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-// Credits accompany the composed image. Text comes only from reviewed local manifests.
+// Credits accompany the composed image. Text comes only from reviewed local manifests,
+// plus the author's own statements for own images embedded in this project.
+import { referencedAssetIds } from "./document.js";
+
+/** Own images the map shows; works for runtime and serialized documents. */
+export function customAssetCredits(doc) {
+    const used = referencedAssetIds(doc);
+    const rows = (doc.assets || []).filter((asset) => used.has(asset.id)).map((asset) => [
+        asset.label,
+        asset.source ? `Quelle: ${asset.source}` : "",
+        asset.license ? `Lizenz: ${asset.license}` : "",
+    ].filter(Boolean).join(" – "));
+    return rows.length ? [`Eigene Bilder (im Projekt eingebettete Rasterbilder; Angaben der Kartenautorin bzw. des Kartenautors):\n${rows.join("\n")}`] : [];
+}
+
 export function creditsForDocument(doc, palette) {
     const used = new Set();
     for (const layer of doc.layers) {
@@ -27,6 +41,7 @@ export function creditsForDocument(doc, palette) {
         "Bei Veröffentlichung diese Angaben auch in einem Begleittext oder einer Credits-Seite nennen; Bilddienste können eingebettete Metadaten entfernen.",
         ...(raster ? ["Rasterquellensammlung: Alle freigegebenen lokalen Katalogquellen sind aufgeführt. Dies bedeutet nicht, dass jedes Paket in dieser Karte sichtbar verwendet wurde."] : []),
         ...palette.packs.filter((pack) => used.has(pack.id) && pack.credit).map((pack) => pack.credit),
+        ...customAssetCredits(doc),
     ].join("\n\n");
 }
 

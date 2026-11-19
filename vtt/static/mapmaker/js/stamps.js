@@ -2,7 +2,11 @@ globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(sourc
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Stamp palette: curated Kenney Cartography Pack (CC0) as the primary set,
 // plus a tiny built-in set (compass, pin; simple fallbacks if the pack is missing).
+// Own images embedded in a project are registered on demand (content-addressed
+// custom:<sha256> ids, so one palette can serve several documents safely).
+import { ValidationError } from "./document.js";
 
+export const CUSTOM_PACK = "custom";
 const FILE_RE = /^[a-z0-9_]{1,40}\.png$/;
 const ASSET_ID_RE = /^(kenney|kma|color):[a-z0-9_-]{1,40}$/;
 const PACK_ID_RE = /^[a-z0-9][a-z0-9-]{0,50}$/;
@@ -141,7 +145,42 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
         }
         return pending.get(id);
     };
-    const ensureDocumentImages = (doc) => {
+    const customName = globalThis.VTTUi("Eigene Bilder");
+    const customGroup = { name: customName, ids: [], custom: true };
+    const customTileGroup = { name: customName, ids: [], custom: true };
+    /** Decode embedded own PNG bytes once; the declared size must match the decoded image. */
+    const registerCustomAssets = async (entries) => {
+        for (const entry of entries || []) {
+            if (stamps.get(entry.id)?.image) continue;
+            let image;
+            try {
+                image = await createImageBitmap(new Blob([entry.bytes], { type: "image/png" }));
+            } catch (_error) {
+                throw new ValidationError(globalThis.VTTUi("Eigenes Bild „{label}“ ließ sich nicht dekodieren.", { label: entry.label }));
+            }
+            if (image.width !== entry.width || image.height !== entry.height) {
+                if (image.close) image.close();
+                throw new ValidationError(globalThis.VTTUi("Eigenes Bild „{label}“ hat nicht die angegebene Größe.", { label: entry.label }));
+            }
+            if (stamps.get(entry.id)?.image) { if (image.close) image.close(); continue; }
+            const search = `${entry.label} ${entry.source || ""} ${entry.license || ""}`.slice(0, 500);
+            stamps.set(entry.id, {
+                id: entry.id, label: entry.label, group: customName, pack: CUSTOM_PACK, packName: customName,
+                search, searchText: `${entry.label} ${customName} ${search}`.toLocaleLowerCase("de").normalize("NFD").replace(/[̀-ͯ]/g, ""),
+                src: null, image, w: entry.width, h: entry.height, defaultSize: clampSize(Math.max(entry.width, entry.height)),
+                pixelArt: entry.style === "pixel", tile: entry.width === entry.height, custom: true,
+                style: entry.style, perspective: entry.perspective, source: entry.source, license: entry.license,
+            });
+        }
+    };
+    /** The palette lists only the current document's own images (others stay resolvable by id). */
+    const showDocumentAssets = (doc) => {
+        const ids = (doc && doc.assets ? doc.assets : []).map((asset) => asset.id).filter((id) => stamps.has(id));
+        customGroup.ids = ids;
+        customTileGroup.ids = ids.filter((id) => stamps.get(id).tile);
+    };
+    const ensureDocumentImages = async (doc) => {
+        await registerCustomAssets(doc.assets);
         const ids = new Set();
         for (const layer of doc.layers) {
             for (const item of layer.items || []) {
@@ -243,8 +282,11 @@ export async function loadPalette(onImageReady = () => {}, onImageError = () => 
     }
     packs.push({ id: "builtin", name: "Roll Drauf · Einfache Symbole" });
     groups.push(builtinGroup);
+    groups.unshift(customGroup);
+    tileGroups.unshift(customTileGroup);
     if (!packLoaded) errors.unshift("Das Kenney-Paket fehlt – einfache Ersatzsymbole stehen bereit.");
-    return { stamps, groups, tileGroups, packs, packLoaded, packError: errors.join(" "), texture, materialTextures, loadStamp, ensureDocumentImages };
+    return { stamps, groups, tileGroups, packs, packLoaded, packError: errors.join(" "), texture, materialTextures, loadStamp, ensureDocumentImages,
+        registerCustomAssets, showDocumentAssets, customGroupName: customName };
 }
 
 function clampSize(value) {
