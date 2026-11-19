@@ -74,3 +74,47 @@
     .sc-navigation h3 { font-size: .8rem; }
     .sc-day { min-height: 45px; }
 }
+/* Private day notes and planning share the existing calendar, including touch. */
+.sc-personal-toolbar { display: flex; align-items: end; flex-wrap: wrap; gap: .5rem; margin: .8rem 0; }
+.sc-personal-toolbar label { display: grid; gap: .25rem; font-size: .85rem; }
+.sc-personal-toolbar select { min-height: 44px; color: inherit; background: transparent; border: 1px solid currentColor; padding: .5rem; border-radius: .3rem; }
+[data-personal-calendar] button { min-height: 44px; }
+.sc-note-markers { display: flex; flex-wrap: wrap; justify-content: center; gap: .12rem; font-size: .8rem; }
+.sc-note-marker[data-color="red"] { color: #a52f39; }
+.sc-note-marker[data-color="orange"] { color: #9a4d15; }
+.sc-note-marker[data-color="yellow"] { color: #826300; }
+.sc-note-marker[data-color="green"] { color: #226944; }
+.sc-note-marker[data-color="teal"] { color: #24696d; }
+.sc-note-marker[data-color="blue"] { color: #315f9f; }
+.sc-note-marker[data-color="purple"] { color: #784d99; }
+.sc-day.is-selected .sc-note-marker { color: inherit; }
+.sc-day-dialog { box-sizing: border-box; width: min(620px, calc(100vw - 24px)); max-height: 88dvh; overflow: auto; border: 1px solid var(--ui-line, #88795f); border-radius: .65rem; padding: 1rem; color: var(--ui-text, #332638); background: var(--ui-paper, #faf2e4); }
+.sc-day-dialog::backdrop { background: #110e17a8; }
+.sc-day-dialog header { display: flex; gap: .5rem; align-items: start; justify-content: space-between; }
+.sc-day-dialog h3 { margin: 0; font-size: 1.1rem; overflow-wrap: anywhere; }
+.sc-day-dialog h4 { margin: .5rem 0; }
+.sc-day-dialog button { min-height: 44px; }
+.sc-day-dialog .btn-secondary { background: transparent; color: inherit; border: 1px solid currentColor; }
+.sc-personal-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin-top: .8rem; }
+.sc-personal-form label { display: grid; gap: .25rem; min-width: 0; font-size: .85rem; }
+.sc-personal-form input, .sc-personal-form select, .sc-personal-form textarea { box-sizing: border-box; min-width: 0; width: 100%; font: inherit; padding: .6rem; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: .3rem; }
+.sc-personal-form textarea { resize: vertical; }
+.sc-note-body { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .9rem; }
+.sc-note { border-left: .3rem solid #784d99; padding-left: .6rem; }
+.sc-note[data-color="red"] { border-left-color: #a52f39; }
+.sc-note[data-color="orange"] { border-left-color: #9a4d15; }
+.sc-note[data-color="yellow"] { border-left-color: #826300; }
+.sc-note[data-color="green"] { border-left-color: #226944; }
+.sc-note[data-color="teal"] { border-left-color: #24696d; }
+.sc-note[data-color="blue"] { border-left-color: #315f9f; }
+[data-day-status], [data-personal-status] { overflow-wrap: anywhere; font-size: .85rem; }
+[data-day-status].is-error, [data-personal-status].is-error { color: #a52f39; }
+:root[data-vtt-theme="night"] .sc-day-dialog { color: #f8f4e9; background: #292132; border-color: #a69ab4; }
+:root[data-vtt-theme="night"] .sc-note-marker[data-color="red"], :root[data-vtt-theme="night"] [data-day-status].is-error, :root[data-vtt-theme="night"] [data-personal-status].is-error { color: #ffb1ba; }
+:root[data-vtt-theme="night"] .sc-note-marker[data-color="orange"] { color: #ffc08d; }
+:root[data-vtt-theme="night"] .sc-note-marker[data-color="yellow"] { color: #e5d27f; }
+:root[data-vtt-theme="night"] .sc-note-marker[data-color="green"] { color: #a0dfb8; }
+:root[data-vtt-theme="night"] .sc-note-marker[data-color="teal"] { color: #92d8d9; }
+:root[data-vtt-theme="night"] .sc-note-marker[data-color="blue"] { color: #a6c8ff; }
+:root[data-vtt-theme="night"] .sc-note-marker[data-color="purple"] { color: #d3b4f3; }
+@media (max-width: 600px) { .sc-personal-form { grid-template-columns: minmax(0, 1fr); } }

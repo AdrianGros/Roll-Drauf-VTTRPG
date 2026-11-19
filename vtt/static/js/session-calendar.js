@@ -9,6 +9,8 @@ const language = () => (globalThis.VTTI18n?.locale?.() || document.documentEleme
 const intlLocale = () => (language() === 'en' ? 'en-GB' : 'de-DE');
 const fail = error => ui(error?.message || 'Die Anfrage ist fehlgeschlagen. Bitte versuche es erneut.');
 const api = (path, method = 'GET', payload) => window.Auth.makeAuthRequest(`/api/campaigns/${path}`, method, payload ?? (method === 'GET' ? null : {}));
+const personalApi = (path, method = 'GET', payload) => window.Auth.makeAuthRequest(`/api/calendar/${path}`, method, payload ?? (method === 'GET' ? null : {}));
+const COLOR_LABELS = {red: 'Rot', orange: 'Orange', yellow: 'Gelb', green: 'Grün', teal: 'Petrol', blue: 'Blau', purple: 'Lila'};
 
 const parseDay = value => new Date(`${String(value).slice(0, 10)}T12:00:00Z`);
 const isoDay = day => day.toISOString().slice(0, 10);
@@ -44,7 +46,7 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
     ensureStylesheet();
     root.setAttribute('data-session-calendar', '');
     const state = {scope: 'month', anchor: todayIn(timezone), campaign: '', day: '', entries: [], cursor: null, data: null,
-                   version: 0, alertVersion: 0, busy: false, materialized: false};
+                   version: 0, alertVersion: 0, busy: false, materialized: false, notes: []};
     root.innerHTML = `
         <div class="sc-heading"><div><span class="book-scene-panel-kicker">${esc(ui('Gemeinsam spielen'))}</span>
             <h2 class="book-scene-panel-title">${esc(ui('Session-Kalender'))}</h2></div>
@@ -61,6 +63,7 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
             <button type="button" class="btn btn-secondary btn-sm" data-move="1" aria-label="${esc(ui('Nächster Zeitraum'))}">›</button>
             <button type="button" class="btn btn-secondary btn-sm" data-today>${esc(ui('Heute'))}</button></div>
         <div data-month-grid></div>
+        <div data-personal-calendar></div>
         <div data-calendar-content aria-busy="true"></div>
         <p data-calendar-status role="status" aria-live="polite"></p>
         <button type="button" class="btn btn-secondary btn-sm" data-load-more hidden>${esc(ui('Weitere Termine laden'))}</button>
@@ -68,6 +71,8 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
     const content = root.querySelector('[data-calendar-content]');
     const status = root.querySelector('[data-calendar-status]');
     const setStatus = (text, error = false) => { status.textContent = text; status.classList.toggle('is-error', error); };
+    const personal = mountPersonalCalendar(root, {timezone, getData: () => state.data, getEntries: () => state.entries,
+        onNotes: notes => { state.notes = notes; if (state.data) renderGrid(); }, onChanged: () => load()});
 
     function eventMarkup(entry) {
         const details = [esc(entry.campaign_name), esc(statusLabel(entry.status)),
@@ -93,9 +98,10 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
         box.innerHTML = `<div class="sc-month-grid">${weekdays.map(d => `<span class="sc-weekday">${esc(d)}</span>`).join('')}
             ${Array.from({length: lead}, () => '<span class="sc-blank"></span>').join('')}
             ${Array.from({length: total}, (_, i) => {
-                const day = shiftDays(data.start, i), n = counts.get(day) || 0;
+                const day = shiftDays(data.start, i), n = counts.get(day) || 0, notes = state.notes.filter(note => note.date === day);
                 return `<button type="button" class="sc-day${day === todayIn(timezone) ? ' is-today' : ''}${state.day === day ? ' is-selected' : ''}" data-day="${day}"
-                    aria-pressed="${state.day === day}" aria-label="${esc(ui('{date}: {count} Termine', {date: dayLabel(day), count: n}))}"><span>${Number(day.slice(8, 10))}</span><small>${n ? `${n} ●` : '&nbsp;'}</small></button>`;
+                    aria-pressed="${state.day === day}" aria-label="${esc(ui('{date}: {count} Termine', {date: dayLabel(day), count: n}))}${notes.length ? ' · ' + esc(ui('{count} Notizen', {count: notes.length})) : ''}"><span>${Number(day.slice(8, 10))}</span><small>${n ? `${n} ●` : '&nbsp;'}</small>
+                    <span class="sc-note-markers" aria-hidden="true">${notes.slice(0, 5).map(note => `<span class="sc-note-marker" data-color="${esc(note.color)}">▣</span>`).join('')}${notes.length > 5 ? '+' : ''}</span></button>`;
             }).join('')}${Array.from({length: trailing}, () => '<span class="sc-blank"></span>').join('')}</div>`;
     }
 
@@ -170,6 +176,7 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
             state.entries = append ? state.entries.concat(data.entries) : data.entries;
             state.cursor = data.next_cursor;
             render();
+            if (!append) await personal.refresh(data);
             if (!append) loadAlerts();
         } catch (error) {
             if (!root.isConnected || version !== state.version) return;
@@ -185,7 +192,7 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
     root.addEventListener('click', async event => {
         const button = event.target.closest('button');
         if (!button || !root.contains(button) || state.busy) return;
-        if (button.dataset.day) { state.day = state.day === button.dataset.day ? '' : button.dataset.day; render(); return; }
+        if (button.dataset.day) { state.day = button.dataset.day; render(); await personal.openDay(state.day); return; }
         if (button.dataset.scope) { state.scope = button.dataset.scope; state.day = ''; await load(); return; }
         if (button.hasAttribute('data-today')) { state.anchor = todayIn(timezone); state.day = ''; await load(); return; }
         if (button.hasAttribute('data-load-more')) { await load({append: true}); return; }
@@ -213,6 +220,237 @@ export async function mountOwnCalendar(root, {timezone = zoneName()} = {}) {
         }
     });
     await load();
+}
+
+/* Private day tools extend the existing calendar; campaign authority stays in its APIs. */
+function mountPersonalCalendar(root, {timezone, getData, getEntries, onNotes, onChanged}) {
+    const host = root.querySelector('[data-personal-calendar]');
+    host.innerHTML = `<div class="sc-personal-toolbar"><label>${esc(ui('Tag öffnen als'))}<select data-day-mode>
+        <option value="notes">${esc(ui('Notizen'))}</option><option value="planning">${esc(ui('Session planen'))}</option></select></label>
+        <button type="button" class="btn btn-secondary btn-sm" data-open-day>${esc(ui('Tag öffnen'))}</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-oneshots>${esc(ui('One-Shots verwalten'))}</button></div>
+        <p class="sc-help">${esc(ui('Notizen sind privat. Erinnerungen erscheinen hier, sobald sie fällig sind.'))}</p>
+        <p data-personal-status role="status" aria-live="polite"></p>
+        <section data-personal-reminders aria-label="${esc(ui('Meine Erinnerungen'))}"></section>`;
+    const dialog = document.createElement('dialog');
+    dialog.className = 'sc-day-dialog'; dialog.dataset.calendarDialog = '';
+    dialog.setAttribute('aria-labelledby', 'scDayTitle-' + crypto.randomUUID());
+    root.append(dialog);
+    let lastDay = '', notesVersion = 0, activeSource = null, posting = false;
+    const personalStatus = (message, bad = false) => {
+        const node = host.querySelector('[data-personal-status]');
+        node.textContent = message; node.classList.toggle('is-error', bad);
+    };
+    const dialogStatus = (message, bad = false) => {
+        const node = dialog.querySelector('[data-day-status]');
+        if (node) { node.textContent = message; node.classList.toggle('is-error', bad); }
+    };
+    async function pages(path) {
+        const collected = []; let cursor = null;
+        for (let i = 0; i < 12; i++) {
+            const data = await personalApi(path + (cursor ? `${path.includes('?') ? '&' : '?'}cursor=${cursor}` : ''));
+            collected.push(...data.notes);
+            cursor = data.next_cursor;
+            if (!cursor) return collected;
+        }
+        throw new Error(ui('Zu viele Einträge. Bitte einen kleineren Zeitraum wählen.'));
+    }
+    async function refreshReminders() {
+        const notes = await pages('reminders');
+        if (!root.isConnected) return;
+        const box = host.querySelector('[data-personal-reminders]');
+        box.innerHTML = `<h4>${esc(ui('Meine Erinnerungen'))}</h4>${notes.length ? `<ul class="sc-agenda">${notes.map(note =>
+            `<li class="sc-event"><div><strong>${esc(note.title)}</strong><small>${esc(dayLabel(note.date))} · ${esc(instantLabel(note.reminder_at, note.timezone))}</small></div>
+                <span class="sc-actions"><button class="btn btn-secondary btn-sm" type="button" data-reminder-open="${note.date}">${esc(ui('Notiz öffnen'))}</button>
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="${note.id}" data-revision="${note.revision}">${esc(ui('Als gelesen markieren'))}</button></span></li>`).join('')}</ul>`
+            : `<p class="sc-empty">${esc(ui('Keine fälligen Erinnerungen.'))}</p>`}`;
+    }
+    async function refresh(data) {
+        const version = ++notesVersion;
+        try {
+            const notes = await pages(`notes?start=${data.start}&end=${data.end}`);
+            if (!root.isConnected || version !== notesVersion) return;
+            onNotes(notes); personalStatus('');
+            await refreshReminders();
+        } catch (error) {
+            if (root.isConnected && version === notesVersion) personalStatus(fail(error), true);
+        }
+    }
+    function shell(title) {
+        dialog.innerHTML = `<header><h3 id="${dialog.getAttribute('aria-labelledby')}">${esc(title)}</h3>
+            <button type="button" class="btn btn-secondary btn-sm" data-day-close aria-label="${esc(ui('Schließen'))}">×</button></header>
+            <div data-day-content></div><p data-day-status role="status" aria-live="polite"></p>`;
+        dialog.querySelector('[data-day-close]').onclick = () => dialog.close();
+    }
+    function present() {
+        if (!dialog.open) dialog.showModal();
+        dialog.querySelector('h3').tabIndex = -1;
+        dialog.querySelector('h3').focus({preventScroll: true});
+    }
+    const foldMarkup = selected => `<label>${esc(ui('Bei doppelter Uhrzeit'))}<select name="fold">
+        <option value="">${esc(ui('Bitte bei Bedarf wählen'))}</option><option value="0"${selected === 0 ? ' selected' : ''}>${esc(ui('Erste Uhrzeit (Sommerzeit)'))}</option>
+        <option value="1"${selected === 1 ? ' selected' : ''}>${esc(ui('Zweite Uhrzeit (Winterzeit)'))}</option></select></label>`;
+    const zoneMarkup = value => `<label>${esc(ui('Zeitzone'))}<input name="timezone" maxlength="64" required value="${esc(value)}" placeholder="Europe/Berlin"></label>`;
+    async function openDay(day, editing = null) {
+        lastDay = day;
+        activeSource = root.querySelector(`[data-day="${day}"]`) || host.querySelector('[data-open-day]');
+        shell(dayLabel(day));
+        const box = dialog.querySelector('[data-day-content]');
+        const mode = host.querySelector('[data-day-mode]').value;
+        const events = getEntries().filter(entry => entry.local_date === day);
+        box.innerHTML = `${events.length ? `<ul class="sc-agenda">${events.map(entry => `<li><a href="${esc(entry.hub_href)}">${esc(entry.session_name)}</a> · ${esc(entry.local_time)}</li>`).join('')}</ul>` : ''}`;
+        if (mode === 'planning') {
+            const managed = (getData()?.campaigns || []).filter(campaign => campaign.can_manage);
+            box.insertAdjacentHTML('beforeend', `<p>${esc(ui('Session in einer Kampagne planen'))}</p>${managed.length ? `<form data-day-plan class="sc-personal-form">
+                <label>${esc(ui('Kampagne'))}<select name="campaign_id">${managed.map(campaign => `<option value="${campaign.id}">${esc(campaign.name)}</option>`).join('')}</select></label>
+                <label>${esc(ui('Session-Name'))}<input name="name" maxlength="100" required></label>
+                <label>${esc(ui('Startdatum und Uhrzeit'))}<input name="first_local" type="datetime-local" value="${day}T19:00" required></label>
+                <label>${esc(ui('Dauer (Minuten)'))}<input name="duration_minutes" type="number" min="1" max="1440" value="240" required></label>
+                ${zoneMarkup(timezone)}${foldMarkup(null)}<button type="submit" class="btn btn-primary">${esc(ui('Session planen'))}</button></form>`
+                : `<p class="sc-empty">${esc(ui('Du verwaltest keine Kampagne. Im Notizmodus kannst du persönliche Notizen anlegen.'))}</p>`}`);
+            const form = box.querySelector('form');
+            if (form) {
+                let key = crypto.randomUUID();
+                form.addEventListener('input', () => { key = crypto.randomUUID(); });
+                form.onsubmit = async event => {
+                    event.preventDefault(); if (posting) return;
+                    const raw = Object.fromEntries(new FormData(form));
+                    const payload = {...raw, campaign_id: Number(raw.campaign_id), duration_minutes: Number(raw.duration_minutes),
+                        fold: raw.fold === '' ? null : Number(raw.fold), request_key: key};
+                    posting = true; form.querySelector('[type=submit]').disabled = true;
+                    try {
+                        await personalApi('sessions', 'POST', payload); await onChanged();
+                        if (dialog.open && form.isConnected) dialog.close();
+                        personalStatus(ui('Session geplant.'));
+                    }
+                    catch (error) { (dialog.open && form.isConnected ? dialogStatus : personalStatus)(fail(error), true); }
+                    finally { posting = false; if (form.isConnected) form.querySelector('[type=submit]').disabled = false; }
+                };
+            }
+            present(); return;
+        }
+        box.insertAdjacentHTML('beforeend', `<section data-day-notes><p>${esc(ui('Notizen werden geladen …'))}</p></section>
+            <form data-note-form class="sc-personal-form"><h4 class="sc-wide">${esc(ui(editing ? 'Notiz bearbeiten' : 'Neue Notiz'))}</h4>
+                <label class="sc-wide">${esc(ui('Titel'))}<input name="title" maxlength="80" required value="${esc(editing?.title || '')}"></label>
+                <label class="sc-wide">${esc(ui('Notiz'))}<textarea name="body" maxlength="2000" rows="3">${esc(editing?.body || '')}</textarea></label>
+                <label>${esc(ui('Farbe'))}<select name="color">${Object.entries(COLOR_LABELS).map(([key, label]) => `<option value="${key}"${key === (editing?.color || 'red') ? ' selected' : ''}>${esc(ui(label))}</option>`).join('')}</select></label>
+                <label>${esc(ui('Erinnerung (optional)'))}<input type="datetime-local" name="reminder_local" value="${esc(editing?.reminder_local || '')}"></label>
+                ${zoneMarkup(editing?.timezone || timezone)}${foldMarkup(editing?.fold)}
+                <p class="sc-help sc-wide">${esc(ui('Erinnerungen erscheinen im VTT. Systembenachrichtigungen bei geschlossenem Browser werden nicht versendet.'))}</p>
+                <button type="submit" class="btn btn-primary">${esc(ui('Notiz speichern'))}</button>
+                ${editing ? `<button type="button" class="btn btn-secondary" data-note-cancel>${esc(ui('Bearbeitung abbrechen'))}</button>` : ''}</form>`);
+        const form = box.querySelector('[data-note-form]');
+        let key = crypto.randomUUID();
+        form.addEventListener('input', () => { key = crypto.randomUUID(); });
+        form.querySelector('[data-note-cancel]')?.addEventListener('click', () => openDay(day));
+        form.onsubmit = async event => {
+            event.preventDefault(); if (posting) return;
+            const raw = Object.fromEntries(new FormData(form));
+            const payload = {...raw, date: day, fold: raw.fold === '' ? null : Number(raw.fold), request_key: key,
+                ...(editing ? {revision: editing.revision} : {})};
+            posting = true; form.querySelector('[type=submit]').disabled = true;
+            try {
+                await personalApi(editing ? `notes/${editing.id}` : 'notes', editing ? 'PUT' : 'POST', payload);
+                if (getData()) await refresh(getData());
+                if (dialog.open && form.isConnected) {
+                    await openDay(day); dialogStatus(ui('Notiz gespeichert.'));
+                } else personalStatus(ui('Notiz gespeichert.'));
+            } catch (error) { (dialog.open && form.isConnected ? dialogStatus : personalStatus)(fail(error), true); }
+            finally { posting = false; if (form.isConnected) form.querySelector('[type=submit]').disabled = false; }
+        };
+        present();
+        try {
+            const notes = await pages(`notes?start=${day}&end=${shiftDays(day, 1)}`);
+            if (!dialog.open || lastDay !== day || !box.isConnected) return;
+            const list = box.querySelector('[data-day-notes]');
+            list.innerHTML = notes.length ? `<ul class="sc-agenda">${notes.map(note => `<li class="sc-event sc-note" data-note="${note.id}" data-color="${esc(note.color)}">
+                <div><strong>▣ ${esc(note.title)}</strong><small>${esc(ui(COLOR_LABELS[note.color]))}${note.reminder_at ? ` · ${esc(instantLabel(note.reminder_at, note.timezone))}` : ''}</small>
+                    <p class="sc-note-body">${esc(note.body)}</p></div><span class="sc-actions"><button type="button" class="btn btn-secondary btn-sm" data-note-edit="${note.id}">${esc(ui('Bearbeiten'))}</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-note-delete="${note.id}">${esc(ui('Löschen'))}</button></span></li>`).join('')}</ul>`
+                : `<p class="sc-empty">${esc(ui('Keine Notizen an diesem Tag.'))}</p>`;
+            list.onclick = async event => {
+                const button = event.target.closest('button'); if (!button || posting) return;
+                const note = notes.find(note => String(note.id) === (button.dataset.noteEdit || button.dataset.noteDelete));
+                if (!note) return;
+                if (button.dataset.noteEdit) { await openDay(day, note); return; }
+                if (!window.confirm(ui('Diese private Notiz löschen?'))) return;
+                posting = true; button.disabled = true;
+                try {
+                    await personalApi(`notes/${note.id}`, 'DELETE', {revision: note.revision});
+                    if (getData()) await refresh(getData());
+                    if (dialog.open && box.isConnected) await openDay(day);
+                } catch (error) { (dialog.open && box.isConnected ? dialogStatus : personalStatus)(fail(error), true); }
+                finally { posting = false; if (button.isConnected) button.disabled = false; }
+            };
+        } catch (error) { if (dialog.open && box.isConnected) dialogStatus(fail(error), true); }
+    }
+    async function openOneShots() {
+        activeSource = host.querySelector('[data-oneshots]'); shell(ui('One-Shots verwalten'));
+        const box = dialog.querySelector('[data-day-content]');
+        box.innerHTML = `<p>${esc(ui('One-Shots werden geladen …'))}</p>`; present();
+        try {
+            const data = await personalApi('oneshots');
+            if (!dialog.open || !box.isConnected) return;
+            box.innerHTML = `<p>${esc(ui('Ein One-Shot belegt einen normalen Kampagnenplatz.'))}</p>
+                <p>${esc(ui('{used} von {quota} Kampagnenplätzen belegt.', {used: data.used, quota: data.quota ?? 0}))}</p>
+                ${data.oneshots.length ? `<ul class="sc-agenda">${data.oneshots.map(round => `<li><a href="${esc(round.hub_href)}">${esc(round.name)}</a> · ${esc(statusLabel(round.status))}</li>`).join('')}</ul>` : `<p>${esc(ui('Noch keine One-Shots.'))}</p>`}
+                ${data.complete ? '' : `<p>${esc(ui('Weitere Runden findest du in den Kampagnen.'))}</p>`}
+                ${data.can_create ? `<form data-oneshot-form class="sc-personal-form"><h4 class="sc-wide">${esc(ui('Neuen One-Shot planen'))}</h4>
+                    <label class="sc-wide">${esc(ui('Name'))}<input name="name" required maxlength="100"></label>
+                    <label>${esc(ui('Startdatum und Uhrzeit'))}<input type="datetime-local" name="first_local" required value="${lastDay || todayIn(timezone)}T19:00"></label>
+                    <label>${esc(ui('Plätze'))}<input type="number" name="max_players" value="6" min="2" max="20" required></label>
+                    <label>${esc(ui('Dauer (Minuten)'))}<input type="number" name="duration_minutes" value="240" min="1" max="1440" required></label>
+                    ${zoneMarkup(timezone)}${foldMarkup(null)}<button type="submit" class="btn btn-primary">${esc(ui('One-Shot anlegen'))}</button></form>`
+                    : `<p>${esc(ui('Zum Anlegen benötigst du DM-Zugang und einen freien Kampagnenplatz.'))}</p>`}`;
+            const form = box.querySelector('form');
+            if (form) {
+                let key = crypto.randomUUID(); form.addEventListener('input', () => { key = crypto.randomUUID(); });
+                form.onsubmit = async event => {
+                    event.preventDefault(); if (posting) return;
+                    const raw = Object.fromEntries(new FormData(form));
+                    posting = true; form.querySelector('[type=submit]').disabled = true;
+                    try {
+                        await personalApi('oneshots', 'POST', {...raw, request_key: key, max_players: Number(raw.max_players),
+                            duration_minutes: Number(raw.duration_minutes), fold: raw.fold === '' ? null : Number(raw.fold)});
+                        await onChanged();
+                        if (dialog.open && form.isConnected) {
+                            await openOneShots(); dialogStatus(ui('One-Shot angelegt.'));
+                        } else personalStatus(ui('One-Shot angelegt.'));
+                    } catch (error) { (dialog.open && form.isConnected ? dialogStatus : personalStatus)(fail(error), true); }
+                    finally { posting = false; if (form.isConnected) form.querySelector('[type=submit]').disabled = false; }
+                };
+            }
+        } catch (error) { if (dialog.open && box.isConnected) dialogStatus(fail(error), true); }
+    }
+    host.addEventListener('click', async event => {
+        const button = event.target.closest('button'); if (!button || posting) return;
+        if (button.hasAttribute('data-open-day')) await openDay(lastDay || todayIn(timezone));
+        if (button.hasAttribute('data-oneshots')) await openOneShots();
+        if (button.dataset.reminderOpen) { host.querySelector('[data-day-mode]').value = 'notes'; await openDay(button.dataset.reminderOpen); }
+        if (button.dataset.dismiss) {
+            posting = true; button.disabled = true;
+            try { await personalApi(`notes/${Number(button.dataset.dismiss)}/dismiss`, 'POST', {revision: Number(button.dataset.revision)}); await refreshReminders(); }
+            catch (error) { personalStatus(fail(error), true); }
+            finally { posting = false; if (button.isConnected) button.disabled = false; }
+        }
+    });
+    dialog.addEventListener('close', () => {
+        const dayButton = activeSource?.hasAttribute('data-day') && lastDay ? root.querySelector(`[data-day="${lastDay}"]`) : null;
+        (dayButton || (activeSource?.isConnected ? activeSource : host.querySelector('[data-open-day]')))?.focus({preventScroll: true});
+    });
+    const onVisibility = () => {
+        if (root.isConnected && !document.hidden) refreshReminders().catch(error => personalStatus(fail(error), true));
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    async function poll() {
+        if (!root.isConnected) { document.removeEventListener('visibilitychange', onVisibility); if (dialog.open) dialog.close(); return; }
+        if (!document.hidden) {
+            try { await refreshReminders(); } catch (error) { personalStatus(fail(error), true); }
+        }
+        setTimeout(poll, 60000);
+    }
+    setTimeout(poll, 60000);
+    return {refresh, openDay};
 }
 
 /* ------------------------------------------------------------------ campaign planner */
