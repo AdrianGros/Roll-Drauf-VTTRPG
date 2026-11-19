@@ -1,4 +1,5 @@
 /* Personal HTTP-only surface. Never mounts a DM controller or joins a table room. */
+import {ThreadSurface} from './review-domain.js';
 const ui = (source, parameters) => globalThis.VTTUi(source, parameters);
 const root = document.getElementById('privateConversations');
 const make = (tag, parent, text, attrs = {}) => {
@@ -45,6 +46,7 @@ export class ConversationSurface {
         this.input = make('textarea', this.form, null, {id: 'privateMessage', maxlength: 2000, rows: 3, required: ''});
         this.send = make('button', this.form, ui('Senden'), {type: 'submit', class: 'btn btn-primary', id: 'privateSend'});
         this.form.onsubmit = event => { event.preventDefault(); this.submit(); };
+        this.threads = new ThreadSurface(this.right);
         this.input.onkeydown = event => {
             if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); this.form.requestSubmit(); }
         };
@@ -52,6 +54,7 @@ export class ConversationSurface {
             this.pause(); if (!document.hidden && this.id) this.read('new');
         });
         window.addEventListener('pagehide', () => {
+            this.threads.setParent(null);
             this.pause(); this.sendAbort?.abort(); this.listAbort?.abort(); this.version++; this.listVersion++;
             this.pending.clear(); this.messages.clear(); this.history.replaceChildren(); this.list.replaceChildren(); this.legacyList.replaceChildren();
             this.input.value = ''; this.form.hidden = true;
@@ -62,6 +65,7 @@ export class ConversationSurface {
     }
     pause() { clearTimeout(this.timer); this.readAbort?.abort(); this.readAbort = null; }
     denied() {
+        this.threads.setParent(null);
         this.pause(); this.sendAbort?.abort(); this.listAbort?.abort(); this.listVersion++; this.version++; if (this.id) this.pending.delete(this.id);
         this.id = null; this.messages.clear(); this.history.replaceChildren(); this.list.replaceChildren();
         this.form.hidden = true; this.input.value = ''; this.older.hidden = true; this.legacy.hidden = true; this.legacyList.replaceChildren();
@@ -101,6 +105,7 @@ export class ConversationSurface {
     }
     async open(id) {
         this.pause(); this.sendAbort?.abort(); this.legacyAbort?.abort(); this.legacyBusy=false; this.version++; this.id = id; this.messages.clear(); this.sending = false;
+        this.threads.setParent(typeof id === 'string' ? {kind: 'campaign', parent_id: Number(id.split(':')[1])} : {kind: 'private', parent_id: id});
         this.legacy.hidden = !(typeof id === 'string' && id.startsWith('campaign:')); this.legacy.open = false; this.legacyBefore = null; this.legacyLoaded = false; this.legacyList.replaceChildren(); this.legacyStatus.textContent = ''; this.legacyMore.hidden = false;
         this.history.replaceChildren(); this.form.hidden = true; this.title.textContent = ui('Gespräch wird geladen …'); this.info.textContent = '';
         this.input.value = this.pending.get(id)?.content || '';

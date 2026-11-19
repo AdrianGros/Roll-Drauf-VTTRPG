@@ -126,7 +126,46 @@ def draft_values(char, data):
 
 def companions(char):
     stored = (char.character_data or {}).get("srdCompanions") if isinstance(char.character_data, dict) else None
-    return [c for c in stored if isinstance(c, dict)] if isinstance(stored, list) else []
+    result = copy.deepcopy([c for c in stored if isinstance(c, dict)]) if isinstance(stored, list) else []
+    for row in result:
+        if isinstance(row.get('scaling'), dict) and row['scaling'].get('enabled'):
+            maximum = scaled_companion_max(char, row)
+            damage = max(0, row.get('hpMax', 0) - row.get('hpCurrent', 0))
+            row['hpMax'], row['hpCurrent'] = maximum, max(0, maximum - damage)
+    return result
+
+
+def scaling_config(raw):
+    """Owner-authored bounded coefficients, never executable rule text."""
+    keys = {'enabled', 'base', 'perLevel', 'perProficiency', 'label'}
+    if not isinstance(raw, dict) or set(raw) != keys or type(raw['enabled']) is not bool:
+        raise ProgressionError('invalid_scaling', 'Ungültige Begleiterskalierung.')
+    for key, maximum in [('base', 9999), ('perLevel', 100), ('perProficiency', 100)]:
+        if type(raw[key]) is not int or not 0 <= raw[key] <= maximum:
+            raise ProgressionError('invalid_scaling', 'Skalierungswerte liegen außerhalb des erlaubten Bereichs.')
+    label = raw['label']
+    if not isinstance(label, str) or len(label) > 80 or '\x00' in label:
+        raise ProgressionError('invalid_scaling', 'Die Bezeichnung der eigenen Regel ist zu lang.')
+    try:
+        label.encode('utf-8')
+    except UnicodeError:
+        raise ProgressionError('invalid_scaling', 'Ungültige Bezeichnung der eigenen Regel.')
+    return {**raw, 'label': label.strip()}
+
+
+def scaled_companion_max(char, companion):
+    config = companion.get('scaling')
+    if not isinstance(config, dict) or not config.get('enabled'):
+        return companion.get('hpMax', 0)
+    from vtt.characters.sheet_link import srd_evaluation
+    try:
+        config = scaling_config(config)
+    except ProgressionError:
+        return companion.get('hpMax', 0)
+    evaluation = srd_evaluation(char) or {}
+    level = evaluation.get('level', char.level or 1)
+    proficiency = evaluation.get('proficiencyBonus', char.proficiency_bonus or 0)
+    return min(9999, config['base'] + config['perLevel'] * level + config['perProficiency'] * proficiency)
 
 
 def _companion(raw, index):
@@ -150,6 +189,8 @@ def _companion(raw, index):
             raise ProgressionError("invalid_companion", f"Begleiter {index + 1}: {field} muss eine ganze Zahl von {low} bis {high} sein.", 422)
         out[field] = value
     out["hpCurrent"] = min(out["hpCurrent"], out["hpMax"])
+    if 'scaling' in raw:
+        out['scaling'] = scaling_config(raw['scaling'])
     return out
 
 
@@ -169,10 +210,22 @@ def set_companions(char, body, *, user_id):
     if len(raw) > MAX_COMPANIONS:
         raise ProgressionError("too_many_companions", f"Höchstens {MAX_COMPANIONS} Begleiter.", 422)
     cleaned, seen = [], set()
+    previous = {entry.get('id'): entry for entry in companions(char)}
     for index, entry in enumerate(raw):
         item = _companion(entry, index)
         if item["id"] is None or item["id"] in seen:
             item["id"] = _fresh_id(seen)
+        prior = previous.get(item['id'])
+        # A stale/older management form cannot remove or overwrite a separately
+        # saved scaling rule. Its dedicated endpoint requires an exact revision.
+        if prior and 'scaling' in prior:
+            item['scaling'] = copy.deepcopy(prior['scaling'])
+        else:
+            item.pop('scaling', None)
+        if item.get('scaling', {}).get('enabled'):
+            damage = max(0, item['hpMax'] - item['hpCurrent'])
+            item['hpMax'] = scaled_companion_max(char, item)
+            item['hpCurrent'] = max(0, item['hpMax'] - damage)
         seen.add(item["id"])
         cleaned.append(item)
     data = copy.deepcopy(char.character_data)

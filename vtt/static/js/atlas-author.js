@@ -3,6 +3,7 @@ import {api,request,make,ui,download,restore} from './atlas-common.js';
 import {creditsForDocument} from '../mapmaker/js/credits.js';
 import {renderProjection} from './atlas-reader.js';
 import {loadSnapshotPalette,snapshotFromProject} from '../mapmaker/js/snapshot.js';
+import {mountWorldLinks} from './review-domain.js';
 
 class Author {
  constructor(host,world,place){this.host=host;this.world=world;this.place=place;this.version=0;this.controller=new AbortController();this.dialogs=new Set();this.active=true;}
@@ -31,6 +32,9 @@ class Author {
   const place=this.graph.places.find(row=>row.id===this.place);if(place)this.placeFields(left,place);
   this.mapFields(right,place);this.libraryFields(right);
   if(this.data.role==='owner')this.memberFields();
+  mountWorldLinks(this.fields,this.world,{signal:this.controller.signal,beforeChange:()=>{
+   if(JSON.stringify(this.graph)!==this.savedGraph)throw new Error(ui('Bitte zuerst die Atlas-Eingaben speichern.'));
+  },afterChange:()=>this.load()}).catch(error=>{if(this.active&&error.name!=='AbortError')this.status.textContent=error.message;});
  }
  placeFields(parent,place){
   const section=make('div',parent,null,{class:'atlas-author-fields'});this.field(section,'Ortsname',place.name,value=>place.name=value,{id:'atlasPlaceName',max:120});
