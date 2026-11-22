@@ -1,0 +1,23 @@
+{
+  "status": "delivered",
+  "source_commit": "07f4bf075f275f2ce00ea8f89433214d37014f5d",
+  "image_id": "sha256:5113f840a7b6e60cf22bf9b1d2e80ad9f26ddd296bed9d10da3bab205c2e8137",
+  "health": {
+    "now": "2026-11-22T19:24:07.289561",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-22T19:24:05.145886",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "backup": {
+    "path": "/srv/migration/2026-11-11/feedback-playtable-windows-20261122/07f4bf075/database-before.dump",
+    "bytes": 500720,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "rollback": "/srv/migration/2026-11-11/feedback-playtable-windows-20261122/07f4bf075/rollback.sh",
+  "live_status": "pass",
+  "temporary_QA_accounts_removed": true,
+  "push": "success using existing repository SSH identity",
+  "schema": "no application schema changes"
+}
