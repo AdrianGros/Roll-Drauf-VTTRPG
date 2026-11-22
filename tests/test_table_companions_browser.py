@@ -42,5 +42,11 @@ def test_personal_bar_companion_keeps_identity_and_damage_after_reload(action_si
             assert TableCompanionBinding.query.one().token_id==token_id
             assert db.session.get(TokenState,token_id).hp_current==7
         assert not page.evaluate('Boolean(window.PlayDMSurface)')
+        if width<600:
+            status=page.locator('#floorViewStatus')
+            status.evaluate("e=>e.textContent='Upper floor'")
+            expect(status).to_be_visible()
+            notice=status.bounding_box();dock=page.locator('#tableDockTabs').bounding_box()
+            assert notice['y']>=48 and notice['y']+notice['height']<dock['y']
         assert not errors,errors
         browser.close()

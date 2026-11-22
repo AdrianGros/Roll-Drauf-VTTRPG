@@ -5,12 +5,15 @@ from pathlib import Path
 import subprocess
 
 repo=Path(__file__).resolve().parents[2]
-release=Path('/srv/migration/2026-11-11/feedback-playtable-windows-20261122/07f4bf075')
+release=Path(os.environ.get('RELEASE_DIR','/srv/migration/2026-11-11/feedback-playtable-windows-20261122/07f4bf075'))
+record=json.loads((release/'release.json').read_text())
+actual=subprocess.check_output(['docker','inspect','roll-drauf-vtt-app-1','--format','{{.Image}}'],text=True).strip()
+assert actual==record['image_id'],'Verify the intended image before live acceptance'
 proof=release/'live';proof.mkdir(mode=0o700,exist_ok=True)
 credential=proof/'private-live-credentials.json'
 container_path='/tmp/window-fix-live-credentials-20261122.json'
 fixture=(repo/'docs/proofs/ui-playtable-2026-11-17/create-live-fixture.py').read_text().replace('/tmp/ui-playtable-live-credentials.json',container_path)
-cleanup=(repo/'docs/proofs/ui-playtable-2026-11-17/cleanup-live-fixture.py').read_text().replace('/tmp/ui-playtable-live-credentials.json',container_path)
+cleanup=(repo/'docs/proofs/review-web-2026-11-18/cleanup-review-fixture.py').read_text().replace('/tmp/review-web-live-credentials-20261122.json',container_path)
 subprocess.run(['docker','exec','-i','roll-drauf-vtt-app-1','python','-'],input=fixture,text=True,check=True)
 try:
     data=subprocess.check_output(['docker','exec','roll-drauf-vtt-app-1','cat',container_path])

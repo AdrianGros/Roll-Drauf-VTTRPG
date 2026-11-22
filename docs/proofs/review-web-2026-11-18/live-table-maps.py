@@ -44,7 +44,7 @@ with sync_playwright() as p:
         box=dm.locator('#pixelCanvas').bounding_box();x=box['x']+box['width']*.25;y=box['y']+box['height']*.25
         dm.mouse.move(x,y);dm.mouse.down();dm.mouse.move(x+box['width']*.5,y+box['height']*.5,steps=12);dm.mouse.up()
         dm.locator('#pixelLabel').fill('QA Own Stamp');dm.locator('#pixelSave').click()
-        expect(dm.locator('#pixelDialog')).not_to_be_visible()
+        expect(dm.locator('#pixelDialog')).not_to_be_visible(timeout=45000)
         point=dm.evaluate('() => rdMapmaker.docToClient(128,128)');dm.mouse.click(point['x'],point['y'])
         dm.wait_for_function('() => rdMapmaker.summary().stamps===1')
         dm.locator('#cloudSave').click();expect(dm.locator('#cloudStatus')).to_have_text('In Bibliothek gespeichert',timeout=45000)
@@ -83,6 +83,8 @@ with sync_playwright() as p:
         dm.screenshot(path=str(root/'floor-dm-night.png'));close_windows(dm)
         player=current=new_page('player','firefox',390);enter(player,'player')
         expect(player.locator('#floorViewStatus')).to_have_text('QA Balcony',timeout=25000)
+        notice=player.locator('#floorViewStatus').bounding_box();dock=player.locator('#tableDockTabs').bounding_box()
+        assert notice['y']>=48 and notice['y']+notice['height']<dock['y']
         assert not player.evaluate('Boolean(window.PlayFloorDM || window.PlayDMSurface)')
         assert player.locator('#btnMapFloors').count()==0
         pixels=player.evaluate("""async()=>{const image=document.getElementById('mapImage');await image.decode();const c=document.createElement('canvas');c.width=image.naturalWidth;c.height=image.naturalHeight;const x=c.getContext('2d');x.drawImage(image,0,0);return [[140,140],[300,140],[900,140]].map(([a,b])=>Array.from(x.getImageData(a,b,1,1).data));}""")
@@ -101,7 +103,10 @@ with sync_playwright() as p:
         summon();child=next(t for t in bootstrap(player)['state_payload']['tokens'] if t['name']=='QA Companion')
         close_windows(player);player.locator('.token-marker[data-token-id="'+str(child['id'])+'"]').click()
         player.locator('#tokenHpCurrent').fill('7');player.locator('#btnTokenHpSet').click()
-        player.wait_for_function("() => document.getElementById('tokenHpCurrent').value==='7'")
+        player.wait_for_function("""async f=>{
+            const data=await Auth.makeAuthRequest(`/api/play/campaigns/${f.c}/sessions/${f.s}/bootstrap`);
+            return data.state_payload.tokens.some(t=>t.id===f.token && t.hp_current===7);
+        }""",arg={'c':fixture['campaign_id'],'s':fixture['session_id'],'token':child['id']},polling=500)
         player.locator('#btnTokenDelete').click();summon()
         child_after=next(t for t in bootstrap(player)['state_payload']['tokens'] if t['name']=='QA Companion')
         assert child_after['id']==child['id'] and child_after['hp_current']==7,child_after

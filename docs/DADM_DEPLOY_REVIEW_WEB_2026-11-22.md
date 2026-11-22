@@ -23,6 +23,8 @@ Der Fenster-/Darkmode-Hotfix ist bereits separat live: Funktionsquelle `07f4bf07
 
 Die Live-Prüfung verwendet ausschließlich isolierte QA-Konten über normale Navigation, anschließend werden deren abhängige Tabellenzeilen und private Dateien entfernt. Das Bereinigungsskript ist gegen ein separates bestehendes Konto, dessen Kampagne/Mitgliedschaft und Datei geprüft; zusammengesetzte Fremdschlüssel bleiben zusammenhängende Bedingungen. Keine Aussage über echte Discord-OAuth-Anmeldung.
 
+Begrenzte Deploy-Korrekturen aus der Abnahme: Der gemeinsame Etagenstatus hängt am tatsächlichen `mapViewport` und verwendet die aktive Palette. Auf schmalen Bildschirmen steht er unter der oberen Bedienleiste, damit die untere Werkzeugleiste ihn nicht verdeckt. Der Etageneditor hat im schwebenden Fenster einen gemeinsamen Scrollbereich. Die reale Playerseite prüft Verankerung und freien Platz oberhalb des Docks; die Live-Reise prüft zusätzlich die tatsächlichen maskierten Bildpixel.
+
 ## Bewusste Grenzen und verbleibende Angaben
 
 Keine erfundene englische Oglan-Fassung oder DSA-Regelinhalte. Der konkrete abgeschnittene Baum ist ohne Asset-ID nicht als behoben behauptet; stattdessen gibt es einen Quell-/Zuschnittvergleich. Kein neuer 3D-/Godot-Editor, keine Animation und kein universelles Tile-Autotiling ohne Übergangsmetadaten. Pixelzeichnungen erzeugen neue Rasterassets; bestehende Eigenassets haben noch keinen separaten Bearbeiten-Dialog. Die bisherigen Gesamtlimits (insbesondere Atlas 16 MiB) gelten weiter. Diese Angaben begrenzen den gelieferten Umfang und sind keine stillen Vollständigkeitsbehauptungen für jede redaktionelle Idee aus den Protokollen.
