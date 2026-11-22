@@ -303,22 +303,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       row.append(json);
     }
     block.append(row);
-    if (canEdit() && state.appearance) {
-      const field = element('div', 'srd-man-field');
-      field.append(element('span', 'srd-man-field-label', globalThis.VTTUi("Farbe des Bogens auf dem Bildschirm")));
-      const swatches = element('div', 'srd-man-swatches');
-      swatches.setAttribute('role', 'group');
-      swatches.setAttribute('aria-label', 'Farbe wählen');
-      state.appearance.themes.forEach((theme) => {
-        const swatch = button(theme.name, 'srd-man-swatch', () => putTheme(theme.id));
-        swatch.dataset.theme = theme.id;
-        swatch.style.setProperty('--swatch', theme.accent);
-        swatch.setAttribute('aria-pressed', theme.id === state.appearance.theme ? 'true' : 'false');
-        swatches.append(swatch);
-      });
-      field.append(swatches);
-      block.append(field);
-    }
+
     return block;
   }
 

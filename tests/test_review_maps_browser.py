@@ -518,6 +518,8 @@ def test_crop_comparison_detects_cut_content_and_fits_a_clean_crop(open_editor):
     ed = open_editor(choose_template=False)
     new_empty(ed)
     page = ed.page
+    failed_urls = []
+    page.on('response', lambda response: failed_urls.append(response.url) if response.status >= 400 else None)
     result = page.evaluate("""async () => {
         const {cropCutSides, fitCropToContent} = await import('/mapmaker/js/ui.js');
         const w = 40, h = 30, alpha = new Uint8Array(w * h);
@@ -535,4 +537,5 @@ def test_crop_comparison_detects_cut_content_and_fits_a_clean_crop(open_editor):
     expect(page.locator('#sheetDialog')).to_be_visible()
     expect(page.locator('#sheetCropInfo')).to_contain_text('Quelle')
     page.locator('#sheetCancel').click()
+    assert not failed_urls, failed_urls
     ed.assert_clean()

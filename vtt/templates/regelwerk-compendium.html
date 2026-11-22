@@ -42,6 +42,15 @@
         <aside class="regelwerk-sidebar" aria-label="Filter" data-ui-aria-label="u_d7decf1aa22b">
             <form id="compendiumForm" class="compendium-form" autocomplete="off">
                 <div class="compendium-field">
+                    <label for="cpSystem" data-review-label="">Regelsystem</label>
+                    <select id="cpSystem"><option value="dnd5e">D&amp;D 5e · SRD 5.2.1</option></select>
+                </div>
+                <div class="compendium-field">
+                    <label for="cpContentLanguage" data-review-label="">Sprache der Regeltexte</label>
+                    <select id="cpContentLanguage"><option value="de">Deutsch</option><option value="en">English</option></select>
+                </div>
+
+                <div class="compendium-field">
                     <label for="cpType"><span data-ui-key="u_358210386a4f">Kategorie</span></label>
                     <select id="cpType" name="type"></select>
                 </div>
@@ -57,7 +66,7 @@
                 <button type="button" id="cpReset"><span data-ui-key="u_f711760625d8">Filter zurücksetzen</span></button>
             </form>
             <div class="regelwerk-sidebar-actions">
-                <a href="/regelwerk"><span data-ui-key="u_919657b6acd4">Zum Regelwerk</span></a>
+                <a id="cpRulebookLink" href="/regelwerk"><span data-ui-key="u_919657b6acd4">Zum Regelwerk</span></a>
                 <a href="/regelwerk/lizenz"><span data-ui-key="u_f707c323c08e">Quelle</span> &amp; <span data-ui-key="u_a0dcbd4b0c9d">Lizenz</span></a>
             </div>
         </aside>
@@ -94,5 +103,10 @@
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/vtt-main-nav.js"></script>
     <script src="/static/js/document-book-frame.js"></script>
+<script>
+(function(){
+ document.querySelectorAll('[data-review-label]').forEach(n=>n.textContent=VTTUi(n.textContent));
+})();
+</script>
 </body>
 </html>

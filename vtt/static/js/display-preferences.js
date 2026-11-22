@@ -4,13 +4,27 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 (function(){
   'use strict';
   const KEY='vtt.display.v1';
-  const defaults={schema:1,theme:'paper',language:'de',unit:'m',accent:'default',stickyPortrait:false};
+  // contentLanguage (W01/K34) is additive: 'auto' follows the UI language, an explicit
+  // edition only applies where that edition actually exists. Older stored values lack it.
+  const defaults=Object.freeze({schema:1,theme:'paper',language:'de',unit:'m',accent:'default',stickyPortrait:false,contentLanguage:'auto'});
   const own=(obj,key)=>Object.prototype.hasOwnProperty.call(obj,key);
   function clean(raw){
     raw=raw && typeof raw==='object' && !Array.isArray(raw)?raw:{};
     return {schema:1,theme:['paper','night'].includes(raw.theme)?raw.theme:'paper',language:['de','en'].includes(raw.language)?raw.language:'de',
-      unit:['m','ft'].includes(raw.unit)?raw.unit:'m',accent:['default','bronze','teal'].includes(raw.accent)?raw.accent:'default',stickyPortrait:raw.stickyPortrait===true};
+      unit:['m','ft'].includes(raw.unit)?raw.unit:'m',accent:['default','bronze','teal'].includes(raw.accent)?raw.accent:'default',stickyPortrait:raw.stickyPortrait===true,
+      contentLanguage:['auto','de','en'].includes(raw.contentLanguage)?raw.contentLanguage:'auto'};
   }
+  // Shared review-web roles (menus, dialogs, focus, navigation group) load on every page that
+  // loads the display preferences, without editing each page template.
+  (function sharedStyles(){
+    try{
+      if(document.querySelector('link[data-review-web]'))return;
+      const link=document.createElement('link');link.rel='stylesheet';
+      link.href=new URL('../css/review-web.css',document.currentScript?.src || location.origin+'/static/js/display-preferences.js').href;
+      link.dataset.reviewWeb='';
+      (document.head || document.documentElement).appendChild(link);
+    }catch(_){/* presentation only */}
+  })();
   let prefs;
   try{const raw=localStorage.getItem(KEY);prefs=clean(raw?JSON.parse(raw):JSON.parse(localStorage.getItem('vtt.sheet.display.v1') || '{}'));}catch(_){prefs={...defaults};}
   const language=prefs.language; // A language change takes effect on the explicitly requested reload.
@@ -73,6 +87,45 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     apply();return {...prefs};
   }
   function element(tag,label){const node=document.createElement(tag);if(label!==undefined)node.textContent=literal(label);return node;}
+  // The rule-text edition a page should open without an explicit locale in its URL.
+  const resolveContent=(value)=>value.contentLanguage==='auto'?value.language:value.contentLanguage;
+  function contentLocale(){return prefs.contentLanguage==='auto'?language:prefs.contentLanguage;}
+  // Editions that actually exist on this server (public list). Expansions stay tied to the
+  // edition they build on; nothing is offered that the server does not publish.
+  let editionsPromise=null;
+  function editions(){
+    if(!editionsPromise){
+      editionsPromise=fetch('/api/rulesets',{credentials:'same-origin'}).then(response=>response.ok?response.json():{rulesets:[]}).then(data=>{
+        const out={originals:[]};
+        for(const book of (data && data.rulesets) || []){
+          if(!book || typeof book.readerUrl!=='string')continue;
+          if(book.rulesetId==='srd-5.2.1-de')out.de={rulesetId:book.rulesetId,title:book.title,readerUrl:'/regelwerk?locale=de'};
+          else if(book.rulesetId==='srd-5.2.1-en')out.en={rulesetId:book.rulesetId,title:book.title,readerUrl:book.readerUrl};
+          else if(book.kind==='original')out.originals.push({rulesetId:book.rulesetId,title:book.title,readerUrl:book.readerUrl,locale:book.locale || 'de'});
+        }
+        return out;
+      }).catch(()=>({originals:[]}));
+    }
+    return editionsPromise;
+  }
+  // One commit path for "Anwenden" and "Auf Standard zurücksetzen": only the display key and the
+  // sheet's theme/unit mirror are written; drafts, auth cookies and other storage stay untouched.
+  function commit(next){
+    const previousContent=resolveContent({...prefs,language}),nextValues=clean(next),reload=nextValues.language!==language;
+    update(nextValues);
+    const nextContent=resolveContent(nextValues);
+    if(!reload && nextContent===previousContent)return;
+    // Changing a language here is explicit; automatically pinned content URLs must
+    // not keep the previous edition. Ordinary deep links stay explicit.
+    const target=new URL(location.href);
+    if(target.pathname==='/regelwerk/compendium'){
+      const type=target.searchParams.get('type');target.search='';
+      target.searchParams.set('locale',nextContent);if(type)target.searchParams.set('type',type);
+      target.hash='';location.assign(target.href);
+    }else if(target.pathname==='/regelwerk'||/^\/regelwerk\/5\.2\.1\/(?:de|en)(?:\/|$)/.test(target.pathname)){
+      location.assign('/regelwerk?locale='+nextContent);
+    }else if(reload)location.reload();
+  }
   function open(){
     let dialog=document.getElementById('vttDisplayDialog');if(dialog){dialog.showModal();return;}
     dialog=element('dialog');dialog.id='vttDisplayDialog';dialog.className='vtt-display-dialog';dialog.setAttribute('aria-labelledby','vttDisplayTitle');
@@ -81,6 +134,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     for(const [key,label,options] of [
       ['theme',globalThis.VTTUi("Darstellung"),[['paper',globalThis.VTTUi("Pergament")],['night',globalThis.VTTUi("Nacht")]]],
       ['language',globalThis.VTTUi("Sprache der Oberfläche"),[['de',globalThis.VTTUi("Deutsch")],['en',globalThis.VTTUi("English")]]],
+      // Edition names are the published book names and stay as published.
+      ['contentLanguage',globalThis.VTTUi("Sprache der Regeltexte"),[['auto',globalThis.VTTUi("Wie die Oberfläche")],['de','Deutsch · SRD 5.2.1'],['en','English · SRD 5.2.1']]],
       ['unit',globalThis.VTTUi("Entfernungen"),[['m',globalThis.VTTUi("Meter")],['ft',globalThis.VTTUi("Feet")]]],
       ['accent',globalThis.VTTUi("Sicherer Farbakzent"),[['default',globalThis.VTTUi("Standard")],['bronze',globalThis.VTTUi("Bronze")],['teal',globalThis.VTTUi("Petrol")]]],
     ]){
@@ -88,27 +143,24 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
       for(const [value,text] of options){const option=element('option',text);option.value=value;select.append(option);}
       select.value=prefs[key];values[key]=select;row.append(select);dialog.append(row);
     }
+    // Only editions this server publishes can be chosen; a stored but missing one stays visible as unavailable.
+    editions().then(found=>{
+      for(const option of values.contentLanguage.options){
+        if(option.value==='auto')continue;
+        const missing=!found[option.value];option.disabled=missing;
+        if(missing && !option.textContent.endsWith(')'))option.textContent+=' ('+literal(globalThis.VTTUi('nicht verfügbar'))+')';
+      }
+    });
     const portrait=element('label'),check=element('input');check.type='checkbox';check.id='vttDisplay-stickyPortrait';check.checked=prefs.stickyPortrait;portrait.append(check,element('span',globalThis.VTTUi("Porträt beim Scrollen sichtbar halten (große Ansichten)")));dialog.append(portrait);
-    dialog.append(element('p',language==='en'
-      ? 'Available English rulebooks and the compendium follow the language setting. Names and saved game values stay unchanged. Preferences apply in this browser.'
-      : 'Verfügbare englische Regelbücher und das Compendium folgen der Sprachwahl. Namen und gespeicherte Spielwerte bleiben erhalten. Präferenzen gelten in diesem Browser.'));
+    dialog.append(element('p',globalThis.VTTUi('Regelwerk und Compendium öffnen die gewählte Sprache der Regeltexte, wenn diese Ausgabe vorhanden ist. Namen und gespeicherte Spielwerte bleiben erhalten. Präferenzen gelten in diesem Browser.')));
     const actions=element('div');actions.className='vtt-display-actions';const cancel=element('button',globalThis.VTTUi("Abbrechen"));cancel.type='button';cancel.addEventListener('click',()=>dialog.close());
-    const save=element('button',globalThis.VTTUi("Anwenden"));save.type='button';const explain=element('p');explain.setAttribute('role','status');
+    const reset=element('button',globalThis.VTTUi('Auf Standard zurücksetzen'));reset.type='button';reset.id='vttDisplayReset';reset.className='vtt-display-reset';
+    const save=element('button',globalThis.VTTUi("Anwenden"));save.type='button';save.id='vttDisplayApply';const explain=element('p');explain.setAttribute('role','status');
     const changed=()=>{const reload=values.language.value!==language;save.textContent=literal(reload?globalThis.VTTUi("Anwenden und Seite neu laden"):globalThis.VTTUi("Anwenden"));explain.textContent=literal(reload?globalThis.VTTUi("Für die neue UI-Sprache wird die Seite neu geladen."):globalThis.VTTUi("Darstellung und Entfernungen werden direkt angepasst."));};
     values.language.addEventListener('change',changed);changed();
-    save.addEventListener('click',()=>{const reload=values.language.value!==language;update(Object.fromEntries([...Object.entries(values).map(([key,node])=>[key,node.value]),['stickyPortrait',check.checked]]));dialog.close();if(reload){
-      // Changing language here is explicit; automatically pinned content URLs
-      // must not keep the previous edition. Ordinary deep links stay explicit.
-      const target=new URL(location.href),nextLanguage=values.language.value;
-      if(target.pathname==='/regelwerk/compendium'){
-        const type=target.searchParams.get('type');target.search='';
-        target.searchParams.set('locale',nextLanguage);if(type)target.searchParams.set('type',type);
-        target.hash='';location.assign(target.href);
-      }else if(target.pathname==='/regelwerk'||/^\/regelwerk\/5\.2\.1\/(?:de|en)(?:\/|$)/.test(target.pathname)){
-        location.assign('/regelwerk?locale='+nextLanguage);
-      }else location.reload();
-    }});
-    actions.append(cancel,save);dialog.append(explain,actions);dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);dialog.showModal();
+    save.addEventListener('click',()=>{const next=Object.fromEntries([...Object.entries(values).map(([key,node])=>[key,node.value]),['stickyPortrait',check.checked]]);dialog.close();commit(next);});
+    reset.addEventListener('click',()=>{dialog.close();commit({...defaults});});
+    actions.append(reset,cancel,save);dialog.append(explain,actions);dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);dialog.showModal();
   }
   // These adapters consume only API diagnostics, never rule/user document fields.
   function apiError(body={}){
@@ -156,10 +208,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     i18n.format=(key,parameters={})=>messages[key]?t(key,parameters):format(key,parameters);
     i18n.lang=language;i18n.vttDisplayInstalled=true;
   }
-  window.VTTI18n={t,literal,translate,error:apiError,report,installEagle,locale:()=>language};
+  window.VTTI18n={t,literal,translate,error:apiError,report,installEagle,locale:()=>language,contentLocale};
   globalThis.VTTUi=(source,parameters={})=>literal(source,parameters);
   globalThis.VTTUiHTML=source=>literal(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  window.VTTDisplay={get:()=>({...prefs}),update,open,formatDistance,number,contrast,nightPalette:()=>({...NIGHT})};
+  window.VTTDisplay={get:()=>({...prefs}),update,open,formatDistance,number,contrast,nightPalette:()=>({...NIGHT}),
+    defaults:()=>({...defaults}),reset:()=>commit({...defaults}),editions,contentLocale};
   apply();
   document.addEventListener('DOMContentLoaded',()=>{
     apply();

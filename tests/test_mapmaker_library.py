@@ -238,7 +238,8 @@ def test_search_pagination(library):
     assert client.get(API + '?q=Karte%2025').json['total'] == 1
     assert client.get(API + '?q=%25').json['total'] == 0
     assert client.get(API + '?page=foo').status_code == 400
-    assert len(known_assets()) == 72064
+    # Current shipped catalogue includes the later asset packs from the live base.
+    assert len(known_assets()) == 91066
 
 
 def test_migration_is_additive_and_repeatable(library):

@@ -819,6 +819,29 @@
                         </div>
                     </div>
 
+                    <div class="sheet-pane review-identity-pane">
+                        <div class="sheet-pane-header">
+                        <div class="sheet-pane-title"><span data-ui-key="u_966792d66d55">Identität</span></div>
+                        </div>
+                        <div id="sheetIdentityGrid" class="sheet-identity-grid">
+                            <div class="sheet-identity-card">
+                                <div class="sheet-identity-label"><span data-ui-key="u_7631b26ea80b">Avatar</span></div>
+                                <div class="sheet-identity-preview">🙂</div>
+                            </div>
+                            <div class="sheet-identity-card">
+                                <div class="sheet-identity-label"><span data-ui-key="u_a1141eb96836">Token</span></div>
+                                <div class="sheet-identity-preview">🛡️</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <nav class="review-sheet-nav" aria-label="Bogenabschnitte" data-ui-aria-label="u_15eba00aa285">
+                        <a href="#sfPanel-play" data-review-section="sfPanel-play" data-ui-key="u_a7991f7af596">Werte</a>
+                        <a href="#srdProgression" data-review-section="srdProgression" data-ui-key="u_7ef0f0264602">Stufe</a>
+                        <a href="#srdInventory" data-review-section="srdInventory" data-ui-key="u_5158b2fd0818">Inventar</a>
+                        <a href="#srdManage" data-review-section="srdManage" data-ui-key="u_6ea942c9369d">Begleiter</a>
+                    </nav>
+
                     <div class="sheet-pane sheet-quick-ledger">
                         <div class="sheet-pane-header">
                             <div class="sheet-pane-title"><span data-ui-key="u_1697b304f208">Kurzüberblick</span></div>
@@ -897,24 +920,6 @@
                         <div id="srdSheetBody"><div class="sheet-empty"><span data-ui-key="u_f2290e06a0bd">Lade Regelwerte…</span></div></div>
                     </section>
 
-                    <div class="sheet-pane">
-                        <div class="sheet-pane-header">
-                        <div class="sheet-pane-title"><span data-ui-key="u_966792d66d55">Identität</span></div>
-                        </div>
-                        <div class="sheet-pane-copy">
-                            <span data-ui-key="u_1ea7bbc836da">Avatar und Spielmarker werden hier gepflegt, bevor der Charakter in Kampagne oder Spieltisch verwendet wird.</span>
-                        </div>
-                        <div id="sheetIdentityGrid" class="sheet-identity-grid">
-                            <div class="sheet-identity-card">
-                                <div class="sheet-identity-label"><span data-ui-key="u_7631b26ea80b">Avatar</span></div>
-                                <div class="sheet-identity-preview">🙂</div>
-                            </div>
-                            <div class="sheet-identity-card">
-                                <div class="sheet-identity-label"><span data-ui-key="u_a1141eb96836">Token</span></div>
-                                <div class="sheet-identity-preview">🛡️</div>
-                            </div>
-                        </div>
-                    </div>
 
                             <div class="book-page-folio" data-book-folio="left">7</div>
                         </section>
@@ -1091,6 +1096,7 @@
     <script src="/static/js/srd-rule-preview.js"></script>
     <script src="/static/js/srd-progression-ui.js"></script>
     <script src="/static/js/srd-manage-ui.js"></script>
+    <script type="module" src="/static/js/review-domain.js"></script>
     <script src="/static/js/book-scene.js"></script>
     <script>globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1104,6 +1110,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         // an owner opens an editable sheet; readers never get mutation handlers.
         const requestedMode = (params.get('mode') || '').toLowerCase();
         const explicitView = requestedMode === 'view';
+        // BookScene inserts this template after bootstrap. Delegate the fixed
+        // links so the live controls work after initial load and recomposition.
+        document.addEventListener('click', event => {
+            const link = event.target.closest?.('[data-review-section]');
+            const id = link?.dataset.reviewSection;
+            if (!['sfPanel-play','srdProgression','srdInventory','srdManage'].includes(id)) return;
+            const target = document.getElementById(id);
+            if (!target) return;
+            event.preventDefault(); event.stopPropagation(); window.SheetFeedback?.reveal(id);
+            target.scrollIntoView({block:'start'});
+            target.tabIndex = -1; target.focus({preventScroll:true});
+        }, true);
         // Fixed section links (C08): known keys only, never used as a selector or code.
         const SHEET_SECTIONS = { identity: 'sheetIdentityGrid', progression: 'srdProgression', inventory: 'srdInventory' };
         const requestedSection = Object.prototype.hasOwnProperty.call(SHEET_SECTIONS, params.get('section') || '')

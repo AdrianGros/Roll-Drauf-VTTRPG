@@ -1,6 +1,7 @@
 /* Loaded only with the server-authorized DM composition. */
 (() => {
-    const el=(tag,text)=>{const node=document.createElement(tag);if(text)node.textContent=text;return node;};
+    const tr=(source,parameters={})=>globalThis.VTTUi?.(source,parameters) || source;
+    const el=(tag,text)=>{const node=document.createElement(tag);if(text)node.textContent=tr(text);return node;};
     const button=(text,fn)=>{const node=el('button',text);node.type='button';node.onclick=fn;return node;};
     window.PlayFloorDM=class {
         constructor(ui){
@@ -12,7 +13,7 @@
             this.enabled=el('input');this.enabled.type='checkbox';this.enabled.id='floorEnabled';
             this.active=el('select');this.active.id='activeFloor';
             const apply=button('Etagenansicht anwenden',()=>this.mutate('', 'PUT',{enabled:this.enabled.checked,active_floor_id:this.active.value?Number(this.active.value):null}));apply.id='applyFloorDeck';
-            this.name=el('input');this.name.id='newFloorName';this.name.maxLength=80;this.name.placeholder='z. B. Erdgeschoss';
+            this.name=el('input');this.name.id='newFloorName';this.name.maxLength=80;this.name.placeholder=tr('z. B. Erdgeschoss');
             this.file=el('input');this.file.id='newFloorFile';this.file.type='file';this.file.accept='image/png';
             this.uploadButton=button('PNG als private Etage hochladen',()=>this.upload());this.uploadButton.id='uploadFloor';
             this.dimensions=el('p');this.list=el('div');this.list.id='floorList';
@@ -32,14 +33,14 @@
             catch(error){if(id===this.mapId)this.status.textContent=error.message;}
         }
         render(data){
-            this.config=data;this.controls.disabled=Boolean(this.ui.readOnly);this.help.textContent=data.limitation;
-            this.dimensions.textContent=`PNG: genau ${data.width} × ${data.height} Pixel, höchstens 4 MiB. Maximal 8 Etagen und 16 MiB je Karte. Transparenz und rechteckige Öffnungen zeigen tiefere Bilder nur bei aktivierter Balkonsicht.`;
-            this.enabled.checked=data.enabled;this.active.replaceChildren(new Option('Etage wählen',''));
+            this.config=data;this.controls.disabled=Boolean(this.ui.readOnly);this.help.textContent=tr(data.limitation);
+            this.dimensions.textContent=tr('PNG: genau {width} × {height} Pixel, höchstens 4 MiB. Maximal 8 Etagen und 16 MiB je Karte. Transparenz und rechteckige Öffnungen zeigen tiefere Bilder nur bei aktivierter Balkonsicht.',{width:data.width,height:data.height});
+            this.enabled.checked=data.enabled;this.active.replaceChildren(new Option(tr('Etage wählen'),''));
             for(const floor of data.floors)this.active.append(new Option(floor.name,String(floor.id)));
             this.active.value=data.active_floor_id??'';this.list.replaceChildren();
             data.floors.forEach((floor,index)=>{
                 const card=el('section');card.className='floor-card';card.dataset.floorId=floor.id;
-                const title=el('input');title.value=floor.name;title.maxLength=80;title.setAttribute('aria-label','Etagenname');
+                const title=el('input');title.value=floor.name;title.maxLength=80;title.setAttribute('aria-label',tr('Etagenname'));
                 const reveal=el('input');reveal.type='checkbox';reveal.checked=floor.reveal_below;
                 const openings=el('div');openings.className='floor-openings';
                 const addRect=(rect={x:0,y:0,width:1,height:1})=>{
@@ -56,7 +57,7 @@
                     const rects=[...openings.children].map(row=>Object.fromEntries([...row.querySelectorAll('input')].map(input=>[input.dataset.rectKey,Number(input.value)])));
                     this.mutate(`/${floor.id}`,'PUT',{name:title.value,reveal_below:reveal.checked,openings:rects});
                 });
-                const remove=button('Etage löschen',()=>{if(confirm(`Private Etage „${floor.name}“ löschen?`))this.mutate(`/${floor.id}`,'DELETE',{});});
+                const remove=button('Etage löschen',()=>{if(confirm(tr('Private Etage „{name}“ löschen?',{name:floor.name})))this.mutate(`/${floor.id}`,'DELETE',{});});
                 card.append(this.label('Name',title),this.label('Balkonsicht: darunterliegende Etagen durch Öffnungen sehen',reveal),down,up,
                     el('p','Öffnungen in Kartenpixeln; X/Y ab der linken oberen Ecke.'),openings,button('Rechteckige Öffnung hinzufügen',()=>addRect()),save,remove);this.list.append(card);
             });
@@ -64,13 +65,13 @@
         async mutate(suffix,method,payload){
             if(this.busy||this.ui.readOnly||!this.config)return;
             this.busy=true;this.controls.disabled=true;const id=this.mapId;
-            try{const data=await Auth.makeAuthRequest(this.path(suffix),method,{revision:this.config.revision,...payload});if(id===this.mapId){this.render(data);this.status.textContent='Etagen gespeichert.';}this.ui.floorView?.refresh(true);}
+            try{const data=await Auth.makeAuthRequest(this.path(suffix),method,{revision:this.config.revision,...payload});if(id===this.mapId){this.render(data);this.status.textContent=tr('Etagen gespeichert.');}this.ui.floorView?.refresh(true);}
             catch(error){if(id===this.mapId){this.status.textContent=error.message;await this.load();}}
             finally{this.busy=false;if(id===this.mapId)this.controls.disabled=Boolean(this.ui.readOnly);}
         }
         async upload(){
             if(this.busy||this.ui.readOnly||!this.config||!this.file.files[0])return;
-            const file=this.file.files[0];if(file.size>4*1024*1024){this.status.textContent='PNG darf höchstens 4 MiB groß sein.';return;}
+            const file=this.file.files[0];if(file.size>4*1024*1024){this.status.textContent=tr('PNG darf höchstens 4 MiB groß sein.');return;}
             // Retain the ID for an identical retry after a lost HTTP response.
             const inputKey=JSON.stringify([this.mapId,this.name.value,file.name,file.size,file.lastModified]);
             if(inputKey!==this.uploadKey){this.uploadKey=inputKey;this.requestId=crypto.randomUUID();}
@@ -79,8 +80,8 @@
             try{
                 const send=()=>fetch(this.path(),{method:'POST',credentials:'include',headers:Auth.buildHeaders('POST',false),body:form});
                 let response=await send();if(response.status===401&&await Auth.refreshAccessToken())response=await send();
-                const data=await response.json();if(!response.ok)throw new Error(data.error||'PNG konnte nicht hochgeladen werden.');
-                if(id===this.mapId){this.render(data);this.file.value='';this.name.value='';this.uploadKey=null;this.status.textContent='Private Etage hochgeladen. Aktivierung und Reihenfolge prüfen.';}
+                const data=await response.json();if(!response.ok)throw new Error(data.error||tr('PNG konnte nicht hochgeladen werden.'));
+                if(id===this.mapId){this.render(data);this.file.value='';this.name.value='';this.uploadKey=null;this.status.textContent=tr('Private Etage hochgeladen. Aktivierung und Reihenfolge prüfen.');}
                 this.ui.floorView?.refresh(true);
             }catch(error){if(id===this.mapId){this.status.textContent=error.message;await this.load();}}
             finally{this.busy=false;if(id===this.mapId)this.controls.disabled=Boolean(this.ui.readOnly);}

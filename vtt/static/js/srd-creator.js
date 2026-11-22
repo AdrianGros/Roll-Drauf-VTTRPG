@@ -422,18 +422,18 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         $('scBuilder').classList.toggle('sc-quick', app.mode === 'quick');
     }
 
-    function renderChrome() {
+    function renderChrome(preserveView = true) {
+        const body = $('scStepBody'), view = preserveView ? captureBuilderView(body) : null;
         renderStepsNav();
         renderSummary();
         renderNav();
         renderFindings();
+        if (view) restoreBuilderView(body, view);
     }
 
     function renderBody() {
         const body = $('scStepBody');
         const ids = app.mode === 'guided' ? [app.step] : STEPS.map(([id]) => id);
-        const focusIndex = focusableIndex(body);
-        const scrollY = window.scrollY;
         body.textContent = '';
         ids.forEach((id) => {
             const def = SC.steps[id];
@@ -444,25 +444,92 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 h('div', { class: 'sc-panel', 'data-findings-for': id }));
             body.append(section);
         });
-        restoreFocus(body, focusIndex, scrollY);
     }
 
-    function focusableIndex(root) {
-        const active = document.activeElement;
-        if (!active || !root.contains(active)) return -1;
-        return Array.from(root.querySelectorAll('button, input, select, textarea, a[href]')).indexOf(active);
+    // Rebuilds must preserve the reader's working context, including nested book
+    // scrollers and open detail groups. A numeric focus index changes when options
+    // are inserted and can move focus to an unrelated control.
+    function detailKey(detail) {
+        const section = detail.closest('.sc-section');
+        const summary = detail.querySelector(':scope > summary');
+        return `${section?.id || ''}:${summary?.textContent || ''}`;
     }
-    function restoreFocus(root, index, scrollY) {
-        if (index >= 0) {
-            const el = root.querySelectorAll('button, input, select, textarea, a[href]')[index];
-            if (el) el.focus({ preventScroll: true });
+
+    function controlKey(node) {
+        if (!node) return null;
+        const section = node.closest('.sc-section')?.id || '';
+        const group = node.closest('[role="group"]')?.getAttribute('aria-label') || '';
+        const label = node.dataset.focusKey || node.getAttribute('name') ||
+            Array.from(node.labels || []).map(item => item.textContent.trim()).join('|') ||
+            node.getAttribute('aria-label') || (node.tagName === 'BUTTON' ? node.textContent.trim() : '');
+        return label ? `${section}:${group}:${node.tagName}:${node.type || ''}:${label}` : null;
+    }
+
+    function keyedControl(root, key) {
+        if (!key) return null;
+        const matches = Array.from(root.querySelectorAll('input,select,textarea,button'))
+            .filter(node => controlKey(node) === key);
+        return matches.length === 1 ? matches[0] : null;
+    }
+
+    function captureBuilderView(root) {
+        const active = root.contains(document.activeElement) ? document.activeElement : null;
+        const path = active?.closest('[data-focus-path]')?.getAttribute('data-focus-path');
+        const marker = active?.id ? active : Array.from(root.querySelectorAll('[id]')).find(node => {
+            const box = node.getBoundingClientRect();
+            return box.top >= 0 && box.top < innerHeight && box.height > 0;
+        });
+        const scrollers = [];
+        for (let node = active || root; node; node = node.parentElement) {
+            if (node.scrollHeight > node.clientHeight || node.scrollWidth > node.clientWidth) {
+                scrollers.push({node, top: node.scrollTop, left: node.scrollLeft});
+            }
         }
-        window.scrollTo(0, scrollY);
+        return {id: active?.id, key: controlKey(active), path, tag: active?.tagName, type: active?.type,
+            start: active?.selectionStart, end: active?.selectionEnd,
+            details: new Map(Array.from(root.querySelectorAll('details')).map(node => [detailKey(node), node.open])),
+            scrollers, x: window.scrollX, y: window.scrollY,
+            markerId: marker?.id, markerKey: controlKey(active),
+            markerTop: (active || marker)?.getBoundingClientRect().top};
+    }
+
+    function restoreBuilderView(root, view) {
+        root.querySelectorAll('details').forEach(node => {
+            if (view.details.has(detailKey(node))) node.open = view.details.get(detailKey(node));
+        });
+        let active = view.id ? document.getElementById(view.id) : keyedControl(root, view.key);
+        if (!active && view.path) {
+            const owner = Array.from(root.querySelectorAll('[data-focus-path]')).find(node => node.getAttribute('data-focus-path') === view.path);
+            const controls = owner?.querySelectorAll('input,select,textarea,button');
+            active = owner?.matches('input,select,textarea,button') ? owner : controls?.length === 1 ? controls[0] : null;
+        }
+        if (active && root.contains(active) && active.tagName === view.tag && !active.disabled) {
+            active.focus({preventScroll: true});
+            if (typeof view.start === 'number' && typeof active.setSelectionRange === 'function') {
+                try { active.setSelectionRange(view.start, view.end); } catch (_) { /* non-text input */ }
+            }
+        }
+        for (const row of view.scrollers) if (row.node.isConnected) {
+            row.node.scrollTop = row.top; row.node.scrollLeft = row.left;
+        }
+        window.scrollTo(view.x, view.y);
+        const marker = view.markerKey ? keyedControl(root, view.markerKey)
+            : view.markerId ? document.getElementById(view.markerId) : null;
+        if (marker && Number.isFinite(view.markerTop)) {
+            const delta = marker.getBoundingClientRect().top - view.markerTop;
+            if (Math.abs(delta) > 1) {
+                const nested = view.scrollers.find(row => row.node.isConnected && row.node !== document.documentElement && row.node !== document.body);
+                if (nested) nested.node.scrollTop += delta;
+                else window.scrollBy(0, delta);
+            }
+        }
     }
 
     function renderAll() {
+        const body = $('scStepBody'), view = captureBuilderView(body);
         renderBody();
-        renderChrome();
+        renderChrome(false);
+        restoreBuilderView(body, view);
     }
     SC.renderAll = renderAll;
     SC.renderChrome = renderChrome;

@@ -4,7 +4,7 @@
     const routeLocale = window.location.pathname.match(/^\/regelwerk\/5\.2\.1\/(de|en)(?:\/|$)/)?.[1];
     const requestedLocale = new URLSearchParams(window.location.search).get('locale');
     const contentLocale = routeLocale || (['de', 'en'].includes(requestedLocale) ? requestedLocale
-        : globalThis.VTTI18n?.locale?.() === 'en' ? 'en' : 'de');
+        : (globalThis.VTTDisplay?.contentLocale?.() || globalThis.VTTI18n?.locale?.()) === 'en' ? 'en' : 'de');
     const SRD_RULESET_ID = `srd-5.2.1-${contentLocale}`;
     // The SRD is the main book; Roll Drauf's own books live under their readerUrl.
     let book = { rulesetId: SRD_RULESET_ID, kind: 'srd', readerUrl: contentLocale === 'en' ? '/regelwerk/5.2.1/en' : '/regelwerk?locale=de' };
@@ -18,6 +18,7 @@
     const searchStatus = document.getElementById('regelwerkSearchStatus');
     const searchResults = document.getElementById('regelwerkSearchResults');
     let navigation = null;
+    let activeDocument = null;
 
     // Explicit UI catalog for authored controls/status/errors only. Rule blocks, book and
     // document titles, search excerpts and facet values are source text; element() below
@@ -231,6 +232,7 @@
         const entry = selectedDocument();
         if (!entry) throw new UiMessageError(ui('Noch kein Regelkapitel verfügbar.'));
         const documentData = await getJson(`${API_ROOT}/documents/${encodeURIComponent(entry.documentId)}`);
+        activeDocument = documentData;
         clear(article);
         const trail = [documentData.navigationPath[0]];
         const sectionEntry = navigation.sections.find((section) => section.title === trail[0]);
@@ -255,6 +257,7 @@
 
     async function showOwnLicense() {
         const data = await getJson(`${API_ROOT}/license`);
+        activeDocument = {title: ui('Quelle & Lizenz'), documentId: 'license'};
         clear(article);
         article.appendChild(element('h2', '', ui('Quelle & Lizenz')));
         article.appendChild(element('p', 'regelwerk-document-meta', ui('{title} · eigenes Werk von Roll Drauf', { title: data.title })));
@@ -273,6 +276,7 @@
     async function showLicense() {
         if (book.kind === 'original') return showOwnLicense();
         const data = await getJson(`${API_ROOT}/license`);
+        activeDocument = {title: ui('Quelle & Lizenz'), documentId: 'license'};
         clear(article);
         article.appendChild(element('h2', '', ui('Quelle & Lizenz')));
         article.appendChild(element('p', 'regelwerk-document-meta', `${data.source.title} · ${data.license.id}`));
@@ -385,6 +389,7 @@
     }
 
     function applyBookChrome() {
+        setText('regelwerkTitle', navigation.title);
         const licenseLink = document.getElementById('regelwerkLicenseLink');
         if (licenseLink) licenseLink.href = navigation.licenseUrl;
         const compendiumLink = document.querySelector('.regelwerk-sidebar-actions a[href^="/regelwerk/compendium"]');
@@ -428,7 +433,33 @@
     }
 
     searchForm.addEventListener('submit', runSearch);
-    document.getElementById('regelwerkPrint').addEventListener('click', () => window.print());
+    function confirmPrint() {
+        if (document.getElementById('reviewPrintDialog')) return;
+        const dialog = element('dialog','review-dialog');dialog.id='reviewPrintDialog';
+        const title=element('h2','',ui('Regeltext drucken'));title.id='reviewPrintTitle';title.tabIndex=-1;
+        dialog.setAttribute('aria-labelledby',title.id);
+        const summary=element('p','',ui('Gedruckt wird der aktuell angezeigte Regeltext: {title}',{title:activeDocument?.title || navigation?.title || document.title}));
+        const note=element('p','',ui('Papierformat und Seitenumbruch bestimmst du in der Druckvorschau.'));
+        const cancel=element('button','',ui('Abbrechen'));cancel.type='button';cancel.onclick=()=>dialog.close();
+        const next=element('button','',ui('Weiter zur Bestätigung'));next.type='button';next.id='reviewPrintNext';
+        next.onclick=()=>{
+            summary.textContent=ui('Möchtest du diesen Regeltext wirklich drucken?');
+            next.textContent=ui('Druckvorschau öffnen');next.id='reviewPrintConfirm';
+            next.onclick=async()=>{
+                if(next.disabled)return;next.disabled=true;
+                try {
+                    await Auth.makeAuthRequest('/api/review-web/print-requests','POST',{
+                        request_id:crypto.randomUUID(),ruleset:book.rulesetId,
+                        document_id:activeDocument?.documentId || selectedDocument()?.documentId || 'current-view'
+                    });
+                } catch (_) { /* Internal request count must never block the requested print. */ }
+                dialog.close();window.print();
+            };
+        };
+        dialog.append(title,summary,note,cancel,next);document.body.append(dialog);dialog.showModal();title.focus();
+        dialog.addEventListener('close',()=>{dialog.remove();document.getElementById('regelwerkPrint')?.focus({preventScroll:true});},{once:true});
+    }
+    document.getElementById('regelwerkPrint').addEventListener('click',confirmPrint);
     window.addEventListener('hashchange', focusHashTarget);
     window.addEventListener('popstate', renderRoute);
     init();

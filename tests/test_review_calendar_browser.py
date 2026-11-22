@@ -103,7 +103,7 @@ def test_private_note_day_dialog_and_real_one_shot(site, width, theme, language,
             };
         }""")
         form.locator('[type=submit]').click()
-        page.wait_for_function("typeof window.releaseCalendarSave === 'function'")
+        page.wait_for_function("() => typeof window.releaseCalendarSave === 'function'")
         dialog.press('Escape')
         expect(dialog).not_to_be_visible()
         page.evaluate('window.releaseCalendarSave()')

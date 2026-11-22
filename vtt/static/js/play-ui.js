@@ -205,7 +205,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this._composedOperator = operator;
             if (operator) {
                 const surface = await this.auth.makeAuthRequest(`/api/play/campaigns/${this.campaignId}/sessions/${this.sessionId}/surface`);
-                for (const source of ["/static/js/play-token-layers-dm.js", "/static/js/play-dm.js", "/static/js/play-feedback-dm.js"]) await new Promise((resolve, reject) => {
+                for (const source of ["/static/js/play-token-layers-dm.js", "/static/js/play-dm.js", "/static/js/play-feedback-dm.js", "/static/js/play-floor-dm.js"]) await new Promise((resolve, reject) => {
                     const script = document.createElement("script");
                     script.src = source;
                     script.onload = resolve;
@@ -2097,6 +2097,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this._visionGeometryLoadedForMapId = activeMap.id;
                 this._renderVisionLayer();
                 this.feedbackDM?.refresh();
+            this.floorDM?.refresh(); this.floorView?.refresh();
             } catch (error) {
                 if (isCurrent()) this._showMessage(error.message || globalThis.VTTUi("Wand-/Lichtdaten konnten nicht geladen werden."), true);
             }
@@ -2816,6 +2817,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this.campaignRoom = new window.PlayCampaignRoom(this);
             this.feedback = new window.PlayFeedback(this);
             if (this._composedOperator) this.feedbackDM = new window.PlayFeedbackDM(this);
+            this.floorView = new window.PlayFloorView(this);
+            if (this._composedOperator) this.floorDM = new window.PlayFloorDM(this);
             const roll = async () => {
                 const token = this._findStateToken(this.selectedTokenId);
                 if (!token || !this._canMoveToken(token)) {
@@ -3266,6 +3269,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this._renderTokenSelectors();
                 this.feedback?.refresh();
                 this.feedbackDM?.refresh();
+            this.floorDM?.refresh(); this.floorView?.refresh();
             });
         }
 
@@ -3317,6 +3321,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this._renderFirstSteps();
             this.feedback?.refresh();
             this.feedbackDM?.refresh();
+            this.floorDM?.refresh(); this.floorView?.refresh();
             }
             this._logActivity(globalThis.VTTUi("Session-Status: {p0}.",{p0:(stateName)}), "info");
         }
@@ -3556,6 +3561,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this._renderFirstSteps();
             this.feedback?.refresh();
             this.feedbackDM?.refresh();
+            this.floorDM?.refresh(); this.floorView?.refresh();
         }
 
         _renderMeta() {
@@ -4337,6 +4343,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         _renderMapCanvas() {
             const statePayload = this.bootstrap?.state_payload || {};
             const activeMap = statePayload.active_map;
+            const background = this.floorView ? this.floorView.background(activeMap) : activeMap?.background_url;
             const allTokens = Array.isArray(statePayload.tokens) ? statePayload.tokens : [];
             // dm_only tokens are hidden from non-operator viewers. (The
             // server currently still sends them - server-side filtering is
@@ -4379,9 +4386,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 emptyState.style.display = activeMap ? "none" : "flex";
             }
 
-            if (activeMap?.background_url) {
-                if (mapImage.getAttribute("src") !== activeMap.background_url) {
-                    mapImage.src = activeMap.background_url;
+            if (background) {
+                if (mapImage.getAttribute("src") !== background) {
+                    mapImage.src = background;
                 }
                 mapImage.style.display = "block";
             } else {

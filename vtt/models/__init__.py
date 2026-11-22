@@ -75,3 +75,9 @@ from vtt.models.atlas import AtlasWorld, AtlasMember, AtlasMap, AtlasPublication
 from vtt.models.session_feedback import TokenTemplate, CampaignChatMessage
 
 from vtt.models.ui_playtable import MapViewSettings, PageHierarchyState, MapPageParent, InitiativeRound, InitiativeCandidate
+
+from vtt.models.review_web import ReviewPrintRequest
+from vtt.models.review_domain import ReviewThread, ReviewThreadMessage, AtlasCampaignLink
+from vtt.models.map_floor import MapFloorDeck, MapFloorImage
+from vtt.models.calendar_note import CalendarNote, CalendarOneShot
+from vtt.models.table_companion import TableCompanionBinding

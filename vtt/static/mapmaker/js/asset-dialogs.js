@@ -2,13 +2,77 @@
 // small pixel editor. Both produce one rasterized PNG that is embedded in the
 // project through Editor.addCustomAsset (same limits as both validators).
 // No AI cut-out, no animation or plugin system; no URL, SVG or script input.
-import { ASSET_PERSPECTIVES, ASSET_STYLES, LIMITS, cleanText, clamp } from "./document.js";
+import { ASSET_PERSPECTIVES, ASSET_STYLES, LIMITS, cleanText, clamp, pngDimensions } from "./document.js";
 
 const ui = (source, parameters) => globalThis.VTTUi(source, parameters);
 const MAX_UPLOAD_FILE = 32 * 1024 * 1024;
 const MAX_UPLOAD_SIDE = 8192;
+const MAX_UPLOAD_PIXELS = 16_000_000;
+const MAX_HEADER_BYTES = 256 * 1024;
 export const PIXEL_SIZES = [16, 24, 32, 48, 64, 96, 128, 192, 256];
 const PIXEL_HISTORY = 40;
+
+// Read only bounded metadata before the browser allocates any decoded pixels.
+// Long/ambiguous headers fail closed. The decoder still validates actual data,
+// and its dimensions are checked again before a bitmap reaches any canvas.
+export async function uploadDimensions(file) {
+    const bytes = new Uint8Array(await file.slice(0, MAX_HEADER_BYTES).arrayBuffer());
+    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    const ascii = (offset, length) => String.fromCharCode(...bytes.subarray(offset, offset + length));
+    if (file.type === "image/png") return pngDimensions(bytes);
+    if (file.type === "image/jpeg") {
+        if (bytes.length < 4 || view.getUint16(0) !== 0xffd8) return null;
+        const sof = new Set([0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf]);
+        let offset = 2;
+        while (offset < bytes.length) {
+            if (bytes[offset++] !== 0xff) return null;
+            while (bytes[offset] === 0xff) offset++;
+            if (offset >= bytes.length) return null;
+            const marker = bytes[offset++];
+            if (marker === 0xda || marker === 0xd9 || marker === 0) return null;
+            if (marker === 0x01 || marker >= 0xd0 && marker <= 0xd7) continue;
+            if (offset + 2 > bytes.length) return null;
+            const length = view.getUint16(offset);
+            if (length < 2 || offset + length > bytes.length) return null;
+            if (sof.has(marker)) return length >= 8 ? { w: view.getUint16(offset + 5), h: view.getUint16(offset + 3) } : null;
+            offset += length;
+        }
+        return null;
+    }
+    if (file.type !== "image/webp" || bytes.length < 20 || ascii(0, 4) !== "RIFF" || ascii(8, 4) !== "WEBP" || view.getUint32(4, true) + 8 !== file.size) return null;
+    const u24 = (offset) => bytes[offset] + bytes[offset + 1] * 256 + bytes[offset + 2] * 65536;
+    let offset = 12, canvas = null;
+    while (offset + 8 <= bytes.length) {
+        const kind = ascii(offset, 4), length = view.getUint32(offset + 4, true), start = offset + 8;
+        if (start + length > file.size) return null;
+        if (kind === "ANIM" || kind === "ANMF") return null;
+        if (kind === "VP8X") {
+            if (canvas || length !== 10 || start + 10 > bytes.length || bytes[start] & 2) return null;
+            canvas = { w: 1 + u24(start + 4), h: 1 + u24(start + 7) };
+            // Reject a huge extended canvas before reading further chunks.
+            if (!boundedDimensions(canvas)) return canvas;
+        } else if (kind === "VP8 " || kind === "VP8L") {
+            let frame;
+            if (kind === "VP8 ") {
+                if (length < 10 || start + 10 > bytes.length || bytes[start] & 1 || ascii(start + 3, 3) !== "\x9d\x01\x2a") return null;
+                frame = { w: view.getUint16(start + 6, true) & 0x3fff, h: view.getUint16(start + 8, true) & 0x3fff };
+            } else {
+                if (length < 5 || start + 5 > bytes.length || bytes[start] !== 0x2f) return null;
+                const bits = view.getUint32(start + 1, true);
+                frame = { w: (bits & 0x3fff) + 1, h: ((bits >>> 14) & 0x3fff) + 1 };
+            }
+            if (canvas && (canvas.w !== frame.w || canvas.h !== frame.h)) return null;
+            return frame;
+        }
+        offset = start + length + (length & 1);
+    }
+    return null;
+}
+
+function boundedDimensions(size) {
+    return size && Number.isInteger(size.w) && Number.isInteger(size.h) && size.w > 0 && size.h > 0
+        && size.w <= MAX_UPLOAD_SIDE && size.h <= MAX_UPLOAD_SIDE && size.w * size.h <= MAX_UPLOAD_PIXELS;
+}
 
 function el(tag, parent, text = null, attributes = {}) {
     const node = document.createElement(tag);
@@ -131,7 +195,8 @@ export class UploadDialog {
         }
         this.pickButton.onclick = () => { this.pick = !this.pick; this.pickButton.setAttribute("aria-pressed", String(this.pick)); };
         this.bindSource();
-        dialog.addEventListener("close", () => this.release());
+        dialog.addEventListener("cancel", () => this.release());
+        dialog.addEventListener("close", () => { if (!dialog.open) this.release(); });
     }
 
     open() {
@@ -146,12 +211,18 @@ export class UploadDialog {
         if (!this.dialog.open) this.dialog.showModal();
     }
 
-    close() { if (this.dialog.open) this.dialog.close(); }
+    close() { this.release(); if (this.dialog.open) this.dialog.close(); }
 
     release() {
+        this.generation = (this.generation || 0) + 1;
+        if (this.frame) cancelAnimationFrame(this.frame);
+        this.frame = 0;
         if (this.bitmap && this.bitmap.close) this.bitmap.close();
         this.bitmap = null;
+        this.crop = null;
+        this.dragStart = null;
         this.output = null;
+        this.save.disabled = true;
         this.source.width = this.source.height = 1;
         this.preview.width = this.preview.height = 1;
     }
@@ -163,21 +234,28 @@ export class UploadDialog {
 
     async load(file) {
         this.release();
+        const generation = this.generation, document_ = this.ed.doc;
+        const current = () => generation === this.generation && this.dialog.isConnected && this.dialog.open && document_ === this.ed.doc;
         this.save.disabled = true;
-        if (!file) return;
+        if (!file || !current()) return;
         // Bounds before decoding: bounded file, raster types only (never SVG or scripts).
         if (file.size > MAX_UPLOAD_FILE) { this.showError(ui("Die Datei ist größer als 32 MiB.")); return; }
         if (!/^image\/(png|jpeg|webp)$/.test(file.type) || /\.svgz?$/i.test(file.name)) { this.showError(ui("Bitte ein PNG-, JPEG- oder WebP-Bild wählen (keine SVG-Dateien).")); return; }
         let bitmap;
         try {
+            const dimensions = await uploadDimensions(file);
+            if (!current()) return;
+            if (!dimensions) { this.showError(ui("Die Bildmaße konnten im begrenzten Dateikopf nicht sicher gelesen werden. Bitte als PNG, JPEG oder WebP neu speichern.")); return; }
+            if (!boundedDimensions(dimensions)) { this.showError(ui("Das Bild darf höchstens {px} Pixel je Seite und 16 Millionen Pixel insgesamt haben. Bitte vorher verkleinern.", { px: MAX_UPLOAD_SIDE })); return; }
             bitmap = await createImageBitmap(file);
         } catch (_error) {
-            this.showError(ui("Das Bild ließ sich nicht lesen."));
+            if (current()) this.showError(ui("Das Bild ließ sich nicht lesen."));
             return;
         }
-        if (bitmap.width > MAX_UPLOAD_SIDE || bitmap.height > MAX_UPLOAD_SIDE) {
+        if (!current()) { if (bitmap.close) bitmap.close(); return; }
+        if (!boundedDimensions({ w: bitmap.width, h: bitmap.height })) {
             if (bitmap.close) bitmap.close();
-            this.showError(ui("Das Bild ist größer als {px} Pixel je Seite. Bitte vorher verkleinern.", { px: MAX_UPLOAD_SIDE }));
+            this.showError(ui("Das Bild darf höchstens {px} Pixel je Seite und 16 Millionen Pixel insgesamt haben. Bitte vorher verkleinern.", { px: MAX_UPLOAD_SIDE }));
             return;
         }
         this.showError("");
@@ -311,16 +389,19 @@ export class UploadDialog {
         if (!this.output) return;
         if (!this.rights.checked) { this.showError(ui("Bitte bestätigen, dass du dieses Bild verwenden darfst.")); return; }
         this.save.disabled = true;
+        const generation = this.generation, document_ = this.ed.doc, output = this.output, meta = this.meta.read();
+        const current = () => generation === this.generation && this.dialog.isConnected && this.dialog.open && document_ === this.ed.doc;
         try {
-            const bytes = await canvasPngBytes(this.output);
-            const entry = await this.ed.addCustomAsset({ bytes, width: this.output.width, height: this.output.height, ...this.meta.read() });
-            if (!entry) return;
+            const bytes = await canvasPngBytes(output);
+            if (!current()) return;
+            const entry = await this.ed.addCustomAsset({ bytes, width: output.width, height: output.height, ...meta });
+            if (!entry || !current()) return;
             this.close();
             this.ed.ui.toast(ui("„{label}“ ist als eigenes Bild in dieser Karte verfügbar.", { label: entry.label }));
         } catch (error) {
-            this.showError(error.message || String(error));
+            if (current()) this.showError(error.message || String(error));
         } finally {
-            this.save.disabled = !this.output;
+            if (current()) this.save.disabled = !this.output;
         }
     }
 }

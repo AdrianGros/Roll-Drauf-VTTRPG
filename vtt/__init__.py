@@ -272,11 +272,21 @@ def create_app(config_name=None):
     app.register_blueprint(characters_bp, url_prefix='/api')
     app.register_blueprint(community_bp, url_prefix='/api')
     app.register_blueprint(play_bp, url_prefix='/api/play')
+    from vtt.play.floor_layers import floor_layers_bp
+    app.register_blueprint(floor_layers_bp, url_prefix='/api/play')
+    from vtt.play.table_companions import table_companions_bp
+    app.register_blueprint(table_companions_bp)
     app.register_blueprint(ops_bp)
     app.register_blueprint(assets_bp)
     app.register_blueprint(admin_dashboard_bp)
     app.register_blueprint(dashboard_home_bp)
     app.register_blueprint(research_survey_bp)
+    from vtt.review_web import review_web_bp
+    app.register_blueprint(review_web_bp)
+    from vtt.review_domain import review_domain_bp
+    app.register_blueprint(review_domain_bp)
+    from vtt.calendar_notes import calendar_notes_bp
+    app.register_blueprint(calendar_notes_bp)
     app.register_blueprint(profile_m18_bp)
     app.register_blueprint(admin_m18_bp)
     app.register_blueprint(registration_keys_bp)

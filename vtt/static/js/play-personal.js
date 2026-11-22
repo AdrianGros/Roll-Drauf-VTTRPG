@@ -16,6 +16,7 @@ class PersonalActionBar {
             const button = event.target.closest('button');
             if (!button) return;
             if (button.hasAttribute('data-pa-edit')) this.edit();
+            else if (button.hasAttribute('data-pa-companions')) this.companions();
             else if (button.hasAttribute('data-pa-generic')) {
                 this.showGeneric = !this.showGeneric;
                 this.ui._renderActionHotbar();
@@ -55,6 +56,7 @@ class PersonalActionBar {
 
     update(token, canAct) {
         this.canAct = canAct;
+        this.parentToken = token;
         const id = canAct || token && this.ui._canMoveToken(token) ? Number(token?.character_id) : 0;
         if (!id) {
             this.characterId = null;
@@ -97,6 +99,8 @@ class PersonalActionBar {
 
     render() {
         if (!this.characterId) return;
+        const companionParent = this.canAct && this.parentToken?.visibility === 'public' &&
+            Number(this.parentToken.owner_user_id) === Number(this.ui.user?.id);
         const catalog = new Map((this.data?.catalog.actions || []).map(action => [action.id, action]));
         const slots = (this.data?.slots || []).map((id, index) => {
             if (!id) return '';
@@ -108,7 +112,68 @@ class PersonalActionBar {
         this.root.innerHTML = `<span class="pa-name">${this.text(this.data?.character_name || 'Charakteraktionen')}</span>
             <div class="pa-slots">${slots || `<span>${globalThis.VTTUiHTML("Noch keine Aktion belegt.")}</span>`}</div>
             <button type="button" data-pa-edit ${!this.active || this.busy ? 'disabled' : ''}>${globalThis.VTTUiHTML("Belegen")}</button>
+            <button type="button" data-pa-companions ${!companionParent || this.busy ? 'disabled' : ''}>${globalThis.VTTUiHTML("Begleiter")}</button>
             <button type="button" data-pa-generic aria-expanded="${this.showGeneric}">${globalThis.VTTUiHTML("Allgemeine")}</button>`;
+    }
+
+    async companions() {
+        if (!this.canAct || this.busy || !this.characterId || !this.parentToken) return;
+        const characterId = this.characterId, parentId = this.parentToken.id, endpoint = this.endpoint();
+        document.getElementById('personalCompanionDialog')?.remove();
+        const dialog = document.createElement('dialog');
+        dialog.id = 'personalCompanionDialog'; dialog.className = 'pa-dialog';
+        dialog.setAttribute('aria-label', globalThis.VTTUi('Begleiter'));
+        const title = document.createElement('h2'); title.textContent = globalThis.VTTUi('Begleiter');
+        const hint = document.createElement('p');
+        hint.textContent = globalThis.VTTUi('Neben deiner sichtbaren Figur platzieren. Erneutes Aufstellen erhält den erlittenen Schaden.');
+        const status = document.createElement('p'); status.setAttribute('role', 'status');
+        const label = document.createElement('label'); label.textContent = globalThis.VTTUi('Vorhandener Begleiter');
+        const select = document.createElement('select'); select.id = 'paCompanionSelect'; label.htmlFor = select.id;
+        const place = document.createElement('button'); place.type = 'button'; place.id = 'paCompanionPlace';
+        place.textContent = globalThis.VTTUi('Neben Figur platzieren'); place.disabled = true;
+        const cancel = document.createElement('button'); cancel.type = 'button'; cancel.textContent = globalThis.VTTUi('Schließen');
+        cancel.onclick = () => dialog.close();
+        dialog.append(title, hint, label, select, status, place, cancel);
+        dialog.addEventListener('close', () => dialog.remove(), {once: true});
+        document.body.append(dialog); dialog.showModal();
+        let source;
+        const sameParent = () => this.characterId === characterId && this.parentToken?.id === parentId && this.canAct;
+        try {
+            source = await this.ui.auth.makeAuthRequest(endpoint + '/companions?parent_token_id=' + parentId);
+            if (!dialog.isConnected || !sameParent()) { dialog.close(); return; }
+            for (const companion of source.companions) {
+                select.add(new Option(`${companion.name} · ${globalThis.VTTUi('TP')} ${companion.hpCurrent}/${companion.hpMax}`, companion.id));
+            }
+            if (!source.companions.length) status.textContent = globalThis.VTTUi('Speichere zuerst einen Begleiter im Charakterbogen.');
+            place.disabled = !source.companions.length;
+            const pending = [...this.pending.entries()].find(([key]) => key.startsWith(`companion:${parentId}:`));
+            if (pending && source.companions.some(row => row.id === pending[0].split(':').slice(2).join(':'))) {
+                select.value = pending[0].split(':').slice(2).join(':'); select.disabled = true;
+                status.textContent = globalThis.VTTUi('Bestätigung fehlt. Erneut versuchen prüft dieselbe Anfrage.');
+            }
+        } catch (error) { if (dialog.isConnected) status.textContent = error.message; }
+        place.onclick = async () => {
+            if (!source || !select.value || this.busy || !sameParent()) return;
+            const key = `companion:${parentId}:${select.value}`;
+            const body = this.pending.get(key) || {parent_token_id: parentId, parent_version: source.parent_version, request_id: crypto.randomUUID()};
+            this.pending.set(key, body); this.busy = true; select.disabled = true; place.disabled = true; this.render();
+            try {
+                await this.ui.auth.makeAuthRequest(endpoint + '/companions/' + encodeURIComponent(select.value) + '/place', 'POST', body);
+                this.pending.delete(key);
+                this.ui._showMessage(globalThis.VTTUi('Begleiter aufgestellt. Erlittener Schaden bleibt erhalten.'));
+                dialog.close();
+                await this.ui.loadBootstrap();
+            } catch (error) {
+                if (error.status && error.status < 500 && error.apiError !== 'request_in_progress') this.pending.delete(key);
+                if (dialog.isConnected) status.textContent = error.apiError === 'parent_version_conflict'
+                    ? globalThis.VTTUi('Die Figur wurde verändert. Schließe den Dialog und öffne Begleiter erneut.')
+                    : this.pending.has(key) ? globalThis.VTTUi('Bestätigung fehlt. Erneut versuchen prüft dieselbe Anfrage.') : error.message;
+                await this.ui.loadBootstrap();
+            } finally {
+                this.busy = false; this.render();
+                place.disabled = !sameParent(); select.disabled = this.pending.has(key);
+            }
+        };
     }
 
     async save(slots) {

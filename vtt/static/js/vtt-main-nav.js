@@ -1,21 +1,30 @@
 globalThis.VTTUi ||= (source,parameters={}) => globalThis.VTTI18n?.literal(source,parameters) ?? source.replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(parameters,k)?String(parameters[k]):m);
 globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-/* Shared VTT ribbon and account memo for book, rules, table, and map pages. */
+/* Shared VTT ribbon, account memo and own profile entry for book, rules, table, and map pages. */
 (function () {
     'use strict';
 
     const launchKey = 'vtt_open_play_launcher';
-    const routes = [
-        ['/dashboard', globalThis.VTTUi("Übersicht")],
+    // W01/K36: campaigns, characters and creation share one labelled group; conversations,
+    // maps, atlas and the compendium stay direct entries. The rulebook is the compendium's
+    // companion entry and opens the matching edition. Every existing direct URL still works.
+    const START = ['/dashboard', globalThis.VTTUi("Übersicht")];
+    const PLAY_GROUP = [
         ['/campaigns', globalThis.VTTUi("Kampagnen")],
         ['/characters', globalThis.VTTUi("Charaktere")],
+        ['/api/ce/authoring', globalThis.VTTUi("Creation Engine")],
+    ];
+    const DIRECT = [
         ['/conversations', globalThis.VTTUi("Gespräche")],
         ['/mapmaker', globalThis.VTTUi("Karten")],
         ['/atlas', globalThis.VTTUi("Atlas")],
-        ['/api/ce/authoring', globalThis.VTTUi("Creation Engine")],
-        ['/regelwerk', globalThis.VTTUi("Regelwerk")],
-        ['/regelwerk/compendium', globalThis.VTTUi("Compendium")],
     ];
+    const REFERENCE = [
+        ['/regelwerk/compendium', globalThis.VTTUi("Compendium")],
+        ['/regelwerk', globalThis.VTTUi("Regelwerk")],
+    ];
+    const routes = [START, ...PLAY_GROUP, ...DIRECT, ...REFERENCE];
+    let groupSequence = 0;
     let memoPromise;
     const staticPreview = location.pathname === '/mapmaker/';
     const anonymousMap = location.pathname === '/static/mapmaker/index.html'
@@ -70,7 +79,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const extras = Array.from(nav.querySelectorAll('#return-character, [href="/api/ce/authoring/advanced"]'));
         const fragment = document.createDocumentFragment();
 
-        routes.forEach(([href, label]) => {
+        function link([href, label]) {
             const anchor = document.createElement('a');
             anchor.className = 'book-dashboard-ribbon-btn';
             anchor.textContent = label;
@@ -96,11 +105,41 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             }
             if (href === '/regelwerk') {
                 anchor.dataset.regelwerkNav = '';
+                anchor.classList.add('vtt-nav-sub');
                 anchor.setAttribute('aria-disabled', staticPreview || anonymousMap ? 'false' : 'true');
                 anchor.hidden = !(staticPreview || anonymousMap);
             }
-            fragment.appendChild(anchor);
-        });
+            return anchor;
+        }
+
+        function cluster(entries, label, className, visibleLabel) {
+            const group = document.createElement(visibleLabel ? 'details' : 'span');
+            group.className = `vtt-nav-group ${className}`;
+            if (visibleLabel) {
+                const caption = document.createElement('summary');
+                caption.className = 'book-dashboard-ribbon-btn';
+                caption.id = `vttNavGroup${++groupSequence}`;
+                caption.textContent = label;
+                group.setAttribute('aria-labelledby', caption.id);
+                group.append(caption);
+                group.addEventListener('keydown', event => {
+                    if (event.key === 'Escape') { group.open = false; caption.focus(); }
+                });
+            } else {
+                group.setAttribute('role', 'group');
+                group.setAttribute('aria-label', label);
+            }
+            const links = document.createElement('span'); links.className = 'vtt-nav-group-links';
+            entries.forEach((entry) => links.append(link(entry)));
+            group.append(links);
+            if (entries.some(([href]) => href === route)) group.classList.add('has-active');
+            return group;
+        }
+
+        fragment.appendChild(link(START));
+        fragment.appendChild(cluster(PLAY_GROUP, globalThis.VTTUi('Spiel & Figuren'), 'vtt-nav-play', true));
+        DIRECT.forEach((entry) => fragment.appendChild(link(entry)));
+        fragment.appendChild(cluster(REFERENCE, globalThis.VTTUi('Compendium und Regelwerk'), 'vtt-nav-reference', false));
 
         const display=document.createElement('button');
         display.type='button';display.className='book-dashboard-ribbon-btn vtt-display-open';display.id='vttDisplayOpen';
@@ -128,8 +167,26 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         nav.setAttribute('aria-label', 'VTT-Hauptnavigation');
         if (!staticPreview && !anonymousMap) {
             window.CreationEngineNavigation?.hydrate(nav);
-            window.RegelwerkNavigation?.hydrate(nav);
+            Promise.resolve(window.RegelwerkNavigation?.hydrate(nav)).then(() => applyContentEdition(nav)).catch(() => {});
         }
+    }
+
+    // K34: an explicitly chosen rule-text language opens its own edition from the normal
+    // navigation, but only when the server publishes that edition. "auto" keeps the UI language.
+    async function applyContentEdition(nav) {
+        const display = window.VTTDisplay;
+        const preferred = display?.get?.().contentLanguage;
+        if (!preferred || preferred === 'auto' || typeof display.editions !== 'function') return;
+        const edition = (await display.editions())[preferred];
+        if (!edition || !nav.isConnected) return;
+        nav.querySelectorAll('a[href^="/regelwerk/compendium"]').forEach((anchor) => {
+            anchor.href = `/regelwerk/compendium?locale=${preferred}`;
+        });
+        nav.querySelectorAll('[data-regelwerk-nav]').forEach((anchor) => {
+            anchor.hidden = false;
+            anchor.href = edition.readerUrl;
+            anchor.setAttribute('aria-disabled', 'false');
+        });
     }
 
     function accountHost(nav) {
@@ -147,6 +204,32 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
         if (nav.closest('.mm-app')) return nav.parentElement;
         return nav.parentElement;
+    }
+
+    async function openOwnProfile() {
+        const old = document.getElementById('reviewOwnProfile');
+        if (old) { old.showModal(); return; }
+        const dialog = document.createElement('dialog');
+        dialog.id = 'reviewOwnProfile'; dialog.className = 'review-dialog';
+        const title = document.createElement('h2'); title.id = 'reviewOwnProfileTitle'; title.tabIndex = -1;
+        title.textContent = VTTUi('Dein Profil'); dialog.setAttribute('aria-labelledby', title.id);
+        const content = document.createElement('div'); content.setAttribute('role','status');
+        content.textContent = VTTUi('Profil wird geladen …');
+        const close = document.createElement('button'); close.type = 'button'; close.textContent = VTTUi('Schließen');
+        close.addEventListener('click',()=>dialog.close());
+        dialog.append(title,content,close);document.body.append(dialog);dialog.showModal();title.focus();
+        dialog.addEventListener('close',()=>dialog.remove(),{once:true});
+        try {
+            const data = await Auth.makeAuthRequest('/api/review-web/profile');
+            if (!dialog.isConnected) return;
+            title.textContent = data.username;
+            const list = document.createElement('dl'); list.className = 'review-profile-stats';
+            for (const [label,key] of [['Charaktere','characters'],['Eigene Kampagnen','owned_campaigns'],['Aktive Mitgliedschaften','memberships']]) {
+                const term=document.createElement('dt'),value=document.createElement('dd');
+                term.textContent=VTTUi(label);value.textContent=String(data[key] ?? 0);list.append(term,value);
+            }
+            content.replaceChildren(list);
+        } catch (_) { if(dialog.isConnected)content.textContent=VTTUi('Profil konnte nicht geladen werden.'); }
     }
 
     async function buildAccount(nav) {
@@ -172,13 +255,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         });
         if (crest) crest.replaceWith(memo);
         else host.appendChild(memo);
-        memo.append(name, count, action);
+        const profile = document.createElement('button');profile.type='button';profile.className='vtt-account-profile';
+        profile.textContent=VTTUi('Profil');profile.addEventListener('click',openOwnProfile);
+        name.addEventListener('dblclick',openOwnProfile);
+        memo.append(name, count, profile, action);
 
         const data = await getMemo();
         if (!memo.isConnected) return;
         if (!data?.user) {
             name.textContent = globalThis.VTTUi("Gast");
-            count.hidden = true;
+            count.hidden = true;profile.hidden = true;
             action.textContent = globalThis.VTTUi("Anmelden");
             action.dataset.signedOut = 'true';
             return;

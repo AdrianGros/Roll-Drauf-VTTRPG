@@ -1,0 +1,62 @@
+{
+  "status": "pass with documented corrected test-harness rerun",
+  "checks": [
+    {
+      "run": "review-api-final-20261122",
+      "summary": "194 passed, 1935 warnings in 246.32s (0:04:06)",
+      "note": ""
+    },
+    {
+      "run": "review-maps-final-20261122",
+      "summary": "28 passed, 17 warnings in 168.28s (0:02:48)",
+      "note": ""
+    },
+    {
+      "run": "review-maps-bounds-final-20261122",
+      "summary": "7 passed, 13 deselected in 52.92s",
+      "note": ""
+    },
+    {
+      "run": "review-companions-floors-browser-20261122",
+      "summary": "3 passed, 92 warnings in 40.81s",
+      "note": ""
+    },
+    {
+      "run": "review-postgres-final-20261122",
+      "summary": "3 passed, 30 warnings in 33.62s",
+      "note": ""
+    },
+    {
+      "run": "review-integration-browser-final-20261122",
+      "summary": "1 failed, 9 passed, 132 warnings in 144.05s (0:02:24)",
+      "note": "Initial CSP polling failure corrected by explicit function predicate and mobile case rerun"
+    },
+    {
+      "run": "review-calendar-browser-final-20261122",
+      "summary": "1 passed, 1 deselected, 12 warnings in 22.03s",
+      "note": ""
+    },
+    {
+      "run": "review-sheet-verified-20261122",
+      "summary": "1 passed, 23 warnings in 15.48s",
+      "note": ""
+    },
+    {
+      "run": "review-creator-final-20261122",
+      "summary": "1 passed, 4 deselected, 8 warnings in 13.73s",
+      "note": ""
+    },
+    {
+      "run": "review-cleanup-verified-20261122",
+      "summary": "1 passed, 18 warnings in 5.33s",
+      "note": ""
+    }
+  ],
+  "catalog": "3701 DE/EN messages complete; placeholder parity verified",
+  "worker_smoke": {
+    "ready": 0,
+    "environment": "network-isolated testing factory"
+  },
+  "timer_units": "systemd-analyze verify pass",
+  "asset_files_modified": false
+}

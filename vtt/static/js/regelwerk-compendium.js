@@ -5,7 +5,7 @@
     // Old character pins omit locale and continue to point to German mechanics.
     const explicitLocale = initialParams.get('locale');
     const contentLocale = ['de', 'en'].includes(explicitLocale) ? explicitLocale
-        : initialParams.has('entry') ? 'de' : globalThis.VTTI18n?.locale?.() === 'en' ? 'en' : 'de';
+        : initialParams.has('entry') ? 'de' : (globalThis.VTTDisplay?.contentLocale?.() || globalThis.VTTI18n?.locale?.()) === 'en' ? 'en' : 'de';
     const API = `/api/rulesets/srd-5.2.1-${contentLocale}/compendium`;
     const PAGE = 50;
     // Only authored controls, headings and status text go through the explicit UI catalog.
@@ -638,16 +638,13 @@
     }
 
     async function init() {
-        const localePicker = document.createElement('select');
-        localePicker.id = 'cpLocale';
-        localePicker.setAttribute('aria-label', uiLocale() === 'en' ? 'Content language' : 'Sprache der Regeltexte');
-        localePicker.append(new Option('Deutsch · SRD 5.2.1', 'de'), new Option('English · SRD 5.2.1', 'en'));
+        const localePicker = document.getElementById('cpContentLanguage');
         localePicker.value = contentLocale;
         localePicker.addEventListener('change', () => {
             const params = new URLSearchParams({locale: localePicker.value, type: els.type.value});
             window.location.href = `${window.location.pathname}?${params}`;
         });
-        els.form.prepend(field(uiLocale() === 'en' ? 'Content language' : 'Sprache der Regeltexte', localePicker, 'cpLocale'));
+        document.getElementById('cpRulebookLink').href = '/regelwerk?locale=' + contentLocale;
         document.querySelectorAll('a[href="/regelwerk"]').forEach((link) => {
             link.href = contentLocale === 'en' ? '/regelwerk/5.2.1/en' : '/regelwerk?locale=de';
         });

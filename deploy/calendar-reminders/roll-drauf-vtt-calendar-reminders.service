@@ -1,0 +1,10 @@
+[Unit]
+Description=Roll Drauf VTT durable in-app calendar reminders
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker exec roll-drauf-vtt-app-1 python -m vtt.calendar_reminder_worker
+TimeoutStartSec=50
+Nice=10

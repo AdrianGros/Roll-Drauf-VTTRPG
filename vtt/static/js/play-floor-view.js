@@ -44,7 +44,7 @@
                     this.ui._renderMapCanvas();this.ui.feedback?.scheduleLighting();
                 }
             }catch(error){
-                if(sequence===this.sequence){this.enabled=null;this.image=null;this.viewKey=null;this.paint(COVER);this.notice.textContent='Etagenansicht konnte nicht aktualisiert werden. Erneut verbinden.';}
+                if(sequence===this.sequence){this.enabled=null;this.image=null;this.viewKey=null;this.paint(COVER);this.notice.textContent=globalThis.VTTUi?.('Etagenansicht konnte nicht aktualisiert werden. Erneut verbinden.') || 'Etagenansicht konnte nicht aktualisiert werden. Erneut verbinden.';}
             }finally{if(this.flight===state)this.flight=null;}
         }
     };

@@ -1,0 +1,11 @@
+[Unit]
+Description=Check due Roll Drauf VTT calendar reminders each minute
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+AccuracySec=5s
+Persistent=true
+Unit=roll-drauf-vtt-calendar-reminders.service
+
+[Install]
+WantedBy=timers.target

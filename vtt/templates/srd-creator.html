@@ -44,7 +44,8 @@
                 </div>
                 <div class="sc-mode" role="group" aria-label="Erstellungsweg" data-ui-aria-label="u_ba3a385e4658">
                     <button type="button" id="scModeGuided" class="sc-btn sc-btn-toggle"><span data-ui-key="u_95d4cfead8f1">Geführt</span></button>
-                    <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle"><span data-ui-key="u_b26e8b66bff2">Schnellbau</span></button>
+                    <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle"><span data-review-label="">Alles auf einmal</span></button>
+                    <p class="review-mode-help" data-review-label="">Geführt: Schritt für Schritt. Alles auf einmal: alle Abschnitte auf einer Seite.</p>
                 </div>
             </div>
             <div id="scConflict" class="sc-banner sc-banner-warn" role="alert" hidden></div>
@@ -82,5 +83,6 @@
     <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/vtt-main-nav.js"></script>
+<script>document.querySelectorAll("[data-review-label]").forEach(n => n.textContent = VTTUi(n.textContent));</script>
 </body>
 </html>

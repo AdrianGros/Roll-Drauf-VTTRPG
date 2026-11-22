@@ -45,6 +45,7 @@
                 if(this.closed||sequence!==this.sequence||map.id!==this.ui.bootstrap?.state_payload?.active_map?.id)return;
                 if(result.map_id!==map.id){if(!this.ui._composedOperator||preview)this.cover(map);await this.ui.loadBootstrap();return;}
                 document.querySelectorAll('.token-marker[data-token-id]').forEach(marker=>{marker.style.visibility=result.preview&&result.visible_token_ids&&!result.visible_token_ids.includes(Number(marker.dataset.tokenId))?'hidden':'';});
+                if(this.ui.floorView?.masked){this.image.hidden=true;this.ui._illuminationActive=true;document.querySelectorAll('#visionLayer .fog-cell').forEach(node=>node.style.display='none');return;}
                 const previouslyActive=this.ui._illuminationActive;
                 this.image.hidden=!result.overlay;this.ui._illuminationActive=Boolean(result.overlay);
                 if(result.overlay){this.image.src=result.overlay;const [width,height]=this.size(map);this.image.style.width=width+'px';this.image.style.height=height+'px';}
