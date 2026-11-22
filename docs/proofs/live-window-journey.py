@@ -17,6 +17,8 @@ with sync_playwright() as p:
         for engine,role,width in [('chromium','dm',1440),('firefox','player',1440),('chromium','player',390)]:
             browser=getattr(p,engine).launch(headless=True,args=['--no-sandbox'] if engine=='chromium' else [])
             context=browser.new_context(viewport={'width':width,'height':1000},reduced_motion='reduce',has_touch=width<600)
+            theme='paper' if engine=='firefox' else 'night'
+            context.add_init_script("localStorage.setItem('vtt.display.v1',JSON.stringify({schema:1,theme:'"+theme+"',language:'de',accent:'default',unit:'m'}))")
             user=fixture['users'][role]
             context.add_cookies([{'name':'access_token_cookie','value':user['token'],'url':origin,'httpOnly':True,'secure':True},
                                 {'name':'csrf_access_token','value':user['csrf'],'url':origin,'secure':True}])
@@ -29,6 +31,14 @@ with sync_playwright() as p:
             page.locator('#dock-tokenWidget').click();page.locator('#dock-turnOrderWidget').click()
             first=page.locator('#window-tokenWidget');second=page.locator('#window-turnOrderWidget')
             expect(first).to_be_visible();expect(second).to_be_visible()
+            page.locator('#btnChatToggle').click();page.locator('#btnBack').click()
+            palette=page.evaluate("""() => {
+              const resolve=token=>{const e=document.createElement('span');e.style.color=`var(${token})`;document.body.append(e);const v=getComputedStyle(e).color;e.remove();return v;};
+              return [['#window-tokenWidget','--ui-paper'],['#window-panel-chat .panel','--ui-panel'],['#chatInput','--ui-panel'],['#appMenu','--ui-panel'],['#appMenuReturn','--ui-soft']].map(([selector,token])=>{const s=getComputedStyle(document.querySelector(selector));return {selector,bg:s.backgroundColor,expected:resolve(token),ink:s.color,expectedInk:resolve('--ui-ink')};});
+            }""")
+            assert all(row['bg']==row['expected'] and row['ink']==row['expectedInk'] for row in palette),palette
+            page.locator('#btnBack').click()
+            page.locator('#window-panel-chat .play-window-head button').click()
             assert first.evaluate("e=>getComputedStyle(e).position")=='fixed'
             assert second.evaluate("e=>getComputedStyle(e).position")=='fixed'
             page.locator('#dock-tokenWidget').click();page.locator('#dock-tokenWidget').click()
@@ -59,7 +69,7 @@ with sync_playwright() as p:
             if role=='player':assert not page.evaluate('Boolean(window.PlayDMSurface)')
             assert errors==[],errors
             page.screenshot(path=str(root/f'windows-{role}-{engine}-{width}.png'))
-            proof['journeys'].append({'role':role,'engine':engine,'width':width,'drag':'touch' if width<600 else 'mouse','before':before,'after':moved,'independent_scroll':True,'restored_after_reload':True})
+            proof['journeys'].append({'role':role,'engine':engine,'width':width,'theme':theme,'palette':palette,'drag':'touch' if width<600 else 'mouse','before':before,'after':moved,'independent_scroll':True,'restored_after_reload':True})
             save();browser.close()
         proof['status']='pass';save()
     except Exception as error:

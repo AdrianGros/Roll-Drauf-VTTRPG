@@ -1,0 +1,41 @@
+{
+  "status": "pass",
+  "before": {
+    "computed_window_position": "relative",
+    "expected": "fixed",
+    "regression_reproduced": true
+  },
+  "after": {
+    "tests": 5,
+    "passed": 5,
+    "log_summary": ".....                                                                    [100%]\n5 passed, 139 warnings in 68.79s (0:01:08)",
+    "roles": [
+      "DM",
+      "Player"
+    ],
+    "engines": [
+      "Chromium",
+      "Firefox"
+    ],
+    "widths": [
+      390,
+      1440
+    ],
+    "themes": [
+      "night",
+      "paper"
+    ],
+    "accent_change": "teal",
+    "checks": [
+      "actual pointer movement",
+      "independent window scroll",
+      "neighbor does not move",
+      "body stays viewport sized",
+      "position survives reload",
+      "computed palette roles for window/panel/textarea/menu/button",
+      "no heading gradient",
+      "screenshots visually inspected"
+    ]
+  },
+  "production": "pending separate normal-role journey"
+}

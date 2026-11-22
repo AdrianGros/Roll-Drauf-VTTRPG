@@ -25,7 +25,6 @@ def test_windows_move_independently_and_scroll_inside_their_body(action_site, en
         assert second.evaluate("e=>getComputedStyle(e).position")=='fixed'
         # Bring the target to the front without depending on overlap order.
         page.locator('#dock-tokenWidget').click();page.locator('#dock-tokenWidget').click()
-        first.locator('.play-window-head strong').press('ArrowDown')
         before=first.bounding_box();other=second.bounding_box()
         heading=first.locator('.play-window-head strong');handle=heading.bounding_box()
         x=handle['x']+20;y=handle['y']+15
@@ -55,4 +54,39 @@ def test_windows_move_independently_and_scroll_inside_their_body(action_site, en
             path=Path(os.environ['VTT_PROOF_DIR']);path.mkdir(parents=True,exist_ok=True)
             page.screenshot(path=str(path/f'windows-{role}-{engine}-{width}.png'))
         assert errors==[],errors
+        browser.close()
+
+
+@pytest.mark.parametrize('engine,theme', [('chromium','night'),('firefox','paper')])
+def test_relocated_windows_textboxes_and_menus_follow_the_display_palette(action_site, engine, theme):
+    _,origin,info=action_site
+    with sync_playwright() as p:
+        browser=getattr(p,engine).launch(headless=True,args=['--no-sandbox'] if engine=='chromium' else [])
+        context=browser.new_context(viewport={'width':1440,'height':1000},reduced_motion='reduce')
+        context.add_init_script("localStorage.setItem('vtt.display.v1',JSON.stringify({schema:1,theme:'"+theme+"',language:'de',accent:'default',unit:'m'}))")
+        context.add_cookies([{'name':'access_token_cookie','value':info['player_auth'],'url':origin,'httpOnly':True}])
+        page=context.new_page();page.set_default_timeout(20000)
+        page.goto(f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}&seat=player")
+        page.locator('#dock-tokenWidget').click()
+        page.locator('#btnChatToggle').click()
+        page.locator('#btnBack').click()
+        expect(page.locator('#appMenu')).to_be_visible()
+        # Native colour conversion avoids assuming how the browser serializes CSS variables.
+        values=page.evaluate("""() => {
+          const css=name=>{const e=document.createElement('span');e.style.color=`var(${name})`;document.body.append(e);const v=getComputedStyle(e).color;e.remove();return v;};
+          const specs=[['#window-tokenWidget','--ui-paper'],['#window-panel-chat .panel','--ui-panel'],['#chatInput','--ui-panel'],['#appMenu','--ui-panel'],['#appMenuReturn','--ui-soft']];
+          return specs.map(([selector,token])=>{const e=document.querySelector(selector),s=getComputedStyle(e);return {selector,bg:s.backgroundColor,expected:css(token),ink:s.color,expectedInk:css('--ui-ink')};});
+        }""")
+        for row in values:
+            assert row['bg']==row['expected'],row
+            assert row['ink']==row['expectedInk'],row
+        page.locator('#btnBack').click()
+        page.evaluate("VTTDisplay.update({theme:'night',accent:'teal'})")
+        assert page.locator('#window-tokenWidget').evaluate("e=>getComputedStyle(e).backgroundColor")=='rgb(28, 28, 28)'
+        heading=page.locator('#window-tokenWidget h4').first
+        assert heading.evaluate("e=>getComputedStyle(e).color")=='rgb(248, 244, 233)'
+        assert heading.evaluate("e=>getComputedStyle(e).backgroundImage")=='none'
+        if os.environ.get('VTT_PROOF_DIR'):
+            path=Path(os.environ['VTT_PROOF_DIR']);path.mkdir(parents=True,exist_ok=True)
+            page.screenshot(path=str(path/f'windows-colors-{theme}-{engine}.png'))
         browser.close()

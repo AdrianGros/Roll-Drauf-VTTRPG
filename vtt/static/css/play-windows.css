@@ -65,3 +65,27 @@ body.play-free-windows > .left-toolbar #btnBack { display: flex; }
 body.play-free-windows > .left-toolbar .tool-btn[hidden] { display: none !important; }
 body.play-free-windows > :is(.left-toolbar, #personalActionBar, #actionHotbar) button { color: var(--ui-ink, #eee) !important; background: var(--ui-panel, #302332) !important; border-color: var(--ui-line, #866); }
 body.play-free-windows > .left-toolbar .tool-btn.active { color: #fdfaf3 !important; background: var(--vtt-plum, #4b235a) !important; }
+
+/* Floating content has left .tabletop-shell; bind its chrome directly to the
+   same display palette instead of inheriting the old book-skin colours. */
+html[data-vtt-theme] body.play-free-windows :is(.play-window,[data-movable],.pa-dialog,.vision-geom-popover) {
+    --panel: var(--ui-panel); --panel-soft: var(--ui-soft); --line: var(--ui-line);
+    --text: var(--ui-ink); --muted: var(--ui-muted);
+    background: var(--ui-panel) !important; color: var(--ui-ink) !important; border-color: var(--ui-line) !important;
+}
+html[data-vtt-theme] body.play-free-windows > .play-window { background: var(--ui-paper) !important; }
+html[data-vtt-theme] body.play-free-windows :is(.play-window,[data-movable],.pa-dialog) :is(.panel,.subpanel,.list-item,.detail-box,.detail-panel,.empty-state,.workflow-copy-box,.token-library-row) {
+    background: var(--ui-panel) !important; color: var(--ui-ink) !important; border-color: var(--ui-line) !important; box-shadow: none;
+}
+html[data-vtt-theme] body.play-free-windows :is(.play-window,[data-movable],.pa-dialog) :is(h1,h2,h3,h4,h5,h6,label,legend,summary,p,dt,dd,th,td,.app-menu-status) {
+    color: var(--ui-ink) !important; text-shadow: none; background-image: none !important;
+}
+html[data-vtt-theme] body.play-free-windows :is(.play-window,[data-movable],.pa-dialog) :is(.muted,small,.hint) { color: var(--ui-muted) !important; }
+html[data-vtt-theme] body.play-free-windows :is(.play-window,[data-movable],.pa-dialog) :is(input:not([type=color]):not([type=checkbox]):not([type=radio]),textarea,select,option) {
+    background: var(--ui-panel) !important; color: var(--ui-ink) !important; border-color: var(--ui-line) !important;
+}
+html[data-vtt-theme] body.play-free-windows :is(.play-window,[data-movable],.pa-dialog) :is(button,.app-menu-item,.mini-btn) {
+    background: var(--ui-soft) !important; color: var(--ui-ink) !important; border-color: var(--ui-line) !important; text-shadow: none;
+}
+html[data-vtt-theme] body.play-free-windows :is(.play-window,[data-movable],.pa-dialog) :is(button,.app-menu-item,.mini-btn):is(:hover,:focus-visible) { border-color: var(--ui-accent) !important; }
+html[data-vtt-theme] body.play-free-windows :is(.play-window,[data-movable],.pa-dialog) a:not(.mini-btn):not(.app-menu-item) { color: var(--ui-accent) !important; }
