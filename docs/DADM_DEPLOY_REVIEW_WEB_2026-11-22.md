@@ -1,5 +1,7 @@
 # Deploy: Umsetzung des Protokoll-Reviews
 
+Nachtrag zur Lieferung: Der unten dokumentierte Integrationsumfang ist inzwischen gepusht, live und abgenommen. Finale Identität, Anzeige-Nachlieferungen, 15 Live-Reisen mit ihrer jeweiligen Image-Provenienz und Restpunkte stehen im [Monitor](DADM_MONITOR_REVIEW_WEB_2026-11-22.md). Der folgende Absatz hält den Stand vor dem Integrationscommit fest.
+
 Status: implementiert und lokal geprüft; gemeinsame Produktionsabnahme steht vor diesem Commit noch aus. Input sind die beiden Protokolle, der Abgleich und die Web-Recherche vom 18.11. sowie der ausdrückliche Umsetzungsauftrag. Die Arbeit erfolgt seit der Owner-Ergänzung vollständig ohne neue Agents-/Orchestrator-Aufrufe. Verbindliches Design: `DADM_APPLY_REVIEW_WEB_2026-11-18.md` und die engeren Kalender-, Domain-, Etagen- und Begleiter-Supplemente.
 
 ## Umgesetzt und normale Einstiege

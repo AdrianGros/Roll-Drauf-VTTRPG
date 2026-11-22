@@ -50,6 +50,21 @@
       "run": "review-cleanup-verified-20261122",
       "summary": "1 passed, 18 warnings in 5.33s",
       "note": ""
+    },
+    {
+      "run": "review-map-palette-verified-20261122",
+      "summary": "1 passed in 8.83s",
+      "note": "Own image upload and pixel dialogs use the night palette; panel/ink/soft surfaces are intentionally distinct"
+    },
+    {
+      "run": "review-floor-anchor-final-20261122",
+      "summary": "3 passed, 92 warnings in 61.70s (0:01:01)",
+      "note": "Real Player pages attach the floor status to the actual map viewport"
+    },
+    {
+      "run": "review-mobile-floor-status-final-20261122",
+      "summary": "2 passed, 71 warnings in 42.08s",
+      "note": "Mobile floor status remains below the top controls and above the bottom toolbar"
     }
   ],
   "catalog": "3701 DE/EN messages complete; placeholder parity verified",

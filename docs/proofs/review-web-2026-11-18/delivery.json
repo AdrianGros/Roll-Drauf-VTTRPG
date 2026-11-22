@@ -1,0 +1,76 @@
+{
+  "status": "delivered",
+  "source_commit": "a6abcce9e34b289efb88cb525a0c4c3ae87037e4",
+  "image_id": "sha256:5726f87c57a3106b3e2337b5761b9449b80f7d8b093810e56aef0cdc682443b3",
+  "health": {
+    "now": "2026-11-22T20:22:50.784580",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-22T20:17:35.149020",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "source_chain": "live/source-chain.json",
+  "schema_migration": {
+    "status": "pass",
+    "tables": [
+      "atlas_campaign_links",
+      "calendar_notes",
+      "calendar_one_shots",
+      "map_floor_decks",
+      "map_floor_images",
+      "review_print_requests",
+      "review_thread_messages",
+      "review_threads",
+      "table_companion_bindings"
+    ],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "backups": [
+    {
+      "path": "/srv/migration/2026-11-11/feedback-review-web-20261122/73fdc74df/database-before.dump",
+      "bytes": 500720,
+      "archive_readable": true,
+      "restore_exercised": false
+    },
+    {
+      "path": "/srv/migration/2026-11-11/feedback-review-web-mobile-20261122/a6abcce9e/database-before.dump",
+      "bytes": 537885,
+      "archive_readable": true,
+      "restore_exercised": false
+    }
+  ],
+  "rollback": "/srv/migration/2026-11-11/feedback-review-web-mobile-20261122/a6abcce9e/rollback-program.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "reminder_timer_active": true,
+  "reminder_worker_result": "success",
+  "live_acceptance": [
+    {
+      "slice": "UI/calendar/domain",
+      "journeys": 8,
+      "source_commit": "73fdc74dfc8a79ce1811ce6985e0151fcd2d061e",
+      "image_id": "sha256:3705e0461738ac6844f320604d0d585d7ab22a056736a929e01d46e2b93af8d5",
+      "proof": "live/ui/ui-live.json",
+      "later_overlays": "Only play-floor.css and play-floor-view.js changed"
+    },
+    {
+      "slice": "Maps/floors/companions",
+      "journeys": 4,
+      "source_commit": "a6abcce9e34b289efb88cb525a0c4c3ae87037e4",
+      "image_id": "sha256:5726f87c57a3106b3e2337b5761b9449b80f7d8b093810e56aef0cdc682443b3",
+      "proof": "live/table/table-maps-live.json"
+    },
+    {
+      "slice": "Movable windows/palette",
+      "journeys": 3,
+      "source_commit": "a6abcce9e34b289efb88cb525a0c4c3ae87037e4",
+      "image_id": "sha256:5726f87c57a3106b3e2337b5761b9449b80f7d8b093810e56aef0cdc682443b3",
+      "proof": "live/windows/live.json"
+    }
+  ],
+  "temporary_QA_accounts_and_private_objects_removed": true,
+  "temporary_credentials_removed": true,
+  "push": "Functional source pushed successfully using existing repository SSH identity",
+  "captured_at": "2026-11-22T20:22:51.000082+00:00"
+}

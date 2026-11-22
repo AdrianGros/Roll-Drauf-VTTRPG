@@ -1,0 +1,38 @@
+{
+  "status": "pass",
+  "journeys": [
+    {
+      "name": "Own profile and reset through normal settings preserve unrelated drafts",
+      "status": "pass"
+    },
+    {
+      "name": "Private note create/reload/edit/delete, durable ready reminder and real campaign-backed One-Shot",
+      "status": "pass",
+      "date": "2026-11-01"
+    },
+    {
+      "name": "Creator all-at-once editing preserves focus, selection, disclosure and working scroll position",
+      "status": "pass"
+    },
+    {
+      "name": "Two deliberate print confirmations record one UI request; physical printing is not claimed",
+      "status": "pass"
+    },
+    {
+      "name": "Create an optional world-to-campaign link through Atlas and retain it after reload",
+      "status": "pass"
+    },
+    {
+      "name": "Campaign thread through Conversations stores only literal text",
+      "status": "pass"
+    },
+    {
+      "name": "Authorized Player reads the same campaign thread without interpreting HTML",
+      "status": "pass"
+    },
+    {
+      "name": "Firefox mobile EN/night: real upload controls above stats, companion section, independent content language",
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "status": "pass",
+  "journeys": [
+    {
+      "name": "Pixel image is placed, saved in personal library, exported with byte-derived identity and restored after reload",
+      "status": "pass",
+      "asset_id": "custom:04738324a83e314e15e01928fb01eb26daa6415166b4f79d541ea82c0cfe669f"
+    },
+    {
+      "name": "Normal campaign map-library preview imports the custom-image project as a real map",
+      "status": "pass"
+    },
+    {
+      "name": "Real DM floor editor and Firefox Player receive opaque balcony pixels through existing wall/vision rules; private source configuration is denied",
+      "status": "pass",
+      "pixels": [
+        [
+          255,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          255,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ]
+      ]
+    },
+    {
+      "name": "Personal companion placement reuses the same soft-deleted token and preserves table damage",
+      "status": "pass",
+      "token_id": 168,
+      "hp_current": 7
+    }
+  ]
+}

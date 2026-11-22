@@ -11,3 +11,5 @@ Normale Live-Reise über Kampagnen-Hub → Sitzung: Chromium-DM bei 1440/Nacht, 
 Belege: [Lieferidentität](proofs/windows-2026-11-22/delivery.json), [Live-Prüfungen](proofs/windows-2026-11-22/live/live.json), [Bereinigung](proofs/windows-2026-11-22/live/cleanup.json), [lokale Prüfungen](proofs/windows-2026-11-22/verification.json). Der vorherige reine Positionsbuild `cc42b9ee9` wurde nicht aktiviert; die Owner-Ergänzung zur Palette ist im tatsächlich aktivierten Nachfolgecommit enthalten.
 
 Residual: bereits geöffnete Browserseiten müssen die neue CSS-Datei durch Neuladen beziehen. Das größere Protokoll-Review-Paket bleibt ein separater Integrations-/Lieferumfang und wurde durch diesen Hotfix nicht versehentlich veröffentlicht.
+
+Nachtrag: Das Review-Paket wurde anschließend separat integriert und geliefert. Die Fenster-/Palettenkorrektur ist im neuen Image erhalten und dort mit allen drei Rollen-/Browserreisen erneut live geprüft. Aktuelle Lieferidentität und Belege: [Review-Monitor](DADM_MONITOR_REVIEW_WEB_2026-11-22.md). Die obigen Imageangaben dokumentieren weiterhin das frühere Hotfixdeployment.

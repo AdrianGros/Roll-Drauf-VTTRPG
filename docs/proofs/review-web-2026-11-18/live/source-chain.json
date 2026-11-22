@@ -1,0 +1,145 @@
+[
+  {
+    "commit": "73fdc74dfc8a79ce1811ce6985e0151fcd2d061e",
+    "image_id": "sha256:3705e0461738ac6844f320604d0d585d7ab22a056736a929e01d46e2b93af8d5",
+    "base_image_id": "sha256:5113f840a7b6e60cf22bf9b1d2e80ad9f26ddd296bed9d10da3bab205c2e8137",
+    "deployed_at": "2026-11-22T19:52:18.983477733Z",
+    "built_source_verification": {
+      "checked": 328,
+      "mismatches": []
+    },
+    "schema_migration": {
+      "status": "pass",
+      "tables": [
+        "atlas_campaign_links",
+        "calendar_notes",
+        "calendar_one_shots",
+        "map_floor_decks",
+        "map_floor_images",
+        "review_print_requests",
+        "review_thread_messages",
+        "review_threads",
+        "table_companion_bindings"
+      ],
+      "previously_present": [],
+      "columns_verified": true
+    },
+    "database_backup": {
+      "path": "/srv/migration/2026-11-11/feedback-review-web-20261122/73fdc74df/database-before.dump",
+      "bytes": 500720,
+      "archive_readable": true,
+      "restore_exercised": false
+    },
+    "overlay_manifest": {
+      "vtt/__init__.py": "3a154d5d78a1745a941c78ca577f0bfb497be9773b0eba7b6476e654de0b4617",
+      "vtt/calendar_notes.py": "06b9bc41cd4ef7cdb93b3c3128b2bc836b99e2a9a583ec90e983aa6d318876bf",
+      "vtt/calendar_reminder_worker.py": "78317b0d9ddae29fb1a0126e3dd2eb00339486fb084605c9eb9a492fad427ece",
+      "vtt/characters/srd_manage.py": "c6a83061cece3b5f2d9bcecb902f5ae3a974f3bb1ec3810ac35885d31ce8a5f1",
+      "vtt/mapmaker_document.py": "e44c84618513fee88ad90326d227a43993e067b6eb21eec19915c57d13c6d37e",
+      "vtt/models/__init__.py": "9ea8110d52354fdc0550aee0d4d8ba97785bbe9ef53c1dbc97ea19eba6320ca6",
+      "vtt/models/calendar_note.py": "f3124a39b20f9907f407433983f598522d5155d07c8ed532e0e85e4b3379b91a",
+      "vtt/models/map_floor.py": "5c2066c30e04c72675f68119ac7cb062afd8da155a545e2ee305c3d97c849041",
+      "vtt/models/review_domain.py": "52f9867f071a81b5e16748d19c9311e02ca7021da1afab8173ff68cd13a795ab",
+      "vtt/models/review_web.py": "20b6e81cfde5c5034866afcc90e4dbfbf03ca54bed18237f94376e627e725032",
+      "vtt/models/table_companion.py": "edf60e1347fdaae79ca67ccabb0fe269fc6c8f2f8def02e32f5ff8ae12f551b0",
+      "vtt/play/floor_layers.py": "eef8f2580a24df41ca38002276e7504759f891fdb66f8f28b1787a78f04c6ffe",
+      "vtt/play/table_companions.py": "067580a6bb3cd5cbbd8acf633b322bbc23c7b7dc4caf65bcc8cf6173bbf9ba5f",
+      "vtt/review_domain.py": "813792bc3141421025b1c9d4d4e988358f7de6f7e8ec9df284b97ef56710e1ae",
+      "vtt/review_web.py": "e73f8d3b3250bdc9dd5e25148e94c42033024e87b45502b909071f5253837935",
+      "vtt/static/css/play-floor.css": "47c8438a318d6d0bf2f4f3fd5482550306581de1f21bb4aec80e3bf3bed48c3a",
+      "vtt/static/css/review-web.css": "61ee733e9c49709cf68cf94be8ccf7782b3b3e83e85534812e4b96dfe156c7f8",
+      "vtt/static/css/session-calendar.css": "0fd0a7f45ad703833c8976f220d117f338474040d9c0e22cf083dc7e24d325ae",
+      "vtt/static/i18n/ui.de.json": "114548da2aff4ca0256118ec0c503b8d489e268e1071e542777f565383c9a2d1",
+      "vtt/static/i18n/ui.en.json": "5f9eb32f673a3f299a9c44ea7c3473463f85708763d07787cb6b863eeff69854",
+      "vtt/static/js/atlas-author.js": "c2aeda04a3ca4fd2be8e962a56dd388e1f8fefdad51f97580c8f002f47cd6176",
+      "vtt/static/js/atlas.js": "be7c4826b6b0cbbf3f3f4b8353d51ae6e5daaf17347f2adf047b137bffa68cb0",
+      "vtt/static/js/display-preferences.js": "f85aff6ab0a58fea168ef9043d97c969ba527f6f9bbb8076445e35c5e52c07b8",
+      "vtt/static/js/play-feedback-dm.js": "b3e9b6ce855b70249721c1c7f66a6279bdfc7d9a9f28b2b9830033fff3f7925f",
+      "vtt/static/js/play-feedback.js": "7139f9d39faf7c66e4fee2c16508b2776efbf2e939c8370fd5dd9431aebb16b1",
+      "vtt/static/js/play-floor-dm.js": "db1494be85f0f339454cd1a319f82b6aa6b3ce26d1585ec557b5ae12f51c2cab",
+      "vtt/static/js/play-floor-view.js": "c337ab8a3de4b7cf8a552983fa1eef9ea6b156463fc6aff36dea45c5b7186ccf",
+      "vtt/static/js/play-personal.js": "015093a4e43b22e4fa50f8c0dcfa8885544abbb136547e39722892fc6621b4e5",
+      "vtt/static/js/play-ui.js": "70b9387b78fc6559f6e64f83a57fa3fd1e7fd06e723043715c6efceaa91ba4a1",
+      "vtt/static/js/private-conversations.js": "0b3117a5345e4ed985bb0d66148d4c8d03de2113651dd55e6b02ad2fcd39f9aa",
+      "vtt/static/js/regelwerk-compendium.js": "879abe8f1cdfbbfc772ebaabeb44a34066704190af34382ccc0180df087598e1",
+      "vtt/static/js/regelwerk-reader.js": "39ae6644f69553d40e5c320e9b9282a96fd5f8845173281e9d8f70d7e557f064",
+      "vtt/static/js/review-domain.js": "71cbf9bb74874d09392993070adb0db79055bc7736d719d713aaac6e17dbf3c7",
+      "vtt/static/js/session-calendar.js": "2bd1704223954708de8d3474e9c0048037dffe6d15950e896fc693ae3a91d34d",
+      "vtt/static/js/sheet-feedback.js": "e8bea16b99f67b1005ab98dc5b30bb690766ce1c85fc21903b9ad576c6949ad8",
+      "vtt/static/js/srd-creator.js": "5366bd2d9b8ce5570c127f0f33cc56bcbe55de35733dc4f4d9874a9c943e9abb",
+      "vtt/static/js/srd-manage-ui.js": "c3b940b848f1c2c45d648032d8f57433125c1122093f399074b1a4fc210399f7",
+      "vtt/static/js/ui-catalog.js": "7871da99ae3fce6d96d0c2217610908d37b13b23dad97ea3e8af58200274600b",
+      "vtt/static/js/vtt-main-nav.js": "68bbfdac2bf5b4560e9fb80a1ce7e09a0b635f12d4098689273c1e47713fbc50",
+      "vtt/static/mapmaker/index.html": "1acdd53d5ba030d414009c784453cbeb880cd93f6bc7185edc93f80c59a45887",
+      "vtt/static/mapmaker/js/app.js": "a2b1b3c7729642035d4f6b146153e57917c9d62e8ddc65fa905b952c48889e35",
+      "vtt/static/mapmaker/js/asset-dialogs.js": "dfbaea568e63849194a174833d6b55c34d583d57182c6a15da71e7aa12b828ec",
+      "vtt/static/mapmaker/js/brush.js": "7188d6203c4be13422f8935e8d8f6d7a0b18d5f2fff159d17d82f525fa23da64",
+      "vtt/static/mapmaker/js/credits.js": "45210f6674caaa5cd466f283562261df93dfda54aca46f584c977b5fd5999e81",
+      "vtt/static/mapmaker/js/document.js": "eda7e8a7b278394a75632bed385708b1f91461fe2da6459108778d4aac1406d5",
+      "vtt/static/mapmaker/js/landmass-dialog.js": "bb9304ec9b6b4def83ce2ccc73173322b37e0de586969f0597021bf41c3808da",
+      "vtt/static/mapmaker/js/landmass.js": "9d4e067163d1caaa8adbf373b29207577c790ad54f5086b8b29fc50457cdebcc",
+      "vtt/static/mapmaker/js/render.js": "07341d25891b7ca112723c4cc87b99adec0600954660d07428d5aef48a30ae5c",
+      "vtt/static/mapmaker/js/selection.js": "7488c15c8cbbbc829f7920d47d03786c926a3fd110a6b4173d23b63036182b27",
+      "vtt/static/mapmaker/js/sha256.js": "6f3b61b854879e951af8053a4982b481e6cbade66c1e41ab67ab2518c9869b04",
+      "vtt/static/mapmaker/js/stamps.js": "7131c487444b458027224a98e3a6c93430b0fadb3b8421af9db3eada0f3ea0c5",
+      "vtt/static/mapmaker/js/tools.js": "dd645720608a9173aab55ae6d4d0e3938ae7c9ce8345b2425563566425682439",
+      "vtt/static/mapmaker/js/ui.js": "f8a9aa800cdd8293b6e189820cc07a6e6c6696ffc1c6b5903a5288f13c0c3e07",
+      "vtt/static/mapmaker/mapmaker.css": "911002c0a5000832464a4f9640eff9700ef688bdf38c6e686cf24648b7452d96",
+      "vtt/templates/character-sheet.html": "b1bb7464587dc854d894b81295c7488df8b9f9db11166e1206125274a960f399",
+      "vtt/templates/play.html": "ff6c0e793acc09a29d2ccdb5341fded9b94ad167a8c570d679a6e9df9b069dcc",
+      "vtt/templates/regelwerk-compendium.html": "dd738075ce8aaba1c4ca337a849ac87f1d676393754a958d8cc3b32f3e4b6122",
+      "vtt/templates/srd-creator.html": "d9d7956a5b5b91c1acfc2c6a7ca5ec1dac4f5ea80e61f8dbb7b13d4c481594fb"
+    }
+  },
+  {
+    "commit": "7d802a44bd83d13a7a07782488d7e30995f237d5",
+    "image_id": "sha256:f214502361acdebf2ffca8366c05fbd0df944194ab3b23aa3451a56f78cc49e8",
+    "base_image_id": "sha256:3705e0461738ac6844f320604d0d585d7ab22a056736a929e01d46e2b93af8d5",
+    "deployed_at": "2026-11-22T20:09:33.17519383Z",
+    "built_source_verification": {
+      "checked": 326,
+      "mismatches": []
+    },
+    "schema_migration": {
+      "status": "pass",
+      "tables": [],
+      "previously_present": [],
+      "columns_verified": true
+    },
+    "database_backup": {
+      "path": "/srv/migration/2026-11-11/feedback-review-web-hud-20261122/7d802a44b/database-before.dump",
+      "bytes": 538040,
+      "archive_readable": true,
+      "restore_exercised": false
+    },
+    "overlay_manifest": {
+      "vtt/static/css/play-floor.css": "6ecd2a72dea282d4663959e2e51b02370057d45d0b6eb0e563e0ecbf2edc702a",
+      "vtt/static/js/play-floor-view.js": "0e63624ca1b2181412ace4605d15e31de319f4ef49d48215c14f61e848190d75"
+    }
+  },
+  {
+    "commit": "a6abcce9e34b289efb88cb525a0c4c3ae87037e4",
+    "image_id": "sha256:5726f87c57a3106b3e2337b5761b9449b80f7d8b093810e56aef0cdc682443b3",
+    "base_image_id": "sha256:f214502361acdebf2ffca8366c05fbd0df944194ab3b23aa3451a56f78cc49e8",
+    "deployed_at": "2026-11-22T20:17:28.050337462Z",
+    "built_source_verification": {
+      "checked": 326,
+      "mismatches": []
+    },
+    "schema_migration": {
+      "status": "pass",
+      "tables": [],
+      "previously_present": [],
+      "columns_verified": true
+    },
+    "database_backup": {
+      "path": "/srv/migration/2026-11-11/feedback-review-web-mobile-20261122/a6abcce9e/database-before.dump",
+      "bytes": 537885,
+      "archive_readable": true,
+      "restore_exercised": false
+    },
+    "overlay_manifest": {
+      "vtt/static/css/play-floor.css": "46ecf7ad61a85550e882ac36b1a9202f1d65f97211204dccbe8ce0394cb0e577"
+    }
+  }
+]
