@@ -31,7 +31,7 @@ def test_personal_bar_companion_keeps_identity_and_damage_after_reload(action_si
             expect(page.locator('#paCompanionPlace')).to_be_enabled()
             page.locator('#paCompanionPlace').click()
             expect(page.locator('#personalCompanionDialog')).to_have_count(0)
-        page.goto(route);place()
+        page.goto(route);expect(page.locator('#floorViewStatus')).to_be_attached();place()
         with app.app_context():
             binding=TableCompanionBinding.query.one();token_id=binding.token_id
             token=db.session.get(TokenState,token_id)

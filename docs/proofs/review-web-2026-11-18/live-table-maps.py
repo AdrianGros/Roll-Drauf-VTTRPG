@@ -44,8 +44,9 @@ with sync_playwright() as p:
         box=dm.locator('#pixelCanvas').bounding_box();x=box['x']+box['width']*.25;y=box['y']+box['height']*.25
         dm.mouse.move(x,y);dm.mouse.down();dm.mouse.move(x+box['width']*.5,y+box['height']*.5,steps=12);dm.mouse.up()
         dm.locator('#pixelLabel').fill('QA Own Stamp');dm.locator('#pixelSave').click()
+        expect(dm.locator('#pixelDialog')).not_to_be_visible()
         point=dm.evaluate('() => rdMapmaker.docToClient(128,128)');dm.mouse.click(point['x'],point['y'])
-        assert dm.evaluate('rdMapmaker.summary().stamps')==1
+        dm.wait_for_function('() => rdMapmaker.summary().stamps===1')
         dm.locator('#cloudSave').click();expect(dm.locator('#cloudStatus')).to_have_text('In Bibliothek gespeichert',timeout=45000)
         with dm.expect_download() as download:
             dm.locator('#fileMenuBtn').click();dm.locator('#saveBtn').click()

@@ -6,7 +6,7 @@
         constructor(ui){
             this.ui=ui;this.path=`/api/play/campaigns/${ui.campaignId}/sessions/${ui.sessionId}/floors/view`;
             this.notice=document.createElement('p');this.notice.id='floorViewStatus';this.notice.setAttribute('role','status');
-            document.getElementById('mapStage')?.append(this.notice);
+            (document.getElementById('mapViewport') || document.getElementById('mapStage'))?.append(this.notice);
             this.timer=setInterval(()=>this.refresh(),4000);
             window.addEventListener('pagehide',()=>{this.closed=true;this.sequence=(this.sequence||0)+1;clearInterval(this.timer);});
             this.refresh(true);

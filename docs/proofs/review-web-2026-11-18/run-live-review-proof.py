@@ -25,7 +25,9 @@ try:
     with os.fdopen(fd,'wb') as out:out.write(data)
     worker=subprocess.run(['docker','exec','roll-drauf-vtt-app-1','python','-m','vtt.calendar_reminder_worker'],text=True,capture_output=True,check=True)
     (proof/'worker.json').write_text(worker.stdout.strip()+'\n')
-    for script in ['live-review-journey.py','live-table-maps.py']:
+    scripts=os.environ.get('PROOF_SCRIPTS','live-review-journey.py,live-table-maps.py').split(',')
+    assert scripts and all(script in {'live-review-journey.py','live-table-maps.py'} for script in scripts)
+    for script in scripts:
         subprocess.run(['docker','run','--rm','--network','host','-e','PROOF_ROOT=/proof',
                         '-v',str(repo)+':/app:ro','-v',str(proof)+':/proof',
                         '-v','/root/.cache/ms-playwright:/root/.cache/ms-playwright:ro',
