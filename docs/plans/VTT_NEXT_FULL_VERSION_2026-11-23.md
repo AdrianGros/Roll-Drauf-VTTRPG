@@ -22,7 +22,7 @@ FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-1
 - Bronze/teal surfaces and ordinary counters follow the chosen accent; class facts use a readable responsive layout.
 - Earlier integrated work remains the baseline: grouped playtable tools, free pan/zoom/FIT, readable scene management, movable persistent windows, calendar notes/reminders/one-shots, companions, private chat threads, private own map assets, Atlas links/publication and masked 2D floors.
 
-The latest slice passed seven live journeys and the added contents-link regression; its temporary QA users and data were removed. Claude completed a source review with no supported blocking findings. The full repository suite has recorded pre-existing failures and verification gaps; these are assigned to FV18. See the [delivery monitor](../DADM_MONITOR_FEEDBACK_HARNESS_2026-11-23.md).
+The goal baseline passed seven live journeys and the added contents-link regression; its temporary QA users and data were removed. The subsequent FV04 delivery passed two additional authenticated Maps journeys, recorded in its own Monitor. Claude completed a source review with no supported blocking findings. The full repository suite has recorded pre-existing failures and verification gaps; these are assigned to FV18. See the [delivery monitor](../DADM_MONITOR_FEEDBACK_HARNESS_2026-11-23.md).
 
 ## Full version work packets
 
@@ -391,9 +391,9 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | --- | --- | --- | --- |
 | N01 | supported case verified report specific catalog follow up | FV11 | Fixture preview and placement work with the chosen tile; no asset-loss fix claimed for unspecified original content. |
 | N02 | delivered | Delivered | Image-brush original colors and material switch are explained. |
-| N03 | delivered | Delivered | FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved. |
+| N03 | delivered | Delivered | FV04 targeting and layer overview delivered; distinct raster/tile/stamp representations and mixed erase/Undo scopes verified at 207c8e9fc. |
 | N04 | design needed | FV05 |  |
-| N05 | delivered | Delivered | FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved. |
+| N05 | delivered | Delivered | Reference grid retained across tools independently of snapping at legible grid zoom, verified at 207c8e9fc. |
 | N06 | open | FV05 |  |
 | N07 | design needed | FV05 |  |
 | N08 | open | FV11, FV16 |  |
@@ -404,7 +404,7 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | N13 | open | FV07 |  |
 | N14 | design needed | FV09 |  |
 | N15 | open | FV09 |  |
-| N16 | delivered | Delivered | FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved. |
+| N16 | delivered | Delivered | Stable placement controls, explicit existing-field label editing and staged/menu Escape verified at 207c8e9fc. |
 | N17 | delivered | Delivered | Place-symbol picker offers recent symbols and the current palette. |
 | N18 | delivered | Delivered | Solo ready/new sessions start safely through an explicit authorized DM context. |
 | N19 | partial | FV03 | Numbered consistent contents and actual destination links delivered; layout reports remain. |

@@ -12,7 +12,7 @@
     "target": "https://vtt.roll-drauf.de"
   },
   "goal": "Complete, integrate, deploy and verify all retained outstanding packets below as the next full VTT version. Preserve delivered functionality, private data and server-enforced Player/DM separation. A packet closes only with delivery evidence or an explicit owner scope decision.",
-  "current_turn_boundary": "Scope definition and status reporting. This plan does not implement application code or settle the unresolved packet designs and product decisions.",
+  "current_turn_boundary": "The original scope-definition turn was planning only. Subsequent authorized goal continuations execute bounded packet Apply, Deploy and Monitor work; current delivery and packet statuses record actual progress. Unresolved product decisions still gate only the affected scope.",
   "release_name": "Next full version; no numeric version or deadline assigned",
   "sources": [
     "docs/DADM_MONITOR_FEEDBACK_HARNESS_2026-11-23.md",
@@ -695,7 +695,7 @@
       "N03": {
         "status": "delivered",
         "packets": [],
-        "note": "FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved."
+        "note": "FV04 targeting and layer overview delivered; distinct raster/tile/stamp representations and mixed erase/Undo scopes verified at 207c8e9fc."
       },
       "N04": {
         "status": "design_needed",
@@ -707,7 +707,7 @@
       "N05": {
         "status": "delivered",
         "packets": [],
-        "note": "FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved."
+        "note": "Reference grid retained across tools independently of snapping at legible grid zoom, verified at 207c8e9fc."
       },
       "N06": {
         "status": "open",
@@ -784,7 +784,7 @@
       "N16": {
         "status": "delivered",
         "packets": [],
-        "note": "FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved."
+        "note": "Stable placement controls, explicit existing-field label editing and staged/menu Escape verified at 207c8e9fc."
       },
       "N17": {
         "status": "delivered",
