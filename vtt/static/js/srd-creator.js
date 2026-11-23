@@ -136,7 +136,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         if (t === 'heading') return h(`h${Math.min((block.level || 2) + 1, 6)}`, { text: block.text });
         if (t === 'paragraph') return h('p', { text: block.text });
         if (t === 'ordered-list' || t === 'unordered-list') return h(t === 'ordered-list' ? 'ol' : 'ul', null, (block.items || []).map((i) => h('li', { text: i })));
-        if (t === 'definition-list') return h('dl', null, (block.entries || []).map((e) => [h('dt', { text: e.term }), h('dd', { text: e.definition })]));
+        if (t === 'definition-list') return h('dl', { class: 'sc-class-facts' }, (block.entries || []).map((e) => [h('dt', { text: e.term }), h('dd', { text: e.definition })]));
         if (t === 'table') {
             return h('div', { class: 'sc-scroll' }, h('table', { class: 'sc-table' },
                 block.caption ? h('caption', { text: block.caption }) : null,
@@ -144,7 +144,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 h('tbody', null, (block.rows || []).map((r) => h('tr', null, r.map((c) => h('td', { text: c })))))));
         }
         if (t === 'rule-callout' || t === 'page-note' || t === 'original-note') return h('aside', { class: 'sc-detail' }, block.title ? h('strong', { text: block.title }) : null, h('p', { text: block.text }));
-        if (t === 'stat-block') return h('section', { class: 'sc-detail' }, h('h3', { text: block.name }), h('dl', null, (block.entries || []).map((e) => [h('dt', { text: e.label }), h('dd', { text: e.value })])));
+        if (t === 'stat-block') return h('section', { class: 'sc-detail' }, h('h3', { text: block.name }), h('dl', { class: 'sc-class-facts' }, (block.entries || []).map((e) => [h('dt', { text: e.label }), h('dd', { text: e.value })])));
         return h('p', { text: '' });
     }
     SC.openEntry = async function (id, fallbackTitle) {

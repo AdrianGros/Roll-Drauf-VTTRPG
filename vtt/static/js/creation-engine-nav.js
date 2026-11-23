@@ -48,7 +48,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const enabled = await available();
         entries.forEach((entry) => {
             entry.setAttribute('aria-disabled', String(!enabled));
-            entry.textContent = enabled ? globalThis.VTTUi("Creation Engine") : globalThis.VTTUi("Creation Engine · nicht verfügbar");
+            const label = entry.querySelector('.book-toc-label') || entry;
+            label.textContent = enabled ? globalThis.VTTUi("Creation Engine") : globalThis.VTTUi("Creation Engine · nicht verfügbar");
             entry.title = enabled
                 ? globalThis.VTTUi("Homebrew erstellen und bearbeiten (Eagle Homebrew)")
                 : globalThis.VTTUi("Die Creation Engine ist für dieses Konto auf diesem Server nicht verfügbar.");

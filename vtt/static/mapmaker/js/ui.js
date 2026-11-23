@@ -96,10 +96,19 @@ export function fitCropToContent(crop, { w, h, alpha }) {
     return cw > 0 && ch > 0 ? { x, y, w: cw, h: ch } : null;
 }
 
+const TRAIT_UNKNOWN = "unknown";
 const STYLE_FILTERS = () => ({ "": globalThis.VTTUi("Alle Darstellungen"), pixel: globalThis.VTTUi("Pixelgrafik"), painted: globalThis.VTTUi("Gemalt"),
-    ink: globalThis.VTTUi("Tusche/Linie"), other: globalThis.VTTUi("Sonstiges") });
+    ink: globalThis.VTTUi("Tusche/Linie"), other: globalThis.VTTUi("Sonstiges"), [TRAIT_UNKNOWN]: globalThis.VTTUi("Ohne Angabe") });
 const PERSPECTIVE_FILTERS = () => ({ "": globalThis.VTTUi("Alle Perspektiven"), top: globalThis.VTTUi("Draufsicht"), side: globalThis.VTTUi("Seitenansicht"),
-    isometric: globalThis.VTTUi("Isometrisch"), other: globalThis.VTTUi("Sonstige") });
+    isometric: globalThis.VTTUi("Isometrisch"), other: globalThis.VTTUi("Sonstige"), [TRAIT_UNKNOWN]: globalThis.VTTUi("Ohne Angabe") });
+const STAMP_FILTER_IDS = ["stampSearch", "stampPack", "stampCategory", "stampStyle", "stampPerspective"];
+
+/** Declared traits only: own images state style/perspective; catalogue packs only state pixel art. null = no claim. */
+function assetTraits(stamp) {
+    return stamp.custom ? { style: stamp.style || null, perspective: stamp.perspective || null }
+        : { style: stamp.pixelArt ? "pixel" : null, perspective: null };
+}
+const traitMatches = (value, filter) => !filter || (filter === TRAIT_UNKNOWN ? value === null : value === filter);
 const FONT_NAMES = () => ({ "": globalThis.VTTUi("Wie der Stil"), cinzel: globalThis.VTTUi("Cinzel (Antiqua-Versalien)"),
     badscript: globalThis.VTTUi("Bad Script (Schreibschrift)"), literata: globalThis.VTTUi("Literata (Buchschrift)") });
 
@@ -117,6 +126,9 @@ export class UI {
         this.ed = editor;
         this.toastTimer = 0;
         this.pane = "tool";
+        // Page-lifetime only: never saved, autosaved or put in undo.
+        this.stampSizes = new Map();
+        this.recentStamps = [];
     }
 
     // ---- wiring ------------------------------------------------------------
@@ -226,6 +238,11 @@ export class UI {
             stampStyleLabel: t("Darstellung"), stampPerspectiveLabel: t("Perspektive"), sheetFitContent: t("Zusammenhängenden Inhalt erfassen"),
             helpOrder: t("Auswahl eine Stufe nach vorne/hinten (mit Umschalt: ganz)"), helpWheelKey: t("Mausrad"),
             helpWheel: t("Reihenfolge der Auswahl ändern (Auswählen-Werkzeug)"), helpLayer: t("Ebene des Werkzeugs wechseln"),
+            stampTraitHint: t("Stil und Perspektive geben nur eigene Bilder an; Katalogpakete kennen nur „Pixelgrafik“."),
+            stampFilterReset: t("Filter zurücksetzen"), helpBracketNote: t("Deutsche Tastatur: AltGr+8/9 für [ ], AltGr+7/0 für { }."),
+            helpNodeKey: t("Ziehen"), helpNode: t("Wegpunkt des ausgewählten Wegs verschieben (Auswählen)"),
+            placeSymbolHint: t("Zuletzt gewählte Symbole und die aktuelle Seite der Symbolpalette (mit deren Suche und Filtern)."),
+            helpEscape: t("Auswahl oder Geste abbrechen; sonst das Platzieren beenden."),
         };
         Object.entries(labels).forEach(([id, text]) => { $(id).textContent = text; });
         const orderNames = { back: t("Ganz nach hinten"), backward: t("Nach hinten"), forward: t("Nach vorne"), front: t("Ganz nach vorne") };
@@ -240,9 +257,14 @@ export class UI {
         $("brushClip").addEventListener("change", (event) => ed.setClip(event.target.value || null));
         for (const [id, names] of [["stampStyle", STYLE_FILTERS()], ["stampPerspective", PERSPECTIVE_FILTERS()]]) {
             for (const [value, name] of Object.entries(names)) $(id).appendChild(el("option", { value }, name));
-            $(id).title = t("Stil- und Perspektivangaben gibt es für eigene Bilder; Pixelgrafik erkennt auch Katalogpakete.");
             $(id).addEventListener("change", () => { this.palettePage = 0; this.renderPalette(); });
         }
+        $("stampFilterReset").addEventListener("click", () => {
+            for (const id of STAMP_FILTER_IDS) $(id).value = "";
+            this.palettePage = 0;
+            this.renderPalette();
+            $("stampPack").focus(); // the button hides itself; keep focus in the filter group
+        });
         for (const select of [$("labelFont"), $("selFont")]) {
             for (const [value, name] of Object.entries(FONT_NAMES())) select.appendChild(el("option", { value }, name));
         }
@@ -431,15 +453,18 @@ export class UI {
         this.brushTexture.set(Math.round((b.texture ?? 1) * 100));
         for (const id of ['brushColorEnabled', 'brushColor', 'brushTexture']) $(id).disabled = image;
         $('brushImageInfo').hidden = !image;
-        $('brushImageInfo').textContent = image ? globalThis.VTTUi('Bildpinsel: {p0}. Originalfarben bleiben erhalten; Materialfarbe und Texturanteil gelten nur für Materialpinsel.', {p0:b.image.label}) : '';
+        $('brushImageInfo').textContent = image ? `${globalThis.VTTUi('Bildpinsel: {p0}. Originalfarben bleiben erhalten; Materialfarbe und Texturanteil gelten nur für Materialpinsel.', {p0:b.image.label})} ${globalThis.VTTUi('Ein Material wählen, um wieder mit Materialfarbe zu malen.')}` : '';
+        this.syncMaterials();
         this.drawBrushPreview();
     }
 
     syncMaterials() {
-        document.querySelectorAll(".mm-swatch").forEach((button) => {
-            const on = button.dataset.material === this.ed.brush.material;
+        // The image brush paints its original colours, so no material is checked; the first swatch stays focusable.
+        const b = this.ed.brush, image = !!b.image && b.shape === "image";
+        document.querySelectorAll(".mm-swatch").forEach((button, index) => {
+            const on = !image && button.dataset.material === b.material;
             button.setAttribute("aria-checked", String(on));
-            button.tabIndex = on ? 0 : -1;
+            button.tabIndex = on || (image && index === 0) ? 0 : -1;
         });
     }
 
@@ -472,6 +497,7 @@ export class UI {
             const value = clamp(Math.round(ed.stampOpts.size * (up ? 1.15 : 1 / 1.15)), 16, 320);
             ed.stampOpts.size = value;
             this.stampSize.set(value);
+            this.rememberStampSize();
         } else if (kind === "softness") {
             ed.brush.softness = clamp(ed.brush.softness + (up ? 10 : -10), 0, 100);
             this.brushSoftness.set(ed.brush.softness);
@@ -489,7 +515,7 @@ export class UI {
 
     bindStamp() {
         const ed = this.ed;
-        this.stampSize = this.range("stampSize", "stampSizeOut", (v) => `${v} px`, (v) => { ed.stampOpts.size = v; ed.requestFrame(); });
+        this.stampSize = this.range("stampSize", "stampSizeOut", (v) => `${v} px`, (v) => { ed.stampOpts.size = v; this.rememberStampSize(); ed.requestFrame(); });
         this.stampRot = this.range("stampRot", "stampRotOut", (v) => `${v}°`, (v) => { ed.stampOpts.rot = v; ed.requestFrame(); });
         this.stampSize.set(ed.stampOpts.size);
         this.stampRot.set(ed.stampOpts.rot);
@@ -677,20 +703,29 @@ export class UI {
         const pack = $("stampPack").value;
         const category = $("stampCategory").value;
         const style = $("stampStyle").value, perspective = $("stampPerspective").value;
+        // Matching symbols hidden only because they make no style/perspective claim (shown as a count, never guessed).
+        let undeclared = 0;
         const ids = palette.groups.flatMap((group) => group.ids).filter((id) => {
             const stamp = palette.stamps.get(id);
             const text = stamp.searchText || normalize(`${stamp.label} ${stamp.group} ${stamp.packName} ${stamp.search}`);
-            // Style/perspective are only known for own images; catalogue pixel art is recognised by its flag.
-            const styleOk = !style || (stamp.custom ? stamp.style === style : style === "pixel" && stamp.pixelArt);
-            const perspectiveOk = !perspective || (stamp.custom && stamp.perspective === perspective);
-            return (!pack || stamp.pack === pack) && (!category || stamp.group === category) && styleOk && perspectiveOk && terms.every((term) => text.includes(term));
+            if ((pack && stamp.pack !== pack) || (category && stamp.group !== category) || !terms.every((term) => text.includes(term))) return false;
+            const traits = assetTraits(stamp);
+            const failing = [[traits.style, style], [traits.perspective, perspective]].filter(([value, filter]) => !traitMatches(value, filter));
+            if (!failing.length) return true;
+            if (failing.every(([value, filter]) => value === null && filter !== TRAIT_UNKNOWN)) undeclared += 1;
+            return false;
         });
         const pageSize = 64;
         const pageCount = Math.max(1, Math.ceil(ids.length / pageSize));
         this.palettePage = Math.max(0, Math.min(this.palettePage, pageCount - 1));
+        const count = undeclared.toLocaleString("de");
         $("stampResults").textContent = ids.length
             ? globalThis.VTTUi("{p0} Symbole · Seite {p1} von {p2}",{p0:(ids.length.toLocaleString("de")),p1:(this.palettePage + 1),p2:(pageCount)})
-            : globalThis.VTTUi("Keine Symbole gefunden. Suche oder Filter ändern.");
+                + (undeclared ? ` · ${globalThis.VTTUi("{count} weitere ohne Stil-/Perspektivangabe ausgeblendet", { count })}` : "")
+            : undeclared
+                ? globalThis.VTTUi("Keine Symbole mit dieser Angabe. {count} passende Symbole haben keine Stil-/Perspektivangabe – „Ohne Angabe“ zeigt sie.", { count })
+                : globalThis.VTTUi("Keine Symbole gefunden. Suche oder Filter ändern.");
+        $("stampFilterReset").hidden = !STAMP_FILTER_IDS.some((id) => $(id).value);
         $("stampPrev").disabled = this.palettePage === 0;
         $("stampNext").disabled = this.palettePage >= pageCount - 1;
         const container = $("palette");
@@ -698,6 +733,7 @@ export class UI {
         let currentGroup = null;
         let grid = null;
         const pageIds = ids.slice(this.palettePage * pageSize, (this.palettePage + 1) * pageSize);
+        this.palettePageIds = pageIds;
         this.updateSymbolOptions(pageIds);
         for (const id of pageIds) {
             const stamp = palette.stamps.get(id);
@@ -735,8 +771,12 @@ export class UI {
             if (this.pendingStamp !== id) return;
             ed.stampOpts.asset = id;
             ed.stampOpts.crop = crop;
-            ed.stampOpts.size = size !== null ? clamp(size,16,320) : crop ? Math.min(256, Math.max(16, crop.w, crop.h)) : stamp.defaultSize;
+            const remembered = this.stampSizes.get(this.stampSizeKey(id, crop));
+            ed.stampOpts.size = size !== null ? clamp(size,16,320) : remembered ?? (crop ? Math.min(256, Math.max(16, crop.w, crop.h)) : stamp.defaultSize);
+            if (size !== null) this.rememberStampSize();
             this.stampSize.set(ed.stampOpts.size);
+            this.recentStamps = [id, ...this.recentStamps.filter((entry) => entry !== id)].slice(0, 12);
+            this.updateSymbolOptions(this.palettePageIds || []);
             $("stampSelected").textContent = globalThis.VTTUi("Ausgewählt: {p0} · {p1}",{p0:(stamp.label),p1:(stamp.packName)});
             document.querySelectorAll(".mm-stamp").forEach((button) => {
                 button.setAttribute("aria-checked", String(button.dataset.asset === id));
@@ -752,18 +792,44 @@ export class UI {
         });
     }
 
+    /** Session tool size per asset; a crop and the whole sheet have different natural sizes. */
+    stampSizeKey(id, crop) {
+        return crop ? `${id}@${crop.x},${crop.y},${crop.w},${crop.h}` : id;
+    }
+
+    rememberStampSize() {
+        const { asset, crop, size } = this.ed.stampOpts;
+        if (asset) this.stampSizes.set(this.stampSizeKey(asset, crop), size);
+    }
+
+    symbolOption(id) {
+        const stamp = this.ed.palette.stamps.get(id);
+        return stamp ? el("option", { value: id }, `${stamp.label} · ${stamp.packName}`) : null;
+    }
+
     ensureSymbolOption(select, id) {
         if (id && ![...select.options].some((option) => option.value === id)) {
-            const stamp = this.ed.palette.stamps.get(id);
-            if (stamp) select.appendChild(el("option", { value: id }, `${stamp.label} · ${stamp.packName}`));
+            const option = this.symbolOption(id);
+            if (option) select.appendChild(option);
         }
     }
 
+    /** Place symbols come from deliberate sources: recently chosen stamps, then the current palette page. */
     updateSymbolOptions(ids) {
+        const ed = this.ed, t = globalThis.VTTUi;
+        const recent = this.recentStamps.filter((id) => ed.assetAvailable(id));
+        const groups = [[t("Zuletzt gewählte Symbole"), recent], [t("Aktuelle Symbolpalette"), ids.filter((id) => !recent.includes(id))]];
         for (const select of [$("placeSymbol"), $("selSymbol")]) {
             const value = select.value;
-            select.replaceChildren(el("option", { value: "" }, globalThis.VTTUi("Kein Symbol")));
-            for (const id of new Set([...ids, value, this.ed.labelOpts.symbol].filter(Boolean))) this.ensureSymbolOption(select, id);
+            select.replaceChildren(el("option", { value: "" }, t("Kein Symbol")));
+            for (const [label, group] of groups) {
+                const options = group.map((id) => this.symbolOption(id)).filter(Boolean);
+                if (!options.length) continue;
+                const optgroup = el("optgroup", { label });
+                optgroup.append(...options);
+                select.appendChild(optgroup);
+            }
+            for (const id of [value, ed.labelOpts.symbol]) this.ensureSymbolOption(select, id);
             select.value = value;
         }
     }
@@ -936,7 +1002,12 @@ export class UI {
         $('groupClear').addEventListener('click',()=>ed.select(null));$('groupDelete').addEventListener('click',()=>ed.deleteSelection());
         $('groupScaleApply').addEventListener('click',()=>{const f=Number($('groupScale').value)/100;if(Number.isFinite(f)&&f>=.1&&f<=5)ed.selectionSet.scale(f);$('groupScale').value='100';});
         $('selPathCurve').addEventListener('change',e=>{ed.liveEdit({curve:e.target.checked});ed.commitEdit();});
-        $('pathNodeMode').addEventListener('change',e=>{ed.editPathNodes=e.target.checked;});
+        $('pathNodeMode').addEventListener('change',e=>{
+            ed.editPathNodes=e.target.checked;
+            // Node dragging lives in the select tool; the path tool always draws a new path.
+            if(e.target.checked&&ed.tool!=='select'){ed.setTool('select');this.toast(globalThis.VTTUi('Auswählen (V): Wegpunkte ziehen. Ohne Haken verschiebt Ziehen den ganzen Weg.'));}
+            ed.requestFrame();
+        });
         $('pathCurve').addEventListener('change',e=>{ed.pathOpts.curve=e.target.checked;});
         $('labelNamed').addEventListener('change',e=>{ed.labelOpts.named=e.target.checked;});
         $('tileAsSymbol').addEventListener('click',()=>{
@@ -1062,6 +1133,9 @@ export class UI {
             if (!editing("selPathName")) $("selPathName").value = item.name || "";
             $("selPathMaterial").value = item.material;
             $("selPathCurve").checked=!!item.curve;$("pathNodeMode").checked=ed.editPathNodes;
+            $("pathEditHint").textContent = ed.tool === "path"
+                ? globalThis.VTTUi("Im Wege-Werkzeug zeichnet Ziehen immer einen neuen Weg. „Wegpunkte bearbeiten“ wechselt zu Auswählen (V).")
+                : globalThis.VTTUi("Wegpunkte bearbeiten einschalten und einen sichtbaren Punkt ziehen. Umschalt + Ziehen funktioniert ebenfalls.");
             if (!editing("selPathWidth") && !editing("selPathWidthNumber")) this.selPathWidth.set(item.width);
         } else {
             $("inspectorTitle").textContent = item.place ? globalThis.VTTUi("Ort") : globalThis.VTTUi("Beschriftung");

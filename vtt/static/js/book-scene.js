@@ -914,30 +914,37 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // separate from the hero so the book spread can place each block
             // on the page marked by the visual audit.
             const tocRows = [
-                { numeral: 'II', label: this.content('home.nav_campaigns', 'Kampagnen'),
+                { label: this.content('home.nav_campaigns', 'Kampagnen'),
                   count: Number(homeState.campaign_count || 0), href: '/campaigns' },
-                { numeral: 'III', label: this.content('home.nav_characters', 'Charaktere'),
+                { label: this.content('home.nav_characters', 'Charaktere'),
                   count: Number(homeState.character_count || 0), href: '/characters' },
-                { numeral: 'IV', label: this.content('home.nav_play', 'Spieltisch'),
+                { label: this.content('home.nav_play', 'Spieltisch'),
                   count: Number(homeState.session_count || 0), href: null,
                   action: 'play-launch',
                   countLabel: this.content('home.toc_sessions', '{count} Sitzungen',
                                            { count: Number(homeState.session_count || 0) }) },
+                { label: globalThis.VTTUi('Gespräche'), href: '/conversations' },
+                { label: globalThis.VTTUi('Karten'), href: '/mapmaker' },
+                { label: globalThis.VTTUi('Atlas'), href: '/atlas' },
+                { label: globalThis.VTTUi('Compendium'), href: '/regelwerk/compendium' },
+                { label: globalThis.VTTUi('Creation Engine · wird geprüft'), capability: 'creation-engine' },
+                { label: globalThis.VTTUi('Regelwerk · Vorschau'), capability: 'regelwerk', hidden: true },
             ];
+            const numerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
 
             return `
                 <nav class="book-toc" aria-label="${globalThis.VTTUiHTML("Inhaltsverzeichnis")}">
                     <div class="book-toc-kicker">${escapeHtml(this.content('home.toc_kicker', 'Inhaltsverzeichnis'))}</div>
-                    ${tocRows.map((row) => `
-                        <a class="book-toc-row" href="${row.href || '#'}" ${row.action ? `data-dashboard-action="${row.action}"` : `data-book-route="${row.href}"`}>
-                            <span class="book-toc-numeral">${row.numeral}</span>
+                    ${tocRows.map((row, index) => `
+                        <a class="book-toc-row" ${row.capability
+                            ? `data-${row.capability}-nav aria-disabled="true" tabindex="0"${row.hidden ? ' hidden' : ''}`
+                            : `href="${row.href || '#'}" ${row.action ? `data-dashboard-action="${row.action}"` : `data-book-route="${row.href}"`}`}>
+                            <span class="book-toc-numeral">${numerals[index]}</span>
                             <span class="book-toc-label">${escapeHtml(row.label)}</span>
                             <span class="book-toc-leader" aria-hidden="true"></span>
-                            <span class="book-toc-count">${escapeHtml(row.countLabel || String(row.count))}</span>
+                            <span class="book-toc-count">${escapeHtml(row.countLabel ?? (row.count == null ? '' : String(row.count)))}</span>
                         </a>
                     `).join('')}
-                    <a class="book-toc-row" data-creation-engine-nav aria-disabled="true" tabindex="0">${globalThis.VTTUiHTML("Creation Engine · wird geprüft")}</a>
-                    <a class="book-toc-row" data-regelwerk-nav hidden aria-disabled="true" tabindex="0">${globalThis.VTTUiHTML("Regelwerk · Vorschau")}</a>
                 </nav>
                 ${homeState.authoring_available === true ? `
                     <div class="book-scene-panel">
@@ -1355,27 +1362,43 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             node.classList.toggle('is-error', Boolean(isError));
         },
 
-        async startCampaignHubSession(campaignId, sessionId) {
-            this.setCampaignHubStatus(globalThis.VTTUi('Session wird gestartet …'));
+        async launchCampaignHubSession(campaignId, sessionId = null) {
+            const pending = this.pendingCampaignSessionActions ||= new Set();
+            if (pending.has(campaignId)) return;
+            pending.add(campaignId);
+            const renderVersion = this.sceneRenderVersion;
+            const buttons = Array.from(this.sceneSurface?.querySelectorAll(
+                '[data-hub-action="start-session"], [data-hub-action="new-session"]'
+            ) || [], button => ({ button, disabled: button.disabled }));
+            buttons.forEach(({ button }) => { button.disabled = true; });
+            let created = false;
+            this.setCampaignHubStatus(sessionId ? globalThis.VTTUi('Session wird gestartet …')
+                : globalThis.VTTUi('Neue Session wird angelegt …'));
             try {
-                await window.Auth.makeAuthRequest(`/api/sessions/${sessionId}/start`, 'POST');
-                this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat: 'dm' });
+                if (!sessionId) {
+                    const session = await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, 'POST', {
+                        name: 'Session ' + new Date().toLocaleDateString('de-DE'),
+                    });
+                    sessionId = session.id;
+                    created = true;
+                }
+                // Only this explicit DM action may replace a remembered Player
+                // seat. Ordinary requests keep the Auth helper's existing seat.
+                await window.Auth.ensureTableContext(campaignId, sessionId, 'dm', true);
+                await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions/${sessionId}/start`, 'POST');
+                if (this.sceneRenderVersion === renderVersion) {
+                    this.enterPlay({ campaignId, sessionId, sourceRoute: 'campaigns', seat: 'dm' });
+                }
             } catch (error) {
+                if (this.sceneRenderVersion !== renderVersion) return;
+                // Keep a successfully created session reachable if its start failed.
+                if (created) {
+                    await this.renderCampaignHubDetail(campaignId);
+                }
                 this.setCampaignHubStatus(error.message || globalThis.VTTUi('Session konnte nicht gestartet werden.'), true);
-            }
-        },
-
-        async createCampaignHubSession(campaignId) {
-            this.setCampaignHubStatus(globalThis.VTTUi('Neue Session wird angelegt …'));
-            try {
-                // The stored session name stays the existing data format.
-                const session = await window.Auth.makeAuthRequest(`/api/campaigns/${campaignId}/sessions`, 'POST', {
-                    name: 'Session ' + new Date().toLocaleDateString('de-DE'),
-                });
-                await window.Auth.makeAuthRequest(`/api/sessions/${session.id}/start`, 'POST');
-                this.enterPlay({ campaignId, sessionId: session.id, sourceRoute: 'campaigns', seat: 'dm' });
-            } catch (error) {
-                this.setCampaignHubStatus(error.message || globalThis.VTTUi('Session konnte nicht erstellt werden.'), true);
+            } finally {
+                pending.delete(campaignId);
+                buttons.forEach(({ button, disabled }) => { button.disabled = disabled; });
             }
         },
 
@@ -1534,12 +1557,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             root.querySelectorAll('[data-hub-action="start-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
                     const sessionId = Number(node.getAttribute('data-hub-session-id'));
-                    this.startCampaignHubSession(campaignId, sessionId);
+                    this.launchCampaignHubSession(campaignId, sessionId);
                 });
             });
             root.querySelectorAll('[data-hub-action="new-session"]').forEach((node) => {
                 node.addEventListener('click', () => {
-                    this.createCampaignHubSession(campaignId);
+                    this.launchCampaignHubSession(campaignId);
                 });
             });
             root.querySelectorAll('[data-hub-action="generate-invite"]').forEach((node) => {

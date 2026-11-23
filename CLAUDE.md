@@ -3,7 +3,13 @@
 Read `AGENTS.md` before work; it remains the durable repository rule source.
 Use the smallest DAD-M runtime profile and the route card for the assigned phase.
 
-Active handoff:
+Active handoff (2026-11-23):
+- `docs/CLAUDE_HANDOFF_MAPMAKER_27_2026-11-23.md`
+- `docs/DADM_DISCOVER_EDITOR_CREATOR_FEEDBACK_2026-11-23.md`
+- `docs/DADM_APPLY_FEEDBACK_HARNESS_2026-11-23.md`
+- `docs/DADM_APPLY_CLAUDE_MAPMAKER_2026-11-23.md` (S1 accepted; later slices remain proposals)
+
+Earlier execution-program references (historical task IDs, not new assignments):
 - `docs/DADM_DISCOVER_VTT_REVIEWS_2026-11-11.md`
 - `docs/plans/VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.md`
 - `docs/plans/VTT_REVIEW_CLAUDE_EXECUTION_2026-11-11.json`

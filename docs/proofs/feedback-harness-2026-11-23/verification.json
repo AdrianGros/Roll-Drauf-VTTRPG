@@ -1,0 +1,88 @@
+{
+  "status": "targeted_verification",
+  "runs": [
+    {
+      "id": "new_mapmaker",
+      "log": "/tmp/vtt-feedback-mapmaker-s1-20261123.log",
+      "sha256": "5a2b64406949acad89e16d51c36ffde0df35d4d3c482018eabdb245ab37c7cea",
+      "summary": "10 passed in 305.74s (0:05:05)",
+      "failures": []
+    },
+    {
+      "id": "map_regressions",
+      "log": "/tmp/vtt-feedback-map-regressions-20261123.log",
+      "sha256": "d86378352821521d34dbd7eca41ea40a25a5a5213fb5a68d873edfd187c8a03c",
+      "summary": "3 passed in 138.26s (0:02:18)",
+      "failures": []
+    },
+    {
+      "id": "session_roles",
+      "log": "/tmp/vtt-feedback-session-roles-final-20261123.log",
+      "sha256": "bffea5bcceef988e7baf1e2c6a582e134b4bf528f7a669ddefd207dec9193212",
+      "summary": "32 passed, 331 warnings in 77.25s (0:01:17)",
+      "failures": []
+    },
+    {
+      "id": "hub",
+      "log": "/tmp/vtt-feedback-hub-clean-final-20261123.log",
+      "sha256": "ab5df625bc76dbd4e163bed2dd888df828f90159bb93556525c31821b6541d46",
+      "summary": "running",
+      "failures": []
+    },
+    {
+      "id": "hub_static_and_owner_player_rework",
+      "log": "/tmp/vtt-feedback-hub-player-recheck-20261123.log",
+      "sha256": "027e4a13a033bdc89d58a2de038a4a9d0b5d3741173fbbc5f3fab2e2511f331a",
+      "summary": "9 passed, 22 warnings in 87.96s (0:01:27)",
+      "failures": []
+    },
+    {
+      "id": "navigation_first",
+      "log": "/tmp/vtt-feedback-nav-fixed-20261123.log",
+      "sha256": "28e24f1b9d09da59f5390c05f50c70ca1bbeeeaf2af4671db4245c67be7c91d6",
+      "summary": "1 failed, 2 passed, 7 warnings in 188.69s (0:03:08)",
+      "failures": [
+        "tests/test_feedback_navigation_browser.py::test_closed_navigation_group_and_direct_pages[firefox-1440-en-paper]"
+      ]
+    },
+    {
+      "id": "navigation_firefox_recheck",
+      "log": "/tmp/vtt-feedback-nav-firefox-20261123.log",
+      "sha256": "3e5c13252a0f47bf22d5ad2a0c86b4f6601073ad5e5af48c645307dce5fa8736",
+      "summary": "1 passed, 9 warnings in 152.30s (0:02:32)",
+      "failures": []
+    },
+    {
+      "id": "unchanged_api_static_baseline",
+      "log": "/tmp/vtt-feedback-unchanged-baseline-20261123.log",
+      "sha256": "589f5a6dacf308ceafb70ffe06b3c36fbce5413d3762b7b8546008baec46ce2b",
+      "summary": "3 failed, 13 warnings in 15.63s",
+      "failures": [
+        "tests/test_creation_engine_navigation.py::test_navigation_capability_is_authenticated_private_and_matches_authority[enabled]",
+        "tests/test_creation_engine_navigation.py::test_navigation_capability_is_authenticated_private_and_matches_authority[no_host]",
+        "tests/test_mapmaker_static.py::test_index_uses_only_relative_local_resources"
+      ]
+    },
+    {
+      "id": "unchanged_navigation_baseline",
+      "log": "/tmp/vtt-feedback-unchanged-nav-browser-20261123.log",
+      "sha256": "3ba3256d1d72ef2f6363800c72c6ec8dcae4651367b07e305cedd56c9fdd53a3",
+      "summary": "1 failed, 10 warnings in 22.33s",
+      "failures": [
+        "tests/test_creation_engine_navigation.py::test_visible_book_navigation_reaches_editor_with_keyboard[/dashboard]"
+      ]
+    }
+  ],
+  "full_repository_suite_green": false,
+  "independent_claude_review_completed": false,
+  "baseline_notes": "Legacy capability/view-as, already-closed disclosure, and existing absolute login href expectations also fail on unchanged 2fcd28deb. No old product behavior restored.",
+  "known_gaps": [
+    "Physical German keyboard not exercised; synthetic AltGr/Option plus real US keys pass.",
+    "One Firefox navigation AbortError was not reproduced in the passing targeted rerun; N20 is not generally closed.",
+    "An extra delayed-navigation test draft assumed same-document header navigation; it was removed after the actual supported header path proved cross-document. Six real hub cases retained."
+  ],
+  "creator_probe": "creator/probe.json",
+  "i18n_sources": 3747,
+  "schema_change": false,
+  "next": "commit/push, bounded image overlay, backup, normal live UI journeys and QA cleanup"
+}

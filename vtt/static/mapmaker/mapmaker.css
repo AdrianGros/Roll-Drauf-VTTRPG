@@ -212,6 +212,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 #mapCanvas[data-cursor="brush"], #mapCanvas[data-cursor="eraser"] { cursor: crosshair; }
 #mapCanvas[data-cursor="stamp"], #mapCanvas[data-cursor="label"] { cursor: copy; }
 #mapCanvas[data-cursor="select"] { cursor: default; }
+#mapCanvas[data-cursor="node"] { cursor: move; }
 #mapCanvas[data-cursor="grab"], #mapCanvas[data-cursor="pan"] { cursor: grab; }
 #mapCanvas[data-cursor="grabbing"] { cursor: grabbing; }
 

@@ -2268,7 +2268,7 @@ def unassign_character_from_session(campaign_id, session_id, character_id):
 @limiter.limit("30 per hour")
 @jwt_required()
 def start_session(campaign_id, session_id):
-    """Start a scheduled session (DM only)."""
+    """Start an unstarted scheduled/ready session (DM context only)."""
     user, error = _get_current_user()
     if error:
         return error
@@ -2284,8 +2284,8 @@ def start_session(campaign_id, session_id):
     if error:
         return error
 
-    if session.status != "scheduled":
-        return jsonify({"error": "session can only be started from scheduled status"}), 409
+    if session.status not in {"scheduled", "ready"}:
+        return jsonify({"error": "session can only be started from scheduled or ready status"}), 409
 
     active_session = GameSession.query.filter_by(campaign_id=campaign.id, status="in_progress").first()
     if active_session and active_session.id != session.id:

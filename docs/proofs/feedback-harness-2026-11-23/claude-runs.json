@@ -1,0 +1,46 @@
+[
+  {
+    "phase": "apply",
+    "task": "C27-PLAN",
+    "engine": "Claude Code 2.1.312",
+    "auth_method": "claude.ai subscription",
+    "base": "2fcd28deb4d39403b882fccf05f9941ed71e859f",
+    "session_id": "14b7ad28-1af6-413f-b132-eb02c05078bc",
+    "is_error": false,
+    "duration_ms": 892416,
+    "num_turns": 74,
+    "tools_observed": [
+      "Glob",
+      "Grep",
+      "Read",
+      "WebFetch",
+      "Write"
+    ],
+    "plan_sha256": "5baddf88560f91d5d0e79e7eeac1446aa7c3a31ea3fa11c72dd16ed7432bfbda",
+    "tests_run_by_claude": false,
+    "generated_plan_file_saved_by": "Codex from complete plan payload; application was not edited in Apply"
+  },
+  {
+    "phase": "deploy",
+    "task": "C27-S1",
+    "auth_method": "claude.ai subscription",
+    "session_id": "d2bf1126-a31a-47d7-892e-e896ba2f5b31",
+    "is_error": false,
+    "duration_ms": 1031485,
+    "num_turns": 98,
+    "owned_files_imported": 7,
+    "tests_run_by_claude": false,
+    "code_status": "imported; Codex running tests, not deployed yet"
+  },
+  {
+    "phase": "monitor",
+    "task": "FEEDBACK-R1",
+    "auth_method": "claude.ai subscription",
+    "session_id": "28802d06-2b05-4519-bbf0-9369f220dbb7",
+    "is_error": true,
+    "status": "incomplete_subscription_limit",
+    "reason": "You've hit your 5-hour limit \u00b7 resets 7:30pm (Europe/Berlin)",
+    "review_completed": false,
+    "fallback": "Codex reviews source and executes checks; no API billing, extra usage or provider switch"
+  }
+]

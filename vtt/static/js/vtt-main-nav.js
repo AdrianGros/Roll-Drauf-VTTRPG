@@ -30,15 +30,35 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     const anonymousMap = location.pathname === '/static/mapmaker/index.html'
         && !/(?:^|;\s*)csrf_access_token=/.test(document.cookie);
 
-    function currentRoute() {
-        const path = location.pathname;
-        if (path === '/static/mapmaker/index.html' || path === '/mapmaker') return '/mapmaker';
+    function routeForPath(pathname) {
+        if (pathname === '/static/mapmaker/index.html') return '/mapmaker';
+        const path = pathname.replace(/\.html$/, '').replace(/\/$/, '');
+        if (path === '/mapmaker') return '/mapmaker';
         if (path === '/character-sheet' || path === '/srd-creator') return '/characters';
         if (path.startsWith('/api/ce/authoring')) return '/api/ce/authoring';
         if (path === '/regelwerk/compendium') return path;
         if (path.startsWith('/regelwerk')) return '/regelwerk';
         if (path === '/play') return '/play';
         return routes.some(([href]) => href === path) ? path : '';
+    }
+
+    function currentRoute() {
+        return routeForPath(location.pathname);
+    }
+
+    function updateRouteState(nav) {
+        const route = currentRoute();
+        nav.querySelectorAll('a.book-dashboard-ribbon-btn').forEach(anchor => {
+            const href = anchor.getAttribute('href');
+            const target = href ? routeForPath(new URL(href, location.href).pathname) : '';
+            const active = Boolean(route) && target === route;
+            anchor.classList.toggle('is-active', active);
+            if (active) anchor.setAttribute('aria-current', 'page');
+            else anchor.removeAttribute('aria-current');
+        });
+        nav.querySelectorAll('.vtt-nav-group').forEach(group => {
+            group.classList.toggle('has-active', Boolean(group.querySelector('a[aria-current="page"]')));
+        });
     }
 
     function getMemo() {
@@ -282,9 +302,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
     function scan() {
         document.querySelectorAll('.book-dashboard-ribbon, .vtt-map-nav').forEach((nav) => {
-            if (nav.dataset.vttMainNav === 'true') return;
-            buildRibbon(nav);
-            buildAccount(nav);
+            if (nav.dataset.vttMainNav !== 'true') {
+                buildRibbon(nav);
+                buildAccount(nav);
+            }
+            updateRouteState(nav);
         });
         if (currentRoute() === '/dashboard' && document.querySelector('.book-dashboard-page')) {
             let pending = false;
@@ -304,6 +326,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan, { once: true });
     else scan();
+    window.addEventListener('popstate', scheduleScan);
     new MutationObserver(scheduleScan).observe(document.documentElement, { childList: true, subtree: true });
     window.VTTMainNav = { scan };
     if (currentRoute() === '/mapmaker' && !staticPreview && !anonymousMap) {

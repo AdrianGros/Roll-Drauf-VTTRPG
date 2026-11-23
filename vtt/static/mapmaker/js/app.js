@@ -345,13 +345,15 @@ class Editor {
                 ctx.strokeRect(b.x, b.y, b.w, b.h);
                 ctx.restore();
                 if ("points" in found.item) {
+                    // Larger gold handles while dragging a node edits it (node mode in the select tool).
+                    const nodeMode = this.editPathNodes && this.tool === "select";
                     ctx.save();
-                    ctx.fillStyle = "#ffffff";
+                    ctx.fillStyle = nodeMode ? "#f2c66d" : "#ffffff";
                     ctx.strokeStyle = "#17424b";
                     ctx.lineWidth = 2 / zoom;
                     for (const point of found.item.points) {
                         ctx.beginPath();
-                        ctx.arc(found.item.x + point.x, found.item.y + point.y, 5 / zoom, 0, Math.PI * 2);
+                        ctx.arc(found.item.x + point.x, found.item.y + point.y, (nodeMode ? 6 : 5) / zoom, 0, Math.PI * 2);
                         ctx.fill();
                         ctx.stroke();
                     }

@@ -9,6 +9,14 @@ body.dashboard-route-book-scene .book-dashboard-page { grid-template-columns: mi
 .vtt-nav-group-links { display: inline-flex; align-items: center; gap: .25rem; }
 .vtt-nav-play { flex: 0 0 auto; white-space: nowrap; }
 .vtt-nav-play summary { cursor: pointer; }
+.vtt-nav-play.has-active > summary {
+  color: var(--ui-accent, #754c19);
+  background: var(--ui-soft, #eee4d0);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: .14em;
+  text-underline-offset: .24em;
+}
 .vtt-nav-play:not([open]) > .vtt-nav-group-links { display: none; }
 .vtt-nav-play[open] summary { margin-bottom: .25rem; }
 .vtt-nav-reference [data-regelwerk-nav] { display: none !important; }

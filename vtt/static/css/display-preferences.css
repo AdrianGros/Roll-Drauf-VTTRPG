@@ -29,6 +29,11 @@ html[data-vtt-theme=night] {
   --ui-line:var(--night-gray); --ui-danger:#ffb8b1; --ui-success:#ace0b8; --ui-warning:#f0d29a;
   --vtt-plum:var(--night-edo); --vtt-plum-deep:var(--night-edo-deep); --vtt-gold:var(--ui-accent); --vtt-gold-deep:var(--ui-accent);
 }
+/* Explicit accents also tint semantic surfaces; the default night palette stays intact. */
+html[data-vtt-theme]:is([data-vtt-accent="bronze"], [data-vtt-accent="teal"]) {
+  --ui-panel:color-mix(in srgb, var(--ui-accent) 8%, var(--ui-paper));
+  --ui-soft:color-mix(in srgb, var(--ui-accent) 14%, var(--ui-paper));
+}
 html[data-vtt-theme] body { color:var(--ui-ink); }
 html[data-vtt-theme] :is(input:not([type=color]):not([type=checkbox]):not([type=radio]),textarea,select) {
   color:var(--ui-ink); background-color:var(--ui-panel); border-color:var(--ui-line);

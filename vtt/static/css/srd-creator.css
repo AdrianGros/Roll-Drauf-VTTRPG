@@ -166,7 +166,7 @@ html[data-vtt-theme] .srd-creator-page {
     --regelwerk-paper: var(--ui-panel); --regelwerk-paper-deep: var(--ui-soft); --regelwerk-border: var(--ui-line);
 }
 html[data-vtt-theme] body.srd-creator-page {
-    background: radial-gradient(ellipse at center, #2d1b35 0%, #0d0514 100%) fixed;
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--ui-accent) 12%, #1c1c1c) 0%, #1c1c1c 100%) fixed;
     color: var(--ui-ink);
     padding-block: clamp(10px, 2vw, 28px);
 }
@@ -225,6 +225,15 @@ html[data-vtt-theme] .srd-creator-page .sc-card[aria-pressed="true"] :is(strong,
 html[data-vtt-theme] .srd-creator-page .sc-btn-danger { color: var(--ui-danger); border-color: var(--ui-danger); }
 html[data-vtt-theme] .srd-creator-page .sc-ok-note { color: var(--ui-success); }
 html[data-vtt-theme] .srd-creator-page .sc-import-error { color: var(--ui-danger); }
+html[data-vtt-theme] .srd-creator-page .sc-step .sc-count {
+    color: var(--ui-ink); background: var(--ui-soft); border: 1px solid var(--ui-accent);
+}
+html[data-vtt-theme] .srd-creator-page .sc-step .sc-count-error {
+    color: var(--ui-paper); background: var(--ui-danger); border-color: var(--ui-danger);
+}
+html[data-vtt-theme] .srd-creator-page .sc-step .sc-count-ok {
+    color: var(--ui-paper); background: var(--ui-success); border-color: var(--ui-success);
+}
 @media (max-width: 900px) {
     html[data-vtt-theme] .srd-creator-page .sc-nav { background: var(--ui-panel); border-top-color: var(--ui-line); }
 }

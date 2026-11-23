@@ -28,7 +28,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             node.hidden = false;
             node.href = state.readerUrl || '/regelwerk';
             node.setAttribute('aria-disabled', 'false');
-            node.textContent = state.status === 'preview' ? globalThis.VTTUi("Regelwerk · Vorschau") : globalThis.VTTUi("Regelwerk");
+            const label = node.querySelector('.book-toc-label') || node;
+            label.textContent = state.status === 'preview' ? globalThis.VTTUi("Regelwerk · Vorschau") : globalThis.VTTUi("Regelwerk");
         });
         return Boolean(state.available);
     }

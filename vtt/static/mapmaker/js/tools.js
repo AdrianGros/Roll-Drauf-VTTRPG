@@ -4,6 +4,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 // cancels the running gesture (reverting a partial stroke) and starts a pinch.
 
 const TEXT_INPUT_TYPES = new Set(["text", "search", "number", "email", "url", "password", "tel", "color"]);
+// Bracket characters depend on the layout: DE/macOS type them with AltGr/Option, which
+// arrives as Ctrl+Alt (Windows), Alt (macOS) or the AltGraph state (Linux). Match the character.
+const BRACKET_NUDGE = { "[": ["size", false], "]": ["size", true], "{": ["softness", false], "}": ["softness", true] };
+const altGraph = (event) => event.getModifierState?.("AltGraph") || (event.ctrlKey && event.altKey);
+// Escape without a gesture or selection leaves these tools; clicking keeps placing repeatedly.
+const PLACEMENT_TOOLS = new Set(["stamp", "label", "tile", "path"]);
 
 function isTextEntry(target) {
     if (!target || !target.closest) return false;
@@ -27,6 +33,13 @@ export function attachInput(ed) {
         return { x: event.clientX - rect.left, y: event.clientY - rect.top };
     };
     const pressureOf = (event) => (event.pointerType === "pen" ? event.pressure : null);
+    /** The single selected path, if any (node editing needs exactly one). */
+    const selectedPath = () => {
+        if (!ed.selection || ed.selectionSet.count !== 1) return null;
+        const item = ed.doc.layers.flatMap((layer) => layer.items || []).find((entry) => entry.id === ed.selection);
+        return item && item.points ? item : null;
+    };
+    const nodeUnder = (item, point) => item.points.findIndex((p) => Math.hypot(item.x + p.x - point.x, item.y + p.y - point.y) <= 9 / ed.view.zoom);
 
     function updateCursorClass() {
         const panning = spaceDown || ed.tool === "pan" || (gesture && gesture.type === "pan");
@@ -157,9 +170,9 @@ export function attachInput(ed) {
                 if(item.text)ed.ui.focusLabelName();
             }
         } else if (ed.tool === "select") {
-            const selected = ed.selection && ed.doc.layers.flatMap((layer) => layer.items || []).find((item) => item.id === ed.selection);
-            if (selected && selected.points && ed.selectionSet.count===1 && (event.shiftKey || ed.editPathNodes) && !event.altKey) {
-                const node = selected.points.findIndex((p) => Math.hypot(selected.x + p.x - point.x, selected.y + p.y - point.y) <= 9 / ed.view.zoom);
+            const selected = selectedPath();
+            if (selected && (event.shiftKey || ed.editPathNodes) && !event.altKey) {
+                const node = nodeUnder(selected, point);
                 if (node >= 0) {
                     gesture = { type: "pathNode", pointerId: event.pointerId, item: selected, node,
                         orig: JSON.parse(JSON.stringify(selected)), startLocal: local(event), moved: false };
@@ -205,6 +218,11 @@ export function attachInput(ed) {
         const point = ed.clientToDoc(event.clientX, event.clientY);
         if (!gesture) {
             ed.cursor = point;
+            if (ed.tool === "select" && !spaceDown) {
+                // Show where a drag moves a single node instead of the whole selection.
+                const path = (ed.editPathNodes || event.shiftKey) && !event.altKey ? selectedPath() : null;
+                canvas.dataset.cursor = path && nodeUnder(path, point) >= 0 ? "node" : "select";
+            }
             if (ed.tool === "brush" || ed.tool === "eraser" || ed.tool === "stamp" || ed.tool === "tile") ed.requestFrame();
             return;
         }
@@ -439,6 +457,13 @@ export function attachInput(ed) {
             ed.cycleLayer(event.key === "ArrowUp" ? -1 : 1);
             return;
         }
+        // Cmd+[ / Cmd+] and Ctrl-only brackets stay with the browser.
+        const nudge = BRACKET_NUDGE[event.key];
+        if (nudge && !event.metaKey && (!event.ctrlKey || altGraph(event))) {
+            ed.ui.nudge(nudge[0], nudge[1]);
+            event.preventDefault();
+            return;
+        }
         if (mod || event.altKey) return;
         // Object order: Bild↑/Bild↓ one step, with Umschalt to front/back (selection, canvas focus).
         if ((event.key === "PageUp" || event.key === "PageDown") && ed.tool === "select" && ed.selectionSet.count
@@ -452,12 +477,6 @@ export function attachInput(ed) {
             ed.setTool(toolKeys[key]);
             return;
         }
-        if (event.key === "[" || event.key === "]" || event.key === "{" || event.key === "}") {
-            const up = event.key === "]" || event.key === "}";
-            ed.ui.nudge(event.shiftKey ? "softness" : "size", up);
-            event.preventDefault();
-            return;
-        }
         if (event.key === "Delete" || event.key === "Backspace") {
             if (ed.selectionSet.count) {
                 event.preventDefault();
@@ -466,8 +485,14 @@ export function attachInput(ed) {
             return;
         }
         if (event.key === "Escape") {
+            // Staged: first cancel the gesture or clear the selection, then leave the placement tool.
+            const busy = !!gesture || ed.selectionSet.count > 0;
             cancelGesture();
             ed.select(null);
+            if (!busy && PLACEMENT_TOOLS.has(ed.tool)) {
+                ed.setTool("select");
+                ed.ui.toast(globalThis.VTTUi("Platzieren beendet – Auswählen (V)."));
+            }
             return;
         }
         if (event.key === "+" || event.key === "=") ed.zoomStep(1.25);
