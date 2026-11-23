@@ -1,6 +1,6 @@
 # Deploy FV04 layers and the first FV05 safety slice
 
-Status: implemented and targeted verification complete; production delivery is the next step. Retention permanent. [Apply contract](DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md). Full goal remains FV01–FV18; this is the first implemented packet, not the whole version.
+Status: implemented, pushed, deployed and verified through both authenticated live journeys. The [Monitor](DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md) records the final source/image, rollback, QA cleanup and remaining scope. Retention permanent. [Apply contract](DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md). Full goal remains FV01–FV18; this is the first implemented packet, not the whole version.
 
 ## Result
 
@@ -27,4 +27,4 @@ Application files: mapmaker `app.js`, `tools.js`, `ui.js`, `selection.js`, `inde
 
 The [proof directory](proofs/full-version-layers-2026-11-23) contains tests/review metadata, the committed-source overlay builder and normal live journeys. The builder checks all shipped Python/JS/CSS/HTML plus changed JSON against committed content, inherits untouched artwork from the checked base image and preserves intentionally absent superseded G1 files. It does not change dependencies or schema.
 
-Next: commit/push; rebuild only the changed files over the checked live image; readable PostgreSQL backup; existing guarded activation and rollback; two normal Maps journeys for DM/Player in Chromium/Firefox at 1440/390, DE/EN and night/paper. Verify actual file save/reload and remove the named QA fixtures and credentials. Only then close FV04 in the register. FV01 has a separately reviewed language design and no implementation yet.
+Delivery completed at source `207c8e9fc`: pushed, overlaid on the checked base image, backed up without migration, activated with rollback and verified through both normal Maps journeys. Actual file save/reload and complete synthetic QA cleanup pass. FV04 is closed in the register; FV01 has a separately reviewed language design and candidate inventory, without locale implementation yet. Full release evidence is in the Monitor.

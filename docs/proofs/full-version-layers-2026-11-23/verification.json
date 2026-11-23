@@ -1,5 +1,5 @@
 {
-  "status": "targeted_checks_complete_pending_live",
+  "status": "targeted_checks_and_live_acceptance_complete",
   "runs": [
     {
       "id": "baseline",
@@ -57,7 +57,7 @@
   "review_medium_M1": "fixed and independently re-reviewed; captured and non-active target assertions pass",
   "schema_change": false,
   "dependency_change": false,
-  "live_status": "not_yet_deployed",
+  "live_status": "pass_two_authenticated_journeys",
   "review_low_checks": {
     "order_layer_collections": "Set instances in reorderSelection and wheelReorder; source confirmed",
     "eraser_targets": "raster engine results only, tiles before.size and stamps removed.size gates; paths/labels excluded by contract",
@@ -65,5 +65,7 @@
     "breakpoint": "760px in isNarrow, CSS and matchMedia",
     "inline_rename": "editor has no remote collaborative mutation path; existing done guard prevents blur re-entry",
     "additional_content_filters": "bounded alpha strips and raster revision cache reviewed by Codex and covered by final browser case"
-  }
+  },
+  "qa_cleanup_complete": true,
+  "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619"
 }

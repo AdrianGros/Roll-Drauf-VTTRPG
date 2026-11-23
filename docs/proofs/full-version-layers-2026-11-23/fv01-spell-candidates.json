@@ -1,0 +1,3819 @@
+{
+  "status": "candidate_inventory_only_no_identity_assignments",
+  "compendium_sha256": {
+    "de": "8727829984c539c222b7e9dde793a2f278344a78a9efe06fa7192645cf7d0767",
+    "en": "c3662ee7f936d6043406403ca20ebddf40b6f8f8d8cb4f8c237691a9fea0f6c1"
+  },
+  "spells": {
+    "total": 339,
+    "one_candidate": 310,
+    "multiple_candidates": 29,
+    "no_candidate": 0
+  },
+  "signature_limit": "Facet agreement is not semantic proof. Every selected pair requires comparison with the actual entries and a reviewed pin.",
+  "candidate_rows": [
+    {
+      "canonical_id": "spells.a-b.ablenkung",
+      "de_name": "Ablenkung",
+      "candidate_en_ids": [
+        "spells.m-o.mislead"
+      ],
+      "candidate_names": [
+        "Mislead"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.alarm",
+      "de_name": "Alarm",
+      "candidate_en_ids": [
+        "spells.a-b.alarm"
+      ],
+      "candidate_names": [
+        "Alarm"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.ansteckung",
+      "de_name": "Ansteckung",
+      "candidate_en_ids": [
+        "spells.c-d.contagion"
+      ],
+      "candidate_names": [
+        "Contagion"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.antimagisches-feld",
+      "de_name": "Antimagisches Feld",
+      "candidate_en_ids": [
+        "spells.a-b.antimagic-field"
+      ],
+      "candidate_names": [
+        "Antimagic Field"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.antipathie-sympathie",
+      "de_name": "Antipathie/Sympathie",
+      "candidate_en_ids": [
+        "spells.a-b.antipathy-sympathy"
+      ],
+      "candidate_names": [
+        "Antipathy/Sympathy"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.arkane-hand",
+      "de_name": "Arkane Hand",
+      "candidate_en_ids": [
+        "spells.a-b.arcane-hand"
+      ],
+      "candidate_names": [
+        "Arcane Hand"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.arkane-spiegelung",
+      "de_name": "Arkane Spiegelung",
+      "candidate_en_ids": [
+        "spells.m-o.mirage-arcane"
+      ],
+      "candidate_names": [
+        "Mirage Arcane"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.arkanes-auge",
+      "de_name": "Arkanes Auge",
+      "candidate_en_ids": [
+        "spells.a-b.arcane-eye"
+      ],
+      "candidate_names": [
+        "Arcane Eye"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.arkanes-schloss",
+      "de_name": "Arkanes Schloss",
+      "candidate_en_ids": [
+        "spells.a-b.arcane-lock"
+      ],
+      "candidate_names": [
+        "Arcane Lock"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.arkanes-schwert",
+      "de_name": "Arkanes Schwert",
+      "candidate_en_ids": [
+        "spells.a-b.arcane-sword"
+      ],
+      "candidate_names": [
+        "Arcane Sword"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.astrale-projektion",
+      "de_name": "Astrale Projektion",
+      "candidate_en_ids": [
+        "spells.a-b.astral-projection"
+      ],
+      "candidate_names": [
+        "Astral Projection"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.attribut-verbessern",
+      "de_name": "Attribut verbessern",
+      "candidate_en_ids": [
+        "spells.e-f.enhance-ability"
+      ],
+      "candidate_names": [
+        "Enhance Ability"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.auferstehung",
+      "de_name": "Auferstehung",
+      "candidate_en_ids": [
+        "spells.p-r.resurrection"
+      ],
+      "candidate_names": [
+        "Resurrection"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.aufloesung",
+      "de_name": "Auflösung",
+      "candidate_en_ids": [
+        "spells.c-d.disintegrate"
+      ],
+      "candidate_names": [
+        "Disintegrate"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.aura-des-lebens",
+      "de_name": "Aura des Lebens",
+      "candidate_en_ids": [
+        "spells.a-b.aura-of-life"
+      ],
+      "candidate_names": [
+        "Aura of Life"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.ausbessern",
+      "de_name": "Ausbessern",
+      "candidate_en_ids": [
+        "spells.m-o.mending"
+      ],
+      "candidate_names": [
+        "Mending"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.ausspaehung",
+      "de_name": "Ausspähung",
+      "candidate_en_ids": [
+        "spells.s.scrying"
+      ],
+      "candidate_names": [
+        "Scrying"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.baumwandeln",
+      "de_name": "Baumwandeln",
+      "candidate_en_ids": [
+        "spells.t-v.tree-stride"
+      ],
+      "candidate_names": [
+        "Tree Stride"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.befehl",
+      "de_name": "Befehl",
+      "candidate_en_ids": [
+        "spells.c-d.command"
+      ],
+      "candidate_names": [
+        "Command"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.beistand",
+      "de_name": "Beistand",
+      "candidate_en_ids": [
+        "spells.a-b.aid"
+      ],
+      "candidate_names": [
+        "Aid"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.bewegungsfreiheit",
+      "de_name": "Bewegungsfreiheit",
+      "candidate_en_ids": [
+        "spells.e-f.freedom-of-movement"
+      ],
+      "candidate_names": [
+        "Freedom of Movement"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.bindung-der-ebenen",
+      "de_name": "Bindung der Ebenen",
+      "candidate_en_ids": [
+        "spells.p-r.planar-binding"
+      ],
+      "candidate_names": [
+        "Planar Binding"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.blindheit-taubheit",
+      "de_name": "Blindheit/Taubheit",
+      "candidate_en_ids": [
+        "spells.a-b.blindness-deafness"
+      ],
+      "candidate_names": [
+        "Blindness/Deafness"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.blitz",
+      "de_name": "Blitz",
+      "candidate_en_ids": [
+        "spells.e-f.fireball",
+        "spells.i-l.lightning-bolt"
+      ],
+      "candidate_names": [
+        "Fireball",
+        "Lightning Bolt"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.blitze-herbeirufen",
+      "de_name": "Blitze herbeirufen",
+      "candidate_en_ids": [
+        "spells.c-d.call-lightning"
+      ],
+      "candidate_names": [
+        "Call Lightning"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.botschaft",
+      "de_name": "Botschaft",
+      "candidate_en_ids": [
+        "spells.m-o.message"
+      ],
+      "candidate_names": [
+        "Message"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.brennende-haende",
+      "de_name": "Brennende Hände",
+      "candidate_en_ids": [
+        "spells.a-b.burning-hands",
+        "spells.m-o.magic-missile"
+      ],
+      "candidate_names": [
+        "Burning Hands",
+        "Magic Missile"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.boeser-blick",
+      "de_name": "Böser Blick",
+      "candidate_en_ids": [
+        "spells.e-f.eyebite"
+      ],
+      "candidate_names": [
+        "Eyebite"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.celestisches-wesen-beschwoeren",
+      "de_name": "Celestisches Wesen beschwören",
+      "candidate_en_ids": [
+        "spells.c-d.conjure-celestial"
+      ],
+      "candidate_names": [
+        "Conjure Celestial"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.chromatische-kugel",
+      "de_name": "Chromatische Kugel",
+      "candidate_en_ids": [
+        "spells.c-d.chromatic-orb"
+      ],
+      "candidate_names": [
+        "Chromatic Orb"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.dauerhafte-flamme",
+      "de_name": "Dauerhafte Flamme",
+      "candidate_en_ids": [
+        "spells.c-d.continual-flame"
+      ],
+      "candidate_names": [
+        "Continual Flame"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.dimensionstuer",
+      "de_name": "Dimensionstür",
+      "candidate_en_ids": [
+        "spells.c-d.dimension-door"
+      ],
+      "candidate_names": [
+        "Dimension Door"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.dissonantes-fluestern",
+      "de_name": "Dissonantes Flüstern",
+      "candidate_en_ids": [
+        "spells.c-d.dissonant-whispers"
+      ],
+      "candidate_names": [
+        "Dissonant Whispers"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.donnerwoge",
+      "de_name": "Donnerwoge",
+      "candidate_en_ids": [
+        "spells.t-v.thunderwave"
+      ],
+      "candidate_names": [
+        "Thunderwave"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.dornenwand",
+      "de_name": "Dornenwand",
+      "candidate_en_ids": [
+        "spells.w-z.wall-of-thorns"
+      ],
+      "candidate_names": [
+        "Wall of Thorns"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.dornenwuchs",
+      "de_name": "Dornenwuchs",
+      "candidate_en_ids": [
+        "spells.s.spike-growth"
+      ],
+      "candidate_names": [
+        "Spike Growth"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.drachen-herbeirufen",
+      "de_name": "Drachen herbeirufen",
+      "candidate_en_ids": [
+        "spells.s.summon-dragon"
+      ],
+      "candidate_names": [
+        "Summon Dragon"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.drachenodem",
+      "de_name": "Drachenodem",
+      "candidate_en_ids": [
+        "spells.c-d.dragons-breath",
+        "spells.i-l.levitate"
+      ],
+      "candidate_names": [
+        "Dragon’s Breath",
+        "Levitate"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.druidenkunst",
+      "de_name": "Druidenkunst",
+      "candidate_en_ids": [
+        "spells.c-d.druidcraft"
+      ],
+      "candidate_names": [
+        "Druidcraft"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.dunkelheit",
+      "de_name": "Dunkelheit",
+      "candidate_en_ids": [
+        "spells.c-d.darkness"
+      ],
+      "candidate_names": [
+        "Darkness"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.dunkelsicht",
+      "de_name": "Dunkelsicht",
+      "candidate_en_ids": [
+        "spells.c-d.darkvision"
+      ],
+      "candidate_names": [
+        "Darkvision"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.duerre",
+      "de_name": "Dürre",
+      "candidate_en_ids": [
+        "spells.a-b.blight"
+      ],
+      "candidate_names": [
+        "Blight"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.ebenenwechsel",
+      "de_name": "Ebenenwechsel",
+      "candidate_en_ids": [
+        "spells.p-r.plane-shift"
+      ],
+      "candidate_names": [
+        "Plane Shift"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.einfache-illusion",
+      "de_name": "Einfache Illusion",
+      "candidate_en_ids": [
+        "spells.m-o.minor-illusion"
+      ],
+      "candidate_names": [
+        "Minor Illusion"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.einfluesterung",
+      "de_name": "Einflüsterung",
+      "candidate_en_ids": [
+        "spells.s.suggestion"
+      ],
+      "candidate_names": [
+        "Suggestion"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.einkerkerung",
+      "de_name": "Einkerkerung",
+      "candidate_en_ids": [
+        "spells.i-l.imprisonment"
+      ],
+      "candidate_names": [
+        "Imprisonment"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.einswerden-mit-der-natur",
+      "de_name": "Einswerden mit der Natur",
+      "candidate_en_ids": [
+        "spells.c-d.commune-with-nature"
+      ],
+      "candidate_names": [
+        "Commune with Nature"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.eismesser",
+      "de_name": "Eismesser",
+      "candidate_en_ids": [
+        "spells.i-l.ice-knife"
+      ],
+      "candidate_names": [
+        "Ice Knife"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.eissturm",
+      "de_name": "Eissturm",
+      "candidate_en_ids": [
+        "spells.e-f.fire-shield",
+        "spells.i-l.ice-storm"
+      ],
+      "candidate_names": [
+        "Fire Shield",
+        "Ice Storm"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.eiswand",
+      "de_name": "Eiswand",
+      "candidate_en_ids": [
+        "spells.w-z.wall-of-ice"
+      ],
+      "candidate_names": [
+        "Wall of Ice"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.elementalismus",
+      "de_name": "Elementalismus",
+      "candidate_en_ids": [
+        "spells.e-f.elementalism"
+      ],
+      "candidate_names": [
+        "Elementalism"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.elementar-beschwoeren",
+      "de_name": "Elementar beschwören",
+      "candidate_en_ids": [
+        "spells.c-d.conjure-elemental"
+      ],
+      "candidate_names": [
+        "Conjure Elemental"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.energiekaefig",
+      "de_name": "Energiekäfig",
+      "candidate_en_ids": [
+        "spells.e-f.forcecage"
+      ],
+      "candidate_names": [
+        "Forcecage"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.energiewand",
+      "de_name": "Energiewand",
+      "candidate_en_ids": [
+        "spells.w-z.wall-of-force"
+      ],
+      "candidate_names": [
+        "Wall of Force"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.erdbeben",
+      "de_name": "Erdbeben",
+      "candidate_en_ids": [
+        "spells.e-f.earthquake"
+      ],
+      "candidate_names": [
+        "Earthquake"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.erde-bewegen",
+      "de_name": "Erde bewegen",
+      "candidate_en_ids": [
+        "spells.e-f.flesh-to-stone",
+        "spells.m-o.move-earth"
+      ],
+      "candidate_names": [
+        "Flesh to Stone",
+        "Move Earth"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.erinnerung-veraendern",
+      "de_name": "Erinnerung verändern",
+      "candidate_en_ids": [
+        "spells.m-o.modify-memory"
+      ],
+      "candidate_names": [
+        "Modify Memory"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.erschaffung",
+      "de_name": "Erschaffung",
+      "candidate_en_ids": [
+        "spells.c-d.creation"
+      ],
+      "candidate_names": [
+        "Creation"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.erwecken",
+      "de_name": "Erwecken",
+      "candidate_en_ids": [
+        "spells.a-b.awaken"
+      ],
+      "candidate_names": [
+        "Awaken"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.c-e.explosion-der-zauberei",
+      "de_name": "Explosion der Zauberei",
+      "candidate_en_ids": [
+        "spells.s.sorcerous-burst"
+      ],
+      "candidate_names": [
+        "Sorcerous Burst"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.fallen-finden",
+      "de_name": "Fallen finden",
+      "candidate_en_ids": [
+        "spells.e-f.find-traps"
+      ],
+      "candidate_names": [
+        "Find Traps"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.falsches-leben",
+      "de_name": "Falsches Leben",
+      "candidate_en_ids": [
+        "spells.e-f.false-life"
+      ],
+      "candidate_names": [
+        "False Life"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.federfall",
+      "de_name": "Federfall",
+      "candidate_en_ids": [
+        "spells.e-f.feather-fall"
+      ],
+      "candidate_names": [
+        "Feather Fall"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.feenfeuer",
+      "de_name": "Feenfeuer",
+      "candidate_en_ids": [
+        "spells.e-f.faerie-fire"
+      ],
+      "candidate_names": [
+        "Faerie Fire"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.feenwesen-beschwoeren",
+      "de_name": "Feenwesen beschwören",
+      "candidate_en_ids": [
+        "spells.c-d.conjure-fey"
+      ],
+      "candidate_names": [
+        "Conjure Fey"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.fesseln",
+      "de_name": "Fesseln",
+      "candidate_en_ids": [
+        "spells.e-f.enthrall"
+      ],
+      "candidate_names": [
+        "Enthrall"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.fesselnder-schlag",
+      "de_name": "Fesselnder Schlag",
+      "candidate_en_ids": [
+        "spells.e-f.ensnaring-strike"
+      ],
+      "candidate_names": [
+        "Ensnaring Strike"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.feuerball",
+      "de_name": "Feuerball",
+      "candidate_en_ids": [
+        "spells.e-f.fireball",
+        "spells.i-l.lightning-bolt"
+      ],
+      "candidate_names": [
+        "Fireball",
+        "Lightning Bolt"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.feuerpfeil",
+      "de_name": "Feuerpfeil",
+      "candidate_en_ids": [
+        "spells.a-b.acid-splash",
+        "spells.e-f.fire-bolt",
+        "spells.p-r.ray-of-frost",
+        "spells.s.shocking-grasp"
+      ],
+      "candidate_names": [
+        "Acid Splash",
+        "Fire Bolt",
+        "Ray of Frost",
+        "Shocking Grasp"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.feuerschild",
+      "de_name": "Feuerschild",
+      "candidate_en_ids": [
+        "spells.e-f.fire-shield",
+        "spells.i-l.ice-storm"
+      ],
+      "candidate_names": [
+        "Fire Shield",
+        "Ice Storm"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.feuersturm",
+      "de_name": "Feuersturm",
+      "candidate_en_ids": [
+        "spells.e-f.fire-storm"
+      ],
+      "candidate_names": [
+        "Fire Storm"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.feuerwand",
+      "de_name": "Feuerwand",
+      "candidate_en_ids": [
+        "spells.w-z.wall-of-fire"
+      ],
+      "candidate_names": [
+        "Wall of Fire"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.finger-des-todes",
+      "de_name": "Finger des Todes",
+      "candidate_en_ids": [
+        "spells.e-f.finger-of-death"
+      ],
+      "candidate_names": [
+        "Finger of Death"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.flammen-erzeugen",
+      "de_name": "Flammen erzeugen",
+      "candidate_en_ids": [
+        "spells.p-r.produce-flame"
+      ],
+      "candidate_names": [
+        "Produce Flame"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.flammende-wolke",
+      "de_name": "Flammende Wolke",
+      "candidate_en_ids": [
+        "spells.i-l.incendiary-cloud"
+      ],
+      "candidate_names": [
+        "Incendiary Cloud"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.flammenklinge",
+      "de_name": "Flammenklinge",
+      "candidate_en_ids": [
+        "spells.e-f.flame-blade"
+      ],
+      "candidate_names": [
+        "Flame Blade"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.flammenkugel",
+      "de_name": "Flammenkugel",
+      "candidate_en_ids": [
+        "spells.e-f.flaming-sphere"
+      ],
+      "candidate_names": [
+        "Flaming Sphere"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.flammenschlag",
+      "de_name": "Flammenschlag",
+      "candidate_en_ids": [
+        "spells.e-f.flame-strike"
+      ],
+      "candidate_names": [
+        "Flame Strike"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.fleisch-zu-stein",
+      "de_name": "Fleisch zu Stein",
+      "candidate_en_ids": [
+        "spells.e-f.flesh-to-stone",
+        "spells.m-o.move-earth"
+      ],
+      "candidate_names": [
+        "Flesh to Stone",
+        "Move Earth"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.flimmern",
+      "de_name": "Flimmern",
+      "candidate_en_ids": [
+        "spells.a-b.blink"
+      ],
+      "candidate_names": [
+        "Blink"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.fluch",
+      "de_name": "Fluch",
+      "candidate_en_ids": [
+        "spells.a-b.bestow-curse"
+      ],
+      "candidate_names": [
+        "Bestow Curse"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.fluch-brechen",
+      "de_name": "Fluch brechen",
+      "candidate_en_ids": [
+        "spells.p-r.remove-curse"
+      ],
+      "candidate_names": [
+        "Remove Curse"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.flug",
+      "de_name": "Flug",
+      "candidate_en_ids": [
+        "spells.e-f.fly",
+        "spells.g-h.gaseous-form"
+      ],
+      "candidate_names": [
+        "Fly",
+        "Gaseous Form"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.frostsphaere",
+      "de_name": "Frostsphäre",
+      "candidate_en_ids": [
+        "spells.c-d.chain-lightning",
+        "spells.e-f.freezing-sphere"
+      ],
+      "candidate_names": [
+        "Chain Lightning",
+        "Freezing Sphere"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.furcht",
+      "de_name": "Furcht",
+      "candidate_en_ids": [
+        "spells.e-f.fear",
+        "spells.m-o.major-image"
+      ],
+      "candidate_names": [
+        "Fear",
+        "Major Image"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.fuerchterlicher-lachanfall",
+      "de_name": "Fürchterlicher Lachanfall",
+      "candidate_en_ids": [
+        "spells.g-h.hideous-laughter"
+      ],
+      "candidate_names": [
+        "Hideous Laughter"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gasfoermige-gestalt",
+      "de_name": "Gasförmige Gestalt",
+      "candidate_en_ids": [
+        "spells.e-f.fly",
+        "spells.g-h.gaseous-form"
+      ],
+      "candidate_names": [
+        "Fly",
+        "Gaseous Form"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.geas",
+      "de_name": "Geas",
+      "candidate_en_ids": [
+        "spells.g-h.geas"
+      ],
+      "candidate_names": [
+        "Geas"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gebet-der-heilung",
+      "de_name": "Gebet der Heilung",
+      "candidate_en_ids": [
+        "spells.p-r.prayer-of-healing"
+      ],
+      "candidate_names": [
+        "Prayer of Healing"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gedanken-wahrnehmen",
+      "de_name": "Gedanken wahrnehmen",
+      "candidate_en_ids": [
+        "spells.c-d.detect-thoughts"
+      ],
+      "candidate_names": [
+        "Detect Thoughts"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gedankendorn",
+      "de_name": "Gedankendorn",
+      "candidate_en_ids": [
+        "spells.m-o.mind-spike"
+      ],
+      "candidate_names": [
+        "Mind Spike"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gedankenleere",
+      "de_name": "Gedankenleere",
+      "candidate_en_ids": [
+        "spells.m-o.mind-blank"
+      ],
+      "candidate_names": [
+        "Mind Blank"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gefuehle-besaenftigen",
+      "de_name": "Gefühle besänftigen",
+      "candidate_en_ids": [
+        "spells.c-d.calm-emotions"
+      ],
+      "candidate_names": [
+        "Calm Emotions"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gegenstand-aufspueren",
+      "de_name": "Gegenstand aufspüren",
+      "candidate_en_ids": [
+        "spells.i-l.locate-object"
+      ],
+      "candidate_names": [
+        "Locate Object"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gegenstaende-beleben",
+      "de_name": "Gegenstände beleben",
+      "candidate_en_ids": [
+        "spells.a-b.animate-objects"
+      ],
+      "candidate_names": [
+        "Animate Objects"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gegenzauber",
+      "de_name": "Gegenzauber",
+      "candidate_en_ids": [
+        "spells.c-d.counterspell"
+      ],
+      "candidate_names": [
+        "Counterspell"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.geheime-truhe",
+      "de_name": "Geheime Truhe",
+      "candidate_en_ids": [
+        "spells.e-f.faithful-hound",
+        "spells.s.secret-chest"
+      ],
+      "candidate_names": [
+        "Faithful Hound",
+        "Secret Chest"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gehaessiger-spott",
+      "de_name": "Gehässiger Spott",
+      "candidate_en_ids": [
+        "spells.t-v.vicious-mockery"
+      ],
+      "candidate_names": [
+        "Vicious Mockery"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.geisterross",
+      "de_name": "Geisterross",
+      "candidate_en_ids": [
+        "spells.p-r.phantom-steed"
+      ],
+      "candidate_names": [
+        "Phantom Steed"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gestalt-veraendern",
+      "de_name": "Gestalt verändern",
+      "candidate_en_ids": [
+        "spells.a-b.alter-self"
+      ],
+      "candidate_names": [
+        "Alter Self"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gestaltwandel",
+      "de_name": "Gestaltwandel",
+      "candidate_en_ids": [
+        "spells.s.shapechange"
+      ],
+      "candidate_names": [
+        "Shapechange"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gift-und-krankheit-entdecken",
+      "de_name": "Gift und Krankheit entdecken",
+      "candidate_en_ids": [
+        "spells.c-d.detect-poison-and-disease"
+      ],
+      "candidate_names": [
+        "Detect Poison and Disease"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gift-verspruehen",
+      "de_name": "Gift versprühen",
+      "candidate_en_ids": [
+        "spells.p-r.poison-spray"
+      ],
+      "candidate_names": [
+        "Poison Spray"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.glyphe-des-schutzes",
+      "de_name": "Glyphe des Schutzes",
+      "candidate_en_ids": [
+        "spells.g-h.glyph-of-warding"
+      ],
+      "candidate_names": [
+        "Glyph of Warding"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gute-beeren",
+      "de_name": "Gute Beeren",
+      "candidate_en_ids": [
+        "spells.g-h.goodberry"
+      ],
+      "candidate_names": [
+        "Goodberry"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gutes-und-boeses-bannen",
+      "de_name": "Gutes und Böses bannen",
+      "candidate_en_ids": [
+        "spells.c-d.dispel-evil-and-good"
+      ],
+      "candidate_names": [
+        "Dispel Evil and Good"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.gutes-und-boeses-entdecken",
+      "de_name": "Gutes und Böses entdecken",
+      "candidate_en_ids": [
+        "spells.c-d.detect-evil-and-good"
+      ],
+      "candidate_names": [
+        "Detect Evil and Good"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.goettliche-fuehrung",
+      "de_name": "Göttliche Führung",
+      "candidate_en_ids": [
+        "spells.g-h.guidance"
+      ],
+      "candidate_names": [
+        "Guidance"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.goettliche-gunst",
+      "de_name": "Göttliche Gunst",
+      "candidate_en_ids": [
+        "spells.c-d.divine-favor"
+      ],
+      "candidate_names": [
+        "Divine Favor"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.goettliches-niederstrecken",
+      "de_name": "Göttliches Niederstrecken",
+      "candidate_en_ids": [
+        "spells.c-d.divine-smite",
+        "spells.s.searing-smite"
+      ],
+      "candidate_names": [
+        "Divine Smite",
+        "Searing Smite"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.f-g.goettliches-wort",
+      "de_name": "Göttliches Wort",
+      "candidate_en_ids": [
+        "spells.c-d.divine-word"
+      ],
+      "candidate_names": [
+        "Divine Word"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.halbebene",
+      "de_name": "Halbebene",
+      "candidate_en_ids": [
+        "spells.c-d.demiplane"
+      ],
+      "candidate_names": [
+        "Demiplane"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.hast",
+      "de_name": "Hast",
+      "candidate_en_ids": [
+        "spells.g-h.haste"
+      ],
+      "candidate_names": [
+        "Haste"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.heilendes-wort",
+      "de_name": "Heilendes Wort",
+      "candidate_en_ids": [
+        "spells.g-h.healing-word"
+      ],
+      "candidate_names": [
+        "Healing Word"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.heilige-aura",
+      "de_name": "Heilige Aura",
+      "candidate_en_ids": [
+        "spells.g-h.holy-aura"
+      ],
+      "candidate_names": [
+        "Holy Aura"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.heilige-flamme",
+      "de_name": "Heilige Flamme",
+      "candidate_en_ids": [
+        "spells.s.sacred-flame"
+      ],
+      "candidate_names": [
+        "Sacred Flame"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.heiliges-gespraech",
+      "de_name": "Heiliges Gespräch",
+      "candidate_en_ids": [
+        "spells.c-d.commune"
+      ],
+      "candidate_names": [
+        "Commune"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.heiligtum",
+      "de_name": "Heiligtum",
+      "candidate_en_ids": [
+        "spells.s.sanctuary"
+      ],
+      "candidate_names": [
+        "Sanctuary"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.heilung",
+      "de_name": "Heilung",
+      "candidate_en_ids": [
+        "spells.g-h.heal"
+      ],
+      "candidate_names": [
+        "Heal"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.heldenmahl",
+      "de_name": "Heldenmahl",
+      "candidate_en_ids": [
+        "spells.g-h.heroes-feast"
+      ],
+      "candidate_names": [
+        "Heroes’ Feast"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.heldenmut",
+      "de_name": "Heldenmut",
+      "candidate_en_ids": [
+        "spells.g-h.heroism"
+      ],
+      "candidate_names": [
+        "Heroism"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.hellsehen",
+      "de_name": "Hellsehen",
+      "candidate_en_ids": [
+        "spells.c-d.clairvoyance"
+      ],
+      "candidate_names": [
+        "Clairvoyance"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.herrliches-herrenhaus",
+      "de_name": "Herrliches Herrenhaus",
+      "candidate_en_ids": [
+        "spells.m-o.magnificent-mansion"
+      ],
+      "candidate_names": [
+        "Magnificent Mansion"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.hypnotisches-muster",
+      "de_name": "Hypnotisches Muster",
+      "candidate_en_ids": [
+        "spells.e-f.fear",
+        "spells.m-o.major-image"
+      ],
+      "candidate_names": [
+        "Fear",
+        "Major Image"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.hoellischer-tadel",
+      "de_name": "Höllischer Tadel",
+      "candidate_en_ids": [
+        "spells.g-h.hellish-rebuke"
+      ],
+      "candidate_names": [
+        "Hellish Rebuke"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.hueter-des-glaubens",
+      "de_name": "Hüter des Glaubens",
+      "candidate_en_ids": [
+        "spells.g-h.guardian-of-faith"
+      ],
+      "candidate_names": [
+        "Guardian of Faith"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.identifizieren",
+      "de_name": "Identifizieren",
+      "candidate_en_ids": [
+        "spells.i-l.identify"
+      ],
+      "candidate_names": [
+        "Identify"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.illusionsschrift",
+      "de_name": "Illusionsschrift",
+      "candidate_en_ids": [
+        "spells.i-l.illusory-script"
+      ],
+      "candidate_names": [
+        "Illusory Script"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.insektenplage",
+      "de_name": "Insektenplage",
+      "candidate_en_ids": [
+        "spells.i-l.insect-plague"
+      ],
+      "candidate_names": [
+        "Insect Plague"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.irrgarten",
+      "de_name": "Irrgarten",
+      "candidate_en_ids": [
+        "spells.m-o.maze"
+      ],
+      "candidate_names": [
+        "Maze"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.kalte-hand",
+      "de_name": "Kalte Hand",
+      "candidate_en_ids": [
+        "spells.c-d.chill-touch"
+      ],
+      "candidate_names": [
+        "Chill Touch"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.kettenblitz",
+      "de_name": "Kettenblitz",
+      "candidate_en_ids": [
+        "spells.c-d.chain-lightning",
+        "spells.e-f.freezing-sphere"
+      ],
+      "candidate_names": [
+        "Chain Lightning",
+        "Freezing Sphere"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.klingenbarriere",
+      "de_name": "Klingenbarriere",
+      "candidate_en_ids": [
+        "spells.a-b.blade-barrier"
+      ],
+      "candidate_names": [
+        "Blade Barrier"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.klon",
+      "de_name": "Klon",
+      "candidate_en_ids": [
+        "spells.c-d.clone"
+      ],
+      "candidate_names": [
+        "Clone"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.klopfen",
+      "de_name": "Klopfen",
+      "candidate_en_ids": [
+        "spells.i-l.knock"
+      ],
+      "candidate_names": [
+        "Knock"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.kontakt-zu-anderen-ebenen",
+      "de_name": "Kontakt zu anderen Ebenen",
+      "candidate_en_ids": [
+        "spells.c-d.contact-other-plane"
+      ],
+      "candidate_names": [
+        "Contact Other Plane"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.kreatur-aufspueren",
+      "de_name": "Kreatur aufspüren",
+      "candidate_en_ids": [
+        "spells.i-l.locate-creature"
+      ],
+      "candidate_names": [
+        "Locate Creature"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.kreis-der-teleportation",
+      "de_name": "Kreis der Teleportation",
+      "candidate_en_ids": [
+        "spells.t-v.teleportation-circle"
+      ],
+      "candidate_names": [
+        "Teleportation Circle"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.kugel-der-unverwundbarkeit",
+      "de_name": "Kugel der Unverwundbarkeit",
+      "candidate_en_ids": [
+        "spells.g-h.globe-of-invulnerability"
+      ],
+      "candidate_names": [
+        "Globe of Invulnerability"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.kaeltekegel",
+      "de_name": "Kältekegel",
+      "candidate_en_ids": [
+        "spells.c-d.cone-of-cold"
+      ],
+      "candidate_names": [
+        "Cone of Cold"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.kaeltestrahl",
+      "de_name": "Kältestrahl",
+      "candidate_en_ids": [
+        "spells.a-b.acid-splash",
+        "spells.e-f.fire-bolt",
+        "spells.p-r.ray-of-frost",
+        "spells.s.shocking-grasp"
+      ],
+      "candidate_names": [
+        "Acid Splash",
+        "Fire Bolt",
+        "Ray of Frost",
+        "Shocking Grasp"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.lange-schritte",
+      "de_name": "Lange Schritte",
+      "candidate_en_ids": [
+        "spells.i-l.longstrider"
+      ],
+      "candidate_names": [
+        "Longstrider"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.lautloses-trugbild",
+      "de_name": "Lautloses Trugbild",
+      "candidate_en_ids": [
+        "spells.s.silent-image"
+      ],
+      "candidate_names": [
+        "Silent Image"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.leicht",
+      "de_name": "Leicht",
+      "candidate_en_ids": [
+        "spells.i-l.light"
+      ],
+      "candidate_names": [
+        "Light"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.leid",
+      "de_name": "Leid",
+      "candidate_en_ids": [
+        "spells.g-h.harm"
+      ],
+      "candidate_names": [
+        "Harm"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.lenkendes-geschoss",
+      "de_name": "Lenkendes Geschoss",
+      "candidate_en_ids": [
+        "spells.g-h.guiding-bolt"
+      ],
+      "candidate_names": [
+        "Guiding Bolt"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.h-l.leuchtfeuer-der-hoffnung",
+      "de_name": "Leuchtfeuer der Hoffnung",
+      "candidate_en_ids": [
+        "spells.a-b.beacon-of-hope"
+      ],
+      "candidate_names": [
+        "Beacon of Hope"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.macht-der-vorstellungskraft",
+      "de_name": "Macht der Vorstellungskraft",
+      "candidate_en_ids": [
+        "spells.p-r.phantasmal-force"
+      ],
+      "candidate_names": [
+        "Phantasmal Force"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magie-bannen",
+      "de_name": "Magie bannen",
+      "candidate_en_ids": [
+        "spells.c-d.dispel-magic"
+      ],
+      "candidate_names": [
+        "Dispel Magic"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magie-entdecken",
+      "de_name": "Magie entdecken",
+      "candidate_en_ids": [
+        "spells.c-d.detect-magic"
+      ],
+      "candidate_names": [
+        "Detect Magic"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magierhand",
+      "de_name": "Magierhand",
+      "candidate_en_ids": [
+        "spells.m-o.mage-hand"
+      ],
+      "candidate_names": [
+        "Mage Hand"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magierruestung",
+      "de_name": "Magierrüstung",
+      "candidate_en_ids": [
+        "spells.m-o.mage-armor"
+      ],
+      "candidate_names": [
+        "Mage Armor"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magische-aura-des-arkanisten",
+      "de_name": "Magische Aura des Arkanisten",
+      "candidate_en_ids": [
+        "spells.a-b.arcanists-magic-aura"
+      ],
+      "candidate_names": [
+        "Arcanist’s Magic Aura"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magische-waffe",
+      "de_name": "Magische Waffe",
+      "candidate_en_ids": [
+        "spells.m-o.magic-weapon"
+      ],
+      "candidate_names": [
+        "Magic Weapon"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magischer-mund",
+      "de_name": "Magischer Mund",
+      "candidate_en_ids": [
+        "spells.m-o.magic-mouth"
+      ],
+      "candidate_names": [
+        "Magic Mouth"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magisches-gefaess",
+      "de_name": "Magisches Gefäß",
+      "candidate_en_ids": [
+        "spells.m-o.magic-jar"
+      ],
+      "candidate_names": [
+        "Magic Jar"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.magisches-geschoss",
+      "de_name": "Magisches Geschoss",
+      "candidate_en_ids": [
+        "spells.a-b.burning-hands",
+        "spells.m-o.magic-missile"
+      ],
+      "candidate_names": [
+        "Burning Hands",
+        "Magic Missile"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.massen-einfluesterung",
+      "de_name": "Massen-Einflüsterung",
+      "candidate_en_ids": [
+        "spells.m-o.mass-suggestion"
+      ],
+      "candidate_names": [
+        "Mass Suggestion"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.massen-heilendes-wort",
+      "de_name": "Massen-Heilendes Wort",
+      "candidate_en_ids": [
+        "spells.m-o.mass-healing-word"
+      ],
+      "candidate_names": [
+        "Mass Healing Word"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.massen-heilung",
+      "de_name": "Massen-Heilung",
+      "candidate_en_ids": [
+        "spells.m-o.mass-heal"
+      ],
+      "candidate_names": [
+        "Mass Heal"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.massen-wunden-heilen",
+      "de_name": "Massen-Wunden heilen",
+      "candidate_en_ids": [
+        "spells.m-o.mass-cure-wounds"
+      ],
+      "candidate_names": [
+        "Mass Cure Wounds"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.metall-erhitzen",
+      "de_name": "Metall erhitzen",
+      "candidate_en_ids": [
+        "spells.g-h.heat-metal"
+      ],
+      "candidate_names": [
+        "Heat Metal"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.meteoritenschwarm",
+      "de_name": "Meteoritenschwarm",
+      "candidate_en_ids": [
+        "spells.m-o.meteor-swarm"
+      ],
+      "candidate_names": [
+        "Meteor Swarm"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.mit-pflanzen-sprechen",
+      "de_name": "Mit Pflanzen sprechen",
+      "candidate_en_ids": [
+        "spells.p-r.plant-growth",
+        "spells.s.speak-with-plants"
+      ],
+      "candidate_names": [
+        "Plant Growth",
+        "Speak with Plants"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.mit-stein-verschmelzen",
+      "de_name": "Mit Stein verschmelzen",
+      "candidate_en_ids": [
+        "spells.m-o.meld-into-stone"
+      ],
+      "candidate_names": [
+        "Meld into Stone"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.mit-tieren-sprechen",
+      "de_name": "Mit Tieren sprechen",
+      "candidate_en_ids": [
+        "spells.s.speak-with-animals"
+      ],
+      "candidate_names": [
+        "Speak with Animals"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.mit-toten-sprechen",
+      "de_name": "Mit Toten sprechen",
+      "candidate_en_ids": [
+        "spells.s.speak-with-dead"
+      ],
+      "candidate_names": [
+        "Speak with Dead"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.mondstrahl",
+      "de_name": "Mondstrahl",
+      "candidate_en_ids": [
+        "spells.m-o.moonbeam"
+      ],
+      "candidate_names": [
+        "Moonbeam"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.monster-beherrschen",
+      "de_name": "Monster beherrschen",
+      "candidate_en_ids": [
+        "spells.c-d.dominate-monster"
+      ],
+      "candidate_names": [
+        "Dominate Monster"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.monster-bezaubern",
+      "de_name": "Monster bezaubern",
+      "candidate_en_ids": [
+        "spells.c-d.charm-monster"
+      ],
+      "candidate_names": [
+        "Charm Monster"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.monster-festhalten",
+      "de_name": "Monster festhalten",
+      "candidate_en_ids": [
+        "spells.g-h.hold-monster"
+      ],
+      "candidate_names": [
+        "Hold Monster"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.maechtige-unsichtbarkeit",
+      "de_name": "Mächtige Unsichtbarkeit",
+      "candidate_en_ids": [
+        "spells.g-h.greater-invisibility"
+      ],
+      "candidate_names": [
+        "Greater Invisibility"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.maechtiges-trugbild",
+      "de_name": "Mächtiges Trugbild",
+      "candidate_en_ids": [
+        "spells.e-f.fear",
+        "spells.m-o.major-image"
+      ],
+      "candidate_names": [
+        "Fear",
+        "Major Image"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.nahrung-und-wasser-erschaffen",
+      "de_name": "Nahrung und Wasser erschaffen",
+      "candidate_en_ids": [
+        "spells.c-d.create-food-and-water"
+      ],
+      "candidate_names": [
+        "Create Food and Water"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.nahrung-und-wasser-reinigen",
+      "de_name": "Nahrung und Wasser reinigen",
+      "candidate_en_ids": [
+        "spells.p-r.purify-food-and-drink"
+      ],
+      "candidate_names": [
+        "Purify Food and Drink"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.nebelschritt",
+      "de_name": "Nebelschritt",
+      "candidate_en_ids": [
+        "spells.m-o.misty-step"
+      ],
+      "candidate_names": [
+        "Misty Step"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.nebelwolke",
+      "de_name": "Nebelwolke",
+      "candidate_en_ids": [
+        "spells.e-f.fog-cloud"
+      ],
+      "candidate_names": [
+        "Fog Cloud"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.notfall",
+      "de_name": "Notfall",
+      "candidate_en_ids": [
+        "spells.c-d.contingency"
+      ],
+      "candidate_names": [
+        "Contingency"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.person-beherrschen",
+      "de_name": "Person beherrschen",
+      "candidate_en_ids": [
+        "spells.c-d.dominate-person"
+      ],
+      "candidate_names": [
+        "Dominate Person"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.person-bezaubern",
+      "de_name": "Person bezaubern",
+      "candidate_en_ids": [
+        "spells.c-d.charm-person"
+      ],
+      "candidate_names": [
+        "Charm Person"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.person-festhalten",
+      "de_name": "Person festhalten",
+      "candidate_en_ids": [
+        "spells.g-h.hold-person"
+      ],
+      "candidate_names": [
+        "Hold Person"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.pflanzentor",
+      "de_name": "Pflanzentor",
+      "candidate_en_ids": [
+        "spells.t-v.transport-via-plants"
+      ],
+      "candidate_names": [
+        "Transport via Plants"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.pflanzenwachstum",
+      "de_name": "Pflanzenwachstum",
+      "candidate_en_ids": [
+        "spells.p-r.plant-growth",
+        "spells.s.speak-with-plants"
+      ],
+      "candidate_names": [
+        "Plant Growth",
+        "Speak with Plants"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.m-p.privates-heiligtum",
+      "de_name": "Privates Heiligtum",
+      "candidate_en_ids": [
+        "spells.p-r.private-sanctum"
+      ],
+      "candidate_names": [
+        "Private Sanctum"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.rascher-rueckzug",
+      "de_name": "Rascher Rückzug",
+      "candidate_en_ids": [
+        "spells.e-f.expeditious-retreat"
+      ],
+      "candidate_names": [
+        "Expeditious Retreat"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.redegewandtheit",
+      "de_name": "Redegewandtheit",
+      "candidate_en_ids": [
+        "spells.g-h.glibness"
+      ],
+      "candidate_names": [
+        "Glibness"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.regenbogenspiel",
+      "de_name": "Regenbogenspiel",
+      "candidate_en_ids": [
+        "spells.p-r.prismatic-spray"
+      ],
+      "candidate_names": [
+        "Prismatic Spray"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.regenbogenwand",
+      "de_name": "Regenbogenwand",
+      "candidate_en_ids": [
+        "spells.p-r.prismatic-wall"
+      ],
+      "candidate_names": [
+        "Prismatic Wall"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.regeneration",
+      "de_name": "Regeneration",
+      "candidate_en_ids": [
+        "spells.p-r.regenerate"
+      ],
+      "candidate_names": [
+        "Regenerate"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.reittier-finden",
+      "de_name": "Reittier finden",
+      "candidate_en_ids": [
+        "spells.e-f.find-steed"
+      ],
+      "candidate_names": [
+        "Find Steed"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.rieseninsekt",
+      "de_name": "Rieseninsekt",
+      "candidate_en_ids": [
+        "spells.g-h.giant-insect"
+      ],
+      "candidate_names": [
+        "Giant Insect"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.rindenhaut",
+      "de_name": "Rindenhaut",
+      "candidate_en_ids": [
+        "spells.a-b.barkskin"
+      ],
+      "candidate_names": [
+        "Barkskin"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sagenkunde",
+      "de_name": "Sagenkunde",
+      "candidate_en_ids": [
+        "spells.i-l.legend-lore"
+      ],
+      "candidate_names": [
+        "Legend Lore"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sanfte-ruhe",
+      "de_name": "Sanfte Ruhe",
+      "candidate_en_ids": [
+        "spells.g-h.gentle-repose"
+      ],
+      "candidate_names": [
+        "Gentle Repose"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schauriger-strahl",
+      "de_name": "Schauriger Strahl",
+      "candidate_en_ids": [
+        "spells.e-f.eldritch-blast"
+      ],
+      "candidate_names": [
+        "Eldritch Blast"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.scheingelaende",
+      "de_name": "Scheingelände",
+      "candidate_en_ids": [
+        "spells.g-h.hallucinatory-terrain"
+      ],
+      "candidate_names": [
+        "Hallucinatory Terrain"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schild",
+      "de_name": "Schild",
+      "candidate_en_ids": [
+        "spells.s.shield"
+      ],
+      "candidate_names": [
+        "Shield"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schild-des-glaubens",
+      "de_name": "Schild des Glaubens",
+      "candidate_en_ids": [
+        "spells.s.shield-of-faith"
+      ],
+      "candidate_names": [
+        "Shield of Faith"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schlaf",
+      "de_name": "Schlaf",
+      "candidate_en_ids": [
+        "spells.s.sleep"
+      ],
+      "candidate_names": [
+        "Sleep"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schmieren",
+      "de_name": "Schmieren",
+      "candidate_en_ids": [
+        "spells.g-h.grease"
+      ],
+      "candidate_names": [
+        "Grease"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schneesturm",
+      "de_name": "Schneesturm",
+      "candidate_en_ids": [
+        "spells.s.sleet-storm"
+      ],
+      "candidate_names": [
+        "Sleet Storm"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schockgriff",
+      "de_name": "Schockgriff",
+      "candidate_en_ids": [
+        "spells.a-b.acid-splash",
+        "spells.e-f.fire-bolt",
+        "spells.p-r.ray-of-frost",
+        "spells.s.shocking-grasp"
+      ],
+      "candidate_names": [
+        "Acid Splash",
+        "Fire Bolt",
+        "Ray of Frost",
+        "Shocking Grasp"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schutz-vor-energie",
+      "de_name": "Schutz vor Energie",
+      "candidate_en_ids": [
+        "spells.p-r.protection-from-energy"
+      ],
+      "candidate_names": [
+        "Protection from Energy"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schutz-vor-gift",
+      "de_name": "Schutz vor Gift",
+      "candidate_en_ids": [
+        "spells.p-r.protection-from-poison"
+      ],
+      "candidate_names": [
+        "Protection from Poison"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schutz-vor-gut-und-boese",
+      "de_name": "Schutz vor Gut und Böse",
+      "candidate_en_ids": [
+        "spells.p-r.protection-from-evil-and-good"
+      ],
+      "candidate_names": [
+        "Protection from Evil and Good"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schutzgeister",
+      "de_name": "Schutzgeister",
+      "candidate_en_ids": [
+        "spells.s.spirit-guardians"
+      ],
+      "candidate_names": [
+        "Spirit Guardians"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schutzhuelle-gegen-lebendes",
+      "de_name": "Schutzhülle gegen Lebendes",
+      "candidate_en_ids": [
+        "spells.a-b.antilife-shell"
+      ],
+      "candidate_names": [
+        "Antilife Shell"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schutzkreis",
+      "de_name": "Schutzkreis",
+      "candidate_en_ids": [
+        "spells.m-o.magic-circle"
+      ],
+      "candidate_names": [
+        "Magic Circle"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schwache-elementare-beschwoeren",
+      "de_name": "Schwache Elementare beschwören",
+      "candidate_en_ids": [
+        "spells.c-d.conjure-minor-elementals"
+      ],
+      "candidate_names": [
+        "Conjure Minor Elementals"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schwache-genesung",
+      "de_name": "Schwache Genesung",
+      "candidate_en_ids": [
+        "spells.i-l.lesser-restoration"
+      ],
+      "candidate_names": [
+        "Lesser Restoration"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schwarze-tentakel",
+      "de_name": "Schwarze Tentakel",
+      "candidate_en_ids": [
+        "spells.a-b.black-tentacles"
+      ],
+      "candidate_names": [
+        "Black Tentacles"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schweben",
+      "de_name": "Schweben",
+      "candidate_en_ids": [
+        "spells.c-d.dragons-breath",
+        "spells.i-l.levitate"
+      ],
+      "candidate_names": [
+        "Dragon’s Breath",
+        "Levitate"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schwebende-scheibe",
+      "de_name": "Schwebende Scheibe",
+      "candidate_en_ids": [
+        "spells.e-f.find-familiar",
+        "spells.e-f.floating-disk"
+      ],
+      "candidate_names": [
+        "Find Familiar",
+        "Floating Disk"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schwerkraft-umkehren",
+      "de_name": "Schwerkraft umkehren",
+      "candidate_en_ids": [
+        "spells.p-r.reverse-gravity"
+      ],
+      "candidate_names": [
+        "Reverse Gravity"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schwaechestrahl",
+      "de_name": "Schwächestrahl",
+      "candidate_en_ids": [
+        "spells.p-r.ray-of-enfeeblement"
+      ],
+      "candidate_names": [
+        "Ray of Enfeeblement"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.schuetzendes-band",
+      "de_name": "Schützendes Band",
+      "candidate_en_ids": [
+        "spells.w-z.warding-bond"
+      ],
+      "candidate_names": [
+        "Warding Bond"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.segnen",
+      "de_name": "Segnen",
+      "candidate_en_ids": [
+        "spells.a-b.bless"
+      ],
+      "candidate_names": [
+        "Bless"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.seiltrick",
+      "de_name": "Seiltrick",
+      "candidate_en_ids": [
+        "spells.p-r.rope-trick"
+      ],
+      "candidate_names": [
+        "Rope Trick"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.selbstverkleidung",
+      "de_name": "Selbstverkleidung",
+      "candidate_en_ids": [
+        "spells.c-d.disguise-self"
+      ],
+      "candidate_names": [
+        "Disguise Self"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sengender-strahl",
+      "de_name": "Sengender Strahl",
+      "candidate_en_ids": [
+        "spells.s.scorching-ray"
+      ],
+      "candidate_names": [
+        "Scorching Ray"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sengendes-niederstrecken",
+      "de_name": "Sengendes Niederstrecken",
+      "candidate_en_ids": [
+        "spells.c-d.divine-smite",
+        "spells.s.searing-smite"
+      ],
+      "candidate_names": [
+        "Divine Smite",
+        "Searing Smite"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.shillelagh",
+      "de_name": "Shillelagh",
+      "candidate_en_ids": [
+        "spells.s.shillelagh"
+      ],
+      "candidate_names": [
+        "Shillelagh"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.simulakrum",
+      "de_name": "Simulakrum",
+      "candidate_en_ids": [
+        "spells.s.simulacrum"
+      ],
+      "candidate_names": [
+        "Simulacrum"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sofortige-beschwoerung",
+      "de_name": "Sofortige Beschwörung",
+      "candidate_en_ids": [
+        "spells.i-l.instant-summons"
+      ],
+      "candidate_names": [
+        "Instant Summons"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sonnenfeuer",
+      "de_name": "Sonnenfeuer",
+      "candidate_en_ids": [
+        "spells.s.sunburst"
+      ],
+      "candidate_names": [
+        "Sunburst"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sonnenstrahl",
+      "de_name": "Sonnenstrahl",
+      "candidate_en_ids": [
+        "spells.s.sunbeam"
+      ],
+      "candidate_names": [
+        "Sunbeam"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.spiegelbilder",
+      "de_name": "Spiegelbilder",
+      "candidate_en_ids": [
+        "spells.m-o.mirror-image"
+      ],
+      "candidate_names": [
+        "Mirror Image"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.spinnenklettern",
+      "de_name": "Spinnenklettern",
+      "candidate_en_ids": [
+        "spells.s.spider-climb"
+      ],
+      "candidate_names": [
+        "Spider Climb"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.spinnennetz",
+      "de_name": "Spinnennetz",
+      "candidate_en_ids": [
+        "spells.w-z.web"
+      ],
+      "candidate_names": [
+        "Web"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sprachen-verstehen",
+      "de_name": "Sprachen verstehen",
+      "candidate_en_ids": [
+        "spells.c-d.comprehend-languages"
+      ],
+      "candidate_names": [
+        "Comprehend Languages"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sprung",
+      "de_name": "Sprung",
+      "candidate_en_ids": [
+        "spells.i-l.jump"
+      ],
+      "candidate_names": [
+        "Jump"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.spruehende-farben",
+      "de_name": "Sprühende Farben",
+      "candidate_en_ids": [
+        "spells.c-d.color-spray"
+      ],
+      "candidate_names": [
+        "Color Spray"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.spurloses-gehen",
+      "de_name": "Spurloses Gehen",
+      "candidate_en_ids": [
+        "spells.p-r.pass-without-trace"
+      ],
+      "candidate_names": [
+        "Pass without Trace"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.spaetzuendender-feuerball",
+      "de_name": "Spätzündender Feuerball",
+      "candidate_en_ids": [
+        "spells.c-d.delayed-blast-fireball"
+      ],
+      "candidate_names": [
+        "Delayed Blast Fireball"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.stein-formen",
+      "de_name": "Stein formen",
+      "candidate_en_ids": [
+        "spells.s.stone-shape"
+      ],
+      "candidate_names": [
+        "Stone Shape"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.steinhaut",
+      "de_name": "Steinhaut",
+      "candidate_en_ids": [
+        "spells.s.stoneskin"
+      ],
+      "candidate_names": [
+        "Stoneskin"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.steinwand",
+      "de_name": "Steinwand",
+      "candidate_en_ids": [
+        "spells.w-z.wall-of-stone"
+      ],
+      "candidate_names": [
+        "Wall of Stone"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sternenfunke",
+      "de_name": "Sternenfunke",
+      "candidate_en_ids": [
+        "spells.s.starry-wisp"
+      ],
+      "candidate_names": [
+        "Starry Wisp"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.stille",
+      "de_name": "Stille",
+      "candidate_en_ids": [
+        "spells.s.silence"
+      ],
+      "candidate_names": [
+        "Silence"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.stinkende-wolke",
+      "de_name": "Stinkende Wolke",
+      "candidate_en_ids": [
+        "spells.s.stinking-cloud"
+      ],
+      "candidate_names": [
+        "Stinking Cloud"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.strahl-der-uebelkeit",
+      "de_name": "Strahl der Übelkeit",
+      "candidate_en_ids": [
+        "spells.p-r.ray-of-sickness"
+      ],
+      "candidate_names": [
+        "Ray of Sickness"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.strahlendes-niederstrecken",
+      "de_name": "Strahlendes Niederstrecken",
+      "candidate_en_ids": [
+        "spells.s.shining-smite"
+      ],
+      "candidate_names": [
+        "Shining Smite"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.sturm-der-vergeltung",
+      "de_name": "Sturm der Vergeltung",
+      "candidate_en_ids": [
+        "spells.s.storm-of-vengeance"
+      ],
+      "candidate_names": [
+        "Storm of Vengeance"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.symbol",
+      "de_name": "Symbol",
+      "candidate_en_ids": [
+        "spells.s.symbol"
+      ],
+      "candidate_names": [
+        "Symbol"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.saeurepfeil",
+      "de_name": "Säurepfeil",
+      "candidate_en_ids": [
+        "spells.a-b.acid-arrow"
+      ],
+      "candidate_names": [
+        "Acid Arrow"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.r-s.saeurespritzer",
+      "de_name": "Säurespritzer",
+      "candidate_en_ids": [
+        "spells.a-b.acid-splash",
+        "spells.e-f.fire-bolt",
+        "spells.p-r.ray-of-frost",
+        "spells.s.shocking-grasp"
+      ],
+      "candidate_names": [
+        "Acid Splash",
+        "Fire Bolt",
+        "Ray of Frost",
+        "Shocking Grasp"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tageslicht",
+      "de_name": "Tageslicht",
+      "candidate_en_ids": [
+        "spells.c-d.daylight"
+      ],
+      "candidate_names": [
+        "Daylight"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tanzende-lichter",
+      "de_name": "Tanzende Lichter",
+      "candidate_en_ids": [
+        "spells.c-d.dancing-lights"
+      ],
+      "candidate_names": [
+        "Dancing Lights"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.taschenspielerei",
+      "de_name": "Taschenspielerei",
+      "candidate_en_ids": [
+        "spells.p-r.prestidigitation"
+      ],
+      "candidate_names": [
+        "Prestidigitation"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.telekinese",
+      "de_name": "Telekinese",
+      "candidate_en_ids": [
+        "spells.t-v.telekinesis"
+      ],
+      "candidate_names": [
+        "Telekinesis"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.telepathische-bindung",
+      "de_name": "Telepathische Bindung",
+      "candidate_en_ids": [
+        "spells.t-v.telepathic-bond"
+      ],
+      "candidate_names": [
+        "Telepathic Bond"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.teleportieren",
+      "de_name": "Teleportieren",
+      "candidate_en_ids": [
+        "spells.t-v.teleport"
+      ],
+      "candidate_names": [
+        "Teleport"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.thaumaturgie",
+      "de_name": "Thaumaturgie",
+      "candidate_en_ids": [
+        "spells.t-v.thaumaturgy"
+      ],
+      "candidate_names": [
+        "Thaumaturgy"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tier-beherrschen",
+      "de_name": "Tier beherrschen",
+      "candidate_en_ids": [
+        "spells.c-d.dominate-beast"
+      ],
+      "candidate_names": [
+        "Dominate Beast"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tierbote",
+      "de_name": "Tierbote",
+      "candidate_en_ids": [
+        "spells.a-b.animal-messenger"
+      ],
+      "candidate_names": [
+        "Animal Messenger"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tiere-beschwoeren",
+      "de_name": "Tiere beschwören",
+      "candidate_en_ids": [
+        "spells.c-d.conjure-animals"
+      ],
+      "candidate_names": [
+        "Conjure Animals"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tiere-oder-pflanzen-aufspueren",
+      "de_name": "Tiere oder Pflanzen aufspüren",
+      "candidate_en_ids": [
+        "spells.i-l.locate-animals-or-plants"
+      ],
+      "candidate_names": [
+        "Locate Animals or Plants"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tierform",
+      "de_name": "Tierform",
+      "candidate_en_ids": [
+        "spells.a-b.animal-shapes"
+      ],
+      "candidate_names": [
+        "Animal Shapes"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tierfreundschaft",
+      "de_name": "Tierfreundschaft",
+      "candidate_en_ids": [
+        "spells.a-b.animal-friendship"
+      ],
+      "candidate_names": [
+        "Animal Friendship"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.todeskreis",
+      "de_name": "Todeskreis",
+      "candidate_en_ids": [
+        "spells.c-d.circle-of-death"
+      ],
+      "candidate_names": [
+        "Circle of Death"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.todesschutz",
+      "de_name": "Todesschutz",
+      "candidate_en_ids": [
+        "spells.c-d.death-ward"
+      ],
+      "candidate_names": [
+        "Death Ward"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.todeswolke",
+      "de_name": "Todeswolke",
+      "candidate_en_ids": [
+        "spells.c-d.cloudkill"
+      ],
+      "candidate_names": [
+        "Cloudkill"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tor",
+      "de_name": "Tor",
+      "candidate_en_ids": [
+        "spells.g-h.gate"
+      ],
+      "candidate_names": [
+        "Gate"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tote-beleben",
+      "de_name": "Tote beleben",
+      "candidate_en_ids": [
+        "spells.a-b.animate-dead"
+      ],
+      "candidate_names": [
+        "Animate Dead"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tote-erwecken",
+      "de_name": "Tote erwecken",
+      "candidate_en_ids": [
+        "spells.p-r.raise-dead"
+      ],
+      "candidate_names": [
+        "Raise Dead"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.traum",
+      "de_name": "Traum",
+      "candidate_en_ids": [
+        "spells.c-d.dream"
+      ],
+      "candidate_names": [
+        "Dream"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.treuer-hund",
+      "de_name": "Treuer Hund",
+      "candidate_en_ids": [
+        "spells.e-f.faithful-hound",
+        "spells.s.secret-chest"
+      ],
+      "candidate_names": [
+        "Faithful Hound",
+        "Secret Chest"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.trugbild-projizieren",
+      "de_name": "Trugbild projizieren",
+      "candidate_en_ids": [
+        "spells.p-r.project-image"
+      ],
+      "candidate_names": [
+        "Project Image"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.tsunami",
+      "de_name": "Tsunami",
+      "candidate_en_ids": [
+        "spells.t-v.tsunami"
+      ],
+      "candidate_names": [
+        "Tsunami"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.toedliches-phantom",
+      "de_name": "Tödliches Phantom",
+      "candidate_en_ids": [
+        "spells.p-r.phantasmal-killer"
+      ],
+      "candidate_names": [
+        "Phantasmal Killer"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.unauffindbarkeit",
+      "de_name": "Unauffindbarkeit",
+      "candidate_en_ids": [
+        "spells.m-o.nondetection"
+      ],
+      "candidate_names": [
+        "Nondetection"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.unheimliches-schicksal",
+      "de_name": "Unheimliches Schicksal",
+      "candidate_en_ids": [
+        "spells.w-z.weird"
+      ],
+      "candidate_names": [
+        "Weird"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.unsichtbarer-diener",
+      "de_name": "Unsichtbarer Diener",
+      "candidate_en_ids": [
+        "spells.t-v.unseen-servant"
+      ],
+      "candidate_names": [
+        "Unseen Servant"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.unsichtbares-sehen",
+      "de_name": "Unsichtbares sehen",
+      "candidate_en_ids": [
+        "spells.s.see-invisibility"
+      ],
+      "candidate_names": [
+        "See Invisibility"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.unsichtbarkeit",
+      "de_name": "Unsichtbarkeit",
+      "candidate_en_ids": [
+        "spells.i-l.invisibility"
+      ],
+      "candidate_names": [
+        "Invisibility"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.untote-erschaffen",
+      "de_name": "Untote erschaffen",
+      "candidate_en_ids": [
+        "spells.c-d.create-undead"
+      ],
+      "candidate_names": [
+        "Create Undead"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.unverwuestliche-sphaere",
+      "de_name": "Unverwüstliche Sphäre",
+      "candidate_en_ids": [
+        "spells.p-r.resilient-sphere"
+      ],
+      "candidate_names": [
+        "Resilient Sphere"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.unwiderstehlicher-tanz",
+      "de_name": "Unwiderstehlicher Tanz",
+      "candidate_en_ids": [
+        "spells.i-l.irresistible-dance"
+      ],
+      "candidate_names": [
+        "Irresistible Dance"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.vampirgriff",
+      "de_name": "Vampirgriff",
+      "candidate_en_ids": [
+        "spells.t-v.vampiric-touch"
+      ],
+      "candidate_names": [
+        "Vampiric Touch"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verarbeitung",
+      "de_name": "Verarbeitung",
+      "candidate_en_ids": [
+        "spells.e-f.fabricate"
+      ],
+      "candidate_names": [
+        "Fabricate"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verbannung",
+      "de_name": "Verbannung",
+      "candidate_en_ids": [
+        "spells.a-b.banishment"
+      ],
+      "candidate_names": [
+        "Banishment"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verbergen",
+      "de_name": "Verbergen",
+      "candidate_en_ids": [
+        "spells.s.sequester"
+      ],
+      "candidate_names": [
+        "Sequester"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verbuendeter-aus-den-ebenen",
+      "de_name": "Verbündeter aus den Ebenen",
+      "candidate_en_ids": [
+        "spells.p-r.planar-ally"
+      ],
+      "candidate_names": [
+        "Planar Ally"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verderben",
+      "de_name": "Verderben",
+      "candidate_en_ids": [
+        "spells.a-b.bane"
+      ],
+      "candidate_names": [
+        "Bane"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.vergroessern-verkleinern",
+      "de_name": "Vergrößern/Verkleinern",
+      "candidate_en_ids": [
+        "spells.e-f.enlarge-reduce"
+      ],
+      "candidate_names": [
+        "Enlarge/Reduce"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verlangsamen",
+      "de_name": "Verlangsamen",
+      "candidate_en_ids": [
+        "spells.s.slow"
+      ],
+      "candidate_names": [
+        "Slow"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verschonung-der-sterbenden",
+      "de_name": "Verschonung der Sterbenden",
+      "candidate_en_ids": [
+        "spells.s.spare-the-dying"
+      ],
+      "candidate_names": [
+        "Spare the Dying"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verschwimmen",
+      "de_name": "Verschwimmen",
+      "candidate_en_ids": [
+        "spells.a-b.blur"
+      ],
+      "candidate_names": [
+        "Blur"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verstricken",
+      "de_name": "Verstricken",
+      "candidate_en_ids": [
+        "spells.e-f.entangle"
+      ],
+      "candidate_names": [
+        "Entangle"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verstaendigung",
+      "de_name": "Verständigung",
+      "candidate_en_ids": [
+        "spells.s.sending"
+      ],
+      "candidate_names": [
+        "Sending"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.vertrauten-finden",
+      "de_name": "Vertrauten finden",
+      "candidate_en_ids": [
+        "spells.e-f.find-familiar",
+        "spells.e-f.floating-disk"
+      ],
+      "candidate_names": [
+        "Find Familiar",
+        "Floating Disk"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verwandlung",
+      "de_name": "Verwandlung",
+      "candidate_en_ids": [
+        "spells.p-r.polymorph"
+      ],
+      "candidate_names": [
+        "Polymorph"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verwirrung",
+      "de_name": "Verwirrung",
+      "candidate_en_ids": [
+        "spells.c-d.confusion"
+      ],
+      "candidate_names": [
+        "Confusion"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.verwuenschung",
+      "de_name": "Verwünschung",
+      "candidate_en_ids": [
+        "spells.g-h.hex"
+      ],
+      "candidate_names": [
+        "Hex"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.vollstaendige-genesung",
+      "de_name": "Vollständige Genesung",
+      "candidate_en_ids": [
+        "spells.g-h.greater-restoration"
+      ],
+      "candidate_names": [
+        "Greater Restoration"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.vorahnung",
+      "de_name": "Vorahnung",
+      "candidate_en_ids": [
+        "spells.a-b.augury"
+      ],
+      "candidate_names": [
+        "Augury"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.voraussicht",
+      "de_name": "Voraussicht",
+      "candidate_en_ids": [
+        "spells.e-f.foresight"
+      ],
+      "candidate_names": [
+        "Foresight"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.t-v.vorbestimmtes-trugbild",
+      "de_name": "Vorbestimmtes Trugbild",
+      "candidate_en_ids": [
+        "spells.p-r.programmed-illusion"
+      ],
+      "candidate_names": [
+        "Programmed Illusion"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.waffe-des-glaubens",
+      "de_name": "Waffe des Glaubens",
+      "candidate_en_ids": [
+        "spells.s.spiritual-weapon"
+      ],
+      "candidate_names": [
+        "Spiritual Weapon"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wahre-auferstehung",
+      "de_name": "Wahre Auferstehung",
+      "candidate_en_ids": [
+        "spells.t-v.true-resurrection"
+      ],
+      "candidate_names": [
+        "True Resurrection"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wahre-verwandlung",
+      "de_name": "Wahre Verwandlung",
+      "candidate_en_ids": [
+        "spells.t-v.true-polymorph"
+      ],
+      "candidate_names": [
+        "True Polymorph"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wahrer-blick",
+      "de_name": "Wahrer Blick",
+      "candidate_en_ids": [
+        "spells.t-v.true-seeing"
+      ],
+      "candidate_names": [
+        "True Seeing"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wasser-atmen",
+      "de_name": "Wasser atmen",
+      "candidate_en_ids": [
+        "spells.w-z.water-breathing"
+      ],
+      "candidate_names": [
+        "Water Breathing"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wasser-erschaffen-oder-zerstoeren",
+      "de_name": "Wasser erschaffen oder zerstören",
+      "candidate_en_ids": [
+        "spells.c-d.create-or-destroy-water"
+      ],
+      "candidate_names": [
+        "Create or Destroy Water"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wasser-kontrollieren",
+      "de_name": "Wasser kontrollieren",
+      "candidate_en_ids": [
+        "spells.c-d.control-water"
+      ],
+      "candidate_names": [
+        "Control Water"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wasserwandeln",
+      "de_name": "Wasserwandeln",
+      "candidate_en_ids": [
+        "spells.w-z.water-walk"
+      ],
+      "candidate_names": [
+        "Water Walk"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.weg-finden",
+      "de_name": "Weg finden",
+      "candidate_en_ids": [
+        "spells.e-f.find-the-path"
+      ],
+      "candidate_names": [
+        "Find the Path"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.weihen",
+      "de_name": "Weihen",
+      "candidate_en_ids": [
+        "spells.g-h.hallow"
+      ],
+      "candidate_names": [
+        "Hallow"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.weissagung",
+      "de_name": "Weissagung",
+      "candidate_en_ids": [
+        "spells.c-d.divination"
+      ],
+      "candidate_names": [
+        "Divination"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wesen-des-waldes-beschwoeren",
+      "de_name": "Wesen des Waldes beschwören",
+      "candidate_en_ids": [
+        "spells.c-d.conjure-woodland-beings"
+      ],
+      "candidate_names": [
+        "Conjure Woodland Beings"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wetterkontrolle",
+      "de_name": "Wetterkontrolle",
+      "candidate_en_ids": [
+        "spells.c-d.control-weather"
+      ],
+      "candidate_names": [
+        "Control Weather"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.widerstand",
+      "de_name": "Widerstand",
+      "candidate_en_ids": [
+        "spells.p-r.resistance"
+      ],
+      "candidate_names": [
+        "Resistance"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wiederbeleben",
+      "de_name": "Wiederbeleben",
+      "candidate_en_ids": [
+        "spells.p-r.revivify"
+      ],
+      "candidate_names": [
+        "Revivify"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wiedergeburt",
+      "de_name": "Wiedergeburt",
+      "candidate_en_ids": [
+        "spells.p-r.reincarnate"
+      ],
+      "candidate_names": [
+        "Reincarnate"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.windstoss",
+      "de_name": "Windstoß",
+      "candidate_en_ids": [
+        "spells.g-h.gust-of-wind"
+      ],
+      "candidate_names": [
+        "Gust of Wind"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.windwall",
+      "de_name": "Windwall",
+      "candidate_en_ids": [
+        "spells.w-z.wind-wall"
+      ],
+      "candidate_names": [
+        "Wind Wall"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.windwandeln",
+      "de_name": "Windwandeln",
+      "candidate_en_ids": [
+        "spells.w-z.wind-walk"
+      ],
+      "candidate_names": [
+        "Wind Walk"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.winzige-huette",
+      "de_name": "Winzige Hütte",
+      "candidate_en_ids": [
+        "spells.t-v.tiny-hut"
+      ],
+      "candidate_names": [
+        "Tiny Hut"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wirrnis",
+      "de_name": "Wirrnis",
+      "candidate_en_ids": [
+        "spells.a-b.befuddlement"
+      ],
+      "candidate_names": [
+        "Befuddlement"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wort-der-macht-betaeubung",
+      "de_name": "Wort der Macht: Betäubung",
+      "candidate_en_ids": [
+        "spells.p-r.power-word-stun"
+      ],
+      "candidate_names": [
+        "Power Word Stun"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wort-der-macht-heilung",
+      "de_name": "Wort der Macht: Heilung",
+      "candidate_en_ids": [
+        "spells.p-r.power-word-heal"
+      ],
+      "candidate_names": [
+        "Power Word Heal"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wort-der-macht-tod",
+      "de_name": "Wort der Macht: Tod",
+      "candidate_en_ids": [
+        "spells.p-r.power-word-kill"
+      ],
+      "candidate_names": [
+        "Power Word Kill"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wort-des-rueckrufs",
+      "de_name": "Wort des Rückrufs",
+      "candidate_en_ids": [
+        "spells.w-z.word-of-recall"
+      ],
+      "candidate_names": [
+        "Word of Recall"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wunden-heilen",
+      "de_name": "Wunden heilen",
+      "candidate_en_ids": [
+        "spells.c-d.cure-wounds"
+      ],
+      "candidate_names": [
+        "Cure Wounds"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wunden-verursachen",
+      "de_name": "Wunden verursachen",
+      "candidate_en_ids": [
+        "spells.i-l.inflict-wounds"
+      ],
+      "candidate_names": [
+        "Inflict Wounds"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.wunsch",
+      "de_name": "Wunsch",
+      "candidate_en_ids": [
+        "spells.w-z.wish"
+      ],
+      "candidate_names": [
+        "Wish"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.waechter-und-hueter",
+      "de_name": "Wächter und Hüter",
+      "candidate_en_ids": [
+        "spells.g-h.guards-and-wards"
+      ],
+      "candidate_names": [
+        "Guards and Wards"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.waende-passieren",
+      "de_name": "Wände passieren",
+      "candidate_en_ids": [
+        "spells.p-r.passwall"
+      ],
+      "candidate_names": [
+        "Passwall"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.zeichen-des-jaegers",
+      "de_name": "Zeichen des Jägers",
+      "candidate_en_ids": [
+        "spells.g-h.hunters-mark"
+      ],
+      "candidate_names": [
+        "Hunter’s Mark"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.zeitstopp",
+      "de_name": "Zeitstopp",
+      "candidate_en_ids": [
+        "spells.t-v.time-stop"
+      ],
+      "candidate_names": [
+        "Time Stop"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.zerbersten",
+      "de_name": "Zerbersten",
+      "candidate_en_ids": [
+        "spells.s.shatter"
+      ],
+      "candidate_names": [
+        "Shatter"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.zielsicherer-schlag",
+      "de_name": "Zielsicherer Schlag",
+      "candidate_en_ids": [
+        "spells.t-v.true-strike"
+      ],
+      "candidate_names": [
+        "True Strike"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.zone-der-wahrheit",
+      "de_name": "Zone der Wahrheit",
+      "candidate_en_ids": [
+        "spells.w-z.zone-of-truth"
+      ],
+      "candidate_names": [
+        "Zone of Truth"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.zungen",
+      "de_name": "Zungen",
+      "candidate_en_ids": [
+        "spells.t-v.tongues"
+      ],
+      "candidate_names": [
+        "Tongues"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.zutritt-verwehren",
+      "de_name": "Zutritt verwehren",
+      "candidate_en_ids": [
+        "spells.e-f.forbiddance"
+      ],
+      "candidate_names": [
+        "Forbiddance"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.w-z.zwang",
+      "de_name": "Zwang",
+      "candidate_en_ids": [
+        "spells.c-d.compulsion"
+      ],
+      "candidate_names": [
+        "Compulsion"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.aetherische-gestalten",
+      "de_name": "Ätherische Gestalten",
+      "candidate_en_ids": [
+        "spells.e-f.etherealness"
+      ],
+      "candidate_names": [
+        "Etherealness"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.aetzkugel",
+      "de_name": "Ätzkugel",
+      "candidate_en_ids": [
+        "spells.t-v.vitriolic-sphere"
+      ],
+      "candidate_names": [
+        "Vitriolic Sphere"
+      ],
+      "identity_approved": false
+    },
+    {
+      "canonical_id": "spells.a-b.aeusserlichkeiten",
+      "de_name": "Äußerlichkeiten",
+      "candidate_en_ids": [
+        "spells.s.seeming"
+      ],
+      "candidate_names": [
+        "Seeming"
+      ],
+      "identity_approved": false
+    }
+  ]
+}

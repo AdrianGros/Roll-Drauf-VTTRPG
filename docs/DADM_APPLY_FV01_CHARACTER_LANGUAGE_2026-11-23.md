@@ -15,6 +15,8 @@ Status: detailed read-only Claude design received; Codex review below defines th
 
 ## Claude source design
 
+Codex inventory follow-up: the [reproducible spell candidate scan](proofs/full-version-layers-2026-11-23/fv01-inventory.py) uses the actual eight German school labels and validates class labels against each locale's class entries. All 339 spells have facet-compatible candidates: 310 single candidates and 29 ambiguous cases. Every result remains `identity_approved: false`; this evidence sizes the mapping work and does not authorize automatic name or rule substitution.
+
 # FV01 Apply: character module language (rules locale scoped to the creator and editor)
 
 This plan was built from read-only inspection at `44fa2da96`. I ran no tests and changed no files. I didn't look at any mapmaker files.

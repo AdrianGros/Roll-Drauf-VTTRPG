@@ -1,0 +1,72 @@
+{
+  "commit": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
+  "base_source": "7e0a3c8595c161eb7ca3442b2d3c7b777366c116",
+  "running_revision_label": "7e0a3c8595c161eb7ca3442b2d3c7b777366c116",
+  "image": "roll-drauf-vtt-app:full-version-layers-20261123-207c8e9fc",
+  "base_image_id": "sha256:fd604eee0ca2481eddad4658262a32cc112327a60db847b4a18a02893abc1af7",
+  "prior_image": "roll-drauf-vtt-app:full-version-layers-rollback-fd604eee0ca2",
+  "overlay_manifest": {
+    "vtt/static/i18n/ui.de.json": "3344f5381486f8d6a040910b1d48fe338933690840e3d7e52babba146c160730",
+    "vtt/static/i18n/ui.en.json": "56ee52a36dc83a511efefb9bb005e6e48c09e094399be86bb863d2cbdf95b8cc",
+    "vtt/static/js/ui-catalog.js": "9ade441e27aae6e1abede2b9a7093f25fa0816eeb644d879f0e3724a69ba8c58",
+    "vtt/static/mapmaker/index.html": "b6466b57370947d6b511e5b7660144e469549840c5f5d9511b7d0e3b1954cd7b",
+    "vtt/static/mapmaker/js/app.js": "ff47861e721c46c3d31892b525a55c95cdf8525bf490112c8967d8a5a39f28b2",
+    "vtt/static/mapmaker/js/selection.js": "55d1f1d0d39887d1016965e53d41fc3c5ce2cf1f09bc19bc592871a1a82b7c7b",
+    "vtt/static/mapmaker/js/tools.js": "c64231f7848109031baa5374d63686e046e1876e8ad6a58738ccb8e8b2b6064d",
+    "vtt/static/mapmaker/js/ui.js": "cd39321395fdabc6d2a89001b7e13ad7593835bdc60f17f5dd1df79e3fef6418",
+    "vtt/static/mapmaker/mapmaker.css": "805ff7532b3682c1998437503d2d8cb64f99a22d4d8288c2a263f30db5c185c1"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_before": {
+    "/roll-drauf-vtt-mailserver-1": {
+      "id": "d17377aeced889c1b8f7179bac736196c8985f3440036ea09568b8c7db088743",
+      "started_at": "2026-11-10T16:17:34.845940374Z"
+    },
+    "/roll-drauf-vtt-db-1": {
+      "id": "75d0b239cd1d6a8f2f791e78028aa6c42142a55f679cf663a49c0a731be62a49",
+      "started_at": "2026-11-10T16:17:34.827250527Z"
+    },
+    "/roll-drauf-vtt-redis-1": {
+      "id": "37ac298892f547099b3844172945475c17e206996b6596d68a3189fd240ead4c",
+      "started_at": "2026-11-10T16:17:34.8087529Z"
+    }
+  },
+  "prepared_at": "2026-11-23T22:50:36.247033+00:00",
+  "verification_scope": "all shipped Python/JS/CSS/HTML, app.py, requirements.txt and changed JSON; unchanged artwork inherited from the checked image",
+  "baseline_source_verification": {
+    "checked": 334,
+    "mismatches": []
+  },
+  "image_id": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
+  "built_source_verification": {
+    "checked": 334,
+    "mismatches": []
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-full-version-layers-20261123/207c8e9fc/database-before.dump",
+    "bytes": 539343,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "deployed_at": "2026-11-23T22:52:31.969919913Z",
+  "health": {
+    "now": "2026-11-23T22:52:41.188889",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-23T22:52:37.220097",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-11/feedback-full-version-layers-20261123/207c8e9fc/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false
+}

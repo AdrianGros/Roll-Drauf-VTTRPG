@@ -8,6 +8,9 @@ Active handoff (2026-11-23):
   active next-version scope: the owner assigned all retained outstanding work
   to FV01–FV18. Every packet still needs its bounded Apply before implementation;
   the existing S2–S11 designs remain proposals where not yet accepted.
+- `docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md`: FV04 is live on
+  `207c8e9fc`; FV05/FV06 have partial deliveries. Preserve this source/image.
+  FV01 has a reviewed Apply and spell-candidate inventory, without locale implementation.
 - `docs/CLAUDE_HANDOFF_MAPMAKER_27_2026-11-23.md`
 - `docs/DADM_DISCOVER_EDITOR_CREATOR_FEEDBACK_2026-11-23.md`
 - `docs/DADM_APPLY_FEEDBACK_HARNESS_2026-11-23.md`

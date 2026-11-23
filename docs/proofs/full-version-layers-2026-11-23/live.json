@@ -1,0 +1,45 @@
+{
+  "status": "pass",
+  "origin": "https://vtt.roll-drauf.de",
+  "journeys": [
+    {
+      "engine": "chromium",
+      "role": "dm",
+      "width": 1440,
+      "language": "de",
+      "theme": "night",
+      "normal_maps_navigation": true,
+      "lower_target_and_no_duplicate": true,
+      "native_radio_keyboard": true,
+      "filters_and_recent_order_available": true,
+      "occupied_grid_unchanged": true,
+      "explicit_new_grid_layer_and_undo": true,
+      "disclosure_and_active_mode_visible": true,
+      "menu_escape_keeps_tool": true,
+      "reference_grid_independent": true,
+      "file_save_reload_keeps_content": true,
+      "file_sha256": "8ee439d1ba32573144a462c1a531518aa3ceec67e1ec22ac01a82f27c9e16d56",
+      "browser_errors": []
+    },
+    {
+      "engine": "firefox",
+      "role": "player",
+      "width": 390,
+      "language": "en",
+      "theme": "paper",
+      "normal_maps_navigation": true,
+      "lower_target_and_no_duplicate": true,
+      "native_radio_keyboard": true,
+      "filters_and_recent_order_available": true,
+      "occupied_grid_unchanged": true,
+      "explicit_new_grid_layer_and_undo": true,
+      "disclosure_and_active_mode_visible": true,
+      "menu_escape_keeps_tool": true,
+      "reference_grid_independent": true,
+      "file_save_reload_keeps_content": true,
+      "file_sha256": "7593f955451a23205a632b9bc054666349ee752f9aec12ceaab4a8505e80a2e0",
+      "browser_errors": []
+    }
+  ],
+  "real_oauth_tested": false
+}

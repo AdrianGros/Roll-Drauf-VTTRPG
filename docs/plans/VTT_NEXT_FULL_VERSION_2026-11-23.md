@@ -8,11 +8,11 @@ Complete, integrate, deploy and verify all retained outstanding packets below as
 
 All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.
 
-The current delivered application is `7e0a3c859`; its final evidence is committed as `8a4dca5ed`. The live image is `sha256:fd604eee0ca2481eddad4658262a32cc112327a60db847b4a18a02893abc1af7`. The working release name is **next full version**; no version number or deadline has been assigned. This planning change does not deploy application code.
+The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `207c8e9fc`, image `sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c`. The working release name is **next full version**; no version number or deadline has been assigned. This planning change does not deploy application code.
 
 ## Current packet progress
 
-FV01 has a [reviewed language design](../DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md); its application remains unchanged. FV04 and the first FV05 safety/reference-grid slice are implemented under the [layer contract](../DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md), with focused verification running and live delivery still outstanding. The File-menu Escape follow-up belongs to FV06; the other FV06 features remain open. This progress does not close the full-version goal.
+FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 has a [reviewed language design](../DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md) and a reproducible candidate inventory covering 339 spells (310 single candidates, 29 ambiguous, no approved identities). Creator/editor localization is not implemented yet. The overall goal remains active.
 
 ## Already delivered
 
@@ -24,30 +24,30 @@ FV01 has a [reviewed language design](../DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026
 
 The latest slice passed seven live journeys and the added contents-link regression; its temporary QA users and data were removed. Claude completed a source review with no supported blocking findings. The full repository suite has recorded pre-existing failures and verification gaps; these are assigned to FV18. See the [delivery monitor](../DADM_MONITOR_FEEDBACK_HARNESS_2026-11-23.md).
 
-## Outstanding work packets
+## Full version work packets
 
-All eighteen packets below belong to the next full version. Lower priority sets the order; it does not remove terrain tools, curved text or the radial palette from the goal. An unresolved design is not an approved implementation contract.
+All eighteen packets below belong to the next full version. FV04 is delivered; other statuses show partial delivery, design progress or remaining work. Lower priority sets the order; it does not remove terrain tools, curved text or the radial palette from the goal. An unresolved design is not an approved implementation contract.
 
-| Packet | Scope | Priority |
-| --- | --- | --- |
-| FV01 | Character module language | P1 |
-| FV02 | Creator workflow and backgrounds | P2 |
-| FV03 | Navigation and responsive page layouts | P1 |
-| FV04 | Layer targets and editor panels | P1 |
-| FV05 | Reference grids snapping and tile transforms | P1 |
-| FV06 | Brush controls colors and quick palette | P1 |
-| FV07 | Object list and label placement | P1 |
-| FV08 | Path drawing and editing modes | P1 |
-| FV09 | Line styles node curves and text geometry | P1 |
-| FV10 | Own images and tileset packages | P1 |
-| FV11 | Catalog metadata and personal sets | P1 |
-| FV12 | Land fill and coastline tools | P2 |
-| FV13 | World campaign and map place relationships | P2 |
-| FV14 | Campaign homebrew approvals | P2 |
-| FV15 | Campaign quota extension request | P2 |
-| FV16 | Content provenance and publication policy | P2 |
-| FV17 | Identify the deferred zero percent control | P2 |
-| FV18 | Integrated verification and full version release | release gate |
+| Packet | Scope | Priority | Status |
+| --- | --- | --- | --- |
+| FV01 | Character module language | P1 | Design and candidate inventory |
+| FV02 | Creator workflow and backgrounds | P2 | Plan and inputs needed |
+| FV03 | Navigation and responsive page layouts | P1 | Planned |
+| FV04 | Layer targets and editor panels | P1 | Delivered live |
+| FV05 | Reference grids snapping and tile transforms | P1 | Partly live |
+| FV06 | Brush controls colors and quick palette | P1 | Partly live |
+| FV07 | Object list and label placement | P1 | Planned |
+| FV08 | Path drawing and editing modes | P1 | Planned |
+| FV09 | Line styles node curves and text geometry | P1 | Plan and inputs needed |
+| FV10 | Own images and tileset packages | P1 | Plan and inputs needed |
+| FV11 | Catalog metadata and personal sets | P1 | Plan and inputs needed |
+| FV12 | Land fill and coastline tools | P2 | Planned |
+| FV13 | World campaign and map place relationships | P2 | Plan and inputs needed |
+| FV14 | Campaign homebrew approvals | P2 | Planned |
+| FV15 | Campaign quota extension request | P2 | Plan and inputs needed |
+| FV16 | Content provenance and publication policy | P2 | Plan and inputs needed |
+| FV17 | Identify the deferred zero percent control | P2 | Plan and inputs needed |
+| FV18 | Integrated verification and full version release | release gate | Planned |
 
 ### FV01 Character module language
 
@@ -365,8 +365,8 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | E06 | open | FV12 |  |
 | E07 | open | FV06 |  |
 | E08 | open | FV06 |  |
-| E09 | partial | FV04 | Tool-specific layer chooser already exists. |
-| E10 | open | FV04 |  |
+| E09 | delivered | Delivered | FV04 delivered and verified at 207c8e9fc. |
+| E10 | delivered | Delivered | FV04 delivered and verified at 207c8e9fc. |
 | E11 | delivered | Delivered | Existing waypoint editing is now reachable through the correct select mode. |
 | E12 | open | FV08 |  |
 | E13 | open | FV09 |  |
@@ -376,10 +376,10 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | E17 | partial | FV07, FV09 | Path naming exists; discoverability and explicit place relations remain. |
 | E18 | open | FV09 |  |
 | E19 | open | FV09 |  |
-| E20 | open | FV04 |  |
-| E21 | open | FV04 |  |
+| E20 | delivered | Delivered | FV04 delivered and verified at 207c8e9fc. |
+| E21 | delivered | Delivered | FV04 delivered and verified at 207c8e9fc. |
 | E22 | delivered | Delivered | Per-asset and crop sizes are remembered for the page session. |
-| E23 | open | FV04 |  |
+| E23 | delivered | Delivered | FV04 delivered and verified at 207c8e9fc. |
 | E24 | partial | FV10 | Private upload, crop and pixel creation exist; full tileset packages and existing-asset editing remain. |
 | E25 | decision needed | FV16 |  |
 | E26 | partial | FV11 | Honest filter matching, unknown traits, counts and reset delivered; semantic classification and catalog completion remain. |
@@ -389,11 +389,11 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 
 | Source item | Current status | Remaining packet | Note |
 | --- | --- | --- | --- |
-| N01 | reproduce | FV04, FV11 |  |
+| N01 | supported case verified report specific catalog follow up | FV11 | Fixture preview and placement work with the chosen tile; no asset-loss fix claimed for unspecified original content. |
 | N02 | delivered | Delivered | Image-brush original colors and material switch are explained. |
-| N03 | open | FV04 |  |
+| N03 | delivered | Delivered | FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved. |
 | N04 | design needed | FV05 |  |
-| N05 | open | FV05 |  |
+| N05 | delivered | Delivered | FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved. |
 | N06 | open | FV05 |  |
 | N07 | design needed | FV05 |  |
 | N08 | open | FV11, FV16 |  |
@@ -404,7 +404,7 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | N13 | open | FV07 |  |
 | N14 | design needed | FV09 |  |
 | N15 | open | FV09 |  |
-| N16 | partial | FV04, FV06 | Staged Escape leaves placement; stable panel placement and File-menu propagation remain. |
+| N16 | delivered | Delivered | FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved. |
 | N17 | delivered | Delivered | Place-symbol picker offers recent symbols and the current palette. |
 | N18 | delivered | Delivered | Solo ready/new sessions start safely through an explicit authorized DM context. |
 | N19 | partial | FV03 | Numbered consistent contents and actual destination links delivered; layout reports remain. |
@@ -427,7 +427,7 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | review-web-existing-custom-asset-editing | open | FV10 |  |
 | review-web-English-Oglan-and-additional-system-content | content input needed | FV16 |  |
 | review-web-clipped-tree | asset id needed | FV11 |  |
-| feedback-harness-menu-Escape | low follow up | FV06 |  |
+| feedback-harness-menu-Escape | delivered | Delivered | FV06 menu propagation subcase verified at 207c8e9fc; other FV06 work remains. |
 | feedback-harness-character-archive-width | reproduce | FV03 |  |
 | inherited-test-and-hardware-gaps | verification needed | FV18 |  |
 
@@ -473,7 +473,7 @@ The following previously excluded directions are not introduced by this consolid
 
 This plan and its [machine-readable register](VTT_NEXT_FULL_VERSION_2026-11-23.json) are permanent repository artifacts. They are the active scope register for the next full version; earlier Discover, Apply and delivery reports retain their evidence and constraints. Packet statuses must be updated with actual verification and delivery references, not inferred from an implementation branch or a present button.
 
-Write the bounded FV01 Apply and the FV04/FV05 layer/grid Apply; collect content/policy/control inputs early. Implement and deliver each packet through its own verified slice.
+Implement FV01 with reviewed canonical-ID display mappings and module-scoped locale; preserve live FV04. Complete the remaining FV05/FV06 contracts and all other retained packets. Await explicit policy/source/control inputs only for dependent work.
 
 Sources:
 

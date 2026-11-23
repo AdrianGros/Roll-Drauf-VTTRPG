@@ -1,7 +1,7 @@
 {
   "title": "Roll Drauf VTT next full version",
   "defined_on": "2026-11-23",
-  "status": "goal_defined_delivery_outstanding",
+  "status": "goal_active_first_packet_delivered",
   "phase": "Apply release scope only",
   "owner_instruction": "Define all outstanding work packets as the goal for the next full version and provide a completed versus remaining rundown.",
   "scope": "All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.",
@@ -31,7 +31,7 @@
       "id": "FV01",
       "title": "Character module language",
       "priority": "P1",
-      "status": "apply_design_reviewed_delivery_outstanding",
+      "status": "apply_reviewed_candidate_inventory_created_delivery_outstanding",
       "source_refs": [
         "T3",
         "2026-11-23:N26"
@@ -44,7 +44,8 @@
       ],
       "depends_on": [],
       "decisions_or_inputs": [],
-      "apply": "docs/DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md"
+      "apply": "docs/DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md",
+      "candidate_inventory": "docs/proofs/full-version-layers-2026-11-23/fv01-spell-candidates.json"
     },
     {
       "id": "FV02",
@@ -93,7 +94,7 @@
       "id": "FV04",
       "title": "Layer targets and editor panels",
       "priority": "P1",
-      "status": "implemented_verification_running_not_deployed",
+      "status": "delivered_verified",
       "source_refs": [
         "M2",
         "S2 layer controls",
@@ -118,13 +119,18 @@
       "decisions_or_inputs": [
         "Specify whether recent layer use lasts for the session or persists, and define the compact bar and panel interactions in the packet Apply."
       ],
-      "apply": "docs/DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md"
+      "apply": "docs/DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md",
+      "delivery": {
+        "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
+        "image": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
+        "monitor": "docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md"
+      }
     },
     {
       "id": "FV05",
       "title": "Reference grids snapping and tile transforms",
       "priority": "P1",
-      "status": "partial_implementation_verification_running_not_deployed",
+      "status": "partial_delivered_verified",
       "source_refs": [
         "S2 reference grid",
         "S10",
@@ -148,13 +154,22 @@
         "Decide tile-grid transformation semantics, snap anchors and the versioned cell-rotation format before implementation."
       ],
       "apply": "docs/DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md",
-      "remaining": "Arbitrary calibration, snap-anchor contract, native tile rotation and all format consumers still required."
+      "remaining": "Arbitrary calibration, snap-anchor contract, native tile rotation and all format consumers still required.",
+      "delivery": {
+        "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
+        "image": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
+        "monitor": "docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md"
+      },
+      "completed_subscope": [
+        "Occupied-grid movement refused with explicit new empty layer/Undo",
+        "Reference grid retained across tools independently of snapping"
+      ]
     },
     {
       "id": "FV06",
       "title": "Brush controls colors and quick palette",
       "priority": "P1",
-      "status": "partial_implementation_verification_running_not_deployed",
+      "status": "partial_delivered_verified",
       "source_refs": [
         "M1 remaining",
         "S5",
@@ -176,7 +191,15 @@
       "decisions_or_inputs": [
         "Define the new gesture bindings and recent-color persistence in Apply; proposed bindings in the Claude plan are candidates."
       ],
-      "remaining": "Only File-menu Escape included in the current slice; colors, opacity/brush shortcuts and radial palette remain."
+      "remaining": "Only File-menu Escape included in the current slice; colors, opacity/brush shortcuts and radial palette remain.",
+      "delivery": {
+        "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
+        "image": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
+        "monitor": "docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md"
+      },
+      "completed_subscope": [
+        "File menu Escape no longer exits placement mode"
+      ]
     },
     {
       "id": "FV07",
@@ -536,18 +559,14 @@
         "note": ""
       },
       "E09": {
-        "status": "partial",
-        "packets": [
-          "FV04"
-        ],
-        "note": "Tool-specific layer chooser already exists."
+        "status": "delivered",
+        "packets": [],
+        "note": "FV04 delivered and verified at 207c8e9fc."
       },
       "E10": {
-        "status": "open",
-        "packets": [
-          "FV04"
-        ],
-        "note": ""
+        "status": "delivered",
+        "packets": [],
+        "note": "FV04 delivered and verified at 207c8e9fc."
       },
       "E11": {
         "status": "delivered",
@@ -612,18 +631,14 @@
         "note": ""
       },
       "E20": {
-        "status": "open",
-        "packets": [
-          "FV04"
-        ],
-        "note": ""
+        "status": "delivered",
+        "packets": [],
+        "note": "FV04 delivered and verified at 207c8e9fc."
       },
       "E21": {
-        "status": "open",
-        "packets": [
-          "FV04"
-        ],
-        "note": ""
+        "status": "delivered",
+        "packets": [],
+        "note": "FV04 delivered and verified at 207c8e9fc."
       },
       "E22": {
         "status": "delivered",
@@ -631,11 +646,9 @@
         "note": "Per-asset and crop sizes are remembered for the page session."
       },
       "E23": {
-        "status": "open",
-        "packets": [
-          "FV04"
-        ],
-        "note": ""
+        "status": "delivered",
+        "packets": [],
+        "note": "FV04 delivered and verified at 207c8e9fc."
       },
       "E24": {
         "status": "partial",
@@ -668,12 +681,11 @@
     },
     "second_review_2026_11_23": {
       "N01": {
-        "status": "reproduce",
+        "status": "supported_case_verified_report_specific_catalog_follow_up",
         "packets": [
-          "FV04",
           "FV11"
         ],
-        "note": ""
+        "note": "Fixture preview and placement work with the chosen tile; no asset-loss fix claimed for unspecified original content."
       },
       "N02": {
         "status": "delivered",
@@ -681,11 +693,9 @@
         "note": "Image-brush original colors and material switch are explained."
       },
       "N03": {
-        "status": "open",
-        "packets": [
-          "FV04"
-        ],
-        "note": ""
+        "status": "delivered",
+        "packets": [],
+        "note": "FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved."
       },
       "N04": {
         "status": "design_needed",
@@ -695,11 +705,9 @@
         "note": ""
       },
       "N05": {
-        "status": "open",
-        "packets": [
-          "FV05"
-        ],
-        "note": ""
+        "status": "delivered",
+        "packets": [],
+        "note": "FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved."
       },
       "N06": {
         "status": "open",
@@ -774,12 +782,9 @@
         "note": ""
       },
       "N16": {
-        "status": "partial",
-        "packets": [
-          "FV04",
-          "FV06"
-        ],
-        "note": "Staged Escape leaves placement; stable panel placement and File-menu propagation remain."
+        "status": "delivered",
+        "packets": [],
+        "note": "FV04 and the documented FV05/FV06 subscopes verified at 207c8e9fc; distinct representations/erase scopes preserved."
       },
       "N17": {
         "status": "delivered",
@@ -894,11 +899,9 @@
         "note": ""
       },
       "feedback-harness-menu-Escape": {
-        "status": "low_follow_up",
-        "packets": [
-          "FV06"
-        ],
-        "note": ""
+        "status": "delivered",
+        "packets": [],
+        "note": "FV06 menu propagation subcase verified at 207c8e9fc; other FV06 work remains."
       },
       "feedback-harness-character-archive-width": {
         "status": "reproduce",
@@ -1053,5 +1056,11 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Write the bounded FV01 Apply and the FV04/FV05 layer/grid Apply; collect content/policy/control inputs early. Implement and deliver each packet through its own verified slice."
+  "next_step": "Implement FV01 with reviewed canonical-ID display mappings and module-scoped locale; preserve live FV04. Complete the remaining FV05/FV06 contracts and all other retained packets. Await explicit policy/source/control inputs only for dependent work.",
+  "current_delivery": {
+    "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
+    "image": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
+    "monitor": "docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md"
+  },
+  "last_updated": "2026-11-24"
 }

@@ -12,7 +12,6 @@ from playwright.sync_api import expect, sync_playwright
 
 from tests.test_full_version_layers_browser import add_paths, paths
 from tests.test_mapmaker_browser import Editor
-from tests.test_review_maps_browser import save_file
 
 
 root = Path(os.environ["PROOF_ROOT"])
@@ -24,6 +23,12 @@ expect.set_options(timeout=30000)
 
 def save():
     (root / "live.json").write_text(json.dumps(proof, indent=2) + "\n")
+
+
+def tool(ed, name):
+    ed.tool(name)
+    if not ed.page.locator("#pane-tool").is_visible():
+        ed.page.locator("#tab-tool").click()
 
 
 with sync_playwright() as playwright:
@@ -53,7 +58,7 @@ with sync_playwright() as playwright:
             page.locator("#newEmpty").click()
             ed = Editor(context, page, errors)
             lower, upper = add_paths(ed), add_paths(ed)
-            ed.tool("path")
+            tool(ed, "path")
             page.locator("#toolLayer").select_option(lower)
             ed.drag([(500, 500), (650, 550), (800, 500)])
             (path,) = ed.summary()["items"]
@@ -77,7 +82,7 @@ with sync_playwright() as playwright:
             page.locator("#layerSort").select_option("recent")
             page.locator("#layerFilterKind").select_option("")
 
-            ed.tool("tile")
+            tool(ed, "tile")
             page.locator("#tileSize").select_option("32")
             ed.click_doc(700, 650)
             (before,) = [layer for layer in ed.summary()["layers"] if layer["kind"] == "tiles"]
@@ -92,7 +97,7 @@ with sync_playwright() as playwright:
             page.keyboard.press("Control+z")
             assert [layer for layer in ed.summary()["layers"] if layer["kind"] == "tiles"] == [before]
 
-            ed.tool("stamp")
+            tool(ed, "stamp")
             options = page.locator("#stampAdvanced")
             expect(options).not_to_have_attribute("open", "")
             options.locator("summary").click()
@@ -105,7 +110,11 @@ with sync_playwright() as playwright:
             page.locator("#referenceGrid").check()
 
             exported = root / f"map-{engine}-{width}.rdmap.json"
-            bundle = save_file(ed, exported)
+            with page.expect_download() as download:
+                page.locator("#fileMenuBtn").click()
+                page.locator("#saveBtn").click()
+            download.value.save_as(exported)
+            bundle = json.loads(exported.read_text())
             assert bundle
             generation = ed.summary()["generation"]
             page.locator("#fileInput").set_input_files(str(exported))
