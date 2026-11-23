@@ -259,6 +259,7 @@ def test_mixed_layer_eraser_scopes_cancel_single_undo_stamp_grid_and_tile_varian
     # Optional stamp grid: off by default, preview and placement share one rounded position.
     ed.tool("stamp")
     assert not ed.page.locator("#stampGridOn").is_checked()
+    ed.stamp_options()
     ed.page.locator("#stampGridOn").check()
     ed.page.locator("#stampGridSize").fill("40")
     ed.click_doc(LAND[0] + 213, LAND[1] + 227)
@@ -294,7 +295,9 @@ def test_dense_scatter_on_a_stamp_grid_never_stacks_positions_one_undo_and_cance
     ed = open_editor()
     ed.tool("stamp")
     ed.page.get_by_role("radio", name="Tanne", exact=True).click()
+    ed.stamp_options()
     ed.page.locator("#stampScatter").check()
+    ed.stamp_options()
     ed.page.locator("#stampGridOn").check()
     ed.page.locator("#stampGridSize").fill("128")
     ed.set_range("#stampSize", 88)

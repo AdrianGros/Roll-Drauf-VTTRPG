@@ -126,12 +126,14 @@ export function attachInput(ed) {
             if (ed.beginTiles(point)) gesture = { type: "tiles", pointerId: event.pointerId };
         } else if (ed.tool === "path") {
             if (!ed.insideMap(point)) return;
+            const target = ed.pathTarget();
+            if (target === false) return;
             ed.commitEdit();
             const at = ed.clampToMap(point.x, point.y);
             const item = { id: null, x: at.x, y: at.y, material: ed.pathOpts.material,
                 width: ed.pathOpts.width, curve: ed.pathOpts.curve, points: [{ x: 0, y: 0 }] };
             ed.previewPath = item;
-            gesture = { type: "path", pointerId: event.pointerId, item, spacing: 28 };
+            gesture = { type: "path", pointerId: event.pointerId, item, spacing: 28, targetId: target?.id || null };
         } else if (ed.tool === "stamp") {
             if (!ed.stampOpts.asset || !ed.assetAvailable(ed.stampOpts.asset)) {
                 ed.ui.toast(globalThis.VTTUi("Wähle zuerst ein Symbol aus der Palette."));
@@ -167,7 +169,6 @@ export function attachInput(ed) {
             const item = ed.createLabel(point);
             if (ed.addItems(layer, [item], "Ort setzen")) {
                 ed.select(item.id);
-                if(item.text)ed.ui.focusLabelName();
             }
         } else if (ed.tool === "select") {
             const selected = selectedPath();
@@ -366,7 +367,7 @@ export function attachInput(ed) {
             }
             if (done.item.points.length > 1 && Math.hypot(end.x, end.y) >= 5) {
                 done.item.id = ed.newPathId();
-                if (ed.addPath(done.item)) ed.select(done.item.id);
+                if (ed.addPath(done.item, done.targetId)) ed.select(done.item.id);
             }
         } else if (done.type === "pathNode" && done.moved) {
             ed.updateItem(done.item, done.orig, JSON.parse(JSON.stringify(done.item)), "Wegpunkt verschieben");

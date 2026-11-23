@@ -129,6 +129,11 @@ export class UI {
         // Page-lifetime only: never saved, autosaved or put in undo.
         this.stampSizes = new Map();
         this.recentStamps = [];
+        this.layerUse = new WeakMap();
+        this.layerUseClock = 0;
+        this.stageLayersExpanded = false;
+        this.tileGridOffer = null;
+        this.rasterContent = new WeakMap();
     }
 
     // ---- wiring ------------------------------------------------------------
@@ -149,9 +154,35 @@ export class UI {
         $("zoomOut").addEventListener("click", () => ed.zoomStep(0.8));
         $("zoomFit").addEventListener("click", () => ed.fit());
         $("activeLayerJump").addEventListener("click", () => {
-            this.openPane("layers");
-            $("layerList").querySelector('.mm-layer.is-active .mm-layer-name')?.focus();
+            if (this.isNarrow()) {
+                this.stageLayersExpanded = !this.stageLayersExpanded;
+                this.syncStageLayers();
+            } else this.openLayerManagement();
         });
+        $("manageStageLayers").addEventListener("click", () => this.openLayerManagement());
+        $("stageLayerPanel").addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && this.isNarrow()) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.stageLayersExpanded = false;
+                this.syncStageLayers();
+                $("activeLayerJump").focus();
+            }
+        });
+        window.matchMedia("(max-width: 760px)").addEventListener("change", () => this.syncStageLayers());
+        this.syncStageLayers();
+        $("referenceGrid").addEventListener("change", (event) => {
+            ed.showReferenceGrid = event.target.checked;
+            ed.requestFrame();
+        });
+        for (const id of ["layerFilterKind", "layerFilterName", "layerFilterContent", "layerSort"]) {
+            $(id).addEventListener(id === "layerFilterName" ? "input" : "change", () => this.refreshLayers());
+        }
+        for (const id of ["tileNewLayer", "layerNewGrid"]) {
+            $(id).addEventListener("click", () => {
+                if (this.tileGridOffer?.doc === ed.doc) ed.newTileLayer(this.tileGridOffer.size);
+            });
+        }
         $("helpBtn").addEventListener("click", () => $("helpDialog").showModal());
         $("helpClose").addEventListener("click", () => $("helpDialog").close());
         $("errorClose").addEventListener("click", () => $("errorDialog").close());
@@ -181,6 +212,8 @@ export class UI {
         });
         menu.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
+                event.preventDefault();
+                event.stopPropagation();
                 closeMenu();
                 menuButton.focus();
             }
@@ -243,8 +276,23 @@ export class UI {
             helpNodeKey: t("Ziehen"), helpNode: t("Wegpunkt des ausgewählten Wegs verschieben (Auswählen)"),
             placeSymbolHint: t("Zuletzt gewählte Symbole und die aktuelle Seite der Symbolpalette (mit deren Suche und Filtern)."),
             helpEscape: t("Auswahl oder Geste abbrechen; sonst das Platzieren beenden."),
+            stageLayerLegend: t("Aktive Zeichenebene"), manageStageLayers: t("Alle Ebenen verwalten"),
+            referenceGridLabel: t("Raster bei allen Werkzeugen"),
+            layerFilterKindLabel: t("Ebenentyp"), layerFilterNameLabel: t("Ebenen suchen"),
+            layerFilterContentLabel: t("Ebeneninhalt"),
+            layerSortLabel: t("Ebenen sortieren"),
+            layerRecentHint: t("Zuletzt genutzt: in dieser Editorsitzung ausgewählt oder bearbeitet."),
+            stampAdvancedLabel: t("Weitere Platzierungsoptionen"),
+            editPlacedLabel: t("Ausgewählte Beschriftung bearbeiten"),
         };
         Object.entries(labels).forEach(([id, text]) => { $(id).textContent = text; });
+        $("editPlacedLabel").addEventListener("click", () => this.focusLabelName());
+        $("layerFilterKind").appendChild(el("option", { value: "" }, t("Alle Ebenentypen")));
+        for (const [kind, label] of Object.entries(KIND_LABEL)) $("layerFilterKind").appendChild(el("option", { value: kind }, label));
+        $("layerSort").append(el("option", { value: "stack" }, t("Zeichenreihenfolge")), el("option", { value: "recent" }, t("Zuletzt genutzt")));
+        for (const [value, label] of [["", t("Alle Inhalte")], ["filled", t("Mit Inhalt")], ["empty", t("Ohne Inhalt")], ["used", t("In dieser Sitzung genutzt")]]) {
+            $("layerFilterContent").appendChild(el("option", { value }, label));
+        }
         const orderNames = { back: t("Ganz nach hinten"), backward: t("Nach hinten"), forward: t("Nach vorne"), front: t("Ganz nach vorne") };
         document.querySelectorAll(".mm-order-row").forEach((row) => row.setAttribute("aria-label", t("Reihenfolge")));
         document.querySelectorAll(".mm-order-label").forEach((node) => { node.textContent = t("Reihenfolge"); });
@@ -288,6 +336,9 @@ export class UI {
 
     showAreaPlan(count) {
         const ed = this.ed, info = $("stampAreaInfo");
+        const mode = ed.stampOpts.area ? globalThis.VTTUi("Fläche füllen (Rechteck ziehen)")
+            : ed.stampOpts.scatter ? globalThis.VTTUi("Streuen beim Ziehen (Wälder, Gebirge)") : "";
+        $("stampAdvancedLabel").textContent = globalThis.VTTUi("Weitere Platzierungsoptionen") + (mode ? ` · ${mode}` : "");
         if (!ed.stampOpts.area) { info.textContent = ""; return; }
         if (count === null) {
             info.textContent = globalThis.VTTUi("Rechteck auf der Karte aufziehen. Abstand wie beim Streuen; ein Rückgängig-Schritt.");
@@ -523,7 +574,8 @@ export class UI {
         $("stampVary").addEventListener("change", (event) => { ed.stampOpts.vary = event.target.checked; });
         $("stampScatter").addEventListener("change", (event) => {
             ed.stampOpts.scatter = event.target.checked;
-            if (event.target.checked && ed.stampOpts.area) { ed.stampOpts.area = false; $("stampArea").checked = false; this.showAreaPlan(null); }
+            if (event.target.checked && ed.stampOpts.area) { ed.stampOpts.area = false; $("stampArea").checked = false; }
+            this.showAreaPlan(null);
             ed.requestFrame();
         });
         // Optional stamp grid: off by default; preview and placement share ed.stampPoint().
@@ -1097,6 +1149,7 @@ export class UI {
         const ed = this.ed;
         const box = $("inspector");
         const found = ed.selection && ed.doc ? findItem(ed.doc, ed.selection) : null;
+        $("editPlacedLabel").disabled = !found || !("text" in found.item);
         const count=ed.doc?ed.selectionSet.count:0,group=count>1||!!ed.selectionSet.tiles;
         $('groupInspector').hidden=!group;
         if(group){
@@ -1215,24 +1268,38 @@ export class UI {
         if (!ed.doc) return;
         this.refreshToolLayer();
         this.refreshClip();
+        const focused = document.activeElement;
+        const focusList = focused?.closest('#layerList, #stageLayerList');
+        const focusLayer = focused?.closest('[data-layer]')?.dataset.layer;
+        const focusControl = focused?.dataset.layerControl;
+        const panelScroll = $("pane-tool").scrollTop;
+        const stripScroll = $("stageLayerList").scrollLeft;
         const list = $("layerList");
         list.replaceChildren();
-        const layers = [...ed.doc.layers].reverse();
-        layers.forEach((layer, row) => {
+        const all = [...ed.doc.layers].reverse();
+        const kind = $("layerFilterKind").value, term = $("layerFilterName").value.trim().toLowerCase();
+        const content = $("layerFilterContent").value;
+        const layers = all.filter((layer) => (!kind || layer.kind === kind) && this.layerMatchesSearch(layer, term)
+            && (!content || (content === "used" ? this.layerUse.has(layer) : this.layerHasContent(layer) === (content === "filled"))));
+        if ($("layerSort").value === "recent") layers.sort((a, b) => (this.layerUse.get(b) || 0) - (this.layerUse.get(a) || 0));
+        layers.forEach((layer) => {
+            const index = ed.doc.layers.indexOf(layer);
             const active = layer.id === ed.activeLayerId;
             const li = el("li", { class: `mm-layer${active ? " is-active" : ""}${layer.visible ? "" : " is-hidden"}`, dataset: { layer: layer.id } });
             const eye = el("button", { type: "button", class: "mm-icon-btn mm-eye", "aria-pressed": String(layer.visible), "aria-label": `${layer.name} ${layer.visible ? "ausblenden" : "einblenden"}`, title: layer.visible ? globalThis.VTTUi("Ausblenden") : globalThis.VTTUi("Einblenden") });
             eye.appendChild(svgIcon(layer.visible ? ICONS.eyeOn : ICONS.eyeOff));
+            eye.dataset.layerControl = "visible";
             eye.addEventListener("click", () => ed.setLayerProp(layer.id, "visible", !layer.visible));
             const name = el("button", { type: "button", class: "mm-layer-name", "aria-current": active ? "true" : null, title: globalThis.VTTUi("Als aktive Ebene wählen") });
-            name.append(el("span", { class: "mm-layer-title" }, layer.name), el("span", { class: `mm-kind mm-kind-${layer.kind}` }, KIND_LABEL[layer.kind]));
+            name.dataset.layerControl = "select";
+            name.append(el("span", { class: "mm-layer-title" }, layer.name), el("span", { class: `mm-kind mm-kind-${layer.kind}` }, `${KIND_LABEL[layer.kind]} · ${this.layerCount(layer)}`));
             name.addEventListener("click", () => ed.setActiveLayer(layer.id));
             name.addEventListener("dblclick", () => this.renameLayer(li, layer));
             const actions = el("div", { class: "mm-layer-actions" });
-            const up = el("button", { type: "button", class: "mm-icon-btn", "aria-label": globalThis.VTTUi("{p0} nach oben",{p0:(layer.name)}), title: globalThis.VTTUi("Nach oben"), disabled: row === 0 });
+            const up = el("button", { type: "button", class: "mm-icon-btn", "aria-label": globalThis.VTTUi("{p0} nach oben",{p0:(layer.name)}), title: globalThis.VTTUi("Nach oben"), disabled: index === ed.doc.layers.length - 1, dataset: { layerControl: "up" } });
             up.appendChild(svgIcon(ICONS.up));
             up.addEventListener("click", () => ed.moveLayer(layer.id, 1));
-            const down = el("button", { type: "button", class: "mm-icon-btn", "aria-label": globalThis.VTTUi("{p0} nach unten",{p0:(layer.name)}), title: globalThis.VTTUi("Nach unten"), disabled: row === layers.length - 1 });
+            const down = el("button", { type: "button", class: "mm-icon-btn", "aria-label": globalThis.VTTUi("{p0} nach unten",{p0:(layer.name)}), title: globalThis.VTTUi("Nach unten"), disabled: index === 0, dataset: { layerControl: "down" } });
             down.appendChild(svgIcon(ICONS.down));
             down.addEventListener("click", () => ed.moveLayer(layer.id, -1));
             const rename = el("button", { type: "button", class: "mm-icon-btn", "aria-label": `${layer.name} umbenennen`, title: globalThis.VTTUi("Umbenennen") });
@@ -1245,6 +1312,29 @@ export class UI {
             li.append(eye, name, actions);
             list.appendChild(li);
         });
+        if (!layers.length) list.appendChild(el("li", { class: "mm-hint" }, globalThis.VTTUi("Keine passende Ebene.")));
+        const strip = $("stageLayerList");
+        strip.querySelectorAll('.mm-stage-layer').forEach((row) => row.remove());
+        for (const layer of all) {
+            const active = layer.id === ed.activeLayerId;
+            const row = el("div", { class: `mm-stage-layer${active ? " is-active" : ""}${layer.visible ? "" : " is-hidden"}`, dataset: { layer: layer.id } });
+            const label = el("label", { class: "mm-stage-layer-name", title: `${layer.name} · ${KIND_LABEL[layer.kind]} · ${this.layerCount(layer)}` });
+            const radio = el("input", { type: "radio", name: "stage-active-layer", value: layer.id, checked: active, dataset: { layerControl: "select" } });
+            radio.addEventListener("change", () => { if (radio.checked) ed.setActiveLayer(layer.id); });
+            const caption = el("span", { class: "mm-stage-layer-caption" });
+            caption.append(el("span", {}, layer.name), el("small", {}, KIND_LABEL[layer.kind]));
+            label.append(radio, caption);
+            const eye = el("button", { type: "button", class: "mm-icon-btn", "aria-pressed": String(layer.visible), "aria-label": globalThis.VTTUi("Sichtbarkeit von {name}", { name: layer.name }), dataset: { layerControl: "visible" } });
+            eye.appendChild(svgIcon(layer.visible ? ICONS.eyeOn : ICONS.eyeOff));
+            eye.addEventListener("click", () => ed.setLayerProp(layer.id, "visible", !layer.visible));
+            row.append(label, eye);
+            strip.appendChild(row);
+        }
+        strip.scrollLeft = stripScroll;
+        if (this.stripActiveLayer !== ed.activeLayerId) {
+            this.revealActiveStageLayer();
+            this.stripActiveLayer = ed.activeLayerId;
+        }
         const active = ed.activeLayer();
         $("layerProps").hidden = !active;
         if (active) {
@@ -1267,6 +1357,79 @@ export class UI {
         $("addTiles").disabled = ed.doc.layers.length >= LIMITS.layers;
         $("addLabels").disabled = ed.doc.layers.length >= LIMITS.layers;
         $("addPaths").disabled = ed.doc.layers.length >= LIMITS.layers;
+        if (focusList && focusLayer && focusControl) {
+            const row = [...$(focusList.id).querySelectorAll('[data-layer]')].find((node) => node.dataset.layer === focusLayer);
+            row?.querySelector(`[data-layer-control="${focusControl}"]`)?.focus({ preventScroll: true });
+        }
+        $("pane-tool").scrollTop = panelScroll;
+    }
+
+    noteLayerUse(layer) {
+        if (layer) this.layerUse.set(layer, ++this.layerUseClock);
+    }
+
+    layerCount(layer) {
+        return layer.kind === "raster" ? globalThis.VTTUi("Rasterbild") : globalThis.VTTUi("Elemente: {count}", { count: layer.kind === "tiles" ? layer.cells.size : layer.items.length });
+    }
+
+    layerMatchesSearch(layer, term) {
+        if (!term || layer.name.toLowerCase().includes(term)) return true;
+        const assetName = (id) => this.ed.palette.stamps.get(id)?.name || id || "";
+        if (layer.kind === "tiles") return [...layer.cells.values()].some((id) => assetName(id).toLowerCase().includes(term));
+        return (layer.items || []).some((item) => [item.name, item.text, assetName(item.asset)].some((value) => value?.toLowerCase().includes(term)));
+    }
+
+    layerHasContent(layer) {
+        if (layer.kind !== "raster") return layer.kind === "tiles" ? layer.cells.size > 0 : layer.items.length > 0;
+        const cached = this.rasterContent.get(layer);
+        if (cached && cached.revision === layer.rev) return cached.filled;
+        const { width, height } = layer.canvas, context = layer.canvas.getContext("2d");
+        let filled = false;
+        // Scan bounded strips only for an explicit content filter, and cache by raster revision.
+        for (let y = 0; y < height && !filled; y += 64) {
+            const bytes = context.getImageData(0, y, width, Math.min(64, height - y)).data;
+            for (let index = 3; index < bytes.length; index += 4) {
+                if (bytes[index]) { filled = true; break; }
+            }
+        }
+        this.rasterContent.set(layer, { revision: layer.rev, filled });
+        return filled;
+    }
+
+    syncStageLayers() {
+        $("stageLayerTools").dataset.expanded = String(this.stageLayersExpanded);
+        if (this.isNarrow()) $("activeLayerJump").setAttribute("aria-expanded", String(this.stageLayersExpanded));
+        else $("activeLayerJump").removeAttribute("aria-expanded");
+        $("activeLayerJump").setAttribute("aria-controls", this.isNarrow() ? "stageLayerPanel" : "pane-layers");
+        if (!this.isNarrow() || this.stageLayersExpanded) this.revealActiveStageLayer();
+    }
+
+    revealActiveStageLayer() {
+        const strip = $("stageLayerList"), row = strip.querySelector('input:checked')?.closest('.mm-stage-layer');
+        if (!row) return;
+        const box = row.getBoundingClientRect(), viewport = strip.getBoundingClientRect();
+        if (box.left < viewport.left) strip.scrollLeft += box.left - viewport.left;
+        else if (box.right > viewport.right) strip.scrollLeft += box.right - viewport.right;
+    }
+
+    openLayerManagement() {
+        this.stageLayersExpanded = false;
+        this.syncStageLayers();
+        this.openPane("layers");
+        $("layerList").querySelector('.mm-layer.is-active .mm-layer-name')?.focus({ preventScroll: true });
+    }
+
+    offerTileGrid(size) {
+        this.tileGridOffer = { doc: this.ed.doc, size };
+        const message = globalThis.VTTUi("Belegte Kacheln behalten ihre Größe. Für {size} px eine neue Ebene anlegen.", { size });
+        for (const id of ["tileGridNotice", "layerGridNotice"]) { $(id).textContent = message; $(id).hidden = false; }
+        for (const id of ["tileNewLayer", "layerNewGrid"]) { $(id).textContent = globalThis.VTTUi("Neue Kachelebene mit {size} px", { size }); $(id).hidden = false; }
+        this.toast(message);
+    }
+
+    clearTileGridOffer() {
+        this.tileGridOffer = null;
+        for (const id of ["tileGridNotice", "layerGridNotice", "tileNewLayer", "layerNewGrid"]) $(id).hidden = true;
     }
 
     renameLayer(li, layer) {

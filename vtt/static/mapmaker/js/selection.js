@@ -67,7 +67,7 @@ export class Selection {
     }
     beginMove() {
         if(this.tiles){const layer=this.ed.doc.layers.find(l=>l.id===this.tiles.layerId);return {layer,keys:this.tiles.keys.slice(),before:new Map(layer.cells),after:null,valid:true};}
-        return {objects:this.objects.map(({item})=>({item,before:copy(item)})),moved:false};
+        return {objects:this.objects.map(({item,layer})=>({item,layer,before:copy(item)})),moved:false};
     }
     previewMove(g,dx,dy) {
         if(g.layer){
@@ -93,10 +93,10 @@ export class Selection {
             if(!g.valid){this.restoreMove(g);this.ed.ui.toast(globalThis.VTTUi('Zielzellen sind belegt oder außerhalb der Karte. Auswahl wurde nicht verschoben.'));return;}
             if(!g.after || g.keys.every((k,i)=>k===g.after.keys[i]))return;
             const set=(cells,keys)=>{g.layer.cells=new Map(cells);this.tiles={layerId:g.layer.id,keys:keys.slice()};this.ids=[];this.ed.invalidate();this.sync();};
-            this.tiles={layerId:g.layer.id,keys:g.after.keys};this.ed.commit({label:globalThis.VTTUi('Kachelauswahl verschieben'),bytes:(g.before.size+g.after.cells.size)*32,undo:()=>set(g.before,g.keys),redo:()=>set(g.after.cells,g.after.keys)});
+            this.tiles={layerId:g.layer.id,keys:g.after.keys};this.ed.commit({label:globalThis.VTTUi('Kachelauswahl verschieben'),bytes:(g.before.size+g.after.cells.size)*32,undo:()=>set(g.before,g.keys),redo:()=>set(g.after.cells,g.after.keys)}, [g.layer]);
         }else if(g.moved){
             const after=g.objects.map(o=>copy(o.item));const set=values=>{g.objects.forEach((o,i)=>Object.assign(o.item,copy(values[i])));this.ed.invalidate();this.ed.afterItemChange();};
-            this.ed.commit({label:globalThis.VTTUi('Auswahl verschieben'),bytes:g.objects.length*512,undo:()=>set(g.objects.map(o=>o.before)),redo:()=>set(after)});
+            this.ed.commit({label:globalThis.VTTUi('Auswahl verschieben'),bytes:g.objects.length*512,undo:()=>set(g.objects.map(o=>o.before)),redo:()=>set(after)}, g.objects.map(o=>o.layer));
         }
         this.ed.afterItemChange();
     }
@@ -106,12 +106,12 @@ export class Selection {
             const layer=ed.doc.layers.find(l=>l.id===this.tiles.layerId),entries=this.tiles.keys.map(k=>[k,layer.cells.get(k)]);
             const apply=()=>{entries.forEach(([k])=>layer.cells.delete(k));ed.invalidate();ed.afterItemChange();};
             const undo=()=>{entries.forEach(([k,v])=>layer.cells.set(k,v));ed.invalidate();ed.afterItemChange();};
-            this.reset();ed._selection=null;apply();ed.commit({label:globalThis.VTTUi('Kachelauswahl löschen'),bytes:entries.length*64,undo,redo:apply});return;
+            this.reset();ed._selection=null;apply();ed.commit({label:globalThis.VTTUi('Kachelauswahl löschen'),bytes:entries.length*64,undo,redo:apply}, [layer]);return;
         }
         const rows=this.objects.map(o=>({...o,index:o.layer.items.indexOf(o.item)}));if(!rows.length)return;
         const apply=()=>{rows.forEach(({layer,item})=>{const i=layer.items.indexOf(item);if(i>=0)layer.items.splice(i,1);});ed.invalidate();ed.afterItemChange();};
         const undo=()=>{rows.slice().sort((a,b)=>a.index-b.index).forEach(({layer,item,index})=>layer.items.splice(index,0,item));ed.invalidate();ed.afterItemChange();};
-        this.reset();ed._selection=null;apply();ed.commit({label:globalThis.VTTUi('Auswahl löschen'),bytes:rows.length*512,undo,redo:apply});
+        this.reset();ed._selection=null;apply();ed.commit({label:globalThis.VTTUi('Auswahl löschen'),bytes:rows.length*512,undo,redo:apply}, rows.map(o=>o.layer));
     }
     scale(factor) {
         const rows=this.objects;if(!rows.length || rows.some(({item})=>'points' in item))return;
@@ -119,7 +119,7 @@ export class Selection {
         factor=Math.max(...rows.map(({item})=>range(item)[0]/item.size),Math.min(factor,...rows.map(({item})=>range(item)[1]/item.size)));
         const before=rows.map(({item})=>copy(item));rows.forEach(({item})=>{item.size*=factor;});
         const after=rows.map(({item})=>copy(item));const set=values=>{rows.forEach(({item},i)=>Object.assign(item,copy(values[i])));this.ed.invalidate();this.ed.afterItemChange();};
-        this.ed.invalidate();this.ed.afterItemChange();this.ed.commit({label:globalThis.VTTUi('Auswahl skalieren'),bytes:rows.length*512,undo:()=>set(before),redo:()=>set(after)});
+        this.ed.invalidate();this.ed.afterItemChange();this.ed.commit({label:globalThis.VTTUi('Auswahl skalieren'),bytes:rows.length*512,undo:()=>set(before),redo:()=>set(after)}, rows.map(o=>o.layer));
     }
     draw(ctx,zoom) {
         ctx.save();ctx.strokeStyle='#f2c66d';ctx.fillStyle='rgba(242,198,109,.12)';ctx.lineWidth=2/zoom;ctx.setLineDash([6/zoom,4/zoom]);

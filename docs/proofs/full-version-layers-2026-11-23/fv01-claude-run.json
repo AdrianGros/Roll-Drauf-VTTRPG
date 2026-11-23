@@ -1,0 +1,18 @@
+{
+  "task": "FV01-APPLY",
+  "phase": "apply",
+  "status": "completed_read_only_design",
+  "source_base": "44fa2da96",
+  "auth_method": "claude.ai subscription",
+  "is_error": false,
+  "tools_observed": [
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "raw_log_sha256": "c5a85556382f191172b0043d758b562099ec521dc68dac87442325aba7149e42",
+  "num_turns": 52,
+  "extra_usage_observed": false,
+  "tests_or_production_access": false,
+  "codex_review": "design retained with explicit corrections and packet remains open"
+}

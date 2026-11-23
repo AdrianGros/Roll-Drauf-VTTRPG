@@ -471,6 +471,7 @@ def test_area_fill_is_one_step_and_refuses_over_budget_before_placing(open_edito
     new_empty(ed)
     page = ed.page
     ed.tool('stamp')
+    ed.stamp_options()
     page.locator('#stampScatter').check()
     page.locator('#stampArea').check()
     expect(page.locator('#stampScatter')).not_to_be_checked()

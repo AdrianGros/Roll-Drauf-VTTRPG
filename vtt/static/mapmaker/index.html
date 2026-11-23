@@ -112,7 +112,14 @@
 
     <main class="mm-stage" id="stage">
         <canvas id="mapCanvas" tabindex="0" aria-label="Kartenfläche. Werkzeuge in der Werkzeugleiste, Orte im Bereich „Orte“." data-ui-aria-label="u_4e13e42d667b"></canvas>
-        <button id="activeLayerJump" class="mm-btn mm-btn-small mm-layer-jump" type="button" aria-controls="pane-layers" title="Aktive Ebene und Ebenenverwaltung öffnen" data-ui-title="u_e055b3861107"><span data-ui-key="u_e18fe9d3a2a7">Ebenen verwalten</span></button>
+        <div id="stageLayerTools" class="mm-stage-layer-tools" data-expanded="false">
+            <button id="activeLayerJump" class="mm-btn mm-btn-small mm-layer-jump" type="button" aria-controls="stageLayerPanel" aria-expanded="false" title="Aktive Ebene und Ebenenverwaltung öffnen" data-ui-title="u_e055b3861107"><span data-ui-key="u_e18fe9d3a2a7">Ebenen verwalten</span></button>
+            <label class="mm-check mm-reference-grid"><input id="referenceGrid" type="checkbox"><span id="referenceGridLabel">Raster bei allen Werkzeugen</span></label>
+            <div id="stageLayerPanel" class="mm-stage-layer-panel">
+                <fieldset id="stageLayerList" class="mm-layer-strip"><legend id="stageLayerLegend" class="sr-only">Aktive Zeichenebene</legend></fieldset>
+                <button id="manageStageLayers" type="button" class="mm-btn mm-btn-small">Alle Ebenen verwalten</button>
+            </div>
+        </div>
         <div class="mm-zoom" role="group" aria-label="Zoom" data-ui-aria-label="u_9b3cbed5c490">
             <button id="zoomOut" type="button" class="mm-icon-btn" aria-label="Verkleinern" data-ui-aria-label="u_2b3117e176c2" title="Verkleinern (−)" data-ui-title="u_4c5602f3b795">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
@@ -143,6 +150,130 @@
         <section class="mm-pane" id="pane-tool" role="tabpanel" aria-labelledby="tab-tool">
             <div class="mm-history-actions"><button id="undoVisible" type="button" class="mm-btn" disabled>Rückgängig</button><button id="redoVisible" type="button" class="mm-btn" disabled>Wiederholen</button></div>
             <label class="mm-field mm-tool-layer" id="toolLayerField"><span id="toolLayerLabel">Ebene für dieses Werkzeug</span><select id="toolLayer"></select><small id="toolLayerHint">Alt+↑ / Alt+↓ wechselt die Ebene.</small></label>
+            <div class="mm-group" data-options="brush eraser">
+                <p class="mm-target"><span data-ui-key="u_27ac40f67979">Malt auf:</span> <strong id="brushTarget">–</strong></p>
+                <div data-options="brush">
+                    <h3 class="mm-h3"><span data-ui-key="u_d8169782b57c">Material</span></h3>
+                    <div id="materials" class="mm-swatches" role="radiogroup" aria-label="Material" data-ui-aria-label="u_d8169782b57c"></div>
+                </div>
+                <label class="mm-field" id="eraseScopeField"><span data-ui-key="u_3934db2910b0">Radierer wirkt auf</span><select id="eraseScope"><option value="active" data-ui-key="u_789ae6b2d585">Aktive Ebene</option><option value="visible" data-ui-key="u_dec4268cf856">Alle sichtbaren Ebenen</option></select></label>
+                <p id="eraseScopeHint" class="mm-hint"></p>
+                <label class="mm-field"><span id="brushShapeLabel" data-ui-key="u_d34263ae6792">Pinselspitze</span><select id="brushShape"><option value="round" data-ui-key="u_7b662a0556ec">Rund</option><option value="square" data-ui-key="u_92a0712ccce5">Quadrat</option><option value="diamond" data-ui-key="u_c5f6f6af5c4f">Raute</option><option value="image" disabled data-ui-key="u_0896891a4fc4">Gewähltes Bild</option></select></label>
+                <p id="brushImageInfo" class="mm-hint" hidden></p>
+                <div data-options="brush">
+                    <label class="mm-check"><input id="brushColorEnabled" type="checkbox" aria-describedby="brushImageInfo"><span id="brushColorLabel" data-ui-key="u_dc1e43384526">Eigene Materialfarbe</span></label>
+                    <label class="mm-field"><span id="brushColorValueLabel" data-ui-key="u_89b7957dae43">Farbe</span><input id="brushColor" type="color" value="#8ea566" aria-describedby="brushImageInfo"></label>
+                    <label class="mm-range"><span id="brushTextureLabel" data-ui-key="u_f10b70a508d5">Texturanteil</span><input id="brushTexture" type="range" min="0" max="100" value="100" aria-describedby="brushImageInfo"><output id="brushTextureOut">100 %</output></label>
+                    <div id="brushCoastControls">
+                        <p id="brushCoastTarget" class="mm-hint"></p>
+                        <label class="mm-check"><input id="brushCoast" type="checkbox"><span id="brushCoastLabel" data-ui-key="u_3c88a283a9d0">Küstenlinie der aktiven Malebene</span></label>
+                        <label class="mm-field"><span id="brushCoastColorLabel" data-ui-key="u_560f5fae2297">Konturfarbe</span><input id="brushCoastColor" type="color" value="#3b2a1a"></label>
+                        <label class="mm-range"><span id="brushCoastWidthLabel" data-ui-key="u_09844223e159">Konturbreite (px)</span><input id="brushCoastWidth" type="range" min="0" max="16" step="0.5" value="2.5"><output id="brushCoastWidthOut">2.5 px</output></label>
+                    </div>
+                    <label class="mm-field" id="brushClipField"><span id="brushClipLabel">Malbegrenzung</span><select id="brushClip"></select></label>
+                    <p id="brushClipHint" class="mm-hint" role="status" aria-live="polite"></p>
+                </div>
+                <div class="mm-range mm-range-edit"><label for="brushSize"><span data-ui-key="u_d9130ae841c9">Größe</span></label><input id="brushSize" type="range" min="2" max="800" step="1"><output id="brushSizeOut"></output><input id="brushSizeNumber" class="mm-number" type="number" min="2" max="800" step="1" aria-label="Pinselgröße in Pixel" data-ui-aria-label="u_118420276fa1"></div>
+                <label class="mm-range"><span><span data-ui-key="u_3c11c68b55b1">Deckkraft</span></span><input id="brushOpacity" type="range" min="1" max="100" step="1"><output id="brushOpacityOut"></output></label>
+                <label class="mm-range"><span><span data-ui-key="u_ea1b9ed680db">Weichheit</span></span><input id="brushSoftness" type="range" min="0" max="100" step="1"><output id="brushSoftnessOut"></output></label>
+                <label class="mm-check" id="pressureRow" hidden><input id="brushPressure" type="checkbox" checked> <span data-ui-key="u_b0e515e0257a">Stiftdruck steuert Größe und Deckkraft</span></label>
+                <canvas id="brushPreview" class="mm-brush-preview" width="480" height="96" aria-hidden="true"></canvas>
+                <p class="mm-hint" data-options="eraser"><span data-ui-key="u_585987ea3b75">Radieren auf „Land“ formt Küsten, Buchten und Seen.</span></p>
+                <p class="mm-hint"><span data-ui-key="u_5dadd1804c71">Tasten:</span> <kbd>[</kbd> <kbd>]</kbd> <span data-ui-key="u_3ec882f61145">Größe,</span> <kbd>{</kbd> <kbd>}</kbd> <span data-ui-key="u_cb230dfc1dec">Weichheit.</span></p>
+            </div>
+
+            <div class="mm-group" data-options="path">
+                <p class="mm-target"><span data-ui-key="u_71cb4043fe52">Zeichnet auf:</span> <strong id="pathTarget"><span data-ui-key="u_ce8c8bb5c91b">Neue Ebene beim ersten Weg</span></strong></p>
+                <label class="mm-field"><span><span data-ui-key="u_308e17d2200a">Art</span></span><select id="pathMaterial"><option value="road" data-ui-key="u_d5c00e9a2be3">Weg</option><option value="river" data-ui-key="u_200b8c04671b">Fluss</option></select></label>
+                <label class="mm-check"><input id="pathCurve" type="checkbox" checked><span id="pathCurveLabel">Geglätteter Verlauf</span></label>
+                <div class="mm-range mm-range-edit"><label for="pathWidth"><span data-ui-key="u_861387c8ffe9">Breite</span></label><input id="pathWidth" type="range" min="2" max="80" step="1"><output id="pathWidthOut"></output><input id="pathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel" data-ui-aria-label="u_85804ab92648"></div>
+                <p class="mm-hint"><span data-ui-key="u_42afd96dfc30">Ziehen zeichnet einen editierbaren Verlauf. Mit Auswählen (V) kannst du ihn oder einzelne Punkte verschieben.</span></p>
+            </div>
+
+            <div class="mm-group" data-options="stamp">
+                <p class="mm-target"><span data-ui-key="u_45cb873b428e">Setzt auf:</span> <strong id="stampTarget">–</strong></p>
+                <label class="mm-field"><span><span data-ui-key="u_43eb38124697">Symbole suchen</span></span><input id="stampSearch" type="search" placeholder="Berge, Wald, Burg …" data-ui-placeholder="u_5d3e37bd219a" autocomplete="off"></label>
+                <label class="mm-field"><span><span data-ui-key="u_acb5ce20a410">Asset-Paket</span></span><select id="stampPack"><option value="" data-ui-key="u_346513e2c8e9">Alle Pakete</option></select></label>
+                <label class="mm-field"><span><span data-ui-key="u_358210386a4f">Kategorie</span></span><select id="stampCategory"><option value="" data-ui-key="u_42f71f9dfcff">Alle Kategorien</option></select></label>
+                <div class="mm-field-row">
+                    <label class="mm-field"><span id="stampStyleLabel">Darstellung</span><select id="stampStyle"></select></label>
+                    <label class="mm-field"><span id="stampPerspectiveLabel">Perspektive</span><select id="stampPerspective"></select></label>
+                </div>
+                <p id="stampTraitHint" class="mm-hint">Stil und Perspektive geben nur eigene Bilder an; Katalogpakete kennen nur „Pixelgrafik“.</p>
+                <p id="stampSelected" class="mm-meta"></p>
+                    <button id="stampCrop" type="button" class="mm-btn mm-btn-small" disabled><span data-ui-key="u_edf8d44272c7">Ausschnitt wählen</span></button>
+                <button id="stampAsBrush" type="button" class="mm-btn mm-btn-small" data-ui-key="u_246ec4b59e56">Gewähltes Symbol als Bildpinsel</button>
+                <p id="stampResults" class="mm-hint" role="status" aria-live="polite"></p>
+                <button id="stampFilterReset" type="button" class="mm-btn mm-btn-small" hidden>Filter zurücksetzen</button>
+                <div class="mm-palette-pages"><button id="stampPrev" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_045733db2fe1">Vorherige</span></button><button id="stampNext" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_7c9d8d2a98d9">Weitere Symbole</span></button></div>
+                <div id="palette" class="mm-palette"></div>
+                <p class="mm-hint"><a href="credits.html" target="_blank" rel="noopener"><span data-ui-key="u_b1005872af1b">Künstler, Quellen</span> &amp; <span data-ui-key="u_1cf3b632b621">Lizenzen</span></a> <span data-ui-key="u_16bdd23b9f81">· Kommerziell nutzbar mit den jeweiligen Künstler-Credits.</span></p>
+                <p id="packNote" class="mm-hint" hidden></p>
+                <div class="mm-range mm-range-edit"><label for="stampSize"><span data-ui-key="u_d9130ae841c9">Größe</span></label><input id="stampSize" type="range" min="16" max="320" step="1"><output id="stampSizeOut"></output><input id="stampSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Symbolgröße in Pixel" data-ui-aria-label="u_1c4b6cb798e7"></div>
+                <div class="mm-own-assets" id="ownAssets">
+                    <div class="mm-own-actions"><button id="ownUploadBtn" type="button" class="mm-btn mm-btn-small">Eigenes Bild hochladen …</button><button id="ownPixelBtn" type="button" class="mm-btn mm-btn-small">Pixelbild zeichnen …</button></div>
+                    <p id="ownAssetUsage" class="mm-hint"></p>
+                    <details id="ownAssetManage"><summary id="ownAssetManageLabel">Eigene Bilder dieser Karte</summary><ul id="ownAssetList" class="mm-own-list"></ul></details>
+                </div>
+                <details id="stampAdvanced" class="mm-advanced"><summary id="stampAdvancedLabel">Weitere Platzierungsoptionen</summary>
+                <div class="mm-placement" role="group" aria-labelledby="stampPlacementLabel">
+                    <span id="stampPlacementLabel" class="mm-hint">Platzierung</span>
+                    <label class="mm-check"><input id="stampScatter" type="checkbox"> <span data-ui-key="u_dc2d7aed6213">Streuen beim Ziehen (Wälder, Gebirge)</span></label>
+                    <label class="mm-check"><input id="stampArea" type="checkbox"> <span id="stampAreaLabel">Fläche füllen (Rechteck ziehen)</span></label>
+                    <p id="stampAreaInfo" class="mm-hint" role="status" aria-live="polite"></p>
+                </div>
+
+                <label class="mm-range"><span><span data-ui-key="u_bb151d57d178">Drehung</span></span><input id="stampRot" type="range" min="-180" max="180" step="1"><output id="stampRotOut"></output></label>
+                <label class="mm-check"><input id="stampFlip" type="checkbox"> <span data-ui-key="u_254cb97a9f54">Spiegeln</span></label>
+                <label class="mm-check"><input id="stampVary" type="checkbox"> <span data-ui-key="u_41cff9ab1c37">Leichte Variation (Größe, Drehung)</span></label>
+                <label class="mm-check"><input id="stampGridOn" type="checkbox"> <span data-ui-key="u_0f100e7a0d60">Stempelraster</span></label>
+                <label class="mm-field"><span data-ui-key="u_af799e55baf9">Rasterweite</span><input id="stampGridSize" class="mm-number" type="number" min="8" max="256" step="1" value="32" disabled></label>
+                </details>
+            </div>
+
+            <div class="mm-group" data-options="tile">
+                <p class="mm-target"><span data-ui-key="u_27ac40f67979">Malt auf:</span> <strong id="tileTarget"><span data-ui-key="u_8ee634ecfae2">Neue Kachelebene bei der ersten Kachel</span></strong></p>
+                <div class="mm-field-row">
+                    <label class="mm-field"><span><span data-ui-key="u_a7f116c3648a">Modus</span></span><select id="tileMode"><option value="paint" data-ui-key="u_a7f2eb381743">Setzen</option><option value="erase" data-ui-key="u_ffa5a8a7e21d">Löschen</option></select></label>
+                    <label class="mm-field"><span data-ui-key="u_121378702788">Pinselradius</span><input id="tileRadius" class="mm-number" type="number" min="0" max="6" step="1" value="0"></label>
+                    <div class="mm-field" id="tileVariantsField" role="group" aria-labelledby="tileVariantsLabel"><span id="tileVariantsLabel" data-ui-key="u_c13ac53f3723">Kachelvarianten</span>
+                        <div class="mm-variant-row"><button id="tileVariantAdd" type="button" class="mm-btn mm-btn-small">+</button><button id="tileVariantClear" type="button" class="mm-btn mm-btn-small">×</button></div>
+                        <ul id="tileVariantList" class="mm-variant-list"></ul></div>
+                    <label class="mm-field"><span><span data-ui-key="u_0d609b774049">Kachelgröße</span></span><select id="tileSize"><option value="16" data-ui-key="u_d1a28f9461fd">16 px</option><option value="24" data-ui-key="u_d2eda2f9d68e">24 px</option><option value="32" data-ui-key="u_1c4fb1334e30">32 px</option><option value="48" data-ui-key="u_414bbf0cac0d">48 px</option><option value="64" data-ui-key="u_0fd548f3aac9">64 px</option></select></label>
+                </div>
+                <p id="tileGridNotice" class="mm-hint" role="status" hidden></p>
+                <button id="tileNewLayer" type="button" class="mm-btn mm-btn-small" hidden></button>
+                <label class="mm-field"><span><span data-ui-key="u_45532b2b8e85">Kacheln suchen</span></span><input id="tileSearch" type="search" placeholder="Gras, Dach, Mauer …" data-ui-placeholder="u_43b9d7f4100d" autocomplete="off"></label>
+                <label class="mm-field"><span><span data-ui-key="u_acb5ce20a410">Asset-Paket</span></span><select id="tilePack"><option value="" data-ui-key="u_346513e2c8e9">Alle Pakete</option></select></label>
+                <p id="tileSelected" class="mm-meta"></p>
+                <button id="tileAsSymbol" type="button" class="mm-btn">Gewählte Kachel frei als Symbol platzieren</button>
+                <button id="tileAsBrush" type="button" class="mm-btn" data-ui-key="u_3c664a5ffdcf">Gewählte Kachel als Bildpinsel</button>
+                <p id="tileResults" class="mm-hint" role="status" aria-live="polite"></p>
+                <div class="mm-palette-pages"><button id="tilePrev" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_045733db2fe1">Vorherige</span></button><button id="tileNext" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_d92f7cbe4bbb">Weitere Kacheln</span></button></div>
+                <div id="tilePalette" class="mm-palette"></div>
+                <p class="mm-hint"><span data-ui-key="u_52040f2f85db">Klicken oder ziehen füllt die Rasterzellen, eine Kachel pro Zelle. Transparente Kacheln wie Zäune oder Waldränder auf eine zweite Kachelebene über dem Boden legen. Gegenstände und Bäume setzt du mit</span> <strong><span data-ui-key="u_cf577b827b3a">Stempel</span></strong>.</p>
+            </div>
+
+            <div class="mm-group" data-options="label">
+                <button id="editPlacedLabel" type="button" class="mm-btn mm-btn-small" disabled>Ausgewählte Beschriftung bearbeiten</button>
+                <label class="mm-check"><input id="labelNamed" type="checkbox" checked><span id="labelNamedLabel">Name anzeigen</span></label>
+                <p class="mm-target"><span data-ui-key="u_45cb873b428e">Setzt auf:</span> <strong id="labelTarget">–</strong></p>
+                <div class="mm-field-row">
+                    <label class="mm-field"><span><span data-ui-key="u_820cfc2922d6">Stil</span></span><select id="labelStyle"></select></label>
+                    <label class="mm-field"><span><span data-ui-key="u_bec9cc1234ae">Ortsart</span></span><select id="labelKind"></select></label>
+                </div>
+                <label class="mm-field"><span id="labelFontLabel">Schriftfamilie</span><select id="labelFont"></select></label>
+                <label class="mm-check"><input id="labelPin" type="checkbox" checked> <span data-ui-key="u_3203ec4b4b77">Ortsnadel zeigen</span></label>
+                <label class="mm-field"><span><span data-ui-key="u_e84a549a8c99">Ortssymbol</span></span><select id="placeSymbol" aria-describedby="placeSymbolHint"></select></label>
+                <p id="placeSymbolHint" class="mm-hint">Zuletzt gewählte Symbole und die aktuelle Seite der Symbolpalette (mit deren Suche und Filtern).</p>
+                <div class="mm-range mm-range-edit"><label for="placeSymbolSize"><span data-ui-key="u_b19e01c58c59">Symbolgröße</span></label><input id="placeSymbolSize" type="range" min="16" max="320" step="1"><output id="placeSymbolSizeOut"></output><input id="placeSymbolSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Ortssymbolgröße in Pixel" data-ui-aria-label="u_28156ff5302d"></div>
+                <p class="mm-hint"><span data-ui-key="u_c2a6118cc49f">Tippe auf die Karte, um immer einen neuen Ort zu setzen. Zum Bearbeiten vorhandener Orte nutze Auswählen (V) oder die Ortsliste.</span></p>
+            </div>
+
+            <div class="mm-group" data-options="select"><p id="selectionHint" class="mm-hint">Auf freier Fläche einen Auswahlrahmen ziehen. Umschalt-Klick erweitert die Auswahl. Ziehen verschiebt die Auswahl; Entf löscht sie. Leertaste verschiebt die Ansicht.</p></div>
+            <div class="mm-group" data-options="pan">
+                <p class="mm-hint"><span data-ui-key="u_1183b369f48d">Ziehen verschiebt die Karte. Mausrad oder zwei Finger zoomen. In jedem Werkzeug:</span> <kbd>Leertaste</kbd> <span data-ui-key="u_a1c7235a87b1">halten oder mittlere Maustaste zum Verschieben.</span></p>
+            </div>
             <div id="groupInspector" class="mm-group" hidden>
                 <h2 id="groupTitle"></h2><p id="groupHint" class="mm-hint"></p>
                 <label id="groupScaleRow" class="mm-field"><span id="groupScaleLabel">Gemeinsame Größe (%)</span><input id="groupScale" type="number" min="10" max="500" value="100" step="10"></label>
@@ -193,124 +324,6 @@
                 <button id="selDelete" type="button" class="mm-btn mm-btn-danger"><span data-ui-key="u_e65c67367259">Auswahl löschen</span></button>
             </div>
 
-            <div class="mm-group" data-options="brush eraser">
-                <p class="mm-target"><span data-ui-key="u_27ac40f67979">Malt auf:</span> <strong id="brushTarget">–</strong></p>
-                <div data-options="brush">
-                    <h3 class="mm-h3"><span data-ui-key="u_d8169782b57c">Material</span></h3>
-                    <div id="materials" class="mm-swatches" role="radiogroup" aria-label="Material" data-ui-aria-label="u_d8169782b57c"></div>
-                </div>
-                <label class="mm-field" id="eraseScopeField"><span data-ui-key="u_3934db2910b0">Radierer wirkt auf</span><select id="eraseScope"><option value="active" data-ui-key="u_789ae6b2d585">Aktive Ebene</option><option value="visible" data-ui-key="u_dec4268cf856">Alle sichtbaren Ebenen</option></select></label>
-                <p id="eraseScopeHint" class="mm-hint"></p>
-                <label class="mm-field"><span id="brushShapeLabel" data-ui-key="u_d34263ae6792">Pinselspitze</span><select id="brushShape"><option value="round" data-ui-key="u_7b662a0556ec">Rund</option><option value="square" data-ui-key="u_92a0712ccce5">Quadrat</option><option value="diamond" data-ui-key="u_c5f6f6af5c4f">Raute</option><option value="image" disabled data-ui-key="u_0896891a4fc4">Gewähltes Bild</option></select></label>
-                <p id="brushImageInfo" class="mm-hint" hidden></p>
-                <div data-options="brush">
-                    <label class="mm-check"><input id="brushColorEnabled" type="checkbox" aria-describedby="brushImageInfo"><span id="brushColorLabel" data-ui-key="u_dc1e43384526">Eigene Materialfarbe</span></label>
-                    <label class="mm-field"><span id="brushColorValueLabel" data-ui-key="u_89b7957dae43">Farbe</span><input id="brushColor" type="color" value="#8ea566" aria-describedby="brushImageInfo"></label>
-                    <label class="mm-range"><span id="brushTextureLabel" data-ui-key="u_f10b70a508d5">Texturanteil</span><input id="brushTexture" type="range" min="0" max="100" value="100" aria-describedby="brushImageInfo"><output id="brushTextureOut">100 %</output></label>
-                    <div id="brushCoastControls">
-                        <p id="brushCoastTarget" class="mm-hint"></p>
-                        <label class="mm-check"><input id="brushCoast" type="checkbox"><span id="brushCoastLabel" data-ui-key="u_3c88a283a9d0">Küstenlinie der aktiven Malebene</span></label>
-                        <label class="mm-field"><span id="brushCoastColorLabel" data-ui-key="u_560f5fae2297">Konturfarbe</span><input id="brushCoastColor" type="color" value="#3b2a1a"></label>
-                        <label class="mm-range"><span id="brushCoastWidthLabel" data-ui-key="u_09844223e159">Konturbreite (px)</span><input id="brushCoastWidth" type="range" min="0" max="16" step="0.5" value="2.5"><output id="brushCoastWidthOut">2.5 px</output></label>
-                    </div>
-                    <label class="mm-field" id="brushClipField"><span id="brushClipLabel">Malbegrenzung</span><select id="brushClip"></select></label>
-                    <p id="brushClipHint" class="mm-hint" role="status" aria-live="polite"></p>
-                </div>
-                <div class="mm-range mm-range-edit"><label for="brushSize"><span data-ui-key="u_d9130ae841c9">Größe</span></label><input id="brushSize" type="range" min="2" max="800" step="1"><output id="brushSizeOut"></output><input id="brushSizeNumber" class="mm-number" type="number" min="2" max="800" step="1" aria-label="Pinselgröße in Pixel" data-ui-aria-label="u_118420276fa1"></div>
-                <label class="mm-range"><span><span data-ui-key="u_3c11c68b55b1">Deckkraft</span></span><input id="brushOpacity" type="range" min="1" max="100" step="1"><output id="brushOpacityOut"></output></label>
-                <label class="mm-range"><span><span data-ui-key="u_ea1b9ed680db">Weichheit</span></span><input id="brushSoftness" type="range" min="0" max="100" step="1"><output id="brushSoftnessOut"></output></label>
-                <label class="mm-check" id="pressureRow" hidden><input id="brushPressure" type="checkbox" checked> <span data-ui-key="u_b0e515e0257a">Stiftdruck steuert Größe und Deckkraft</span></label>
-                <canvas id="brushPreview" class="mm-brush-preview" width="480" height="96" aria-hidden="true"></canvas>
-                <p class="mm-hint" data-options="eraser"><span data-ui-key="u_585987ea3b75">Radieren auf „Land“ formt Küsten, Buchten und Seen.</span></p>
-                <p class="mm-hint"><span data-ui-key="u_5dadd1804c71">Tasten:</span> <kbd>[</kbd> <kbd>]</kbd> <span data-ui-key="u_3ec882f61145">Größe,</span> <kbd>{</kbd> <kbd>}</kbd> <span data-ui-key="u_cb230dfc1dec">Weichheit.</span></p>
-            </div>
-
-            <div class="mm-group" data-options="path">
-                <p class="mm-target"><span data-ui-key="u_71cb4043fe52">Zeichnet auf:</span> <strong id="pathTarget"><span data-ui-key="u_ce8c8bb5c91b">Neue Ebene beim ersten Weg</span></strong></p>
-                <label class="mm-field"><span><span data-ui-key="u_308e17d2200a">Art</span></span><select id="pathMaterial"><option value="road" data-ui-key="u_d5c00e9a2be3">Weg</option><option value="river" data-ui-key="u_200b8c04671b">Fluss</option></select></label>
-                <label class="mm-check"><input id="pathCurve" type="checkbox" checked><span id="pathCurveLabel">Geglätteter Verlauf</span></label>
-                <div class="mm-range mm-range-edit"><label for="pathWidth"><span data-ui-key="u_861387c8ffe9">Breite</span></label><input id="pathWidth" type="range" min="2" max="80" step="1"><output id="pathWidthOut"></output><input id="pathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel" data-ui-aria-label="u_85804ab92648"></div>
-                <p class="mm-hint"><span data-ui-key="u_42afd96dfc30">Ziehen zeichnet einen editierbaren Verlauf. Mit Auswählen (V) kannst du ihn oder einzelne Punkte verschieben.</span></p>
-            </div>
-
-            <div class="mm-group" data-options="stamp">
-                <p class="mm-target"><span data-ui-key="u_45cb873b428e">Setzt auf:</span> <strong id="stampTarget">–</strong></p>
-                <div class="mm-placement" role="group" aria-labelledby="stampPlacementLabel">
-                    <span id="stampPlacementLabel" class="mm-hint">Platzierung</span>
-                    <label class="mm-check"><input id="stampScatter" type="checkbox"> <span data-ui-key="u_dc2d7aed6213">Streuen beim Ziehen (Wälder, Gebirge)</span></label>
-                    <label class="mm-check"><input id="stampArea" type="checkbox"> <span id="stampAreaLabel">Fläche füllen (Rechteck ziehen)</span></label>
-                    <p id="stampAreaInfo" class="mm-hint" role="status" aria-live="polite"></p>
-                </div>
-                <div class="mm-own-assets" id="ownAssets">
-                    <div class="mm-own-actions"><button id="ownUploadBtn" type="button" class="mm-btn mm-btn-small">Eigenes Bild hochladen …</button><button id="ownPixelBtn" type="button" class="mm-btn mm-btn-small">Pixelbild zeichnen …</button></div>
-                    <p id="ownAssetUsage" class="mm-hint"></p>
-                    <details id="ownAssetManage"><summary id="ownAssetManageLabel">Eigene Bilder dieser Karte</summary><ul id="ownAssetList" class="mm-own-list"></ul></details>
-                </div>
-                <label class="mm-field"><span><span data-ui-key="u_43eb38124697">Symbole suchen</span></span><input id="stampSearch" type="search" placeholder="Berge, Wald, Burg …" data-ui-placeholder="u_5d3e37bd219a" autocomplete="off"></label>
-                <label class="mm-field"><span><span data-ui-key="u_acb5ce20a410">Asset-Paket</span></span><select id="stampPack"><option value="" data-ui-key="u_346513e2c8e9">Alle Pakete</option></select></label>
-                <label class="mm-field"><span><span data-ui-key="u_358210386a4f">Kategorie</span></span><select id="stampCategory"><option value="" data-ui-key="u_42f71f9dfcff">Alle Kategorien</option></select></label>
-                <div class="mm-field-row">
-                    <label class="mm-field"><span id="stampStyleLabel">Darstellung</span><select id="stampStyle"></select></label>
-                    <label class="mm-field"><span id="stampPerspectiveLabel">Perspektive</span><select id="stampPerspective"></select></label>
-                </div>
-                <p id="stampTraitHint" class="mm-hint">Stil und Perspektive geben nur eigene Bilder an; Katalogpakete kennen nur „Pixelgrafik“.</p>
-                <p id="stampSelected" class="mm-meta"></p>
-                    <button id="stampCrop" type="button" class="mm-btn mm-btn-small" disabled><span data-ui-key="u_edf8d44272c7">Ausschnitt wählen</span></button>
-                <button id="stampAsBrush" type="button" class="mm-btn mm-btn-small" data-ui-key="u_246ec4b59e56">Gewähltes Symbol als Bildpinsel</button>
-                <p id="stampResults" class="mm-hint" role="status" aria-live="polite"></p>
-                <button id="stampFilterReset" type="button" class="mm-btn mm-btn-small" hidden>Filter zurücksetzen</button>
-                <div class="mm-palette-pages"><button id="stampPrev" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_045733db2fe1">Vorherige</span></button><button id="stampNext" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_7c9d8d2a98d9">Weitere Symbole</span></button></div>
-                <div id="palette" class="mm-palette"></div>
-                <p class="mm-hint"><a href="credits.html" target="_blank" rel="noopener"><span data-ui-key="u_b1005872af1b">Künstler, Quellen</span> &amp; <span data-ui-key="u_1cf3b632b621">Lizenzen</span></a> <span data-ui-key="u_16bdd23b9f81">· Kommerziell nutzbar mit den jeweiligen Künstler-Credits.</span></p>
-                <p id="packNote" class="mm-hint" hidden></p>
-                <div class="mm-range mm-range-edit"><label for="stampSize"><span data-ui-key="u_d9130ae841c9">Größe</span></label><input id="stampSize" type="range" min="16" max="320" step="1"><output id="stampSizeOut"></output><input id="stampSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Symbolgröße in Pixel" data-ui-aria-label="u_1c4b6cb798e7"></div>
-                <label class="mm-range"><span><span data-ui-key="u_bb151d57d178">Drehung</span></span><input id="stampRot" type="range" min="-180" max="180" step="1"><output id="stampRotOut"></output></label>
-                <label class="mm-check"><input id="stampFlip" type="checkbox"> <span data-ui-key="u_254cb97a9f54">Spiegeln</span></label>
-                <label class="mm-check"><input id="stampVary" type="checkbox"> <span data-ui-key="u_41cff9ab1c37">Leichte Variation (Größe, Drehung)</span></label>
-                <label class="mm-check"><input id="stampGridOn" type="checkbox"> <span data-ui-key="u_0f100e7a0d60">Stempelraster</span></label>
-                <label class="mm-field"><span data-ui-key="u_af799e55baf9">Rasterweite</span><input id="stampGridSize" class="mm-number" type="number" min="8" max="256" step="1" value="32" disabled></label>
-            </div>
-
-            <div class="mm-group" data-options="tile">
-                <p class="mm-target"><span data-ui-key="u_27ac40f67979">Malt auf:</span> <strong id="tileTarget"><span data-ui-key="u_8ee634ecfae2">Neue Kachelebene bei der ersten Kachel</span></strong></p>
-                <div class="mm-field-row">
-                    <label class="mm-field"><span><span data-ui-key="u_a7f116c3648a">Modus</span></span><select id="tileMode"><option value="paint" data-ui-key="u_a7f2eb381743">Setzen</option><option value="erase" data-ui-key="u_ffa5a8a7e21d">Löschen</option></select></label>
-                    <label class="mm-field"><span data-ui-key="u_121378702788">Pinselradius</span><input id="tileRadius" class="mm-number" type="number" min="0" max="6" step="1" value="0"></label>
-                    <div class="mm-field" id="tileVariantsField" role="group" aria-labelledby="tileVariantsLabel"><span id="tileVariantsLabel" data-ui-key="u_c13ac53f3723">Kachelvarianten</span>
-                        <div class="mm-variant-row"><button id="tileVariantAdd" type="button" class="mm-btn mm-btn-small">+</button><button id="tileVariantClear" type="button" class="mm-btn mm-btn-small">×</button></div>
-                        <ul id="tileVariantList" class="mm-variant-list"></ul></div>
-                    <label class="mm-field"><span><span data-ui-key="u_0d609b774049">Kachelgröße</span></span><select id="tileSize"><option value="16" data-ui-key="u_d1a28f9461fd">16 px</option><option value="24" data-ui-key="u_d2eda2f9d68e">24 px</option><option value="32" data-ui-key="u_1c4fb1334e30">32 px</option><option value="48" data-ui-key="u_414bbf0cac0d">48 px</option><option value="64" data-ui-key="u_0fd548f3aac9">64 px</option></select></label>
-                </div>
-                <label class="mm-field"><span><span data-ui-key="u_45532b2b8e85">Kacheln suchen</span></span><input id="tileSearch" type="search" placeholder="Gras, Dach, Mauer …" data-ui-placeholder="u_43b9d7f4100d" autocomplete="off"></label>
-                <label class="mm-field"><span><span data-ui-key="u_acb5ce20a410">Asset-Paket</span></span><select id="tilePack"><option value="" data-ui-key="u_346513e2c8e9">Alle Pakete</option></select></label>
-                <p id="tileSelected" class="mm-meta"></p>
-                <button id="tileAsSymbol" type="button" class="mm-btn">Gewählte Kachel frei als Symbol platzieren</button>
-                <button id="tileAsBrush" type="button" class="mm-btn" data-ui-key="u_3c664a5ffdcf">Gewählte Kachel als Bildpinsel</button>
-                <p id="tileResults" class="mm-hint" role="status" aria-live="polite"></p>
-                <div class="mm-palette-pages"><button id="tilePrev" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_045733db2fe1">Vorherige</span></button><button id="tileNext" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_d92f7cbe4bbb">Weitere Kacheln</span></button></div>
-                <div id="tilePalette" class="mm-palette"></div>
-                <p class="mm-hint"><span data-ui-key="u_52040f2f85db">Klicken oder ziehen füllt die Rasterzellen, eine Kachel pro Zelle. Transparente Kacheln wie Zäune oder Waldränder auf eine zweite Kachelebene über dem Boden legen. Gegenstände und Bäume setzt du mit</span> <strong><span data-ui-key="u_cf577b827b3a">Stempel</span></strong>.</p>
-            </div>
-
-            <div class="mm-group" data-options="label">
-                <label class="mm-check"><input id="labelNamed" type="checkbox" checked><span id="labelNamedLabel">Name anzeigen</span></label>
-                <p class="mm-target"><span data-ui-key="u_45cb873b428e">Setzt auf:</span> <strong id="labelTarget">–</strong></p>
-                <div class="mm-field-row">
-                    <label class="mm-field"><span><span data-ui-key="u_820cfc2922d6">Stil</span></span><select id="labelStyle"></select></label>
-                    <label class="mm-field"><span><span data-ui-key="u_bec9cc1234ae">Ortsart</span></span><select id="labelKind"></select></label>
-                </div>
-                <label class="mm-field"><span id="labelFontLabel">Schriftfamilie</span><select id="labelFont"></select></label>
-                <label class="mm-check"><input id="labelPin" type="checkbox" checked> <span data-ui-key="u_3203ec4b4b77">Ortsnadel zeigen</span></label>
-                <label class="mm-field"><span><span data-ui-key="u_e84a549a8c99">Ortssymbol</span></span><select id="placeSymbol" aria-describedby="placeSymbolHint"></select></label>
-                <p id="placeSymbolHint" class="mm-hint">Zuletzt gewählte Symbole und die aktuelle Seite der Symbolpalette (mit deren Suche und Filtern).</p>
-                <div class="mm-range mm-range-edit"><label for="placeSymbolSize"><span data-ui-key="u_b19e01c58c59">Symbolgröße</span></label><input id="placeSymbolSize" type="range" min="16" max="320" step="1"><output id="placeSymbolSizeOut"></output><input id="placeSymbolSizeNumber" class="mm-number" type="number" min="16" max="320" step="1" aria-label="Ortssymbolgröße in Pixel" data-ui-aria-label="u_28156ff5302d"></div>
-                <p class="mm-hint"><span data-ui-key="u_c2a6118cc49f">Tippe auf die Karte, um immer einen neuen Ort zu setzen. Zum Bearbeiten vorhandener Orte nutze Auswählen (V) oder die Ortsliste.</span></p>
-            </div>
-
-            <div class="mm-group" data-options="select"><p id="selectionHint" class="mm-hint">Auf freier Fläche einen Auswahlrahmen ziehen. Umschalt-Klick erweitert die Auswahl. Ziehen verschiebt die Auswahl; Entf löscht sie. Leertaste verschiebt die Ansicht.</p></div>
-            <div class="mm-group" data-options="pan">
-                <p class="mm-hint"><span data-ui-key="u_1183b369f48d">Ziehen verschiebt die Karte. Mausrad oder zwei Finger zoomen. In jedem Werkzeug:</span> <kbd>Leertaste</kbd> <span data-ui-key="u_a1c7235a87b1">halten oder mittlere Maustaste zum Verschieben.</span></p>
-            </div>
         </section>
 
         <section class="mm-pane" id="pane-layers" role="tabpanel" aria-labelledby="tab-layers" hidden>
@@ -324,11 +337,20 @@
                 <p class="mm-hint"><span data-ui-key="u_ef09d0687820">Der Titel verwendet den Namen oben im Editor. Eine vorhandene Überschrift in der Kartenmitte oben wird dafür vorübergehend ausgeblendet.</span></p>
             </div>
             <p class="mm-hint"><span data-ui-key="u_a4862cab2279">Oben liegende Ebenen verdecken darunterliegende.</span></p>
+            <div class="mm-layer-filters">
+                <label class="mm-field"><span id="layerFilterKindLabel">Ebenentyp</span><select id="layerFilterKind"></select></label>
+                <label class="mm-field"><span id="layerFilterNameLabel">Ebenen suchen</span><input id="layerFilterName" type="search" maxlength="80"></label>
+                <label class="mm-field"><span id="layerFilterContentLabel">Ebeneninhalt</span><select id="layerFilterContent"></select></label>
+                <label class="mm-field"><span id="layerSortLabel">Ebenen sortieren</span><select id="layerSort"></select></label>
+            </div>
+            <p id="layerRecentHint" class="mm-hint">Zuletzt genutzt: in dieser Editorsitzung ausgewählt oder bearbeitet.</p>
             <ol id="layerList" class="mm-layers"></ol>
             <div id="layerProps" class="mm-group">
                 <label class="mm-range"><span><span data-ui-key="u_3c11c68b55b1">Deckkraft</span></span><input id="layerOpacity" type="range" min="0" max="100" step="1"><output id="layerOpacityOut"></output></label>
                 <label class="mm-check" id="layerCoastRow"><input id="layerCoast" type="checkbox"> <span data-ui-key="u_deff9fdc7fe7">Küstenlinie und Brandung</span></label>
                 <label class="mm-field" id="layerGridRow" hidden><span><span data-ui-key="u_0d609b774049">Kachelgröße</span></span><select id="layerGrid"><option value="16" data-ui-key="u_d1a28f9461fd">16 px</option><option value="24" data-ui-key="u_d2eda2f9d68e">24 px</option><option value="32" data-ui-key="u_1c4fb1334e30">32 px</option><option value="48" data-ui-key="u_414bbf0cac0d">48 px</option><option value="64" data-ui-key="u_0fd548f3aac9">64 px</option></select></label>
+                <p id="layerGridNotice" class="mm-hint" role="status" hidden></p>
+                <button id="layerNewGrid" type="button" class="mm-btn mm-btn-small" hidden></button>
             </div>
             <div class="mm-add-row">
                 <button id="addRaster" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_ae9525603420">+ Malebene</span></button>

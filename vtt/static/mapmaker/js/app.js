@@ -69,6 +69,7 @@ class Editor {
         this.eraseScope = "active"; // "active" (default) or explicit "visible"
         this.eraseGesture = null;
         this.previewPath = null;
+        this.showReferenceGrid = false; // page-session view state, never part of a document
         this.selectionSet = new Selection(this);
         this.selection = null;
         this.editPathNodes = false;
@@ -185,6 +186,7 @@ class Editor {
         this.cancelInteractions();
         this.finishWheelOrder(false);
         this.doc = doc;
+        this.ui.clearTileGridOffer();
         // Own images belong to exactly this project; the palette lists only these.
         doc.assets ||= [];
         this.palette.showDocumentAssets(doc);
@@ -379,6 +381,7 @@ class Editor {
             ctx.restore();
         }
         if (this.tool === "tile") this.drawTileOverlay(ctx, zoom);
+        else if (this.showReferenceGrid) this.drawTileOverlay(ctx, zoom, true);
         if (!this.cursor || this.strokeActive && this.tool === "stamp") return;
         if (this.tool === "stamp" && (this.stampOpts.scatter || this.stampOpts.area)) {
             // Visible scatter coverage: the spacing that separates scattered stamps.
@@ -422,9 +425,9 @@ class Editor {
     }
 
     /** Grid of the tile layer being painted, and the cell under the cursor with a preview. */
-    drawTileOverlay(ctx, zoom) {
+    drawTileOverlay(ctx, zoom, gridOnly = false) {
         const layer = this.targetLayer("tiles", { quiet: true });
-        const size = layer ? layer.grid.size : this.tileOpts.size;
+        const size = gridOnly && this.stampOpts.grid ? this.stampOpts.grid : layer ? layer.grid.size : this.tileOpts.size;
         const { cols, rows } = tileGridSize(this.doc, size);
         if (size * zoom >= 6) {
             const x0 = Math.max(0, Math.floor(-this.view.panX / zoom / size));
@@ -440,7 +443,7 @@ class Editor {
             ctx.stroke();
             ctx.restore();
         }
-        if (!this.cursor || !this.insideMap(this.cursor)) return;
+        if (gridOnly || !this.cursor || !this.insideMap(this.cursor)) return;
         const col = Math.floor(this.cursor.x / size);
         const row = Math.floor(this.cursor.y / size);
         const stamp = !this.tileOpts.erase && this.tileOpts.asset ? this.palette.stamps.get(this.tileOpts.asset) : null;
@@ -617,7 +620,7 @@ class Editor {
                 }
                 put(after);
             },
-        });
+        }, [layer]);
     }
 
     cancelTiles() {
@@ -652,7 +655,9 @@ class Editor {
 
     setActiveLayer(id) {
         if (!this.layerById(id)) return;
+        if (id !== this.activeLayerId) this.ui.clearTileGridOffer();
         this.activeLayerId = id;
+        this.ui.noteLayerUse(this.layerById(id));
         this.validateClip();
         this.ui.refreshLayers();
         this.ui.updateTargets();
@@ -736,7 +741,7 @@ class Editor {
         return layer;
     }
 
-    layerCommand(label, apply, revert, bytes = 256) {
+    layerCommand(label, apply, revert, bytes = 256, layers = []) {
         apply();
         this.afterLayerChange();
         this.commit({
@@ -744,7 +749,7 @@ class Editor {
             bytes,
             undo: () => { revert(); this.afterLayerChange(); },
             redo: () => { apply(); this.afterLayerChange(); },
-        });
+        }, layers);
     }
 
     afterLayerChange() {
@@ -789,7 +794,7 @@ class Editor {
             this.ui.toast(globalThis.VTTUi("Die Malebenen wären zusammen zu groß für diese Kartengröße."));
             return;
         }
-        const names = { raster: globalThis.VTTUi("Malebene"), paths: globalThis.VTTUi("Wege & Flüsse"), stamps: globalThis.VTTUi("Symbole"), labels: globalThis.VTTUi("Beschriftung"), tiles: globalThis.VTTUi("Kacheln") };
+        const names = { raster: globalThis.VTTUi("Malebene"), paths: globalThis.VTTUi("Wege (Vektor)"), stamps: globalThis.VTTUi("Symbole"), labels: globalThis.VTTUi("Beschriftung"), tiles: globalThis.VTTUi("Kacheln") };
         const layer = createLayer(kind, `${names[kind]} ${countLayers(this.doc, kind) + 1}`, this.doc.size, collectIds(this.doc));
         if (kind === "tiles") layer.grid.size = this.tileOpts.size;
         const active = this.doc.layers.indexOf(this.activeLayer());
@@ -798,7 +803,8 @@ class Editor {
         this.layerCommand("Ebene hinzufügen",
             () => { this.doc.layers.splice(index, 0, layer); this.activeLayerId = layer.id; },
             () => { this.doc.layers.splice(this.doc.layers.indexOf(layer), 1); },
-            bytes);
+            bytes, [layer]);
+        return layer;
     }
 
     deleteLayer(id) {
@@ -813,7 +819,7 @@ class Editor {
         this.layerCommand(`Ebene „${layer.name}“ löschen`,
             () => { this.doc.layers.splice(this.doc.layers.indexOf(layer), 1); },
             () => { this.doc.layers.splice(index, 0, layer); this.activeLayerId = layer.id; },
-            bytes);
+            bytes, [layer]);
         this.ui.toast(globalThis.VTTUi("Ebene „{p0}“ gelöscht – Strg+Z holt sie zurück.",{p0:(layer.name)}));
     }
 
@@ -826,7 +832,7 @@ class Editor {
             const list = this.doc.layers;
             list.splice(b, 0, list.splice(a, 1)[0]);
         };
-        this.layerCommand("Ebene verschieben", () => swap(from, to), () => swap(to, from));
+        this.layerCommand("Ebene verschieben", () => swap(from, to), () => swap(to, from), 256, [layer]);
     }
 
     setLayerProp(id, key, value) {
@@ -842,6 +848,12 @@ class Editor {
         const before = get();
         if (before === value) return;
         if (key === "gridSize") {
+            if (layer.cells.size) {
+                this.ui.offerTileGrid(value);
+                this.ui.refreshLayers();
+                return false;
+            }
+            this.ui.clearTileGridOffer();
             // Cells keep their column/row; refuse a size that would push used cells off the map.
             const { cols, rows } = tileGridSize(this.doc, value);
             if ([...layer.cells.keys()].some((k) => cellOf(k).col >= cols || cellOf(k).row >= rows)) {
@@ -851,7 +863,18 @@ class Editor {
             }
         }
         const labels = { visible: value ? globalThis.VTTUi("Ebene einblenden") : globalThis.VTTUi("Ebene ausblenden"), name: globalThis.VTTUi("Ebene umbenennen"), opacity: globalThis.VTTUi("Deckkraft"), coast: globalThis.VTTUi("Küstenlinie"), gridSize: globalThis.VTTUi("Kachelgröße") };
-        this.layerCommand(labels[key] || "Ebene ändern", () => set(value), () => set(before));
+        this.layerCommand(labels[key] || "Ebene ändern", () => set(value), () => set(before), 256, [layer]);
+        return true;
+    }
+
+    /** A new empty layer is the explicit alternative to moving occupied cells. */
+    newTileLayer(size) {
+        const previous = this.tileOpts.size;
+        this.tileOpts.size = size;
+        const layer = this.addLayer("tiles");
+        if (!layer) this.tileOpts.size = previous;
+        else this.ui.clearTileGridOffer();
+        return layer;
     }
 
     // ---- items -------------------------------------------------------------
@@ -877,18 +900,34 @@ class Editor {
             this.afterItemChange();
         };
         apply();
-        this.commit({ label, bytes: 256 * items.length, undo: revert, redo: apply });
+        this.commit({ label, bytes: 256 * items.length, undo: revert, redo: apply }, [layer]);
         return true;
     }
 
-    addPath(item) {
-        let layer = [...this.doc.layers].reverse().find((entry) => entry.kind === "paths" && entry.visible);
-        if (layer) return this.addItems(layer, [item], item.material === "river" ? "Fluss zeichnen" : "Weg zeichnen");
+    pathTarget() {
+        if (this.doc.layers.some((layer) => layer.kind === "paths")) return this.targetLayer("paths") || false;
         if (this.doc.layers.length >= LIMITS.layers || countItems(this.doc) >= LIMITS.items) {
             this.ui.toast(globalThis.VTTUi("Höchstgrenze an Ebenen oder Kartenelementen erreicht."));
             return false;
         }
-        layer = createLayer("paths", "Wege & Flüsse", this.doc.size, collectIds(this.doc));
+        return null; // No existing target: creation belongs to the committed stroke, not pointerdown.
+    }
+
+    addPath(item, targetId = undefined) {
+        let layer;
+        if (targetId || this.doc.layers.some((entry) => entry.kind === "paths")) {
+            layer = targetId === undefined ? this.pathTarget() : this.layerById(targetId);
+            if (!layer || layer.kind !== "paths" || !layer.visible) {
+                this.ui.toast(globalThis.VTTUi("Die gewählte Wegeebene ist nicht mehr sichtbar oder vorhanden."));
+                return false;
+            }
+            return this.addItems(layer, [item], item.material === "river" ? "Fluss zeichnen" : "Weg zeichnen");
+        }
+        if (this.doc.layers.length >= LIMITS.layers || countItems(this.doc) >= LIMITS.items) {
+            this.ui.toast(globalThis.VTTUi("Höchstgrenze an Ebenen oder Kartenelementen erreicht."));
+            return false;
+        }
+        layer = createLayer("paths", globalThis.VTTUi("Wege (Vektor)"), this.doc.size, collectIds(this.doc));
         layer.items.push(item);
         const lastRaster = this.doc.layers.findLastIndex((entry) => entry.kind === "raster");
         const index = lastRaster + 1;
@@ -902,7 +941,7 @@ class Editor {
             this.afterLayerChange();
         };
         apply();
-        this.commit({ label: item.material === "river" ? globalThis.VTTUi("Fluss zeichnen") : globalThis.VTTUi("Weg zeichnen"), bytes: 1024 + item.points.length * 24, undo: revert, redo: apply });
+        this.commit({ label: item.material === "river" ? globalThis.VTTUi("Fluss zeichnen") : globalThis.VTTUi("Weg zeichnen"), bytes: 1024 + item.points.length * 24, undo: revert, redo: apply }, [layer]);
         return true;
     }
 
@@ -932,7 +971,7 @@ class Editor {
             this.afterItemChange();
         };
         this.afterItemChange();
-        this.commit({ label: items.length > 1 ? globalThis.VTTUi("Symbole streuen") : globalThis.VTTUi("Symbol setzen"), bytes: 256 * items.length, undo: revert, redo: apply });
+        this.commit({ label: items.length > 1 ? globalThis.VTTUi("Symbole streuen") : globalThis.VTTUi("Symbol setzen"), bytes: 256 * items.length, undo: revert, redo: apply }, [layer]);
     }
 
     removeLive(layer, items) {
@@ -995,7 +1034,7 @@ class Editor {
         const labels = { forward: globalThis.VTTUi("Eine Stufe nach vorne"), backward: globalThis.VTTUi("Eine Stufe nach hinten"),
             front: globalThis.VTTUi("Ganz nach vorne"), back: globalThis.VTTUi("Ganz nach hinten") };
         this.commit({ label: labels[mode], bytes: 256 + [...after.values()].reduce((sum, list) => sum + list.length * 8, 0),
-            undo: () => this.applyOrder(before), redo: () => this.applyOrder(after) });
+            undo: () => this.applyOrder(before), redo: () => this.applyOrder(after) }, [...layers]);
         return true;
     }
 
@@ -1023,7 +1062,7 @@ class Editor {
         if (!changed) return;
         if (!commit) { this.applyOrder(session.before); return; }
         this.commit({ label: globalThis.VTTUi("Reihenfolge ändern"), bytes: 256 + [...after.values()].reduce((sum, list) => sum + list.length * 8, 0),
-            undo: () => this.applyOrder(session.before), redo: () => this.applyOrder(after) });
+            undo: () => this.applyOrder(session.before), redo: () => this.applyOrder(after) }, [...session.layers]);
         this.gestureEnded();
     }
 
@@ -1081,7 +1120,7 @@ class Editor {
             this.afterItemChange();
         };
         apply();
-        this.commit({ label: globalThis.VTTUi("Wege verbinden"), bytes: 1024 + merged.length * 32, undo: revert, redo: apply });
+        this.commit({ label: globalThis.VTTUi("Wege verbinden"), bytes: 1024 + merged.length * 32, undo: revert, redo: apply }, [layer]);
         this.ui.toast(globalThis.VTTUi("Wege verbunden."));
         return true;
     }
@@ -1238,7 +1277,7 @@ class Editor {
             this.afterItemChange();
         };
         this.afterItemChange();
-        this.commit({ label, bytes: 512, undo: () => set(before), redo: () => set(after) });
+        this.commit({ label, bytes: 512, undo: () => set(before), redo: () => set(after) }, [findItem(this.doc, item.id)?.layer].filter(Boolean));
     }
 
     afterItemChange() {
@@ -1255,6 +1294,7 @@ class Editor {
             const found = findItem(this.doc, itemId);
             if (found && found.layer.id !== this.activeLayerId) {
                 this.activeLayerId = found.layer.id;
+                this.ui.noteLayerUse(found.layer);
                 this.ui.refreshLayers();
                 this.ui.updateTargets();
             }
@@ -1424,7 +1464,7 @@ class Editor {
             bytes: imgBefore.data.length + imgAfter.data.length,
             undo: () => put(imgBefore),
             redo: () => put(imgAfter),
-        });
+        }, [layer]);
     }
 
     cancelStroke() {
@@ -1638,6 +1678,9 @@ class Editor {
         if (!this.history.push(command)) {
             undo();
             this.ui.toast(globalThis.VTTUi("Diese Radierfläche ist zu groß für den Verlauf und wurde zurückgesetzt. Bitte in kleineren Schritten radieren."));
+        } else {
+            for (const { layer } of [...rasters, ...tiles, ...stamps]) this.ui.noteLayerUse(layer);
+            this.ui.refreshLayers();
         }
     }
 
@@ -1650,7 +1693,8 @@ class Editor {
 
     // ---- history & persistence ---------------------------------------------
 
-    commit(command) {
+    commit(command, layers = []) {
+        for (const layer of new Set(layers)) this.ui.noteLayerUse(layer);
         if (!this.history.push(command)) {
             this.ui.toast(globalThis.VTTUi("Dieser Schritt war zu groß für den Verlauf – ältere Schritte wurden verworfen."));
         }
@@ -1672,6 +1716,8 @@ class Editor {
 
     onHistoryChange() {
         this.ui.updateUndo();
+        this.ui.clearTileGridOffer();
+        this.ui.refreshLayers();
         this.markChanged();
     }
 

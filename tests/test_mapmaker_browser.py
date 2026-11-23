@@ -137,6 +137,11 @@ class Editor:
     def tool(self, name):
         self.page.locator(f".mm-tool[data-tool={name}]").click()
 
+    def stamp_options(self):
+        disclosure = self.page.locator('#stampAdvanced')
+        if disclosure.get_attribute('open') is None:
+            disclosure.locator('summary').click()
+
     def tab(self, name):
         self.page.get_by_role("tab", name=name).click()
 
@@ -488,6 +493,7 @@ def test_scatter_places_several_stamps_as_one_undo_step(open_editor):
     count = ed.summary()["stamps"]
     ed.tool("stamp")
     ed.page.get_by_role("radio", name="Tanne", exact=True).click()
+    ed.stamp_options()
     ed.page.locator("#stampScatter").check()
     ed.drag([(SEA_A[0] - 200, SEA_A[1]), (SEA_A[0] + 200, SEA_A[1])], steps=20)
     added = ed.summary()["stamps"] - count
@@ -1182,6 +1188,7 @@ def test_r2_scatter_cancelled_by_second_touch_is_never_autosaved(open_editor):
     count = ed.summary()["stamps"]
     ed.tool("stamp")
     ed.page.get_by_role("radio", name="Tanne", exact=True).click()
+    ed.stamp_options()
     ed.page.locator("#stampScatter").check()
     ed.page.locator("#mapTitle").fill("Streuwald")
     x, y = SEA_A

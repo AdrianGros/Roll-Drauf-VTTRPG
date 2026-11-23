@@ -1,0 +1,69 @@
+{
+  "status": "targeted_checks_complete_pending_live",
+  "runs": [
+    {
+      "id": "baseline",
+      "log": "/tmp/vtt-fv04-baseline-20261123.log",
+      "sha256": "7b42b8892ff12359e556acc6b6499e8221406652e0e0ca2fb5577fc214377728",
+      "summary": "2 failed in 66.73s; intended baseline assertions",
+      "expected_baseline_failure": true
+    },
+    {
+      "id": "complete",
+      "log": "/tmp/vtt-fv04-complete-20261123.log",
+      "sha256": "8e9505aeb7575110cc1077de235875e60cf68af8409e3868c7ff859517575c69",
+      "summary": "11 passed in 154.39s",
+      "expected_baseline_failure": false
+    },
+    {
+      "id": "regressions",
+      "log": "/tmp/vtt-fv04-regressions-20261123.log",
+      "sha256": "733110643683ba691859dd8a248100e0572f94e1ac73446cb7d6c91177ef2df5",
+      "summary": "2 failed, 5 passed in 177.83s; old actions did not open the new disclosure",
+      "expected_baseline_failure": false
+    },
+    {
+      "id": "final",
+      "log": "/tmp/vtt-fv04-final-20261123.log",
+      "sha256": "a02d783653b7bae66852666dee88fe5754c18ac87a087628fd9bd23990235512",
+      "summary": "1 failed, 18 passed in 259.09s; area start was under the former two-row strip",
+      "expected_baseline_failure": false
+    },
+    {
+      "id": "recent-nonactive",
+      "log": "/tmp/vtt-fv04-recent-nonactive-20261123.log",
+      "sha256": "55b4635925c0f0a6ce8df2bee9722f6133d383567aa0439657ff4ea219ff47e2",
+      "summary": "1 passed in 15.88s",
+      "expected_baseline_failure": false
+    },
+    {
+      "id": "filter-layout-final",
+      "log": "/tmp/vtt-fv04-filter-layout-final-20261123.log",
+      "sha256": "7e8c9682e012db2004e30720e8bd89d1642ef07d791df2ef9996937d0de710d5",
+      "summary": "6 passed in 69.40s",
+      "expected_baseline_failure": false
+    },
+    {
+      "id": "active_visible",
+      "log": "/tmp/vtt-fv04-active-visible-20261123.log",
+      "sha256": "07db99bd2beb25060a845b7fd2bedacffcf2920d85b9bfbd605034a4f8959f8f",
+      "summary": "2 passed in 20.11s",
+      "expected_baseline_failure": false
+    }
+  ],
+  "i18n_sources": 3772,
+  "new_test_cases": 12,
+  "full_repository_suite_green": false,
+  "review_medium_M1": "fixed and independently re-reviewed; captured and non-active target assertions pass",
+  "schema_change": false,
+  "dependency_change": false,
+  "live_status": "not_yet_deployed",
+  "review_low_checks": {
+    "order_layer_collections": "Set instances in reorderSelection and wheelReorder; source confirmed",
+    "eraser_targets": "raster engine results only, tiles before.size and stamps removed.size gates; paths/labels excluded by contract",
+    "reference_grid_size": "numeric stampGridSize or 0 from existing checkbox handler",
+    "breakpoint": "760px in isNarrow, CSS and matchMedia",
+    "inline_rename": "editor has no remote collaborative mutation path; existing done guard prevents blur re-entry",
+    "additional_content_filters": "bounded alpha strips and raster revision cache reviewed by Codex and covered by final browser case"
+  }
+}

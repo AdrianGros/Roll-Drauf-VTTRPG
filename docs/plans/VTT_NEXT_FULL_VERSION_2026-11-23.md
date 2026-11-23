@@ -10,6 +10,10 @@ All retained outstanding packets from the two 2026-11-23 reviews, the older expl
 
 The current delivered application is `7e0a3c859`; its final evidence is committed as `8a4dca5ed`. The live image is `sha256:fd604eee0ca2481eddad4658262a32cc112327a60db847b4a18a02893abc1af7`. The working release name is **next full version**; no version number or deadline has been assigned. This planning change does not deploy application code.
 
+## Current packet progress
+
+FV01 has a [reviewed language design](../DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md); its application remains unchanged. FV04 and the first FV05 safety/reference-grid slice are implemented under the [layer contract](../DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md), with focused verification running and live delivery still outstanding. The File-menu Escape follow-up belongs to FV06; the other FV06 features remain open. This progress does not close the full-version goal.
+
 ## Already delivered
 
 - Reliable solo session creation/start, scheduled/ready handling, double-click protection, retry visibility and explicit authorized DM entry.

@@ -31,7 +31,7 @@
       "id": "FV01",
       "title": "Character module language",
       "priority": "P1",
-      "status": "planned",
+      "status": "apply_design_reviewed_delivery_outstanding",
       "source_refs": [
         "T3",
         "2026-11-23:N26"
@@ -43,7 +43,8 @@
         "Cover the character editor as well as the creator; retain one validated rules engine."
       ],
       "depends_on": [],
-      "decisions_or_inputs": []
+      "decisions_or_inputs": [],
+      "apply": "docs/DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md"
     },
     {
       "id": "FV02",
@@ -92,7 +93,7 @@
       "id": "FV04",
       "title": "Layer targets and editor panels",
       "priority": "P1",
-      "status": "planned_input_needed",
+      "status": "implemented_verification_running_not_deployed",
       "source_refs": [
         "M2",
         "S2 layer controls",
@@ -116,13 +117,14 @@
       "depends_on": [],
       "decisions_or_inputs": [
         "Specify whether recent layer use lasts for the session or persists, and define the compact bar and panel interactions in the packet Apply."
-      ]
+      ],
+      "apply": "docs/DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md"
     },
     {
       "id": "FV05",
       "title": "Reference grids snapping and tile transforms",
       "priority": "P1",
-      "status": "planned_input_needed",
+      "status": "partial_implementation_verification_running_not_deployed",
       "source_refs": [
         "S2 reference grid",
         "S10",
@@ -144,13 +146,15 @@
       ],
       "decisions_or_inputs": [
         "Decide tile-grid transformation semantics, snap anchors and the versioned cell-rotation format before implementation."
-      ]
+      ],
+      "apply": "docs/DADM_APPLY_FULL_VERSION_LAYERS_2026-11-23.md",
+      "remaining": "Arbitrary calibration, snap-anchor contract, native tile rotation and all format consumers still required."
     },
     {
       "id": "FV06",
       "title": "Brush controls colors and quick palette",
       "priority": "P1",
-      "status": "planned_input_needed",
+      "status": "partial_implementation_verification_running_not_deployed",
       "source_refs": [
         "M1 remaining",
         "S5",
@@ -171,7 +175,8 @@
       "depends_on": [],
       "decisions_or_inputs": [
         "Define the new gesture bindings and recent-color persistence in Apply; proposed bindings in the Claude plan are candidates."
-      ]
+      ],
+      "remaining": "Only File-menu Escape included in the current slice; colors, opacity/brush shortcuts and radial palette remain."
     },
     {
       "id": "FV07",
