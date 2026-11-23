@@ -4,6 +4,12 @@ Status: Apply / laufende Lieferung. Auftrag: Owner „researchrn planen und Impl
 Die abgeschlossenen Discover-Berichte und ihre 40 Karten bleiben als historische Eingaben erhalten.
 Fortschritt und Lieferbelege werden hier sowie in den jeweiligen Paketbelegen geführt.
 
+Aktiver Restumfang seit dem Owner-Auftrag vom 23.11.: [nächste vollständige
+VTT-Version](VTT_NEXT_FULL_VERSION_2026-11-23.md). Die weiterhin offenen
+Homebrew-Freigaben, Kontingentanfragen, der unidentifizierte 0%-Regler und die
+Gesamtabnahme sind dort FV14, FV15, FV17 und FV18 zugeordnet. Historische N-IDs
+dieser Runde sind von den N-IDs des Reviews vom 23.11. zu unterscheiden.
+
 ## Reihenfolge und Grenze
 
 | Paket | Karten | Lieferumfang | Stand |

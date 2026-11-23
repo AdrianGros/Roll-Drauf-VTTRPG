@@ -1,0 +1,1052 @@
+{
+  "title": "Roll Drauf VTT next full version",
+  "defined_on": "2026-11-23",
+  "status": "goal_defined_delivery_outstanding",
+  "phase": "Apply release scope only",
+  "owner_instruction": "Define all outstanding work packets as the goal for the next full version and provide a completed versus remaining rundown.",
+  "scope": "All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.",
+  "baseline": {
+    "live_functional_source": "7e0a3c8595c161eb7ca3442b2d3c7b777366c116",
+    "evidence_source": "8a4dca5ed",
+    "live_image": "sha256:fd604eee0ca2481eddad4658262a32cc112327a60db847b4a18a02893abc1af7",
+    "target": "https://vtt.roll-drauf.de"
+  },
+  "goal": "Complete, integrate, deploy and verify all retained outstanding packets below as the next full VTT version. Preserve delivered functionality, private data and server-enforced Player/DM separation. A packet closes only with delivery evidence or an explicit owner scope decision.",
+  "current_turn_boundary": "Scope definition and status reporting. This plan does not implement application code or settle the unresolved packet designs and product decisions.",
+  "release_name": "Next full version; no numeric version or deadline assigned",
+  "sources": [
+    "docs/DADM_MONITOR_FEEDBACK_HARNESS_2026-11-23.md",
+    "docs/DADM_DISCOVER_MAPMAKER_REVIEW_2026-11-23.md",
+    "docs/DADM_DISCOVER_EDITOR_CREATOR_FEEDBACK_2026-11-23.md",
+    "docs/DADM_APPLY_CLAUDE_MAPMAKER_2026-11-23.md",
+    "docs/DADM_MONITOR_REVIEW_WEB_2026-11-22.md",
+    "docs/DADM_MONITOR_TOOL_GROUPS_2026-11-23.md",
+    "docs/DADM_MONITOR_CANVAS_SCENES_2026-11-23.md",
+    "docs/DADM_DEPLOY_MONITOR_SESSION_FEEDBACK_2026-11-16.md",
+    "docs/plans/FEEDBACK_IMPLEMENTATION_2026-11-13.md",
+    "docs/decisions/FEEDBACK_REMAINING_SCOPE_2026-11-13.md"
+  ],
+  "packets": [
+    {
+      "id": "FV01",
+      "title": "Character module language",
+      "priority": "P1",
+      "status": "planned",
+      "source_refs": [
+        "T3",
+        "2026-11-23:N26"
+      ],
+      "outcome": "The selected rules language controls the entire character creator and editor while the surrounding website keeps its own UI language.",
+      "acceptance": [
+        "Verify DE/DE, DE/EN, EN/DE, EN/EN and automatic selection, including reload and existing drafts.",
+        "Translate module labels, help, validation, choices, class details, weapons, spells and invocations from approved content; preserve canonical IDs, user text, selections and derived values.",
+        "Cover the character editor as well as the creator; retain one validated rules engine."
+      ],
+      "depends_on": [],
+      "decisions_or_inputs": []
+    },
+    {
+      "id": "FV02",
+      "title": "Creator workflow and backgrounds",
+      "priority": "P2",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "T4 remaining",
+        "2026-11-23:N22",
+        "2026-11-23:N23"
+      ],
+      "outcome": "Make guided creation and the full form easy to distinguish and expand the available backgrounds using approved content.",
+      "acceptance": [
+        "Both modes remain available and use the same draft; mode labels and hierarchy explain their purpose.",
+        "Approved additional backgrounds appear in the intended language and pass existing choice and prerequisite validation."
+      ],
+      "depends_on": [
+        "FV01"
+      ],
+      "decisions_or_inputs": [
+        "The exact additional backgrounds and their usable sources must be selected; FV16 tracks the shared content inputs."
+      ]
+    },
+    {
+      "id": "FV03",
+      "title": "Navigation and responsive page layouts",
+      "priority": "P1",
+      "status": "planned",
+      "source_refs": [
+        "T2 remaining",
+        "2026-11-23:N19",
+        "2026-11-23:N20",
+        "2026-11-23:N10",
+        "feedback monitor character archive width"
+      ],
+      "outcome": "Resolve the remaining Atlas, conversations, header and narrow-screen layout reports while retaining the delivered active navigation and contents.",
+      "acceptance": [
+        "Reproduce direct entry, internal navigation, Back/Forward and delayed loading; keep one header and stable page state.",
+        "Check Atlas, conversations, the character archive and editor selects at 390/1440 pixels in both palettes and languages; separate native dropdown width from actual document reflow.",
+        "Controls and content remain reachable without accidental horizontal overflow or canvas displacement."
+      ],
+      "depends_on": [],
+      "decisions_or_inputs": []
+    },
+    {
+      "id": "FV04",
+      "title": "Layer targets and editor panels",
+      "priority": "P1",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "M2",
+        "S2 layer controls",
+        "S4",
+        "2026-11-23:E09",
+        "2026-11-23:E10",
+        "2026-11-23:E20",
+        "2026-11-23:E21",
+        "2026-11-23:E23",
+        "2026-11-23:N01",
+        "2026-11-23:N03",
+        "2026-11-23:N16 remaining"
+      ],
+      "outcome": "Respect the deliberately selected compatible layer, provide a compact layer overview and keep frequently used tools and assets easy to reach.",
+      "acceptance": [
+        "Drawing uses the selected lower compatible layer; reuse existing compatible layers and never silently convert raster layers or edit hidden layers.",
+        "Layer controls expose type, object counts, filtering, visibility and a defined recent-use view; structural changes support Undo.",
+        "Put asset choices before rare settings, keep panel and placement controls stable, and verify keyboard and touch access at 390/1440 pixels.",
+        "Reproduce tile-as-symbol palette, preview and placed-object behavior separately; explain the distinct erase targets for raster pixels, tiles and stamps."
+      ],
+      "depends_on": [],
+      "decisions_or_inputs": [
+        "Specify whether recent layer use lasts for the session or persists, and define the compact bar and panel interactions in the packet Apply."
+      ]
+    },
+    {
+      "id": "FV05",
+      "title": "Reference grids snapping and tile transforms",
+      "priority": "P1",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "S2 reference grid",
+        "S10",
+        "2026-11-23:N04",
+        "2026-11-23:N05",
+        "2026-11-23:N06",
+        "2026-11-23:N07",
+        "2026-11-23:N09"
+      ],
+      "outcome": "Separate the visible reference grid, snapping, calibration and deliberate changes to tile content; add native tile rotation.",
+      "acceptance": [
+        "Keep a reference grid visible during free placement without forcing snapping.",
+        "Changing grid size must not silently move existing tiles; provide an explicit safe new-layer or transform workflow with Undo and preserved old documents.",
+        "Support bounded numeric calibration and a clear field-count/map-size workflow; define the requested 2 by 2 snap example explicitly.",
+        "Native cell rotation survives validation, save/reload, PNG/ZIP, library and Atlas/table snapshots."
+      ],
+      "depends_on": [
+        "FV04"
+      ],
+      "decisions_or_inputs": [
+        "Decide tile-grid transformation semantics, snap anchors and the versioned cell-rotation format before implementation."
+      ]
+    },
+    {
+      "id": "FV06",
+      "title": "Brush controls colors and quick palette",
+      "priority": "P1",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "M1 remaining",
+        "S5",
+        "S11 radial menu",
+        "2026-11-23:E02",
+        "2026-11-23:E04",
+        "2026-11-23:E07",
+        "2026-11-23:E08",
+        "feedback monitor File menu Escape"
+      ],
+      "outcome": "Add the last eight reusable colors, opacity shortcuts, faster brush and size selection and the requested temporary radial palette.",
+      "acceptance": [
+        "Committed custom colors are selectable again; keys, sliders and previews show the same values.",
+        "New shortcuts and modifiers preserve zoom, pinch, Alt-wheel ordering, middle-button pan, text entry and Undo.",
+        "Define quick brush switching as well as sizing; the radial palette has a conflict-free trigger and keyboard/touch fallback.",
+        "Escape closes the File menu without also changing the placement tool."
+      ],
+      "depends_on": [],
+      "decisions_or_inputs": [
+        "Define the new gesture bindings and recent-color persistence in Apply; proposed bindings in the Claude plan are candidates."
+      ]
+    },
+    {
+      "id": "FV07",
+      "title": "Object list and label placement",
+      "priority": "P1",
+      "status": "planned",
+      "source_refs": [
+        "S3",
+        "2026-11-23:E16",
+        "2026-11-23:E17 discoverability",
+        "2026-11-23:N12",
+        "2026-11-23:N13"
+      ],
+      "outcome": "Provide one selectable overview of map objects, a translucent label-and-symbol preview and convenient rotation presets.",
+      "acceptance": [
+        "The list and map select the same paths, stamps, tile content and labels; filtering uses existing document and selection state.",
+        "Preview the actual label and optional symbol before placement without making advance configuration mandatory.",
+        "Rotation presets and existing free rotation produce the same stored result and a clear Undo step; keep path naming discoverable."
+      ],
+      "depends_on": [
+        "FV04"
+      ],
+      "decisions_or_inputs": []
+    },
+    {
+      "id": "FV08",
+      "title": "Path drawing and editing modes",
+      "priority": "P1",
+      "status": "planned",
+      "source_refs": [
+        "S6",
+        "2026-11-23:E12",
+        "2026-11-23:E14"
+      ],
+      "outcome": "Allow paths to be drawn by clicking individual nodes and make switching between drawing and editing explicit.",
+      "acceptance": [
+        "Freehand drawing and click-to-add-node mode coexist; finish, remove-last-node and cancel actions are defined.",
+        "Editing reuses the delivered select/node controls; existing paths remain unchanged until deliberately edited.",
+        "Undo/Redo and save/reload preserve the exact committed path."
+      ],
+      "depends_on": [
+        "FV04"
+      ],
+      "decisions_or_inputs": []
+    },
+    {
+      "id": "FV09",
+      "title": "Line styles node curves and text geometry",
+      "priority": "P1",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "S7",
+        "S11 curved text",
+        "2026-11-23:E13",
+        "2026-11-23:E15",
+        "2026-11-23:E17 relations",
+        "2026-11-23:E18",
+        "2026-11-23:E19",
+        "2026-11-23:N14",
+        "2026-11-23:N15"
+      ],
+      "outcome": "Add local node curvature, road/trail/river/border styles, dashed and dotted lines, free colors, river-to-sea color treatment, place relations, letter spacing and curved labels.",
+      "acceptance": [
+        "Local corner/curve controls remain distinct from whole-path smoothing; crossings connect only on an explicit action.",
+        "Path-to-place relations and the two-color sea treatment have defined semantics; existing names and IDs remain valid.",
+        "Tracking and curved text have matching preview, selection geometry and exported appearance.",
+        "Client/server validation, resource limits, Undo, save/reload, PNG/ZIP, library, Atlas and table snapshots agree; old documents retain their appearance."
+      ],
+      "depends_on": [
+        "FV07",
+        "FV08"
+      ],
+      "decisions_or_inputs": [
+        "Define optional/versioned line, node, relation and text fields and compatibility behavior in Apply."
+      ]
+    },
+    {
+      "id": "FV10",
+      "title": "Own images and tileset packages",
+      "priority": "P1",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "M5 content tools",
+        "S8",
+        "2026-11-23:E24",
+        "review web existing custom asset editing gap"
+      ],
+      "outcome": "Make upload, crop and pixel tools discoverable, support editing existing private assets and add a genuine tileset-package workflow.",
+      "acceptance": [
+        "Existing upload/crop/pixel creation remains available from relevant tools, including tiles.",
+        "Define the sheet/package format, grid metadata and errors; enforce limits before expensive decoding.",
+        "Edit an existing own image without silently changing unrelated references; preserve source and license metadata.",
+        "Import/edit/place/Undo/save/reload/library/Atlas/table/PNG/ZIP round trips keep pixels and provenance; foreign projects cannot use cached private assets."
+      ],
+      "depends_on": [
+        "FV04",
+        "FV05"
+      ],
+      "decisions_or_inputs": [
+        "Confirm the tileset package contract and the edit/revision behavior for existing assets; FV16 governs any public release."
+      ]
+    },
+    {
+      "id": "FV11",
+      "title": "Catalog metadata and personal sets",
+      "priority": "P1",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "M4 remaining",
+        "S9",
+        "2026-11-23:E26 remaining",
+        "2026-11-23:E27",
+        "2026-11-23:N08",
+        "clipped tree report"
+      ],
+      "outcome": "Complete catalog classification and world-map/battlemap discovery, personal sets and hidden assets, and address confirmed content gaps.",
+      "acceptance": [
+        "Audit actual metadata and inventory before assigning style, perspective, resolution, category or intended use; retain the delivered unknown bucket, counts and reset.",
+        "Personal hidden choices and named sets have defined scope and persistence; project asset IDs remain stable.",
+        "Add approved artwork only for demonstrated gaps; inspect the reported clipped tree against its exact source/crop."
+      ],
+      "depends_on": [
+        "FV04"
+      ],
+      "decisions_or_inputs": [
+        "Choose account or local persistence for sets; supply the clipped tree asset ID; additional artwork needs approved content tracked in FV16."
+      ]
+    },
+    {
+      "id": "FV12",
+      "title": "Land fill and coastline tools",
+      "priority": "P2",
+      "status": "planned",
+      "source_refs": [
+        "M6",
+        "S11 terrain",
+        "2026-11-23:E01",
+        "2026-11-23:E05",
+        "2026-11-23:E06"
+      ],
+      "outcome": "Fill a closed land outline, add rough/triangular/polygon brush options and render coastline waves.",
+      "acceptance": [
+        "Fill only the intended active raster region with one Undo action; preserve coastline, sea and other layers.",
+        "New tips and roughness preserve current brush feel, texture toggle, image brushes and chosen colors.",
+        "Coast waves and new marks survive save/reload and exports within defined budgets."
+      ],
+      "depends_on": [
+        "FV04",
+        "FV06"
+      ],
+      "decisions_or_inputs": []
+    },
+    {
+      "id": "FV13",
+      "title": "World campaign and map place relationships",
+      "priority": "P2",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "T5",
+        "2026-11-23:N11"
+      ],
+      "outcome": "Make Atlas/world-to-editor navigation and map-place linking coherent, including multiple campaigns in a DM world.",
+      "acceptance": [
+        "Use the existing authorized Atlas editing and publication paths; link locations to the intended world entries.",
+        "Define how several campaigns use one world, which data is shared and who can edit or publish it.",
+        "World grants and campaign membership remain separate; Reader and Player responses never reveal private sources or DM-only geometry."
+      ],
+      "depends_on": [
+        "FV09",
+        "FV10"
+      ],
+      "decisions_or_inputs": [
+        "The cross-campaign ownership, sharing and publication contract needs its own explicit Apply decisions."
+      ]
+    },
+    {
+      "id": "FV14",
+      "title": "Campaign homebrew approvals",
+      "priority": "P2",
+      "status": "planned",
+      "source_refs": [
+        "2026-11-13:N07",
+        "B04 remaining"
+      ],
+      "outcome": "Let an authorized DM approve specific published homebrew choices for a campaign using an explicit allowlist.",
+      "acceptance": [
+        "Only approved published choices appear in that campaign and use the existing creator/progression validation.",
+        "A DM approval does not bypass arbitrary prerequisites, authorize unpublished content or elevate a Player context.",
+        "Test unauthorized changes, revocation, existing characters and creator/editor consistency."
+      ],
+      "depends_on": [
+        "FV01"
+      ],
+      "decisions_or_inputs": []
+    },
+    {
+      "id": "FV15",
+      "title": "Campaign quota extension request",
+      "priority": "P2",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "2026-11-13:S15",
+        "B10"
+      ],
+      "outcome": "Expose the existing authorized route for requesting campaign-capacity extensions.",
+      "acceptance": [
+        "Users can find the request path, understand the current capacity and see the request outcome.",
+        "Keep approval and actual quota changes under the existing authorized administration contract; a request cannot grant itself slots.",
+        "Do not automatically alter real users, add a Donutarian test slot or introduce a payment system."
+      ],
+      "depends_on": [],
+      "decisions_or_inputs": [
+        "Confirm the existing request/approval path and product limits in Apply; no new slot count has been decided."
+      ]
+    },
+    {
+      "id": "FV16",
+      "title": "Content provenance and publication policy",
+      "priority": "P2",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "2026-11-23:E25",
+        "2026-11-23:N08 content inputs",
+        "2026-11-23:N23 content inputs",
+        "review web English Oglan and additional system content"
+      ],
+      "outcome": "Preserve truthful content provenance, settle the public AI-content policy and resolve the outstanding requests for additional approved rules or artwork.",
+      "acceptance": [
+        "Keep source/license information and rights confirmation through private editing and export; public policy is a separate explicit owner decision.",
+        "Use genuine approved material for more backgrounds, missing artwork and an English Oglan edition; never fabricate an official translation or content rights.",
+        "Record the DSA/additional-system request against available sources and actual required mechanics before promising support; do not imply a complete new rules engine.",
+        "Missing inputs remain visible until supplied or explicitly deferred by the owner."
+      ],
+      "depends_on": [],
+      "decisions_or_inputs": [
+        "Owner decision on public AI labeling/publication; actual approved English Oglan material, additional backgrounds/artwork and any additional-system sources."
+      ]
+    },
+    {
+      "id": "FV17",
+      "title": "Identify the deferred zero percent control",
+      "priority": "P2",
+      "status": "planned_input_needed",
+      "source_refs": [
+        "2026-11-13:N11"
+      ],
+      "outcome": "Identify the originally reported control that should reach zero percent and establish the intended behavior.",
+      "acceptance": [
+        "Locate the exact control and reproduce the report before changing a range or minimum.",
+        "Preserve the existing owner deferral until identification; do not reinterpret this as brush size, eraser softness or grid calibration.",
+        "Once identified, create a bounded implementation/verification contract or record an explicit owner deferral."
+      ],
+      "depends_on": [],
+      "decisions_or_inputs": [
+        "The original control is still unidentified and was explicitly deferred by the owner."
+      ]
+    },
+    {
+      "id": "FV18",
+      "title": "Integrated verification and full version release",
+      "priority": "release gate",
+      "status": "planned",
+      "source_refs": [
+        "B11",
+        "feedback harness residuals",
+        "tool groups residuals",
+        "canvas scenes residuals",
+        "new full version acceptance"
+      ],
+      "outcome": "Deliver and verify the complete retained scope on the live VTT, with an accurate owner checklist and recoverable releases.",
+      "acceptance": [
+        "Every required packet is implemented and verified, or has an explicit owner-approved scope disposition; a missing input is never counted as delivered.",
+        "Run the affected API, permissions, storage, format and browser checks; triage obsolete capability/string/gesture expectations and investigate the template-placement, square measurement, two-client fog, initiative and floor timing gaps.",
+        "Verify Chromium/Firefox, 390/1440 pixels, DE/EN and both palettes; retain 320-pixel/touch coverage for the playtable. Exercise a physical DE keyboard and actual external/OAuth journeys when the owner can supply that interaction; report any agreed gap.",
+        "Repeat complete normal UI journeys across campaigns/session entry, Player/DM, character creation/editing, map editing/library/Atlas, chat, calendar, companions and floors.",
+        "For each functional slice commit/push, reconcile the running source/image, preserve unrelated live work, record backup/migrations/rollback, deploy only the app when appropriate, verify live and remove QA data.",
+        "Resolve blocking findings, record owner acceptance for the new full version and keep the previously accepted playtable baseline intact."
+      ],
+      "depends_on": [
+        "FV01",
+        "FV02",
+        "FV03",
+        "FV04",
+        "FV05",
+        "FV06",
+        "FV07",
+        "FV08",
+        "FV09",
+        "FV10",
+        "FV11",
+        "FV12",
+        "FV13",
+        "FV14",
+        "FV15",
+        "FV16",
+        "FV17"
+      ],
+      "decisions_or_inputs": []
+    }
+  ],
+  "coverage": {
+    "editor_2026_11_23": {
+      "E01": {
+        "status": "open",
+        "packets": [
+          "FV12"
+        ],
+        "note": ""
+      },
+      "E02": {
+        "status": "open",
+        "packets": [
+          "FV06"
+        ],
+        "note": ""
+      },
+      "E03": {
+        "status": "delivered",
+        "packets": [
+          "FV18"
+        ],
+        "note": "DE character-based hotkeys delivered; physical DE hardware verification remains."
+      },
+      "E04": {
+        "status": "open",
+        "packets": [
+          "FV06"
+        ],
+        "note": ""
+      },
+      "E05": {
+        "status": "open",
+        "packets": [
+          "FV12"
+        ],
+        "note": ""
+      },
+      "E06": {
+        "status": "open",
+        "packets": [
+          "FV12"
+        ],
+        "note": ""
+      },
+      "E07": {
+        "status": "open",
+        "packets": [
+          "FV06"
+        ],
+        "note": ""
+      },
+      "E08": {
+        "status": "open",
+        "packets": [
+          "FV06"
+        ],
+        "note": ""
+      },
+      "E09": {
+        "status": "partial",
+        "packets": [
+          "FV04"
+        ],
+        "note": "Tool-specific layer chooser already exists."
+      },
+      "E10": {
+        "status": "open",
+        "packets": [
+          "FV04"
+        ],
+        "note": ""
+      },
+      "E11": {
+        "status": "delivered",
+        "packets": [],
+        "note": "Existing waypoint editing is now reachable through the correct select mode."
+      },
+      "E12": {
+        "status": "open",
+        "packets": [
+          "FV08"
+        ],
+        "note": ""
+      },
+      "E13": {
+        "status": "open",
+        "packets": [
+          "FV09"
+        ],
+        "note": ""
+      },
+      "E14": {
+        "status": "open",
+        "packets": [
+          "FV08"
+        ],
+        "note": ""
+      },
+      "E15": {
+        "status": "open",
+        "packets": [
+          "FV09"
+        ],
+        "note": ""
+      },
+      "E16": {
+        "status": "open",
+        "packets": [
+          "FV07"
+        ],
+        "note": ""
+      },
+      "E17": {
+        "status": "partial",
+        "packets": [
+          "FV07",
+          "FV09"
+        ],
+        "note": "Path naming exists; discoverability and explicit place relations remain."
+      },
+      "E18": {
+        "status": "open",
+        "packets": [
+          "FV09"
+        ],
+        "note": ""
+      },
+      "E19": {
+        "status": "open",
+        "packets": [
+          "FV09"
+        ],
+        "note": ""
+      },
+      "E20": {
+        "status": "open",
+        "packets": [
+          "FV04"
+        ],
+        "note": ""
+      },
+      "E21": {
+        "status": "open",
+        "packets": [
+          "FV04"
+        ],
+        "note": ""
+      },
+      "E22": {
+        "status": "delivered",
+        "packets": [],
+        "note": "Per-asset and crop sizes are remembered for the page session."
+      },
+      "E23": {
+        "status": "open",
+        "packets": [
+          "FV04"
+        ],
+        "note": ""
+      },
+      "E24": {
+        "status": "partial",
+        "packets": [
+          "FV10"
+        ],
+        "note": "Private upload, crop and pixel creation exist; full tileset packages and existing-asset editing remain."
+      },
+      "E25": {
+        "status": "decision_needed",
+        "packets": [
+          "FV16"
+        ],
+        "note": ""
+      },
+      "E26": {
+        "status": "partial",
+        "packets": [
+          "FV11"
+        ],
+        "note": "Honest filter matching, unknown traits, counts and reset delivered; semantic classification and catalog completion remain."
+      },
+      "E27": {
+        "status": "open",
+        "packets": [
+          "FV11"
+        ],
+        "note": ""
+      }
+    },
+    "second_review_2026_11_23": {
+      "N01": {
+        "status": "reproduce",
+        "packets": [
+          "FV04",
+          "FV11"
+        ],
+        "note": ""
+      },
+      "N02": {
+        "status": "delivered",
+        "packets": [],
+        "note": "Image-brush original colors and material switch are explained."
+      },
+      "N03": {
+        "status": "open",
+        "packets": [
+          "FV04"
+        ],
+        "note": ""
+      },
+      "N04": {
+        "status": "design_needed",
+        "packets": [
+          "FV05"
+        ],
+        "note": ""
+      },
+      "N05": {
+        "status": "open",
+        "packets": [
+          "FV05"
+        ],
+        "note": ""
+      },
+      "N06": {
+        "status": "open",
+        "packets": [
+          "FV05"
+        ],
+        "note": ""
+      },
+      "N07": {
+        "status": "design_needed",
+        "packets": [
+          "FV05"
+        ],
+        "note": ""
+      },
+      "N08": {
+        "status": "open",
+        "packets": [
+          "FV11",
+          "FV16"
+        ],
+        "note": ""
+      },
+      "N09": {
+        "status": "design_needed",
+        "packets": [
+          "FV05"
+        ],
+        "note": ""
+      },
+      "N10": {
+        "status": "reproduce",
+        "packets": [
+          "FV03",
+          "FV04"
+        ],
+        "note": ""
+      },
+      "N11": {
+        "status": "design_needed",
+        "packets": [
+          "FV13"
+        ],
+        "note": ""
+      },
+      "N12": {
+        "status": "open",
+        "packets": [
+          "FV07"
+        ],
+        "note": ""
+      },
+      "N13": {
+        "status": "open",
+        "packets": [
+          "FV07"
+        ],
+        "note": ""
+      },
+      "N14": {
+        "status": "design_needed",
+        "packets": [
+          "FV09"
+        ],
+        "note": ""
+      },
+      "N15": {
+        "status": "open",
+        "packets": [
+          "FV09"
+        ],
+        "note": ""
+      },
+      "N16": {
+        "status": "partial",
+        "packets": [
+          "FV04",
+          "FV06"
+        ],
+        "note": "Staged Escape leaves placement; stable panel placement and File-menu propagation remain."
+      },
+      "N17": {
+        "status": "delivered",
+        "packets": [],
+        "note": "Place-symbol picker offers recent symbols and the current palette."
+      },
+      "N18": {
+        "status": "delivered",
+        "packets": [],
+        "note": "Solo ready/new sessions start safely through an explicit authorized DM context."
+      },
+      "N19": {
+        "status": "partial",
+        "packets": [
+          "FV03"
+        ],
+        "note": "Numbered consistent contents and actual destination links delivered; layout reports remain."
+      },
+      "N20": {
+        "status": "reproduce",
+        "packets": [
+          "FV03"
+        ],
+        "note": ""
+      },
+      "N21": {
+        "status": "delivered",
+        "packets": [],
+        "note": "The active navigation group remains marked when closed."
+      },
+      "N22": {
+        "status": "open",
+        "packets": [
+          "FV02"
+        ],
+        "note": ""
+      },
+      "N23": {
+        "status": "content_input_needed",
+        "packets": [
+          "FV02",
+          "FV16"
+        ],
+        "note": ""
+      },
+      "N24": {
+        "status": "delivered",
+        "packets": [],
+        "note": "Bronze/teal affect semantic surfaces and ordinary counters."
+      },
+      "N25": {
+        "status": "delivered",
+        "packets": [],
+        "note": "Class facts use responsive readable definition lists."
+      },
+      "N26": {
+        "status": "open",
+        "packets": [
+          "FV01"
+        ],
+        "note": ""
+      }
+    },
+    "legacy_and_quality": {
+      "2026-11-13:N07": {
+        "status": "open",
+        "packets": [
+          "FV14"
+        ],
+        "note": "Campaign-specific published homebrew allowlist."
+      },
+      "2026-11-13:S15/B10": {
+        "status": "open",
+        "packets": [
+          "FV15"
+        ],
+        "note": "Authorized campaign-quota extension request."
+      },
+      "2026-11-13:N11": {
+        "status": "owner_deferred_input_needed",
+        "packets": [
+          "FV17"
+        ],
+        "note": "Unidentified zero-percent control."
+      },
+      "B11": {
+        "status": "open",
+        "packets": [
+          "FV18"
+        ],
+        "note": "Combined acceptance for the new full version; previously accepted playtable behavior stays accepted."
+      },
+      "review-web-existing-custom-asset-editing": {
+        "status": "open",
+        "packets": [
+          "FV10"
+        ],
+        "note": ""
+      },
+      "review-web-English-Oglan-and-additional-system-content": {
+        "status": "content_input_needed",
+        "packets": [
+          "FV16"
+        ],
+        "note": ""
+      },
+      "review-web-clipped-tree": {
+        "status": "asset_id_needed",
+        "packets": [
+          "FV11"
+        ],
+        "note": ""
+      },
+      "feedback-harness-menu-Escape": {
+        "status": "low_follow_up",
+        "packets": [
+          "FV06"
+        ],
+        "note": ""
+      },
+      "feedback-harness-character-archive-width": {
+        "status": "reproduce",
+        "packets": [
+          "FV03"
+        ],
+        "note": ""
+      },
+      "inherited-test-and-hardware-gaps": {
+        "status": "verification_needed",
+        "packets": [
+          "FV18"
+        ],
+        "note": ""
+      }
+    }
+  },
+  "previous_plan_mapping": {
+    "S2": [
+      "FV04",
+      "FV05"
+    ],
+    "S3": [
+      "FV07"
+    ],
+    "S4": [
+      "FV03",
+      "FV04"
+    ],
+    "S5": [
+      "FV06"
+    ],
+    "S6": [
+      "FV08"
+    ],
+    "S7": [
+      "FV09"
+    ],
+    "S8": [
+      "FV10",
+      "FV16"
+    ],
+    "S9": [
+      "FV11"
+    ],
+    "S10": [
+      "FV05"
+    ],
+    "S11": [
+      "FV06",
+      "FV09",
+      "FV12"
+    ],
+    "T3": [
+      "FV01"
+    ],
+    "T4_remaining": [
+      "FV02",
+      "FV16"
+    ],
+    "T5": [
+      "FV13"
+    ]
+  },
+  "sequence": [
+    {
+      "wave": 1,
+      "packets": [
+        "FV01",
+        "FV03",
+        "FV04",
+        "FV05"
+      ],
+      "focus": "Language, remaining navigation/layout, layer targeting and protection against silent grid movement."
+    },
+    {
+      "wave": 2,
+      "packets": [
+        "FV02",
+        "FV06",
+        "FV07",
+        "FV08"
+      ],
+      "focus": "Creator clarity, faster controls, object/label UX and path modes."
+    },
+    {
+      "wave": 3,
+      "packets": [
+        "FV05",
+        "FV09",
+        "FV10",
+        "FV11",
+        "FV12"
+      ],
+      "focus": "Complete grid/format work, lines/text, private assets, catalog and terrain."
+    },
+    {
+      "wave": 4,
+      "packets": [
+        "FV13",
+        "FV14",
+        "FV15"
+      ],
+      "focus": "World/campaign relationships, homebrew approval and quota requests."
+    },
+    {
+      "wave": "throughout",
+      "packets": [
+        "FV16",
+        "FV17",
+        "FV18"
+      ],
+      "focus": "Request needed decisions and inputs early; maintain verification per slice and finish combined acceptance."
+    }
+  ],
+  "release_requirements": [
+    "Complete packet Apply with contracts, permissions, exact base/file ownership, limits, acceptance and rollout before implementation.",
+    "Keep source/image/backups/schema/rollback and normal live UI journeys per functional slice.",
+    "Preserve all delivered map, role, camera, scene, window, calendar, chat, companion and floor behavior.",
+    "Do not silently defer a packet, claim an unavailable input implemented, restore superseded G1, or change a real user quota for testing.",
+    "Keep Claude collaboration within the existing subscription and explicit file ownership; no extra usage/provider fallback; Codex owns integration, verification and delivery.",
+    "Full version closes only after retained required packets and the final acceptance checklist are complete; blocking inputs need an explicit owner resolution or scope decision."
+  ],
+  "risks_and_assumptions": [
+    {
+      "severity": "medium",
+      "subject": "Map formats and private assets",
+      "handling": "FV05/FV09/FV10 define backwards compatibility, server validation, budgets, Undo and all storage/export consumers before implementation."
+    },
+    {
+      "severity": "medium",
+      "subject": "Locale and authorization contracts",
+      "handling": "FV01 preserves canonical rule IDs; FV13/FV14 separately enforce campaign/world/seat permissions."
+    },
+    {
+      "severity": "medium",
+      "subject": "Open product and content inputs",
+      "handling": "FV16/FV17 and the relevant packet decisions remain visible; private tooling and independent fixes can progress."
+    },
+    {
+      "severity": "medium",
+      "subject": "Inherited verification failures",
+      "handling": "FV18 separates obsolete assertions, test timing and confirmed runtime issues; no blanket green-suite claim."
+    }
+  ],
+  "not_added_as_features": [
+    "Superseded G1 restoration",
+    "3D/Godot editor",
+    "Animation",
+    "Universal autotiling without transition metadata",
+    "A complete new DSA rules engine",
+    "A new billing system or automatic quota increases"
+  ],
+  "artifacts_retention": "permanent repository planning artifacts",
+  "next_step": "Write the bounded FV01 Apply and the FV04/FV05 layer/grid Apply; collect content/policy/control inputs early. Implement and deliver each packet through its own verified slice."
+}

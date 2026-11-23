@@ -4,6 +4,10 @@ Read `AGENTS.md` before work; it remains the durable repository rule source.
 Use the smallest DAD-M runtime profile and the route card for the assigned phase.
 
 Active handoff (2026-11-23):
+- `docs/plans/VTT_NEXT_FULL_VERSION_2026-11-23.md` and its JSON register are the
+  active next-version scope: the owner assigned all retained outstanding work
+  to FV01–FV18. Every packet still needs its bounded Apply before implementation;
+  the existing S2–S11 designs remain proposals where not yet accepted.
 - `docs/CLAUDE_HANDOFF_MAPMAKER_27_2026-11-23.md`
 - `docs/DADM_DISCOVER_EDITOR_CREATOR_FEEDBACK_2026-11-23.md`
 - `docs/DADM_APPLY_FEEDBACK_HARNESS_2026-11-23.md`
