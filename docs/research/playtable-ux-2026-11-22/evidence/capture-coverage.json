@@ -1,0 +1,108 @@
+{
+  "status": "captured",
+  "authentication": "isolated throwaway SQLite accounts; no production sessions",
+  "source_revision": "a6abcce9e34b289efb88cb525a0c4c3ae87037e4",
+  "instrumentation": "Expose the existing PlayWindows.ui reference; no stylesheet or layout replacement. Floor cards use explicitly synthetic view metadata.",
+  "states": [
+    {
+      "state": "dm-window-layersWidget",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-turnOrderWidget",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-tokenWidget",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-tokenLayersWidget",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-mapPresentation",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-mapFloors",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-panel-chat",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-panel-tools",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-panel-journal",
+      "status": "captured"
+    },
+    {
+      "state": "dm-window-beyond20",
+      "status": "captured"
+    },
+    {
+      "state": "dm-journal-session-controls",
+      "status": "captured"
+    },
+    {
+      "state": "dm-app-menu",
+      "status": "captured"
+    },
+    {
+      "state": "dm-display-preferences",
+      "status": "captured"
+    },
+    {
+      "state": "dm-measure-options",
+      "status": "captured"
+    },
+    {
+      "state": "dm-selected-character",
+      "status": "captured"
+    },
+    {
+      "state": "dm-conditions",
+      "status": "captured"
+    },
+    {
+      "state": "dm-token-create",
+      "status": "captured"
+    },
+    {
+      "state": "dm-loot",
+      "status": "captured"
+    },
+    {
+      "state": "dm-wall-edit",
+      "status": "captured"
+    },
+    {
+      "state": "dm-light-edit",
+      "status": "captured"
+    },
+    {
+      "state": "dm-map-library",
+      "status": "captured"
+    },
+    {
+      "state": "dm-floor-cards-synthetic",
+      "status": "captured"
+    },
+    {
+      "state": "player-personal-actions",
+      "status": "captured"
+    },
+    {
+      "state": "player-action-editor",
+      "status": "captured"
+    },
+    {
+      "state": "player-companions",
+      "status": "captured"
+    }
+  ]
+}

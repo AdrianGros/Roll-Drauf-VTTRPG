@@ -1,0 +1,42 @@
+{
+  "status": "research-and-three-mockups-complete",
+  "application_source": "a6abcce9e34b289efb88cb525a0c4c3ae87037e4",
+  "research_base": "9e33bf70624f8a602fb5c05224542ddda2f01058",
+  "research_branch": "research/playtable-ux-20261122",
+  "production_code_modified": false,
+  "production_deployment": false,
+  "studies": 3,
+  "practice_articles": 4,
+  "browser_capture_states": 29,
+  "indexed_DOM_entries": 875,
+  "controls": 294,
+  "information": 581,
+  "additional_conditional_source_texts": 241,
+  "footer_registered_controls": 18,
+  "footer_controls_visible_in_ready_DM_baseline": 16,
+  "mockup_checks": 13,
+  "mockup_javascript_errors": 0,
+  "human_usability_study": false,
+  "limitations": [
+    "isolated browser capture of shipped source, not an observed production session",
+    "variable row families and content values are not feature counts",
+    "sheet/Beyond20 embedded application contents are outside the table-chrome scope",
+    "mockups simulate representative local interactions, not production APIs",
+    "comparative usability remains an untested design hypothesis"
+  ],
+  "artifacts": {
+    "inventory.csv": "inventory.csv",
+    "inventory.json": "inventory.json",
+    "footer-index.md": "footer-index.md",
+    "playtable-varianten.html": "playtable-varianten.html",
+    "evidence/capture-coverage.json": "evidence/capture-coverage.json",
+    "evidence/mockup-verification.json": "evidence/mockup-verification.json"
+  },
+  "mockup_sha256": "8c68c9574d31287eac950b6dcf5b0603fa0a6a7ded34ab4ac11cab8471c4a980",
+  "captured_at": "2026-11-23T07:09:53.962919+00:00",
+  "artifact_sha256": {
+    "inventory.csv": "2f7bcdeba8304a6a7f31a1d2e63ec4b2a8deb7ab0f736b74baa8871958b0e1df",
+    "inventory.json": "c27a3baa75858a247999492cf643870972133942167ad7c639e1a24273c4a021",
+    "playtable-varianten.html": "8c68c9574d31287eac950b6dcf5b0603fa0a6a7ded34ab4ac11cab8471c4a980"
+  }
+}

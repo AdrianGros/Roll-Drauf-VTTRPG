@@ -1,0 +1,209 @@
+<div id="playtable-drafts" aria-label="Darstellung der drei Playtable-Entwürfe">
+  <div class="viz-carousel" aria-label="Drei Bedienkonzepte für den DM-Spieltisch" data-previous-label="Vorheriger Entwurf" data-next-label="Nächster Entwurf">
+    <section data-variant="Werkzeuggruppen" aria-label="Werkzeuggruppen">
+      <div class="pt-app" data-design="groups" aria-label="Gruppierte Werkzeugleiste">
+        <header class="pt-top"><div class="pt-brand">Roll Drauf <span>Die alte Sternwarte</span></div><div class="pt-top-actions"><span class="pt-seat">Spielleitung · Entwurf</span><button class="pt-compact cursor-interaction" type="button" data-command="settings" aria-label="Darstellung und Tischmenü"><i data-lucide="settings" aria-hidden="true"></i></button></div></header>
+        <div class="pt-viewline"><span>Szene: <strong>Die alte Sternwarte</strong></span><span>Balkon · 100 %</span></div>
+        <main class="pt-main"><div class="pt-map" aria-label="Beispielkarte mit Elda und einem Wächter"><div class="pt-room pt-room-one"></div><div class="pt-room pt-room-two"></div><div class="pt-corridor"></div><div class="pt-map-title">Die alte Sternwarte<span>Balkon über dem Lesesaal</span></div><button class="pt-token pt-hero cursor-interaction" type="button" data-select-token aria-label="Elda auswählen"><span>EL</span><small>Elda</small></button><button class="pt-token pt-enemy cursor-interaction" type="button" data-select-token aria-label="Wächter auswählen"><span>WÄ</span><small>Wächter</small></button><div class="pt-context" hidden><strong>Elda</strong><span>18 / 24 TP</span><button class="pt-compact cursor-interaction" type="button" data-command="conditions">Zustände</button><button class="pt-compact cursor-interaction" type="button" data-command="tokens">Figur öffnen</button></div></div><aside class="pt-panel" aria-label="Karte und Sicht"></aside></main>
+        <div class="pt-status" role="status" aria-live="polite">Werkzeug: Auswählen</div>
+        <footer class="pt-dock" aria-label="Werkzeuge und Tischfenster"><div class="pt-group" data-group="tools" role="group" aria-label="Werkzeug wählen"></div><div class="pt-group" data-group="windows" role="group" aria-label="Tischfenster öffnen"></div><div class="pt-group" data-group="table" role="group" aria-label="Kommunikation und weitere Funktionen"></div></footer>
+      </div>
+    </section>
+    <section data-variant="Arbeitsbereiche" aria-label="Arbeitsbereiche" hidden><div class="pt-app" data-design="workspaces" aria-label="Aufgabenbezogene Arbeitsbereiche"></div></section>
+    <section data-variant="Persönliches Dock" aria-label="Persönliches Dock" hidden><div class="pt-app" data-design="personal" aria-label="Persönliches Dock mit vollständiger Befehlsübersicht"></div></section>
+  </div>
+</div>
+<style>
+#playtable-drafts{width:100%;color-scheme:dark;--pt-bg:#1c1c1c;--pt-panel:#232127;--pt-soft:#292532;--pt-ink:#f8f4e9;--pt-muted:#a6a5a2;--pt-line:#8a8a8a;--pt-active:#5e4a8c;--pt-accent:#ab9fbb;--pt-map:#262b30;--pt-stone:#394047;--pt-stone-edge:#62696b;--pt-grid:rgba(248,244,233,.055);--pt-step:52px;--pt-radius:9px;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;line-height:1.4}
+#playtable-drafts[data-palette=paper]{color-scheme:light;--pt-bg:#f8f3e9;--pt-panel:#fffaf1;--pt-soft:#efe5d3;--pt-ink:#342b25;--pt-muted:#635247;--pt-line:#927952;--pt-active:#713536;--pt-accent:#713536;--pt-map:#e0d6c4;--pt-stone:#c9bca5;--pt-stone-edge:#8a7c66;--pt-grid:rgba(37,30,43,.1)}
+#playtable-drafts *{box-sizing:border-box}
+#playtable-drafts [hidden]{display:none!important}
+#playtable-drafts .pt-app{height:650px;width:100%;display:flex;flex-direction:column;background:var(--pt-bg);color:var(--pt-ink);border:1px solid var(--pt-line);border-radius:12px;overflow:hidden;position:relative;isolation:isolate}
+#playtable-drafts .pt-app button,#playtable-drafts .pt-app input,#playtable-drafts .pt-app select{font:inherit;color:inherit}
+#playtable-drafts .pt-app button:focus-visible,#playtable-drafts .pt-app input:focus-visible,#playtable-drafts .pt-app select:focus-visible{outline:3px solid var(--pt-accent);outline-offset:2px}
+#playtable-drafts .pt-app svg,#playtable-drafts .pt-app i[data-lucide]{width:20px;height:20px;flex:0 0 20px}
+#playtable-drafts .pt-top{min-height:54px;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;gap:10px;border-bottom:1px solid var(--pt-line);background:var(--pt-bg)}
+#playtable-drafts .pt-brand{font:500 18px Georgia,serif;display:flex;align-items:center;gap:16px}
+#playtable-drafts .pt-brand>span{font:400 12px system-ui,sans-serif;color:var(--pt-muted)}
+#playtable-drafts .pt-top-actions{display:flex;align-items:center;gap:10px}
+#playtable-drafts .pt-seat{font-size:12px;color:var(--pt-muted)}
+#playtable-drafts .pt-compact{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;min-width:44px;padding:6px 10px;background:var(--pt-soft);border:1px solid var(--pt-line);border-radius:var(--pt-radius);font-size:12px}
+#playtable-drafts .pt-viewline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 14px;font-size:12px;color:var(--pt-muted);background:var(--pt-panel)}
+#playtable-drafts .pt-viewline strong{color:var(--pt-ink);font-weight:500}
+#playtable-drafts .pt-main{position:relative;display:grid;grid-template-columns:minmax(0,1fr);min-height:0;flex:1}
+#playtable-drafts .pt-map{position:relative;min-height:260px;background-color:var(--pt-map);background-image:linear-gradient(var(--pt-grid) 1px,transparent 1px),linear-gradient(90deg,var(--pt-grid) 1px,transparent 1px);background-size:32px 32px;overflow:hidden}
+#playtable-drafts .pt-room{position:absolute;border:9px solid var(--pt-stone-edge);background:var(--pt-stone);opacity:.72;box-shadow:inset 0 0 0 2px var(--pt-bg)}
+#playtable-drafts .pt-room-one{left:8%;top:22%;width:40%;height:55%;border-radius:48% 48% 5px 5px}
+#playtable-drafts .pt-room-two{left:55%;top:12%;width:30%;height:45%}
+#playtable-drafts .pt-corridor{position:absolute;left:38%;top:45%;width:27%;height:17%;background:var(--pt-stone);border-top:6px solid var(--pt-stone-edge);border-bottom:6px solid var(--pt-stone-edge);opacity:.7}
+#playtable-drafts .pt-map-title{position:absolute;left:20px;top:20px;font:400 19px Georgia,serif;color:var(--pt-ink)}
+#playtable-drafts .pt-map-title>span{display:block;font:400 12px system-ui,sans-serif;margin-top:4px;color:var(--pt-muted)}
+#playtable-drafts .pt-token{position:absolute;width:52px;min-height:52px;padding:0;border:0;background:transparent;color:var(--pt-ink);z-index:2}
+#playtable-drafts .pt-token>span{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin:auto;border-radius:50%;border:2px solid var(--pt-ink);background:var(--pt-active);color:#f8f4e9;font-size:12px;font-weight:500;box-shadow:0 3px 10px #0005}
+#playtable-drafts .pt-token>small{font-size:12px;display:block;background:var(--pt-bg);padding:1px 4px;border-radius:4px;margin-top:3px}
+#playtable-drafts .pt-hero{left:24%;top:40%}
+#playtable-drafts .pt-enemy{left:49%;top:62%}
+#playtable-drafts .pt-context{position:absolute;left:10%;bottom:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--pt-panel);padding:8px;border:1px solid var(--pt-line);border-radius:var(--pt-radius);z-index:3;font-size:12px;max-width:80%}
+#playtable-drafts .pt-context strong{font-weight:500}
+#playtable-drafts .pt-panel{position:absolute;z-index:4;right:16px;top:16px;bottom:16px;width:310px;background:var(--pt-panel);border:1px solid var(--pt-line);border-radius:var(--pt-radius);box-shadow:0 10px 30px #0003;display:flex;flex-direction:column;min-width:0;overflow:auto}
+#playtable-drafts .pt-panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid var(--pt-line);flex-shrink:0}
+#playtable-drafts .pt-panel-head h3{font-size:14px;font-weight:500;margin:0}
+#playtable-drafts .pt-panel-body{padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+#playtable-drafts .pt-subtitle{margin:0;color:var(--pt-muted);font-size:12px}
+#playtable-drafts .pt-row{display:flex;align-items:center;gap:9px;min-height:44px;width:100%;border:1px solid var(--pt-line);border-radius:var(--pt-radius);padding:8px 10px;background:var(--pt-soft);text-align:left;text-decoration:none;overflow-wrap:anywhere}
+#playtable-drafts .pt-row>span:first-of-type{flex:1;min-width:0}
+#playtable-drafts .pt-row .pt-meta{font-size:12px;color:var(--pt-muted);flex:0 0 auto}
+#playtable-drafts .pt-row[aria-pressed=true],#playtable-drafts .pt-button[aria-pressed=true]{background:var(--pt-active);color:#f8f4e9;border-color:var(--pt-accent)}
+#playtable-drafts .pt-button[aria-expanded=true]{border-color:var(--pt-accent);box-shadow:inset 0 -3px var(--pt-accent)}
+#playtable-drafts .pt-row[aria-pressed=true] .pt-meta{color:#f8f4e9}
+#playtable-drafts .pt-field{display:flex;flex-direction:column;gap:5px;font-size:12px}
+#playtable-drafts .pt-field input,#playtable-drafts .pt-field select,#playtable-drafts .pt-field textarea{width:100%;min-width:0;min-height:40px;border:1px solid var(--pt-line);border-radius:var(--pt-radius);background:var(--pt-bg);color:var(--pt-ink);padding:8px;font:inherit;font-size:14px;max-width:100%}
+#playtable-drafts .pt-check{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;font-size:13px;border-bottom:1px solid var(--pt-line);padding:6px 0}
+#playtable-drafts .pt-check input{width:20px;height:20px;accent-color:var(--pt-active)}
+#playtable-drafts .pt-turn{display:flex;align-items:center;gap:10px;min-height:48px;padding:8px;background:var(--pt-soft);border-radius:var(--pt-radius)}
+#playtable-drafts .pt-turn strong{font-weight:500;flex:1}
+#playtable-drafts .pt-turn[data-current=true]{border-left:3px solid var(--pt-accent)}
+#playtable-drafts .pt-turn .pt-meta{color:var(--pt-muted);font-size:12px}
+#playtable-drafts .pt-status{min-height:30px;display:flex;align-items:center;padding:6px 14px;font-size:12px;background:var(--pt-bg);border-top:1px solid var(--pt-line);color:var(--pt-muted);flex-shrink:0}
+#playtable-drafts .pt-dock{display:flex;gap:12px;justify-content:center;padding:9px 10px 10px;background:var(--pt-panel);flex-shrink:0;min-width:0}
+#playtable-drafts .pt-group{display:flex;gap:4px;align-items:center;min-width:0}
+#playtable-drafts .pt-group+.pt-group{border-left:1px solid var(--pt-line);padding-left:12px}
+#playtable-drafts .pt-button{min-width:60px;min-height:var(--pt-step);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;background:var(--pt-soft);border:1px solid var(--pt-line);border-radius:var(--pt-radius);padding:5px 7px;font-size:12px!important;white-space:nowrap}
+#playtable-drafts .pt-button>span{font-size:12px}
+#playtable-drafts .pt-button:hover,#playtable-drafts .pt-row:hover,#playtable-drafts .pt-compact:hover{border-color:var(--pt-accent)}
+#playtable-drafts .pt-workspace-tabs{display:flex;justify-content:center;gap:5px;padding:8px;border-top:1px solid var(--pt-line);background:var(--pt-bg);flex-shrink:0}
+#playtable-drafts .pt-workspace-tabs .pt-button{min-width:108px;flex-direction:row;gap:8px;min-height:44px}
+#playtable-drafts [data-design=workspaces] .pt-main{grid-template-columns:minmax(0,1fr) 310px}
+#playtable-drafts [data-design=workspaces] .pt-main:has(.pt-panel[hidden]){grid-template-columns:minmax(0,1fr)}
+#playtable-drafts [data-design=workspaces] .pt-panel{position:relative;inset:auto;width:auto;height:100%;border:0;border-left:1px solid var(--pt-line);border-radius:0;box-shadow:none}
+#playtable-drafts [data-design=workspaces] .pt-map-title{font-size:17px}
+#playtable-drafts .pt-results{display:flex;flex-direction:column;gap:5px}
+#playtable-drafts .pt-catalog-pages{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+#playtable-drafts .pt-compact:disabled{opacity:.55;cursor:default}
+#playtable-drafts .pt-command-line{display:flex;gap:5px;align-items:stretch}
+#playtable-drafts .pt-command-line>.pt-row{flex:1;min-width:0;font-size:13px}
+#playtable-drafts .pt-pin{min-width:44px;padding:6px}
+#playtable-drafts .pt-pin[aria-pressed=true]{color:var(--pt-accent)}
+#playtable-drafts .pt-pin[aria-pressed=true] svg{fill:currentColor}
+@media(max-width:900px){#playtable-drafts .pt-dock{gap:7px;padding-inline:7px}#playtable-drafts .pt-group+.pt-group{padding-left:7px}#playtable-drafts .pt-button{min-width:52px;padding-inline:5px}#playtable-drafts .pt-button>span{font-size:11px}}
+@media(max-width:700px){#playtable-drafts .pt-app{height:1000px}#playtable-drafts .pt-brand>span,#playtable-drafts .pt-seat{display:none}#playtable-drafts .pt-top{min-height:50px}#playtable-drafts .pt-main,#playtable-drafts [data-design=workspaces] .pt-main{display:flex;flex-direction:column;min-height:0}#playtable-drafts .pt-map{flex:1;min-height:225px}#playtable-drafts .pt-panel,#playtable-drafts [data-design=workspaces] .pt-panel{position:relative;inset:auto;flex:0 1 440px;width:auto;margin:8px;border:1px solid var(--pt-line);border-radius:var(--pt-radius);height:auto;box-shadow:none;overflow:auto}#playtable-drafts .pt-panel-body{padding:10px}#playtable-drafts .pt-dock{flex-wrap:wrap;gap:5px;padding:7px}#playtable-drafts .pt-group{justify-content:center;flex-wrap:wrap;flex:1 1 auto}#playtable-drafts .pt-group+.pt-group{border-left:0;padding-left:0}#playtable-drafts .pt-group[data-group=tools]{flex:1 1 100%}#playtable-drafts .pt-button{min-width:60px;min-height:48px}#playtable-drafts .pt-workspace-tabs .pt-button{min-width:0;flex:1;font-size:12px;flex-direction:column;gap:3px}#playtable-drafts .pt-workspace-tabs{gap:4px;padding:6px}#playtable-drafts .pt-context{left:8px;bottom:8px;max-width:96%}#playtable-drafts .pt-viewline{padding:7px 10px}#playtable-drafts .pt-viewline>span:last-child{display:none}}
+</style>
+<script>
+(()=>{
+ const root=document.getElementById('playtable-drafts');
+ const first=root.querySelector('[data-design=groups]');
+ for(const kind of ['workspaces','personal'])root.querySelector(`[data-design=${kind}]`).innerHTML=first.innerHTML;
+ const icons={select:'mouse-pointer-2',pan:'hand',measure:'ruler',scenes:'layers',tokens:'users-round',initiative:'swords',map:'sun-moon',chat:'message-circle',dice:'dices',more:'ellipsis',floors:'layers-2',wall:'brick-wall',light:'lamp',markers:'eye',journal:'notebook-pen',beyond:'link',settings:'Darstellung',leave:'log-out',conditions:'heart-pulse',tokenlayers:'scan-eye',grid:'grid-2x2',lighting:'sun',perspective:'scan-eye','floor-add':'plus',library:'library-big',session:'clipboard-list',notes:'notebook-pen','token-create':'user-round-plus',catalog:'grid-2x2',measurement:'ruler','session-end':'square'};
+ const names={select:'Auswählen',pan:'Bewegen',measure:'Messen',scenes:'Szenen',tokens:'Figuren',initiative:'Initiative',map:'Karte & Sicht',chat:'Chat',dice:'Würfeln',more:'Mehr',floors:'Etagen & Balkonsicht',wall:'Wand zeichnen',light:'Licht setzen',markers:'Markierungen',journal:'Journal',beyond:'Beyond20',settings:'Darstellung',leave:'Tisch verlassen',conditions:'Zustände',tokenlayers:'Token-Sichtbarkeit',measurement:'Messoptionen',session:'Sitzung verwalten','session-end':'Sitzung beenden'};
+ const titles={...names,initiative:'Initiative',more:'Weitere Tischfunktionen'};
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const icon=id=>`<i data-lucide="${icons[id]||id}" aria-hidden="true"></i>`;
+ const isTool=id=>['select','pan','measure','wall','light'].includes(id);
+ const smallNames={...names,select:'Wählen',map:'Karte & Sicht',initiative:'Initiative'};
+ const designState={groups:{tool:'select',panel:'map',turn:0},workspaces:{tool:'select',panel:'initiative',workspace:'Kampf',turn:0},personal:{tool:'select',panel:'catalog',query:'',pins:['initiative','light','chat'],turn:0}};
+ const appearance={palette:'night',density:52,labels:'Ausführlich',selection:false};
+ const saved=window.openai?.widgetState;
+ if(saved?.privateContent?.appearance)Object.assign(appearance,saved.privateContent.appearance);
+ const remember=(kind)=>{const s=designState[kind];window.openai?.setWidgetState?.({modelContent:{entwurf:kind,geoeffnet:s.panel,arbeitsbereich:s.workspace||null,pins:s.pins||null},privateContent:{appearance}})?.catch(()=>{});};
+ const actionButton=(id,s)=>{const selected=isTool(id)?s.tool===id:s.panel===id;return `<button class="pt-button cursor-interaction" type="button" data-command="${id}" ${isTool(id)?`aria-pressed="${selected}"`:`aria-expanded="${selected}"`} aria-label="${esc(titles[id]||names[id])}">${icon(id)}<span>${esc((appearance.labels==='Kurz'?smallNames:names)[id])}</span></button>`;};
+ const row=(id,label,meta='')=>`<button class="pt-row cursor-interaction" type="button" data-command="${id}">${icon(id)}<span>${esc(label||names[id])}</span>${meta?`<span class="pt-meta">${esc(meta)}</span>`:icon('chevron-right')}</button>`;
+ const panelHead=(title)=>`<div class="pt-panel-head"><h3>${esc(title)}</h3><button class="pt-compact cursor-interaction" type="button" data-close-panel aria-label="Fenster schließen">${icon('x')}</button></div>`;
+ function contents(kind){
+  const s=designState[kind];
+  if(s.panel==='measurement')return `<label class="pt-field">Messform<select><option>Strecke</option><option>Kreis</option><option>Kegel</option></select></label><label class="pt-check">Am Raster einrasten<input type="checkbox"></label><p class="pt-subtitle">Aktives Werkzeug: Messen. Ein anderes Werkzeug beendet die Messung.</p>${row('map','Karte & Sicht öffnen')}`;
+  if(s.panel==='map')return `<p class="pt-subtitle">Die alte Sternwarte · Kartenbild und Sicht</p>${row('grid','Raster und Maßstab','70 px')}${row('lighting','Dynamisches Licht','Ein')}${row('wall','Wand zeichnen')}${row('light','Licht setzen')}${row('floors','Etagen und Balkonsicht','Balkon')}${row('perspective','Spielerperspektive','DM')}`;
+  if(s.panel==='floors')return `<p class="pt-subtitle">Kartenbild wechseln. Figuren und Wände bleiben auf derselben Karte.</p><label class="pt-check">Etagenbilder aktiv<input type="checkbox" checked></label><label class="pt-field">Aktive Etage<select><option>Erdgeschoss</option><option selected>Balkon</option></select></label><label class="pt-check">Blick nach unten durch Öffnungen<input type="checkbox" checked></label>${row('floor-add','Etage hinzufügen')}${row('map','Zurück zu Karte & Sicht')}`;
+  if(s.panel==='floor-add')return `<label class="pt-field">Name<input placeholder="z. B. Dachgeschoss" maxlength="80"></label><label class="pt-field">PNG-Datei<input type="file" accept="image/png"></label><p class="pt-subtitle">1.200 × 900 Pixel · höchstens 4 MiB</p>${row('floors','Zur Etagenübersicht')}`;
+  if(s.panel==='initiative')return `<p class="pt-subtitle">Runde 2 · ${s.turn%2?'Wächter':'Elda'} ist am Zug</p><div class="pt-turn" data-current="${s.turn%2===0}"><span>18</span><strong>Elda</strong><span class="pt-meta">18 / 24 TP</span></div><div class="pt-turn" data-current="${s.turn%2===1}"><span>12</span><strong>Wächter</strong><span class="pt-meta">12 / 18 TP</span></div><button class="pt-row cursor-interaction" type="button" data-next-turn>${icon('skip-forward')}<span>Nächster Zug</span></button>${row('conditions','Zustände bearbeiten')}${row('dice','Initiative würfeln')}`;
+  if(s.panel==='scenes')return `<p class="pt-subtitle">Aktive Szene und zugehörige Kartenseiten</p><button class="pt-row cursor-interaction" type="button" aria-pressed="true" data-scene="Die alte Sternwarte">${icon('layers')}<span>Die alte Sternwarte</span><span class="pt-meta">Aktiv</span></button><button class="pt-row cursor-interaction" type="button" data-scene="Kellergewölbe">${icon('corner-down-right')}<span>Kellergewölbe</span></button>${row('floors','Etagen der aktiven Karte')}${row('library','Eigene Kartenbibliothek')}`;
+  if(s.panel==='tokens')return `<p class="pt-subtitle">Figur auswählen, bearbeiten oder platzieren</p><button class="pt-row cursor-interaction" type="button" data-select-token>${icon('user-round')}<span>Elda</span><span class="pt-meta">18 / 24 TP</span></button><button class="pt-row cursor-interaction" type="button" data-select-token>${icon('user-round')}<span>Wächter</span><span class="pt-meta">12 / 18 TP</span></button>${row('token-create','Figur platzieren')}${row('tokenlayers','Token-Sichtbarkeit')}${row('conditions','Zustände')}`;
+  if(s.panel==='tokenlayers')return `<p class="pt-subtitle">Diese Auswahl betrifft Figuren, nicht Kartenetagen.</p><label class="pt-field">Ausgewählte Figur<select><option>Elda</option><option>Wächter</option></select></label><label class="pt-field">Sichtbarkeit<select><option>Für Spieler sichtbar</option><option>Nur für die Spielleitung</option></select></label>${row('tokens','Zurück zu Figuren')}`;
+  if(s.panel==='conditions')return `<p class="pt-subtitle">Elda · aktuelle Figur</p>${['Konzentriert','Liegend','Vergiftet','Unsichtbar'].map(v=>`<label class="pt-check">${v}<input type="checkbox"></label>`).join('')}${row('tokens','Figur öffnen')}`;
+  if(s.panel==='grid')return `<label class="pt-field">Rastergröße in Pixeln<input type="number" value="70" min="16" max="300"></label><label class="pt-check">Raster anzeigen<input type="checkbox" checked></label><label class="pt-field">Meter pro Rasterfeld<input type="number" value="1.5" step="0.1"></label>${row('map','Zurück zu Karte & Sicht')}`;
+  if(s.panel==='lighting')return `<label class="pt-check">Dynamisches Licht<input type="checkbox" checked></label><label class="pt-field">Umgebungslicht in Prozent<input type="number" value="25" min="0" max="100"></label><label class="pt-check">Erkundete Bereiche merken<input type="checkbox" checked></label>${row('map','Zurück zu Karte & Sicht')}`;
+  if(s.panel==='perspective')return `<p class="pt-subtitle">Vorschau der Sicht. Dein Tischplatz bleibt Spielleitung.</p><label class="pt-field">Ansehen als<select><option>Spielleitung · gesamte Karte</option><option>Elda · Spielerperspektive</option></select></label>${row('map','Zurück zu Karte & Sicht')}`;
+  if(s.panel==='dice')return `<label class="pt-field">Würfelausdruck<input value="1d20 + 5" aria-label="Würfelausdruck"></label><label class="pt-field">Wurfmodus<select><option>Normal</option><option>Vorteil</option><option>Nachteil</option></select></label><button class="pt-row cursor-interaction" type="button" data-roll>${icon('dices')}<span>Würfeln</span></button><p class="pt-subtitle" data-result aria-live="polite">Ein offener Wurf erscheint im Tischchat.</p>`;
+  if(s.panel==='chat')return `<p class="pt-subtitle">Tischchat · für alle am Tisch</p><div class="pt-turn"><strong>Elda</strong><span>Ich sehe die Treppe.</span></div><label class="pt-field">Nachricht<textarea class="pt-chat-text" rows="3" aria-label="Nachricht"></textarea></label><button class="pt-row cursor-interaction" type="button" data-send>${icon('send')}<span>Senden</span></button><p class="pt-subtitle" data-chat-status role="status"></p>`;
+  if(s.panel==='more')return `${row('journal','Journal und Materialien')}${row('beyond','Beyond20 einrichten')}${row('catalog','Alle Werkzeuge')}${row('settings','Darstellung und Fenster')}${row('leave','Tisch verlassen')}`;
+  if(s.panel==='settings')return `<p class="pt-subtitle">Darstellung dieses Tisches</p><label class="pt-field">Farbpalette<select data-palette-select><option value="night" ${appearance.palette==='night'?'selected':''}>Nacht</option><option value="paper" ${appearance.palette==='paper'?'selected':''}>Pergament</option></select></label><p class="pt-subtitle">Text, Menüs und Formularfelder verwenden dieselben Farbrollen.</p>${row('more','Weitere Tischfunktionen')}`;
+  if(s.panel==='journal')return `${row('library','Materialbibliothek')}${row('notes','Notizen')}${row('session','Sitzung verwalten')}`;
+  if(s.panel==='session')return `<p class="pt-subtitle">Aktuelle Sitzung: Live</p><button class="pt-row cursor-interaction" type="button" data-local-action="Sitzung pausieren">${icon('pause')}<span>Sitzung pausieren</span></button><button class="pt-row cursor-interaction" type="button" data-local-action="Start-Check öffnen">${icon('list-checks')}<span>Start-Check öffnen</span></button>${row('session-end','Sitzung beenden')}${row('leave','Tisch verlassen')}`;
+  if(s.panel==='session-end')return `<p>Die Sitzung für alle beenden? Das Verlassen deines eigenen Tisches beendet die Sitzung nicht.</p>${row('session','Sitzung fortsetzen')}<button class="pt-row cursor-interaction" type="button" data-local-action="Sitzungsende bestätigt">${icon('square')}<span>Sitzungsende bestätigen</span></button>`;
+  if(s.panel==='leave')return `<p>Den Tisch verlassen und zur Kampagne zurückkehren?</p>${row('more','Am Tisch bleiben')}<button class="pt-row cursor-interaction" type="button" data-local-action="Zur Kampagne wechseln">${icon('log-out')}<span>Zur Kampagne</span></button>`;
+  if(s.panel==='beyond')return `<p>Würfe aus D&amp;D Beyond mit diesem Tisch verbinden.</p><label class="pt-field">Verbindung<select><option>Noch nicht verbunden</option><option>Verbindung prüfen</option></select></label>${row('more','Zurück zu den Tischfunktionen')}`;
+  if(s.panel==='token-create')return `<label class="pt-field">Name<input placeholder="z. B. Goblin"></label><label class="pt-field">Typ<select><option>Monster</option><option>Spielerfigur</option><option>Objekt</option></select></label><button class="pt-row cursor-interaction" type="button" data-local-action="Figur zum Platzieren gewählt">${icon('map-pin')}<span>Auf der Karte platzieren</span></button>`;
+  if(s.panel==='library')return `<label class="pt-field">Material suchen<input type="search" placeholder="Eigene Karten und Dateien"></label><div class="pt-turn"><strong>Die alte Sternwarte</strong><span class="pt-meta">Kartenprojekt</span></div><p class="pt-subtitle">Vor dem Übernehmen erscheint eine Vorschau.</p>${row('scenes','Zu den Szenen')}`;
+  if(s.panel==='notes')return `<label class="pt-field">Notizen für die Spielleitung<textarea rows="6" aria-label="Notizen">Die Treppe führt zum Balkon.</textarea></label>`;
+  return '';
+ }
+ const allCommands=['scenes','tokens','initiative','floors','light','wall','chat','dice','map','tokenlayers','conditions','markers','journal','beyond','settings','leave','measurement','session','session-end'];
+ function catalog(kind){
+  const s=designState[kind];const search=s.query||'';
+  const synonyms={floors:'Balkon Etage',map:'Raster Licht Sicht',scenes:'Seiten Karten',tokens:'Tokens Monster Objekte',initiative:'Kampf Zugfolge',tokenlayers:'Layers Player Dungeon Master'};
+  const commandName=id=>names[id]||({measurement:'Messoptionen',session:'Sitzung verwalten','session-end':'Sitzung beenden'}[id]);
+  const filtered=allCommands.filter(id=>(commandName(id)+' '+(synonyms[id]||'')).toLocaleLowerCase('de').includes(search.toLocaleLowerCase('de')));
+  const start=Math.min(s.offset||0,Math.max(0,Math.floor((filtered.length-1)/8)*8));
+  return `<label class="pt-field">Befehl suchen<input type="search" data-command-search placeholder="z. B. Etagen, Initiative, Licht" value="${esc(search)}"></label><div class="pt-results">${filtered.slice(start,start+8).map(id=>`<div class="pt-command-line">${row(id,titles[id]||commandName(id))}${s.pins?`<button class="pt-compact pt-pin cursor-interaction" type="button" data-pin="${id}" aria-pressed="${s.pins.includes(id)}" ${s.pins.length>=5&&!s.pins.includes(id)?'disabled':''} aria-label="${esc(commandName(id))} ${s.pins.includes(id)?'vom Dock lösen':'ans Dock heften'}">${icon('star')}</button>`:''}</div>`).join('')||'<p>Kein passender Befehl.</p>'}</div><div class="pt-catalog-pages"><button class="pt-compact cursor-interaction" type="button" data-command-page="-1" ${start===0?'disabled':''}>Zurück</button><span class="pt-subtitle">${filtered.length?start+1:0}–${Math.min(start+8,filtered.length)} von ${filtered.length}</span><button class="pt-compact cursor-interaction" type="button" data-command-page="1" ${start+8>=filtered.length?'disabled':''}>Weitere Befehle</button></div>${s.pins?'<p class="pt-subtitle">Stern: ans Dock heften · bis zu fünf Pins</p>':''}`;
+ }
+ function render(kind,keepSearchFocus=false){
+  const app=root.querySelector(`[data-design=${kind}]`),s=designState[kind];
+  app.querySelector('[data-group=tools]').innerHTML=['select','pan','measure'].map(id=>actionButton(id,s)).join('');
+  let windows=['scenes','tokens','initiative','map'];let table=['chat','dice','more'];
+  if(kind==='workspaces'){
+   windows=s.workspace==='Kampf'?['initiative','tokens','conditions']:s.workspace==='Vorbereiten'?['scenes','map','floors']:['scenes','tokens','journal'];
+   table=['chat','more'];
+   let tabs=app.querySelector('.pt-workspace-tabs');if(!tabs){tabs=document.createElement('div');tabs.className='pt-workspace-tabs';tabs.setAttribute('role','group');tabs.setAttribute('aria-label','Arbeitsbereich wählen');app.querySelector('.pt-dock').before(tabs);}
+   tabs.innerHTML=[['Leiten','compass'],['Kampf','swords'],['Vorbereiten','hammer']].map(([name,i])=>`<button class="pt-button cursor-interaction" type="button" data-workspace="${name}" aria-pressed="${s.workspace===name}">${icon(i)}<span>${name}</span></button>`).join('');
+  }
+  if(kind==='personal'){windows=s.pins;table=[];}
+  app.querySelector('[data-group=windows]').innerHTML=windows.map(id=>actionButton(id,s)).join('');
+  app.querySelector('[data-group=table]').innerHTML=kind==='personal'?`<button class="pt-button cursor-interaction" type="button" data-command="catalog" aria-expanded="${s.panel==='catalog'}">${icon('grid-2x2')}<span>Alle Werkzeuge</span></button>`:table.map(id=>actionButton(id,s)).join('');
+  const panel=app.querySelector('.pt-panel');panel.hidden=!s.panel;
+  if(s.panel){
+   const title=s.panel==='catalog'?'Alle Werkzeuge':s.panel==='map'?'Karte & Sicht':s.panel==='initiative'?'Initiative':s.panel==='floor-add'?'Etage hinzufügen':names[s.panel]||({grid:'Raster und Maßstab',lighting:'Dynamisches Licht',perspective:'Spielerperspektive','token-create':'Figur platzieren',library:'Materialbibliothek',session:'Sitzung verwalten',notes:'Notizen',measurement:'Messoptionen','session-end':'Sitzung beenden'}[s.panel])||s.panel;
+   panel.setAttribute('aria-label',title);panel.innerHTML=panelHead(title)+`<div class="pt-panel-body">${s.panel==='catalog'?catalog(kind):contents(kind)}</div>`;
+   for(const field of panel.querySelectorAll('.pt-field select')){
+    const label=[...field.parentElement.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).map(n=>n.textContent).join(' ').trim();
+    if(label)field.setAttribute('aria-label',label);
+   }
+  }
+  app.querySelector('.pt-context').hidden=!appearance.selection;
+  app.querySelector('.pt-status').textContent=`Werkzeug: ${names[s.tool]}${s.tool==='measure'?' · Einrasten in den Messoptionen':s.tool==='wall'||s.tool==='light'?' · Esc beendet das Werkzeug':''}${kind==='workspaces'?' · Arbeitsbereich: '+s.workspace:''}`;
+  globalThis.lucide?.createIcons({attrs:{width:20,height:20}});
+  if(keepSearchFocus){const input=panel.querySelector('[data-command-search]');input?.focus();input?.setSelectionRange?.(input.value.length,input.value.length);}
+ }
+ function renderAppearance(){root.dataset.palette=appearance.palette;root.style.setProperty('--pt-step',Math.max(44,Number(appearance.density)||52)+'px');for(const kind of Object.keys(designState))render(kind);}
+ function command(kind,id){
+  const s=designState[kind];
+  if(isTool(id)){s.tool=id;if(id==='measure')s.panel='measurement';else if(s.panel==='measurement')s.panel='';render(kind);}
+  else if(id==='markers'){s.markers=!s.markers;root.querySelector(`[data-design=${kind}] .pt-status`).textContent='Wand- und Lichtmarkierungen '+(s.markers?'eingeblendet':'ausgeblendet');}
+  else{s.panel=s.panel===id?'':id;render(kind);}
+  remember(kind);
+ }
+ root.addEventListener('click',event=>{
+  const button=event.target.closest('button');if(!button)return;const app=button.closest('[data-design]');if(!app)return;const kind=app.dataset.design,s=designState[kind];
+  if(button.dataset.command)command(kind,button.dataset.command);
+  else if(button.hasAttribute('data-close-panel')){s.panel='';render(kind);remember(kind);}
+  else if(button.dataset.workspace){s.workspace=button.dataset.workspace;s.panel=s.workspace==='Kampf'?'initiative':s.workspace==='Vorbereiten'?'map':'scenes';render(kind);remember(kind);}
+  else if(button.dataset.pin){const id=button.dataset.pin;if(s.pins.includes(id))s.pins=s.pins.filter(x=>x!==id);else if(s.pins.length<5)s.pins.push(id);render(kind);remember(kind);}
+  else if(button.dataset.commandPage){s.offset=Math.max(0,(s.offset||0)+Number(button.dataset.commandPage)*8);render(kind);}
+  else if(button.hasAttribute('data-select-token')){appearance.selection=!appearance.selection;renderAppearance();remember(kind);}
+  else if(button.hasAttribute('data-next-turn')){s.turn++;render(kind);}
+  else if(button.dataset.scene){app.querySelector('.pt-viewline strong').textContent=button.dataset.scene;app.querySelector('.pt-status').textContent='Szene gewählt: '+button.dataset.scene;}
+  else if(button.hasAttribute('data-roll'))app.querySelector('[data-result]').textContent='Beispielwurf: 14 + 5 = 19';
+  else if(button.hasAttribute('data-send')){const value=app.querySelector('.pt-chat-text').value.trim();app.querySelector('[data-chat-status]').textContent=value?'Nachricht in dieser Vorschau eingefügt.':'Bitte eine Nachricht eingeben.';}
+  else if(button.dataset.localAction)app.querySelector('.pt-status').textContent=button.dataset.localAction+' · Vorschau';
+ });
+ root.addEventListener('input',event=>{if(!event.target.matches('[data-command-search]'))return;const kind=event.target.closest('[data-design]').dataset.design;designState[kind].query=event.target.value;designState[kind].offset=0;render(kind,true);});
+ root.addEventListener('change',event=>{if(event.target.matches('[data-palette-select]')){appearance.palette=event.target.value;renderAppearance();}});
+ root.addEventListener('keydown',event=>{const app=event.target.closest('[data-design]');if(!app)return;const kind=app.dataset.design;if(event.key==='Escape'){designState[kind].tool='select';designState[kind].panel='';render(kind);event.preventDefault();}if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k'){designState[kind].panel='catalog';render(kind);app.querySelector('[data-command-search]')?.focus();event.preventDefault();}});
+ renderAppearance();
+ if(globalThis.Tweak){
+  const tweak=new Tweak({container:root,onChange:renderAppearance});
+  tweak.addSelect(appearance,'palette',{label:'Farbpalette',options:[{label:'Nacht',value:'night'},{label:'Pergament',value:'paper'}]});
+  tweak.addSlider(appearance,'density',{label:'Buttonhöhe',min:44,max:60,step:4,unit:'px'});
+  tweak.addSelect(appearance,'labels',{label:'Beschriftung',options:['Ausführlich','Kurz']});
+  tweak.addToggle(appearance,'selection',{label:'Figur ausgewählt'});
+ }
+})();
+</script>

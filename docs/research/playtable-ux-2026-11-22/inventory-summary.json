@@ -1,0 +1,136 @@
+{
+  "indexed_DOM_families": 875,
+  "controls": 294,
+  "information": 581,
+  "conditional_source_texts": 241,
+  "not_mounted_template_controls": 0,
+  "by_zone": {
+    "R": 16,
+    "N": 18,
+    "H": 27,
+    "K": 16,
+    "D": 206,
+    "S": 9,
+    "W": 448,
+    "B": 55,
+    "A": 12,
+    "M": 20,
+    "T": 36,
+    "P": 12
+  },
+  "captured_states": 29,
+  "sources": [
+    {
+      "path": "vtt/templates/play.html",
+      "sha256": "ff6c0e793acc09a29d2ccdb5341fded9b94ad167a8c570d679a6e9df9b069dcc"
+    },
+    {
+      "path": "vtt/play/surfaces/dm.json",
+      "sha256": "e3d50d176b75e88fe9e033df0f1dc7d13a0d7a3078a6868e6aa6f53d3645062c"
+    },
+    {
+      "path": "vtt/static/js/play-campaign-room.js",
+      "sha256": "395d36783927897de8ee071ef34a739449a26b3402702a30c2c5b8a41551a8d9"
+    },
+    {
+      "path": "vtt/static/js/play-client.js",
+      "sha256": "a95805defe62860ac5296dd6ebf943ad581dc2962477dd50767eded1871c6d65"
+    },
+    {
+      "path": "vtt/static/js/play-dm.js",
+      "sha256": "d69686f11dbbf20905d0918d921bca7f35943f4414574a1dc61f2a2c0df919d2"
+    },
+    {
+      "path": "vtt/static/js/play-feedback-dm.js",
+      "sha256": "b3e9b6ce855b70249721c1c7f66a6279bdfc7d9a9f28b2b9830033fff3f7925f"
+    },
+    {
+      "path": "vtt/static/js/play-feedback.js",
+      "sha256": "7139f9d39faf7c66e4fee2c16508b2776efbf2e939c8370fd5dd9431aebb16b1"
+    },
+    {
+      "path": "vtt/static/js/play-floor-dm.js",
+      "sha256": "db1494be85f0f339454cd1a319f82b6aa6b3ce26d1585ec557b5ae12f51c2cab"
+    },
+    {
+      "path": "vtt/static/js/play-floor-view.js",
+      "sha256": "0e63624ca1b2181412ace4605d15e31de319f4ef49d48215c14f61e848190d75"
+    },
+    {
+      "path": "vtt/static/js/play-journal-dm.js",
+      "sha256": "cefcc5459c5633171ab5653c7425219ab8b7e821a1ecac0e11df72124ae055ff"
+    },
+    {
+      "path": "vtt/static/js/play-journal.js",
+      "sha256": "5927a90cfa3e2c7c5e477a1ee750a6eceb7875bb176909a941d42116c11bcf5b"
+    },
+    {
+      "path": "vtt/static/js/play-map-library.js",
+      "sha256": "9a33111525ad2ed71fb7b5c99bc6fc461810807583675a9cddd5f15ab7a96c9c"
+    },
+    {
+      "path": "vtt/static/js/play-personal.js",
+      "sha256": "015093a4e43b22e4fa50f8c0dcfa8885544abbb136547e39722892fc6621b4e5"
+    },
+    {
+      "path": "vtt/static/js/play-player.js",
+      "sha256": "c33e26ce6283a239ddd53f25cea575abbd8d975c125b3495385accb3eab75c51"
+    },
+    {
+      "path": "vtt/static/js/play-socket.js",
+      "sha256": "b9016b4489d5a0bfc2ce68285971f12c66c054e2e7735c9e61973cf1131858e0"
+    },
+    {
+      "path": "vtt/static/js/play-token-layers-dm.js",
+      "sha256": "d1764c683b84bb1956ec8ee3948b43790dadd76e27e51ba3a100298feb72b777"
+    },
+    {
+      "path": "vtt/static/js/play-token-library.js",
+      "sha256": "b000f4ddef4e328561d818a57d5404a7d2aee24f40980d751d2fd80e90076b1c"
+    },
+    {
+      "path": "vtt/static/js/play-ui.js",
+      "sha256": "70b9387b78fc6559f6e64f83a57fa3fd1e7fd06e723043715c6efceaa91ba4a1"
+    },
+    {
+      "path": "vtt/static/js/play-windows.js",
+      "sha256": "4f4289a5b9b332ca5451145ea13f9c19e870bb41dc8f230ff6304298f510e9db"
+    },
+    {
+      "path": "vtt/static/js/display-preferences.js",
+      "sha256": "f85aff6ab0a58fea168ef9043d97c969ba527f6f9bbb8076445e35c5e52c07b8"
+    },
+    {
+      "path": "vtt/static/js/vtt-main-nav.js",
+      "sha256": "68bbfdac2bf5b4560e9fb80a1ce7e09a0b635f12d4098689273c1e47713fbc50"
+    },
+    {
+      "path": "vtt/static/css/play-feedback.css",
+      "sha256": "1357ef3630abe649d0ab4a780f2020bf24621fbff24253eee6730138e3554238"
+    },
+    {
+      "path": "vtt/static/css/play-floor.css",
+      "sha256": "46ecf7ad61a85550e882ac36b1a9202f1d65f97211204dccbe8ce0394cb0e577"
+    },
+    {
+      "path": "vtt/static/css/play-personal.css",
+      "sha256": "d1272cd5f6f1a825004e0c6c51f1125a05162529e03211740cab83c53106b310"
+    },
+    {
+      "path": "vtt/static/css/play-token-layers-dm.css",
+      "sha256": "252e52c5945058b2af233db204c7f43493a199e48af928f157a651d873076991"
+    },
+    {
+      "path": "vtt/static/css/play-windows.css",
+      "sha256": "fdae6fe4ad381912b75fa2905233ef038618aaeae7765723d7bb00219770434f"
+    },
+    {
+      "path": "vtt/static/css/play-workspace.css",
+      "sha256": "d3728cbb4fbcb91d0db4546801c922f152b35451245d38c4bc65a1fe0565b71d"
+    },
+    {
+      "path": "vtt/static/css/display-preferences.css",
+      "sha256": "ea0ee873f68bbb1b17a4120e5344356d2d257556a9fff470452e198e5d9cc06b"
+    }
+  ]
+}

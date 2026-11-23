@@ -1,0 +1,68 @@
+{
+  "status": "pass",
+  "scope": "Mockup rendering and local interactions only; no VTT integration or user study",
+  "checks": [
+    {
+      "design": "groups",
+      "local_navigation_to_floors": "pass"
+    },
+    {
+      "design": "workspaces",
+      "local_navigation_to_floors": "pass"
+    },
+    {
+      "design": "personal",
+      "local_navigation_to_floors": "pass"
+    },
+    {
+      "design": "personal",
+      "width": 1024,
+      "horizontal_clipping": false
+    },
+    {
+      "design": "groups",
+      "width": 1024,
+      "horizontal_clipping": false
+    },
+    {
+      "design": "workspaces",
+      "width": 1024,
+      "horizontal_clipping": false
+    },
+    {
+      "design": "personal",
+      "width": 390,
+      "horizontal_clipping": false
+    },
+    {
+      "design": "groups",
+      "width": 390,
+      "horizontal_clipping": false
+    },
+    {
+      "design": "workspaces",
+      "width": 390,
+      "horizontal_clipping": false
+    },
+    {
+      "design": "personal",
+      "width": 320,
+      "horizontal_clipping": false
+    },
+    {
+      "design": "groups",
+      "width": 320,
+      "horizontal_clipping": false
+    },
+    {
+      "design": "workspaces",
+      "width": 320,
+      "horizontal_clipping": false
+    },
+    {
+      "palette_switch": "pass",
+      "night_background": "rgb(28, 28, 28)"
+    }
+  ],
+  "javascript_errors": []
+}
