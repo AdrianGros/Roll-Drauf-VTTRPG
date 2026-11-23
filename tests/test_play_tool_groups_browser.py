@@ -28,6 +28,8 @@ def test_grouped_commands_keep_real_controls_roles_and_drafts(action_site,engine
         page.locator('#btnMeasureSnap').click();expect(page.locator('#btnMeasureSnap')).to_have_attribute('aria-pressed','true')
         page.locator('[data-tool=select]').click();expect(page.locator('#measureOptions')).to_be_hidden()
         page.locator('#btnTableMore').click();expect(page.locator('#window-tableMore')).to_be_visible()
+        expect(page.locator('#btnSidebarToggle .tool-label')).to_be_visible()
+        expect(page.locator('#window-tableMore [data-command=display] .tool-label')).to_be_visible()
         page.locator('#btnSidebarToggle').click();expect(page.locator('#window-tableMore')).to_be_hidden()
         expect(page.locator('#window-panel-journal')).to_be_visible()
         page.locator('#window-panel-journal .play-window-head button').click();page.locator('#btnTableMore').click()
@@ -35,6 +37,7 @@ def test_grouped_commands_keep_real_controls_roles_and_drafts(action_site,engine
         page.locator('#playCommandSearch').fill('Etagen')
         if seat=='dm':
             expect(page.locator('.play-command-list [data-command=floors]')).to_be_visible()
+            expect(page.locator('.play-command-list [data-command=floors] .tool-label')).to_be_visible()
             page.locator('.play-command-list [data-command=floors]').click();expect(page.locator('#window-mapFloors')).to_be_visible()
             page.locator('#window-mapFloors .play-window-head button').click()
             page.locator('#btnMapPresentation').click();expect(page.locator('#window-mapPresentation')).to_be_visible()
@@ -43,6 +46,7 @@ def test_grouped_commands_keep_real_controls_roles_and_drafts(action_site,engine
             # The original labels remain useful search synonyms.
             page.locator('#playCommandSearch').fill('Figuren' if language=='de' else 'Figures')
             page.locator('.play-command-list [data-command=figures]').click()
+            expect(page.locator('#dock-tokenLayersWidget .tool-label')).to_be_visible()
             page.locator('#dock-tokenLayersWidget').click();expect(page.locator('#window-tokenLayersWidget')).to_be_visible()
             expect(page.locator('#presentationGridSize')).to_have_value('88')
             page.locator('#window-tokenLayersWidget .play-window-head button').click()
