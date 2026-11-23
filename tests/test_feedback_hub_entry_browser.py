@@ -102,4 +102,3 @@ def test_solo_dm_starts_from_hub_without_map_or_existing_context(
         expect(page.locator("body")).to_have_attribute("data-table-seat", "dm", timeout=20000)
         assert not errors, errors
         browser.close()
-
