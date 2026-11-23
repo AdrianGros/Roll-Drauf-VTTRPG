@@ -1,0 +1,52 @@
+{
+  "status": "delivered_and_live_verified",
+  "url": "https://vtt.roll-drauf.de",
+  "navigation": "Campaign hub → session → grouped toolbar; More → auxiliary functions and full command search",
+  "roles": [
+    "DM",
+    "Player",
+    "owner-as-Player (local browser and API tests)"
+  ],
+  "source_commit": "3fd012f4251e580a76e3f093ee143e13687e4480",
+  "image": "roll-drauf-vtt-app:feedback-tool-groups-labels-20261123-20261111-3fd012f42",
+  "image_id": "sha256:4c87060242643b534394516c0a458974c716fd84bc742a84d587b7e72451e516",
+  "branch": "feat/playtable-tool-groups-20261123",
+  "functional_commits_pushed": true,
+  "release_directory": "/srv/migration/2026-11-11/feedback-tool-groups-labels-20261123/3fd012f42",
+  "base_image_before_tool_groups": "sha256:5726f87c57a3106b3e2337b5761b9449b80f7d8b093810e56aef0cdc682443b3",
+  "initial_functional_commit": "e29cd96f90c59c5389bf3aab13beb40c9d650ec3",
+  "history": [
+    {
+      "commit": "e29cd96f90c59c5389bf3aab13beb40c9d650ec3",
+      "image_id": "sha256:916fb837b9b0d0de1374bef51fbbcdb6644403e198b6a481882af581919a4913",
+      "result": "three functional live journeys pass; visual review then found hidden original row labels"
+    },
+    {
+      "commit": "3fd012f4251e580a76e3f093ee143e13687e4480",
+      "image_id": "sha256:4c87060242643b534394516c0a458974c716fd84bc742a84d587b7e72451e516",
+      "result": "one CSS file overlay; visible-label checks and all three final live journeys pass"
+    }
+  ],
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-tool-groups-labels-20261123/3fd012f42/database-before.dump",
+    "bytes": 537886,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "other_services_unchanged": true,
+  "reminder_timer": "active; last worker result success",
+  "live_journeys": 3,
+  "synthetic_fixture_removed": true,
+  "immediate_css_rollback": "/srv/migration/2026-11-11/feedback-tool-groups-labels-20261123/3fd012f42/rollback.sh",
+  "rollback_to_pre_tool_groups": "/srv/migration/2026-11-11/feedback-tool-groups-labels-20261123/3fd012f42/rollback-to-pre-tool-groups.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "proof_runner_sha256": "e374c63a00f6f02439dff3802920f783ff139a22a755788bc372d411ad031f25",
+  "known_gaps": "See verification.json: baseline string contracts, older measurement/vision journeys, and template-placement test failure. No full-suite-green claim."
+}

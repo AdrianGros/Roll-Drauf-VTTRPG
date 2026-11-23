@@ -1,0 +1,210 @@
+{
+  "status": "pass",
+  "journeys": [
+    {
+      "role": "dm",
+      "engine": "chromium",
+      "width": 1440,
+      "theme": "night",
+      "palette": [
+        {
+          "selector": "#window-tokenWidget",
+          "bg": "rgb(28, 28, 28)",
+          "expected": "rgb(28, 28, 28)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#window-panel-chat .panel",
+          "bg": "rgb(35, 33, 39)",
+          "expected": "rgb(35, 33, 39)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#chatInput",
+          "bg": "rgb(35, 33, 39)",
+          "expected": "rgb(35, 33, 39)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#measureShape",
+          "bg": "rgb(35, 33, 39)",
+          "expected": "rgb(35, 33, 39)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#appMenu",
+          "bg": "rgb(35, 33, 39)",
+          "expected": "rgb(35, 33, 39)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#appMenuReturn",
+          "bg": "rgb(41, 37, 50)",
+          "expected": "rgb(41, 37, 50)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        }
+      ],
+      "grouped_commands": true,
+      "primary_commands": 10,
+      "real_map_setting_save": true,
+      "drag": "mouse",
+      "before": {
+        "x": 156,
+        "y": 132,
+        "width": 360,
+        "height": 696
+      },
+      "after": {
+        "x": 316,
+        "y": 222,
+        "width": 360,
+        "height": 606
+      },
+      "independent_scroll": true,
+      "restored_after_reload": true
+    },
+    {
+      "role": "player",
+      "engine": "firefox",
+      "width": 1440,
+      "theme": "paper",
+      "palette": [
+        {
+          "selector": "#window-tokenWidget",
+          "bg": "rgb(248, 243, 233)",
+          "expected": "rgb(248, 243, 233)",
+          "ink": "rgb(52, 43, 37)",
+          "expectedInk": "rgb(52, 43, 37)"
+        },
+        {
+          "selector": "#window-panel-chat .panel",
+          "bg": "rgb(255, 250, 241)",
+          "expected": "rgb(255, 250, 241)",
+          "ink": "rgb(52, 43, 37)",
+          "expectedInk": "rgb(52, 43, 37)"
+        },
+        {
+          "selector": "#chatInput",
+          "bg": "rgb(255, 250, 241)",
+          "expected": "rgb(255, 250, 241)",
+          "ink": "rgb(52, 43, 37)",
+          "expectedInk": "rgb(52, 43, 37)"
+        },
+        {
+          "selector": "#measureShape",
+          "bg": "rgb(255, 250, 241)",
+          "expected": "rgb(255, 250, 241)",
+          "ink": "rgb(52, 43, 37)",
+          "expectedInk": "rgb(52, 43, 37)"
+        },
+        {
+          "selector": "#appMenu",
+          "bg": "rgb(255, 250, 241)",
+          "expected": "rgb(255, 250, 241)",
+          "ink": "rgb(52, 43, 37)",
+          "expectedInk": "rgb(52, 43, 37)"
+        },
+        {
+          "selector": "#appMenuReturn",
+          "bg": "rgb(239, 229, 211)",
+          "expected": "rgb(239, 229, 211)",
+          "ink": "rgb(52, 43, 37)",
+          "expectedInk": "rgb(52, 43, 37)"
+        }
+      ],
+      "grouped_commands": true,
+      "primary_commands": 9,
+      "real_map_setting_save": false,
+      "drag": "mouse",
+      "before": {
+        "x": 156,
+        "y": 132,
+        "width": 360,
+        "height": 593.9500122070312
+      },
+      "after": {
+        "x": 316,
+        "y": 222,
+        "width": 360,
+        "height": 593.9500122070312
+      },
+      "independent_scroll": true,
+      "restored_after_reload": true
+    },
+    {
+      "role": "player",
+      "engine": "chromium",
+      "width": 390,
+      "theme": "night",
+      "palette": [
+        {
+          "selector": "#window-tokenWidget",
+          "bg": "rgb(28, 28, 28)",
+          "expected": "rgb(28, 28, 28)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#window-panel-chat .panel",
+          "bg": "rgb(35, 33, 39)",
+          "expected": "rgb(35, 33, 39)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#chatInput",
+          "bg": "rgb(35, 33, 39)",
+          "expected": "rgb(35, 33, 39)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#measureShape",
+          "bg": "rgb(35, 33, 39)",
+          "expected": "rgb(35, 33, 39)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#appMenu",
+          "bg": "rgb(35, 33, 39)",
+          "expected": "rgb(35, 33, 39)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        },
+        {
+          "selector": "#appMenuReturn",
+          "bg": "rgb(41, 37, 50)",
+          "expected": "rgb(41, 37, 50)",
+          "ink": "rgb(248, 244, 233)",
+          "expectedInk": "rgb(248, 244, 233)"
+        }
+      ],
+      "grouped_commands": true,
+      "primary_commands": 9,
+      "real_map_setting_save": false,
+      "drag": "touch",
+      "before": {
+        "x": 24,
+        "y": 132,
+        "width": 360,
+        "height": 580
+      },
+      "after": {
+        "x": 24,
+        "y": 222,
+        "width": 360,
+        "height": 490
+      },
+      "independent_scroll": true,
+      "restored_after_reload": true
+    }
+  ],
+  "authentication": "Synthetic QA sessions; Discord OAuth not exercised"
+}

@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 from playwright.sync_api import expect, sync_playwright
+expect.set_options(timeout=30000)
 
 root=Path(os.environ['PROOF_ROOT'])
 fixture=json.loads((root/'private-live-credentials.json').read_text())
@@ -110,4 +111,4 @@ with sync_playwright() as p:
             save();browser.close()
         proof['status']='pass';save()
     except Exception as error:
-        proof['status']='failed';proof['error']=str(error);save();raise
+        proof['status']='failed';proof['error']=str(error);proof['browser_errors']=errors if 'errors' in locals() else [];save();raise

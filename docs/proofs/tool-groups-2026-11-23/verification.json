@@ -194,6 +194,17 @@
       "failed_tests": [
         "tests/test_session_feedback_browser.py::test_windows_restore_and_token_menu_upload_and_library[player-1440-chromium]"
       ]
+    },
+    {
+      "id": "final_row_label_visibility",
+      "log": "/tmp/tool-groups-labels-core-20261123.log",
+      "log_sha256": "7abcb245fccfa90bd60079e0afc9d690ed0247253387cefc715b72cbfe12492f",
+      "summary": "4 passed, 129 warnings in 83.24s (0:01:23)",
+      "exit_code": 0,
+      "tests": [
+        "tests/test_play_tool_groups_browser.py"
+      ],
+      "source_commit": "3fd012f4251e580a76e3f093ee143e13687e4480"
     }
   ],
   "known_findings": [
@@ -238,11 +249,23 @@
       "observation": "after aligning the fixture to pixel dimensions and the current direct-placement contract, the placement request still fails with the same generic error on unchanged baseline and implementation",
       "comparison": "unchanged runtime mounted read-only; same current test overlay; failure occurs before the new More entry is used",
       "disposition": "open existing verification gap; no token library, server, geometry or placement runtime code changed by this release; do not claim this journey passed"
+    },
+    {
+      "scope": "visual live review of first build",
+      "observation": "legacy .tool-btn .tool-label display:none still hid original source labels after relocation into window rows",
+      "correction": "explicit display:block in scoped command-row selector; all four updated browser cases pass and live assertions now require visible row labels",
+      "source_commit": "3fd012f4251e580a76e3f093ee143e13687e4480"
+    },
+    {
+      "scope": "first follow-up live startup attempt",
+      "observed": "five-second default Playwright expectation expired before the table seat was composed; no journey completed; scoped QA data and credentials were cleaned",
+      "test_change": "explicit 30-second expectation timeout for live readiness, matching network/UI initialization; app code unchanged",
+      "repeat": "all three final live journeys pass; no browser errors"
     }
   ],
   "full_repository_suite_green": false,
   "runtime_fingerprints": {
-    "vtt/static/css/play-tool-groups.css": "be72ccf986c284682fec042ff02d69b3460b2868fc4a6ddc22e1eb7bd10caeef",
+    "vtt/static/css/play-tool-groups.css": "36bf4848f8e86650cd29a07444bb4762aefccfa5996380ed92742576ea62212c",
     "vtt/static/i18n/ui.de.json": "e135370d4bb781b9cbfd8cdbf200b09b7e5ce6441c3a6e7b32355baf06f4f796",
     "vtt/static/i18n/ui.en.json": "3e5b8ad5269b817056be2aa3832c5ae1ae4f7d18647a3fe24e461a18c967a565",
     "vtt/static/icons/play-controls.svg": "70f401e36e86ee5483198d8876f6745ef462785caaf1bb8a9d87942563b0e1c1",
@@ -254,7 +277,7 @@
     "vtt/static/js/ui-catalog.js": "00b3932049290bf565bdab3e3d842eecbc74ea42c8d68d50f15d9d38555699d3",
     "vtt/templates/play.html": "90c0b827e09c1ae16b68f05ad20f4c64cff6bcc5d078108bb17f8d79494dcfc3"
   },
-  "runtime_source_commit": "e29cd96f90c59c5389bf3aab13beb40c9d650ec3",
+  "runtime_source_commit": "3fd012f4251e580a76e3f093ee143e13687e4480",
   "successful_targeted_coverage": {
     "authorized_api": "32 passed",
     "grouped_surface": "4 passed in final-core, exit 0",
@@ -262,6 +285,13 @@
     "token_layers_personal_actions_seat_memory": "all 8 cases pass before the later template assertion in last-regressions; total successful prefix 9 including Firefox-paper",
     "calibration_real_wall_light_edit_journal_media": "3 passed in final-contexts, exit 0",
     "companion_identity_damage_reload": "2 passed in companions-ready, exit 0",
-    "earlier_mobile_and_existing_ui_journeys": "9 pass before calibration assertion; includes Chromium/WebKit touch/rotation, UI journeys, journal context race, return-to-maps. Calibration subsequently passes in final-contexts"
+    "earlier_mobile_and_existing_ui_journeys": "9 pass before calibration assertion; includes Chromium/WebKit touch/rotation, UI journeys, journal context race, return-to-maps. Calibration subsequently passes in final-contexts",
+    "grouped_surface_and_visible_row_labels": "4 passed after the scoped CSS follow-up, exit 0; DE/EN, DM/Player/owner-as-Player, 320/390/1024/1440"
+  },
+  "live_final": {
+    "status": "pass",
+    "journeys": 3,
+    "row_labels_visible": true,
+    "postcheck": "postcheck.json"
   }
 }
