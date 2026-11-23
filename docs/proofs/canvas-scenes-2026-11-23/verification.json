@@ -1,0 +1,73 @@
+{
+  "status": "targeted_checks_complete_with_documented_existing_gaps",
+  "baseline_source": "3fd012f4251e580a76e3f093ee143e13687e4480",
+  "baseline_image": "sha256:4c87060242643b534394516c0a458974c716fd84bc742a84d587b7e72451e516",
+  "environment": "roll-drauf-vtt-mobile-tests:20261115, --network none, temporary SQLite per fixture, readonly browser cache",
+  "command_template": "docker run --rm --network none -v <worktree>:/app -v /root/.cache/ms-playwright:/root/.cache/ms-playwright:ro -w /app --entrypoint python roll-drauf-vtt-mobile-tests:20261115 -c import os,pytest; r=pytest.main(<tests>);os._exit(int(r))",
+  "runs": [
+    {
+      "id": "four_role_camera_scene_cases",
+      "log": "/tmp/canvas-scenes-acceptance-20261123.log",
+      "sha256": "6d6d42eb0b4889cc0be552bdff6cd07e98a3e810471c12a086534e3c6c640701",
+      "summary": "4 passed, 130 warnings in 229.93s (0:03:49)",
+      "failed_tests": []
+    },
+    {
+      "id": "existing_regressions",
+      "log": "/tmp/canvas-scenes-regression-20261123.log",
+      "sha256": "6650e8f153c267bee8f84c2ca6fd2f1d58d971e7ba7b218fc510a96a3f771171",
+      "summary": "3 failed, 4 passed, 221 warnings in 262.04s (0:04:22)",
+      "failed_tests": [
+        "tests/test_playtable_token_clipboard_browser.py::test_dm_marquee_copy_and_paste_tokens_at_the_pointer",
+        "tests/test_ui_playtable_complete_browser.py::test_grid_hierarchy_library_measure_and_candidate_journeys",
+        "tests/test_floor_layers_browser.py::test_dm_upload_balcony_and_member_receives_only_masked_raster"
+      ]
+    },
+    {
+      "id": "legacy_coordinate_rechecks",
+      "log": "/tmp/canvas-scenes-coordinates-20261123.log",
+      "sha256": "d97836cd58eb923024922de56b99a0984431a586b0b140f3a1255c7ec02337de",
+      "summary": "2 failed, 78 warnings in 128.80s (0:02:08)",
+      "failed_tests": [
+        "tests/test_playtable_token_clipboard_browser.py::test_dm_marquee_copy_and_paste_tokens_at_the_pointer",
+        "tests/test_ui_playtable_complete_browser.py::test_grid_hierarchy_library_measure_and_candidate_journeys"
+      ]
+    },
+    {
+      "id": "unchanged_baseline_floor_host",
+      "log": "/tmp/canvas-scenes-baseline-floor-20261123.log",
+      "sha256": "304373ce8cd0092b9cf7a88dd173e10941fa780197969e0418bc754ad80cd8c5",
+      "summary": "1 passed, 28 warnings in 66.57s (0:01:06)",
+      "failed_tests": []
+    },
+    {
+      "id": "unchanged_baseline_existing_ui_journey",
+      "log": "/tmp/canvas-scenes-baseline-initiative-20261123.log",
+      "sha256": "d1ba3b71b5df599a75a754cf3689bf6f8ee6d481ad9e91197ad285ce7075450b",
+      "summary": "1 failed, 53 warnings in 73.92s (0:01:13)",
+      "failed_tests": [
+        "tests/test_ui_playtable_complete_browser.py::test_grid_hierarchy_library_measure_and_candidate_journeys"
+      ]
+    },
+    {
+      "id": "new_focused_copy_after_camera",
+      "log": "/tmp/canvas-scenes-copy-final-20261123.log",
+      "sha256": "2a081a2837183956ff2c58f7f297db02541b567028462f96d2a2bdd1ad765cb1",
+      "summary": "1 passed, 38 warnings in 43.24s",
+      "failed_tests": []
+    }
+  ],
+  "coverage": {
+    "camera_scene_cases": "4 passed: all corners centered, movement beyond document, fit under 20%, cursor/pinch anchors, no token-state changes, readable scenes, actual rename/parent actions, DE/EN, DM/Player/owner-as-Player",
+    "android": "existing real-touch token drag, pan on token, pinch and cancellation pass",
+    "other_existing": "Player clipboard separation, visible lighting/scene hierarchy, lighting-failure cover pass in combined run",
+    "i18n": "3732 sources DE/EN complete; generated catalog checked",
+    "copy_after_camera": "Focused public-UI test passes: pan, zoom, real Ctrl+C/Ctrl+V and persisted coordinates within one grid square; explicit readiness waits."
+  },
+  "known_gaps": [
+    "Original marquee test used unmodified drag although current production requires Shift; no camera-driven change to that requirement. Original fixture also uses legacy cell dimensions. Additional isolated check is recorded separately.",
+    "Existing initiative candidate journey did not reach expected candidate in combined run; unchanged baseline already fails earlier at grid-save readiness. No initiative/runtime/server change in this slice.",
+    "Standalone floor-module host (loads no changed camera/scene modules) failed a pixel sample in combined run; standalone unchanged baseline passes. No floor file changed. This is not claimed as a completed floor regression acceptance."
+  ],
+  "full_repository_suite_green": false
+}

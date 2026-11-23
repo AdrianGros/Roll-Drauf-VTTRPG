@@ -167,15 +167,17 @@ def test_android_real_touch_drag_pan_pinch_and_cancel(action_site):
         # PAN starting on a token must move the map, never the token.
         for _ in range(6):
             page.locator('#btnZoomIn').tap()
-        marker.scroll_into_view_if_needed()
         page.locator('[data-tool=pan]').tap()
+        from tests.play_canvas_shared import pan_by,usable
+        area=usable(page);target=marker.bounding_box()
+        pan_by(page,(area['left']+area['right'])/2-target['x']-target['width']/2,(area['top']+area['bottom'])/2-target['y']-target['height']/2,cdp)
         box = marker.bounding_box()
         x, y = box['x'] + box['width'] / 2, box['y'] + box['height'] / 2
-        scroll_before = page.locator('#mapViewport').evaluate('(v) => [v.scrollLeft,v.scrollTop]')
+        map_before = page.locator('#mapWorld').bounding_box()
         touch('touchStart', [(0, x, y)])
         touch('touchMove', [(0, x - 45, y - 30)])
         touch('touchEnd', [])
-        assert page.locator('#mapViewport').evaluate('(v) => [v.scrollLeft,v.scrollTop]') != scroll_before
+        assert page.locator('#mapWorld').bounding_box()['x'] != map_before['x']
         assert position() == moved
         # Real multi-touch changes map zoom, not the page scale.
         page.locator('#btnZoomFit').tap()

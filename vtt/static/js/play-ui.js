@@ -93,6 +93,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this.tokenIndex = new Map();
             this.currentTool = "select";
             this.zoomLevel = 100;
+            this.cameraX = 0; this.cameraY = 0; this._cameraFit = false;
             this.activeSidebarTab = "tools";
             // S01: client-side-only filter over the already-loaded layer
             // list, and the roving-tabindex id for keyboard row navigation.
@@ -998,8 +999,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const zoomReset = document.getElementById("btnZoomReset");
             const zoomFit = document.getElementById("btnZoomFit");
             const zoomRange = document.getElementById("zoomRange");
-            if (zoomOut) zoomOut.addEventListener("click", () => this._setZoom(this.zoomLevel - 10));
-            if (zoomIn) zoomIn.addEventListener("click", () => this._setZoom(this.zoomLevel + 10));
+            if (zoomOut) zoomOut.addEventListener("click", () => this._setZoom(this.zoomLevel / 1.2));
+            if (zoomIn) zoomIn.addEventListener("click", () => this._setZoom(this.zoomLevel * 1.2));
             if (zoomReset) zoomReset.addEventListener("click", () => this._setZoom(100));
             if (zoomFit) zoomFit.addEventListener("click", () => this._zoomFit());
             if (zoomRange) {
@@ -1137,72 +1138,64 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             };
         }
 
-        // The scroll spacer (#mapExtent) must always be world-size * zoom:
-        // scale() alone leaves the layout box unscaled, which made the
-        // scrollbars lie in both directions (robot audit 2026-08-23).
-        _syncExtent() {
-            const extent = document.getElementById("mapExtent");
-            if (!extent) return;
-            const { width, height } = this._worldSize();
-            const scale = this.zoomLevel / 100;
-            extent.style.width = `${Math.round(width * scale)}px`;
-            extent.style.height = `${Math.round(height * scale)}px`;
+        // Camera coordinates are local to the viewport, independent of the
+        // document bounds. Every world layer shares this one transform.
+        _renderCamera() {
+            const world = document.getElementById('mapWorld');
+            if (world) world.style.transform = `translate(${this.cameraX}px, ${this.cameraY}px) scale(${this.zoomLevel / 100})`;
+        }
+
+        _cameraArea() {
+            const viewport = document.getElementById('mapViewport');
+            const rect = viewport.getBoundingClientRect();
+            let top = 16, bottom = rect.height - 16;
+            const header = document.querySelector('.stage-topbar')?.getBoundingClientRect();
+            if (header?.height && header.bottom > rect.top) top = Math.max(top, header.bottom - rect.top + 12);
+            for (const selector of ['.left-toolbar', '#personalActionBar', '#actionHotbar']) {
+                const bar = document.querySelector(selector)?.getBoundingClientRect();
+                if (bar?.height && bar.width && bar.top < rect.bottom && bar.bottom > rect.top) bottom = Math.min(bottom, bar.top - rect.top - 12);
+            }
+            return {left:16, top, width:Math.max(1,rect.width-32), height:Math.max(1,bottom-top)};
         }
 
         _setZoom(nextZoom, anchor = null) {
-            const clamped = Math.max(20, Math.min(300, Math.round(Number(nextZoom) || 100)));
-            const viewport = document.getElementById("mapViewport");
-            const previousScale = this.zoomLevel / 100;
-            const nextScale = clamped / 100;
-
-            // Keep the world point under the anchor (e.g. the mouse wheel
-            // cursor) stationary: convert the anchor to world coordinates at
-            // the old scale, then scroll so the same world point sits under
-            // the anchor again at the new scale.
-            let anchorWorld = null;
-            if (anchor && viewport) {
-                const rect = viewport.getBoundingClientRect();
-                const viewX = anchor.clientX - rect.left;
-                const viewY = anchor.clientY - rect.top;
-                anchorWorld = {
-                    viewX,
-                    viewY,
-                    worldX: (viewport.scrollLeft + viewX) / previousScale,
-                    worldY: (viewport.scrollTop + viewY) / previousScale,
-                };
-            }
-
-            this.zoomLevel = clamped;
-            const world = document.getElementById("mapWorld");
-            const zoomLabel = document.getElementById("zoomLabel");
-            const zoomRange = document.getElementById("zoomRange");
-            if (world) world.style.transform = `scale(${nextScale})`;
-            this._syncExtent();
-            if (zoomLabel) zoomLabel.textContent = `${clamped}%`;
-            if (zoomRange) zoomRange.value = String(clamped);
-
-            if (anchorWorld && viewport) {
-                viewport.scrollLeft = anchorWorld.worldX * nextScale - anchorWorld.viewX;
-                viewport.scrollTop = anchorWorld.worldY * nextScale - anchorWorld.viewY;
-            }
+            const value = Number(nextZoom);
+            const clamped = Math.round(Math.max(0.01, Math.min(300, Number.isFinite(value) ? value : this.zoomLevel)) * 10000) / 10000;
+            const viewport = document.getElementById('mapViewport');
+            if (!viewport) return;
+            const rect = viewport.getBoundingClientRect(), area = this._cameraArea();
+            const viewX = anchor ? anchor.clientX - rect.left : area.left + area.width / 2;
+            const viewY = anchor ? anchor.clientY - rect.top : area.top + area.height / 2;
+            const oldScale = this.zoomLevel / 100, scale = clamped / 100;
+            const worldX = anchor?.worldX ?? (viewX - this.cameraX) / oldScale;
+            const worldY = anchor?.worldY ?? (viewY - this.cameraY) / oldScale;
+            this.zoomLevel = clamped; this._cameraFit = false;
+            this.cameraX = viewX - worldX * scale; this.cameraY = viewY - worldY * scale;
+            this._renderCamera();
+            const label = document.getElementById('zoomLabel'), range = document.getElementById('zoomRange');
+            if (label) label.textContent = `${Number(clamped.toFixed(2))}%`;
+            if (range) range.value = String(clamped);
+            this._renderMeasurement();
         }
 
         _zoomFit() {
-            const viewport = document.getElementById("mapViewport");
+            const viewport = document.getElementById('mapViewport');
             if (!viewport) return;
-            const { width, height } = this._worldSize();
-            const availableW = Math.max(120, viewport.clientWidth - 48);
-            const availableH = Math.max(120, viewport.clientHeight - 48);
-            const fit = Math.min(availableW / width, availableH / height) * 100;
-            this._setZoom(Math.min(150, fit));
-            viewport.scrollLeft = 0;
-            viewport.scrollTop = 0;
+            const rect = viewport.getBoundingClientRect(), area = this._cameraArea();
+            const {width,height} = this._worldSize();
+            const fit = Math.min(area.width / width, area.height / height, 3) * 100;
+            this._setZoom(fit, {clientX:rect.left+area.left+area.width/2, clientY:rect.top+area.top+area.height/2, worldX:width/2, worldY:height/2});
+            this._cameraFit = true;
         }
 
         _bindViewportNavigation() {
             const viewport = document.getElementById("mapViewport");
             if (!viewport) return;
 
+            this.cameraObserver = new ResizeObserver(() => { if (this._cameraFit) this._zoomFit(); });
+            for (const node of [viewport, document.querySelector('.stage-topbar'), document.querySelector('.left-toolbar'), document.getElementById('personalActionBar'), document.getElementById('actionHotbar')]) {
+                if (node) this.cameraObserver.observe(node);
+            }
             // Only the map owns these gestures; menus keep native scrolling/zoom.
             const touches = new Map();
             let pinch = null;
@@ -1231,7 +1224,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const y = (a.y + b.y) / 2 - rect.top;
                 const scale = this.zoomLevel / 100;
                 pinch = { distance: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)), zoom: this.zoomLevel,
-                    worldX: (viewport.scrollLeft + x) / scale, worldY: (viewport.scrollTop + y) / scale };
+                    worldX: (x - this.cameraX) / scale, worldY: (y - this.cameraY) / scale };
                 event.preventDefault();
                 event.stopImmediatePropagation();
             }, true);
@@ -1241,9 +1234,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (!pinch || touches.size < 2) return;
                 const [a, b] = [...touches.values()];
                 const rect = viewport.getBoundingClientRect();
-                this._setZoom(pinch.zoom * Math.hypot(a.x - b.x, a.y - b.y) / pinch.distance);
-                viewport.scrollLeft = pinch.worldX * this.zoomLevel / 100 - ((a.x + b.x) / 2 - rect.left);
-                viewport.scrollTop = pinch.worldY * this.zoomLevel / 100 - ((a.y + b.y) / 2 - rect.top);
+                this._setZoom(pinch.zoom * Math.hypot(a.x - b.x, a.y - b.y) / pinch.distance,
+                    {clientX:(a.x+b.x)/2, clientY:(a.y+b.y)/2, worldX:pinch.worldX, worldY:pinch.worldY});
             }, true);
             const endTouch = (event) => {
                 if (!touches.delete(event.pointerId)) return;
@@ -1266,12 +1258,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // scrolling of a huge map happens by panning instead.
             viewport.addEventListener("wheel", (event) => {
                 event.preventDefault();
-                const step = event.deltaY < 0 ? 10 : -10;
-                this._setZoom(this.zoomLevel + step, event);
+                if (event.deltaY) this._setZoom(this.zoomLevel * (event.deltaY < 0 ? 1.12 : 1/1.12), event);
             }, { passive: false });
 
             // Panning: PAN tool with the left button, or middle button in
-            // any tool. Uses scroll offsets, so it composes with zoom.
+            // any tool. Camera translation stays free beyond document edges.
             viewport.addEventListener("pointerdown", (event) => {
                 const isMiddle = event.button === 1;
                 const isPanTool = this.currentTool === "pan" && event.button === 0;
@@ -1283,8 +1274,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 this.panState = {
                     startX: event.clientX,
                     startY: event.clientY,
-                    scrollLeft: viewport.scrollLeft,
-                    scrollTop: viewport.scrollTop,
+                    cameraX: this.cameraX,
+                    cameraY: this.cameraY,
                     pointerId: event.pointerId,
                 };
                 viewport.classList.add("panning");
@@ -1294,8 +1285,10 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 if (!this.panState || this.panState.pointerId !== event.pointerId) return;
                 if (Math.hypot(event.clientX-this.panState.startX,event.clientY-this.panState.startY)<5) return;
                 this._suppressMapClickUntil = performance.now()+250;
-                viewport.scrollLeft = this.panState.scrollLeft - (event.clientX - this.panState.startX);
-                viewport.scrollTop = this.panState.scrollTop - (event.clientY - this.panState.startY);
+                this._cameraFit = false;
+                this.cameraX = this.panState.cameraX + event.clientX - this.panState.startX;
+                this.cameraY = this.panState.cameraY + event.clientY - this.panState.startY;
+                this._renderCamera();
             });
             window.addEventListener("pointerup", (event) => {
                 if (!this.panState || this.panState.pointerId !== event.pointerId) return;
@@ -3680,53 +3673,31 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             } else if (!layers.length) {
                 container.innerHTML = `<div class='muted'>${globalThis.VTTUiHTML("Keine Seite passt zur Suche.")}</div>`;
             } else {
+                const openOptions = new Set([...container.querySelectorAll('.scene-options[open]')].map(node => Number(node.dataset.layerId)));
                 container.innerHTML = layers.map((layer) => {
                     const siblings=allLayers.filter(row=>(row.parent_layer_id??null)===(layer.parent_layer_id??null));
                     const index = siblings.indexOf(layer);
                     const isActive = Number(layer.id) === Number(stack.active_layer_id);
                     const mapName = escapeHtml(layer.campaign_map?.name || `Map ${layer.campaign_map_id}`);
                     const thumb = this._thumbUrl(layer.campaign_map);
-                    // The eye is the activation affordance. Visibility is
-                    // still part of the layer model, but no longer consumes
-                    // a second control or pretends the eye changes visibility.
-                    const activateIcon = "&#128065;";
-                    const labelField = canEdit
-                        ? `<input class="layer-label-input" data-act="rename" data-layer-id="${layer.id}" value="${escapeHtml(layer.label)}">`
-                        : `<div class="layer-label-input" style="cursor:default;">${escapeHtml(layer.label)}</div>`;
-                    // 8e856de deliberately removed an earlier visibility
-                    // toggle because it reused the SAME eye glyph as the
-                    // activate button -- two look-alike eye icons on one
-                    // row, ambiguous which did what. Reusing that icon here
-                    // would reintroduce the exact confusion; a lock/unlock
-                    // pair reads unambiguously as "hidden from players" and
-                    // shares no glyph with activateIcon.
-                    const visibleIcon = layer.is_player_visible ? "&#128275;" : "&#128274;";
-                    const visibleTitle = layer.is_player_visible ? "Für Spieler sichtbar - klicken um sie vor Spielern zu verbergen" : "Nur für DM sichtbar - klicken um sie für Spieler freizugeben";
-                    const actionsRow = canEdit ? `
-                                <div class="layer-actions-row">
-                                    <button data-act="up" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Nach oben")}" ${index === 0 ? "disabled" : ""}>&uarr;</button>
-                                    <button data-act="down" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Nach unten")}" ${index === siblings.length - 1 ? "disabled" : ""}>&darr;</button>
-                                    <button data-act="visibility" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn ${layer.is_player_visible ? "active-toggle" : ""}" title="${visibleTitle}" aria-pressed="${layer.is_player_visible ? "true" : "false"}">${visibleIcon}</button>
-                                    <button data-act="duplicate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Seite duplizieren")}">&#10697;</button>
-                                    <button data-act="activate" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn" title="${globalThis.VTTUiHTML("Seite aktivieren")}" aria-label="${globalThis.VTTUiHTML("Seite aktivieren")}">${activateIcon}</button>
-                                    <button data-act="delete" data-layer-id="${layer.id}" class="mini-btn layer-icon-btn danger" title="${globalThis.VTTUiHTML("Seite entfernen")}">&times;</button>
-                                </div>
-                    ` : "";
+                    const controls = canEdit ? this.feedbackDM.sceneControls(layer, index, siblings.length, isActive, openOptions.has(Number(layer.id))) : {};
                     return `
-                        <div class="layer-row ${isActive ? "active-row" : ""}" data-layer-id="${layer.id}" role="option" aria-selected="${isActive ? "true" : "false"}" tabindex="-1">
-                            ${thumb ? `<img class="layer-thumb" src="${thumb}" alt="">` : `<div class="layer-thumb"></div>`}
-                            <div class="layer-info">
-                                ${labelField}
-                                <div class="layer-map-name">${mapName}</div>
+                        <div class="layer-row ${isActive ? "active-row" : ""}" data-layer-id="${layer.id}" role="group" aria-label="${escapeHtml(layer.label)}" aria-current="${isActive ? "true" : "false"}" tabindex="-1">
+                            <div class="scene-heading">
+                                ${thumb ? `<img class="layer-thumb" src="${thumb}" alt="">` : `<div class="layer-thumb" aria-hidden="true">▧</div>`}
+                                <div class="layer-info">
+                                    <div class="layer-title">${escapeHtml(layer.label)}</div>
+                                    <div class="layer-map-name">${mapName}</div>
+                                    ${isActive ? `<span class="scene-active-state">${globalThis.VTTUiHTML("Aktive Szene")}</span>` : ''}
+                                </div>
+                                ${controls.primary || ''}
                             </div>
-                            <div class="layer-actions">
-                                ${actionsRow}
-                            </div>
+                            ${controls.options || ''}
                         </div>
                     `;
                 }).join("");
 
-                // Roving tabindex (W3C APG listbox pattern): exactly one row
+                // Scene directory keyboard navigation: exactly one row
                 // is a tab stop -- the last-focused one, the active one, or
                 // simply the first visible row. Arrow/Home/End move it.
                 const rows = Array.from(container.querySelectorAll(".layer-row"));
@@ -3736,7 +3707,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 rows.forEach((row) => row.setAttribute("tabindex", row === focusCandidate ? "0" : "-1"));
                 rows.forEach((row) => {
                     row.addEventListener("click", (event) => {
-                        if (event.target.closest("button, input, select, textarea, a")) return;
+                        if (event.target.closest("button, input, select, textarea, a, details")) return;
                         if (!canEdit) return;
                         this._activateLayer(Number(row.dataset.layerId));
                     });
@@ -3781,11 +3752,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 
         // S01 keyboard nav: ArrowUp/ArrowDown move the roving tab stop
         // between rows, Home/End jump to the ends, Enter/Space activates
-        // the focused row -- the W3C APG listbox pattern. Bound once via
+        // the focused editable row. Bound once via
         // delegation in _bindLayersDirectoryControls, not re-bound per
         // render, so it survives every _renderLayers() re-render for free.
         _handleLayerListKeydown(event) {
-            if(event.target.closest("input,select,textarea,button,a")) return;
+            if(event.target.closest("input,select,textarea,button,a,summary")) return;
             const container = document.getElementById("layerList");
             if (!container) return;
             const rows = Array.from(container.querySelectorAll(".layer-row"));
@@ -3811,7 +3782,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             } else if (event.key === "End") {
                 event.preventDefault();
                 focusRow(rows[rows.length - 1]);
-            } else if ((event.key === "Enter" || event.key === " ") && current) {
+            } else if ((event.key === "Enter" || event.key === " ") && current && this._composedOperator && !this.readOnly) {
                 event.preventDefault();
                 this._activateLayer(Number(current.dataset.layerId));
             }
@@ -4383,7 +4354,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             mapWorld.dataset.mapWidth = String(width);
             mapWorld.dataset.mapHeight = String(height);
             mapWorld.dataset.hasMap = activeMap ? "true" : "false";
-            this._syncExtent();
+            this._renderCamera();
 
             const emptyState = document.getElementById("mapEmptyState");
             if (emptyState) {
@@ -4403,7 +4374,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // First render of a newly-activated map: fit it to the screen
             // once, then leave the zoom alone so manual choices stick.
             const activeMapId = activeMap ? Number(activeMap.id) : null;
-            if (activeMapId !== null && activeMapId !== this.autoFitMapId) {
+            if (activeMapId !== null && (activeMapId !== this.autoFitMapId || this._cameraFit)) {
                 this.autoFitMapId = activeMapId;
                 this._zoomFit();
             }

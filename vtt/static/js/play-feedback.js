@@ -14,7 +14,7 @@
             const help=el('p',text('Kreis und Quadrat: Mittelpunkt wählen, dann bis zum Rand ziehen.','Circle and square: choose the centre, then move to the edge.'));document.getElementById('measureOptions')?.append(help);
             const snap=document.querySelector('#btnMeasureSnap .tool-label');if(snap)snap.textContent=text('Einrasten','Snap');
             const pan=document.querySelector('[data-tool="pan"]');if(pan){pan.title=text('Verschieben · Leertaste halten · mittlere Maustaste','Pan · hold Space · middle mouse button');}
-            document.addEventListener('keydown',event=>{if(event.code==='Space'&&!event.target.closest?.('input,textarea,select,button,a,[contenteditable="true"]')){ui._spacePan=true;event.preventDefault();}});
+            document.addEventListener('keydown',event=>{if(event.code==='Space'&&!event.target.closest?.('input,textarea,select,button,a,summary,[contenteditable="true"]')){ui._spacePan=true;event.preventDefault();}});
             document.addEventListener('keyup',event=>{if(event.code==='Space')ui._spacePan=false;});
             window.addEventListener('blur',()=>{ui._spacePan=false;});
             window.addEventListener('pagehide',()=>{clearTimeout(this.timer);this.closed=true;this.sequence=(this.sequence||0)+1;});
@@ -84,7 +84,7 @@
             const container=document.getElementById('layerList');if(!container)return;
             container.setAttribute('role','group');
             const ordered=[],visited=new Set();
-            const visit=(parent,depth,path)=>{for(const layer of layers.filter(row=>(row.parent_layer_id??null)===parent)){if(visited.has(layer.id))continue;visited.add(layer.id);ordered.push(layer);const row=container.querySelector(`.layer-row[data-layer-id="${layer.id}"]`);if(row){row.setAttribute('role','group');row.removeAttribute('aria-selected');row.style.marginInlineStart=`${Math.min(depth,12)*14}px`;row.dataset.depth=depth;const title=row.querySelector('.layer-map-name');if(title&&path.length)title.textContent=path.join(' / ')+' / '+(layer.campaign_map?.name||'');container.append(row);}visit(layer.id,depth+1,[...path,layer.label]);}};
+            const visit=(parent,depth,path)=>{for(const layer of layers.filter(row=>(row.parent_layer_id??null)===parent)){if(visited.has(layer.id))continue;visited.add(layer.id);ordered.push(layer);const row=container.querySelector(`.layer-row[data-layer-id="${layer.id}"]`);if(row){row.setAttribute('role','group');row.removeAttribute('aria-selected');row.style.setProperty("--scene-depth",Math.min(depth,3));row.dataset.depth=depth;const title=row.querySelector('.layer-map-name');if(title&&path.length)title.textContent=path.join(' / ')+' / '+(layer.campaign_map?.name||'');container.append(row);}visit(layer.id,depth+1,[...path,layer.label]);}};
             visit(null,0,[]);
             // Defensive projection fallback if a page disappears between bootstrap and rendering.
             for(const layer of layers)if(!visited.has(layer.id)){const row=container.querySelector(`.layer-row[data-layer-id="${layer.id}"]`);if(row)container.append(row);}

@@ -1,5 +1,6 @@
 """End-to-end UI journeys for authorized DM and separate Player surfaces."""
 from tests.test_personal_actions_browser import action_site
+from tests.test_playtable_token_clipboard_browser import client_point
 from vtt.extensions import db
 from vtt.models import SceneWall,SceneLight
 
@@ -20,6 +21,8 @@ def test_grid_hierarchy_library_measure_and_candidate_journeys(action_site):
         for page in (dm,player):page.set_default_timeout(25000);page.on('pageerror',lambda error:errors.append(str(error)))
         route=f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}"
         dm.goto(route+'&seat=dm');player.goto(route+'&seat=player')
+        expect(dm.locator('#presenceRoster')).to_contain_text('action-player')
+        expect(player.locator('#presenceRoster')).to_contain_text('action-dm')
         confirmations=[]
         dm.on('dialog',lambda dialog:(confirmations.append(dialog.message),dialog.accept()))
         expect(dm.locator('#btnMapPresentation')).to_be_visible();expect(player.locator('#btnMapPresentation')).to_have_count(0)
@@ -46,12 +49,12 @@ def test_grid_hierarchy_library_measure_and_candidate_journeys(action_site):
         player.locator('[data-tool="select"]').click();player.locator('#dock-tokenWidget').click()
         expect(player.locator('#window-tokenWidget')).to_be_visible()
         player.locator('#btnPlaceNewToken').click()
-        viewport=player.locator('#mapViewport');box=viewport.bounding_box();player.mouse.click(box['x']+300,box['y']+220)
+        player.mouse.click(*client_point(player,300,220))
         expect(player.locator('#tokenCreatePanel')).to_be_visible()
         player.locator('#btnTokenCreateCancel').click()
         player.locator('[data-tool="measure"]').click()
         expect(player.locator('#btnMeasureSnap')).to_have_attribute('aria-pressed','false')
-        player.mouse.click(box['x']+200,box['y']+200);player.mouse.move(box['x']+310,box['y']+240)
+        player.mouse.click(*client_point(player,400,400));player.mouse.move(*client_point(player,600,500))
         expect(player.locator('#measureLayer text')).not_to_have_count(0)
         player.locator('#btnMeasureSnap').click();expect(player.locator('#btnMeasureSnap')).to_have_attribute('aria-pressed','true')
         assert not errors,errors
@@ -91,7 +94,7 @@ def test_visible_lighting_preview_and_campaign_page_hierarchy(action_site):
         page.locator('#btnVisionToggle').click();expect(page.locator('#visionLayer')).to_be_visible()
         page.locator('#window-mapPresentation .play-window-head button').click();page.locator('#dock-layersWidget').click()
         rows=page.locator('#layerList .layer-row');expect(rows).to_have_count(2)
-        parent=rows.first.get_attribute('data-layer-id');rows.nth(1).locator('select').select_option(parent)
+        parent=rows.first.get_attribute('data-layer-id');rows.nth(1).locator('summary').click();rows.nth(1).locator('select').select_option(parent)
         expect(rows.nth(1)).to_have_attribute('data-depth','1')
         page.reload();page.locator('#dock-layersWidget').click();expect(page.locator('#layerList .layer-row').nth(1)).to_have_attribute('data-depth','1')
         page.goto(origin+f"/conversations?campaign_id={info['campaign']}")

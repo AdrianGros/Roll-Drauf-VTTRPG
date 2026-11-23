@@ -60,14 +60,33 @@
                 await ui.loadBootstrap();this.refresh(true);this.status.textContent=text('Karteneinstellungen gespeichert.','Map settings saved.');}
             catch(error){this.status.textContent=error.message;await ui.loadBootstrap();this.refresh(true);}finally{this.save.disabled=false;}
         }
+        sceneControls(layer,index,count,active,open){
+            const t=source=>globalThis.VTTUiHTML(source),safe=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+            const action=(name,label,disabled=false)=>`<button type="button" class="scene-action" data-act="${name}" data-layer-id="${layer.id}" ${disabled?'disabled':''}>${t(label)}</button>`;
+            const visibility=layer.is_player_visible?'Vor Spielern verbergen':'Für Spieler freigeben';
+            return {
+                primary:`<button type="button" class="scene-activate" data-act="activate" data-layer-id="${layer.id}" aria-pressed="${active}">${t(active?'Aktiv':'Anzeigen')}</button>`,
+                options:`<details class="scene-options" data-layer-id="${layer.id}" ${open?'open':''}>
+                    <summary>${t('Optionen')}</summary>
+                    <div class="scene-options-body">
+                        <label>${t('Szenenname')}<input class="layer-label-input" aria-label="${t('Szenenname')}" data-act="rename" data-layer-id="${layer.id}" value="${safe(layer.label)}"></label>
+                        <div class="scene-admin-actions">
+                            ${action('up','Nach oben',index===0)}${action('down','Nach unten',index===count-1)}
+                            <button type="button" class="scene-action scene-visibility" data-act="visibility" data-layer-id="${layer.id}" aria-pressed="${layer.is_player_visible}">${t(visibility)}</button>
+                            ${action('duplicate','Duplizieren')}${action('delete','Entfernen')}
+                        </div>
+                    </div>
+                </details>`
+            };
+        }
         renderParents(layers,byId){
             const ui=this.ui;
-            for(const layer of layers){const row=document.querySelector(`#layerList .layer-row[data-layer-id="${layer.id}"] .layer-info`);if(!row||row.querySelector('.layer-parent-label'))continue;
+            for(const layer of layers){const row=document.querySelector(`#layerList .layer-row[data-layer-id="${layer.id}"] .scene-options-body`);if(!row||row.querySelector('.layer-parent-label'))continue;
                 const select=el('select');select.setAttribute('aria-label',text('Übergeordnete Seite','Parent page'));select.append(new Option(text('Oberste Ebene','Top level'),''));
                 for(const candidate of layers){let parent=candidate,cycle=false,visited=new Set();while(parent){if(parent.id===layer.id||visited.has(parent.id)){cycle=true;break;}visited.add(parent.id);parent=byId.get(parent.parent_layer_id);}if(!cycle)select.append(new Option(candidate.label,String(candidate.id)));}
                 select.value=layer.parent_layer_id??'';select.disabled=ui.readOnly;
                 select.onchange=async()=>{select.disabled=true;try{await Auth.makeAuthRequest(`${this.path}/scene-stack/layers/${layer.id}/parent`,'PUT',{parent_layer_id:select.value?Number(select.value):null,revision:ui.bootstrap.scene_stack.hierarchy_revision||0});await ui.loadBootstrap();}catch(error){ui._showMessage(error.message,true);await ui.loadBootstrap();}};
-                const label=this.label(text('Unterseite von','Child of'),select);label.className='layer-parent-label';row.append(label);
+                const label=this.label(text('Unterseite von','Child of'),select);label.className='layer-parent-label';row.querySelector('.scene-admin-actions').before(label);
             }
         }
         renderCandidates(data){this.candidates.replaceChildren();for(const row of data.candidates.filter(c=>c.status==='pending')){const item=el('li',`${row.name}: ${row.total}`);const accept=button(text('Übernehmen','Accept'),()=>this.action(`/initiative-candidates/${row.id}/accept`,{revision:data.revision}));item.append(accept);this.candidates.append(item);}this.reset.disabled=this.ui.readOnly;}

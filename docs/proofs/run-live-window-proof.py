@@ -13,6 +13,8 @@ proof=release/'live';proof.mkdir(mode=0o700,exist_ok=True)
 credential=proof/'private-live-credentials.json'
 container_path='/tmp/window-fix-live-credentials-20261122.json'
 fixture=(repo/'docs/proofs/ui-playtable-2026-11-17/create-live-fixture.py').read_text().replace('/tmp/ui-playtable-live-credentials.json',container_path)
+if os.environ.get('LIVE_LARGE_MAP')=='1':
+    fixture=fixture.replace('width=1200,height=900','width=6000,height=4000').replace('name="Aktionsprüfung"','name="Turtonia · der Wald hinter dem nördlichen Stadttor"')
 cleanup=(repo/'docs/proofs/review-web-2026-11-18/cleanup-review-fixture.py').read_text().replace('/tmp/review-web-live-credentials-20261122.json',container_path)
 subprocess.run(['docker','exec','-i','roll-drauf-vtt-app-1','python','-'],input=fixture,text=True,check=True)
 try:
@@ -23,7 +25,7 @@ try:
                     '-v',str(repo)+':/app:ro','-v',str(proof)+':/proof',
                     '-v','/root/.cache/ms-playwright:/root/.cache/ms-playwright:ro',
                     '--entrypoint','python','roll-drauf-vtt-mobile-tests:20261115',
-                    '/app/docs/proofs/live-window-journey.py'],check=True)
+                    '/app/docs/proofs/'+os.environ.get('LIVE_JOURNEY','live-window-journey.py')],check=True)
 finally:
     result=subprocess.run(['docker','exec','-i','roll-drauf-vtt-app-1','python','-'],input=cleanup,text=True,capture_output=True)
     if result.returncode:

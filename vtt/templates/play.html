@@ -535,12 +535,7 @@
         .map-viewport.tool-pan { cursor: grab; }
         .map-viewport.tool-pan.panning { cursor: grabbing; }
         .map-viewport.tool-token #mapWorld { cursor: crosshair; }
-        /* Table refactor, 2026-08-23: #mapExtent is the scroll spacer. A CSS
-           scale() on #mapWorld does not change its layout box, so scrollbars
-           used to be sized for the UNscaled world - dead scroll space when
-           zoomed out, unreachable map when zoomed in. The renderer sizes
-           this wrapper to world-size * zoom so the scroll area always
-           matches what is visually there. */
+        /* The viewport clips the freely translated and scaled map world. */
         #mapExtent {
             position: relative;
             margin: 0 auto;
@@ -2480,7 +2475,7 @@
                             <button type="button" id="btnZoomOut" class="mini-control" title="Zoom out" data-ui-title="u_a4ae4b24a1f5">-</button>
                             <span id="zoomLabel" class="mini-control">100%</span>
                             <button type="button" id="btnZoomIn" class="mini-control" title="Zoom in" data-ui-title="u_4fc05f2763ba">+</button>
-                            <input id="zoomRange" type="range" min="20" max="300" step="5" value="100">
+                            <input id="zoomRange" type="range" min="0.01" max="300" step="0.01" value="100">
                             <button type="button" id="btnZoomFit" class="mini-control" title="Karte einpassen" data-ui-title="u_9788efabf9ed">FIT</button>
                             <button type="button" id="btnZoomReset" class="mini-control" title="100%">RST</button>
                         </div>
@@ -3100,6 +3095,7 @@
     <link rel="stylesheet" href="/static/css/play-windows.css">
     <script src="/static/js/play-windows.js"></script>
     <link rel="stylesheet" href="/static/css/play-tool-groups.css">
+    <link rel="stylesheet" href="/static/css/play-canvas-scenes.css">
     <script src="/static/js/play-tool-groups.js"></script>
     <script src="/static/js/play-token-library.js"></script>
     <script src="/static/js/play-campaign-room.js"></script>

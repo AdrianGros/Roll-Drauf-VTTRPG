@@ -1,0 +1,28 @@
+/* Local camera, without scroll limits or changes to document coordinates. */
+#mapViewport{overflow:hidden;overflow:clip}
+#mapExtent{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;overflow:visible}
+
+/* One scene per card; management never squeezes its name or thumbnail. */
+#window-layersWidget{width:min(440px,calc(100vw - 12px))}
+#window-layersWidget #layerList{min-width:0;max-width:100%}
+#window-layersWidget .layer-row{display:block;min-width:0;max-width:100%;margin:0 0 10px calc(var(--scene-depth,0)*8px);padding:10px;box-sizing:border-box;background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:8px}
+#window-layersWidget .layer-row.active-row{border-color:var(--ui-accent)}
+#window-layersWidget .scene-heading{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center}
+#window-layersWidget .layer-thumb{display:grid;place-items:center;width:44px;height:44px;box-sizing:border-box;background:var(--ui-soft);border-color:var(--ui-line);font:24px system-ui}
+#window-layersWidget .layer-info{min-width:0}
+#window-layersWidget .layer-title{font:600 14px/1.4 system-ui;overflow-wrap:anywhere}
+#window-layersWidget .layer-map-name{font:12px/1.4 system-ui;padding:0;margin-top:4px;overflow-wrap:anywhere}
+#window-layersWidget .scene-active-state{display:block;font:12px/1.4 system-ui;color:var(--ui-accent);margin-top:4px}
+#window-layersWidget .scene-activate{min-width:80px;min-height:44px;padding:8px;font-size:14px}
+#window-layersWidget .scene-activate[aria-pressed=true]{border-color:var(--ui-accent);box-shadow:inset 0 -3px var(--ui-accent)}
+#window-layersWidget .scene-options{margin-top:10px;border-top:1px solid var(--ui-line)}
+#window-layersWidget .scene-options>summary{display:list-item;min-height:44px;padding:12px 8px;box-sizing:border-box;cursor:pointer;font:14px/1.4 system-ui}
+#window-layersWidget .scene-options>summary:focus-visible{outline:3px solid var(--ui-accent);outline-offset:2px}
+#window-layersWidget .scene-options-body{display:grid;gap:12px;padding:4px 0}
+#window-layersWidget .scene-options-body label{display:flex;flex-direction:column;align-items:stretch;gap:6px;font:13px/1.4 system-ui}
+#window-layersWidget .scene-options-body :is(input,select){width:100%;max-width:100%;min-width:0;min-height:44px;box-sizing:border-box;font:14px system-ui;border-color:var(--ui-line)}
+#window-layersWidget .scene-admin-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#window-layersWidget .scene-action{min-width:0;min-height:44px;padding:8px;white-space:normal;font-size:14px;overflow-wrap:anywhere}
+#window-layersWidget .scene-visibility{grid-column:1/-1}
+#window-layersWidget #layerSearchInput{width:100%;min-height:44px;box-sizing:border-box;font-size:14px}
+@media(max-width:620px){#window-layersWidget .scene-options-body :is(input,select){font-size:16px}}
