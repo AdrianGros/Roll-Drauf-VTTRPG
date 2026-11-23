@@ -1,0 +1,74 @@
+{
+  "status": "pass",
+  "journeys": [
+    {
+      "role": "dm",
+      "engine": "chromium",
+      "width": 1440,
+      "theme": "paper",
+      "camera": {
+        "all_corners_centered": true,
+        "pan_beyond_document": true,
+        "fit_below_20_percent": true,
+        "zoom_anchor_kept": true,
+        "pinch": false
+      },
+      "token_state_unchanged_by_camera": true,
+      "scene_cards_readable": true,
+      "real_scene_rename_parent_and_activation": true,
+      "browser_errors": []
+    },
+    {
+      "role": "player",
+      "engine": "firefox",
+      "width": 1440,
+      "theme": "night",
+      "camera": {
+        "all_corners_centered": true,
+        "pan_beyond_document": true,
+        "fit_below_20_percent": true,
+        "zoom_anchor_kept": true,
+        "pinch": false
+      },
+      "token_state_unchanged_by_camera": true,
+      "scene_cards_readable": true,
+      "real_scene_rename_parent_and_activation": false,
+      "browser_errors": []
+    },
+    {
+      "role": "dm",
+      "engine": "chromium",
+      "width": 390,
+      "theme": "night",
+      "camera": {
+        "all_corners_centered": true,
+        "pan_beyond_document": true,
+        "fit_below_20_percent": true,
+        "zoom_anchor_kept": true,
+        "pinch": true
+      },
+      "token_state_unchanged_by_camera": true,
+      "scene_cards_readable": true,
+      "real_scene_rename_parent_and_activation": true,
+      "browser_errors": []
+    },
+    {
+      "role": "player",
+      "engine": "chromium",
+      "width": 320,
+      "theme": "night",
+      "camera": {
+        "all_corners_centered": true,
+        "pan_beyond_document": true,
+        "fit_below_20_percent": true,
+        "zoom_anchor_kept": true,
+        "pinch": true
+      },
+      "token_state_unchanged_by_camera": true,
+      "scene_cards_readable": true,
+      "real_scene_rename_parent_and_activation": false,
+      "browser_errors": []
+    }
+  ],
+  "authentication": "isolated synthetic sessions; Discord OAuth not exercised"
+}

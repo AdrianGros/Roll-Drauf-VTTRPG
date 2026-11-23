@@ -12,7 +12,7 @@ def save():
     (root/'live.json').write_text(json.dumps(proof,ensure_ascii=False,indent=2)+'\n')
 with sync_playwright() as p:
     try:
-        for engine,role,width,theme in [('chromium','dm',1440,'paper'),('firefox','player',1440,'night'),('chromium','dm',390,'paper'),('chromium','player',320,'night')]:
+        for engine,role,width,theme in [('chromium','dm',1440,'paper'),('firefox','player',1440,'night'),('chromium','dm',390,'night'),('chromium','player',320,'night')]:
             browser=getattr(p,engine).launch(headless=True,args=['--no-sandbox'] if engine=='chromium' else [])
             ctx=browser.new_context(viewport={'width':width,'height':900},reduced_motion='reduce',has_touch=width<600)
             ctx.add_init_script("localStorage.setItem('vtt.display.v1',JSON.stringify({schema:1,theme:'"+theme+"',language:'de',accent:'default',unit:'m'}))")

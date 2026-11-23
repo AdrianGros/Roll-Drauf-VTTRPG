@@ -1,0 +1,59 @@
+{
+  "status": "delivered_and_live_verified",
+  "url": "https://vtt.roll-drauf.de",
+  "source_commit": "ca61fc4fd0d28ee524bb6353114c30bf8ea83e1b",
+  "image": "roll-drauf-vtt-app:feedback-canvas-scenes-20261123-20261111-ca61fc4fd",
+  "image_id": "sha256:16304c0ba8313ac37b3129878e3303e74e1cfae4a8010fb1b628181484aa0b7f",
+  "base_image": "sha256:4c87060242643b534394516c0a458974c716fd84bc742a84d587b7e72451e516",
+  "branch": "fix/canvas-scenes-20261123",
+  "functional_commit_pushed": true,
+  "runtime_files": [
+    "vtt/static/css/play-canvas-scenes.css",
+    "vtt/static/i18n/ui.de.json",
+    "vtt/static/i18n/ui.en.json",
+    "vtt/static/js/play-feedback-dm.js",
+    "vtt/static/js/play-feedback.js",
+    "vtt/static/js/play-ui.js",
+    "vtt/static/js/ui-catalog.js",
+    "vtt/templates/play.html"
+  ],
+  "built_source_verification": {
+    "checked": 332,
+    "mismatches": []
+  },
+  "schema": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "backup": {
+    "path": "/srv/migration/2026-11-11/feedback-canvas-scenes-20261123/ca61fc4fd/database-before.dump",
+    "bytes": 539109,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "live_journeys": 4,
+  "navigation": "Kampagnen-Hub → Sitzung → Bewegen/Zoom/FIT; Szenen → Optionen",
+  "roles": [
+    "DM",
+    "Player",
+    "owner-as-Player (local)"
+  ],
+  "large_live_map": [
+    6000,
+    4000
+  ],
+  "local_large_map": [
+    12000,
+    9000
+  ],
+  "other_services_unchanged": true,
+  "reminder_timer_active": true,
+  "qa_cleanup_verified": true,
+  "rollback": "/srv/migration/2026-11-11/feedback-canvas-scenes-20261123/ca61fc4fd/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "editor_feedback": "Separate discovery artifact E01–E27; no mapmaker runtime changes",
+  "proof_runner_sha256": "2a269f16829511df08ef7c65d69f2af456e507a523bca8c767632681ba74ea3e"
+}

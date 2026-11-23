@@ -69,5 +69,23 @@
     "Existing initiative candidate journey did not reach expected candidate in combined run; unchanged baseline already fails earlier at grid-save readiness. No initiative/runtime/server change in this slice.",
     "Standalone floor-module host (loads no changed camera/scene modules) failed a pixel sample in combined run; standalone unchanged baseline passes. No floor file changed. This is not claimed as a completed floor regression acceptance."
   ],
-  "full_repository_suite_green": false
+  "full_repository_suite_green": false,
+  "live": {
+    "status": "pass",
+    "journeys": 4,
+    "data_unchanged_by_camera": true,
+    "real_scene_actions": true,
+    "qa_removed": true
+  },
+  "source_commit": "ca61fc4fd0d28ee524bb6353114c30bf8ea83e1b",
+  "runtime_fingerprints": {
+    "vtt/static/css/play-canvas-scenes.css": "21c5c7557d47685655b95bdf32dd47ddead78dff6f32bb35c3b418896485e4d8",
+    "vtt/static/i18n/ui.de.json": "fed4893889d23b113fb99bb26800102c9c081a0bd0883e35c11328ca4f7915b3",
+    "vtt/static/i18n/ui.en.json": "f796244473ab4793bb8f1f75f6242142f2ba304211841f162c080b52d49ff17d",
+    "vtt/static/js/play-feedback-dm.js": "833ee0071a1887fd399366e6ef12e14e7e62a7e19dee4fb1e19aa2e396f4d569",
+    "vtt/static/js/play-feedback.js": "0e5b18b2151705205b12599056b37c4f1eff3d176e4b6a9bfb9aa31ce226e834",
+    "vtt/static/js/play-ui.js": "1fc24b49e4b34b3aee45c5438bba59910c7ab0df85baf0a9fa19a9b30cc4415c",
+    "vtt/static/js/ui-catalog.js": "9f28495d0707373ef34224aad1e0eaef041ff713b21d4b9fdd89408e1cdbfe62",
+    "vtt/templates/play.html": "43707c484302ec8afce2dc96896027e1f94cef9c66a73ca52a05359fb11f03a2"
+  }
 }
