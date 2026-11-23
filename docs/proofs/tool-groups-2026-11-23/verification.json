@@ -1,0 +1,190 @@
+{
+  "status": "pre_activation_checks_in_progress",
+  "baseline_source": "a6abcce9e34b289efb88cb525a0c4c3ae87037e4",
+  "baseline_reproduced_in": "084a05789a7a1aa2398bda21ffc700aa76972e4a (same VTT files as live baseline)",
+  "test_environment": {
+    "image": "roll-drauf-vtt-mobile-tests:20261115",
+    "network": "none",
+    "database": "per-test temporary SQLite, no lane or production database",
+    "browser_cache": "read-only preinstalled Playwright",
+    "image_id": "sha256:37cecd8df9acbd8efa1f23db87e57c0a8a577768ee8c30f9206ca348c186b65d"
+  },
+  "command_template": "docker run --rm --network none -v <worktree>:/app -v /root/.cache/ms-playwright:/root/.cache/ms-playwright:ro -w /app --entrypoint python roll-drauf-vtt-mobile-tests:20261115 -c \"import os,pytest; result=pytest.main([<options and test files>]); os._exit(int(result))\"",
+  "checks": {
+    "i18n_catalog": "3728 sources; DE/EN complete; generated files and placeholders checked",
+    "svg": "21 unique local symbols; XML parsed",
+    "python_syntax": "new browser test and live acceptance script compiled",
+    "diff_check": "pass",
+    "standalone_node_syntax": "not run: node is not installed; browser tests exercise actual script parsing"
+  },
+  "runs": [
+    {
+      "id": "targeted_authorized_api",
+      "log": "/tmp/tool-groups-api-targeted-20261123.log",
+      "log_sha256": "3d2d2839b7f54a1f958d8620ec4388a370d77be87dc999aa2be6a3e2ff481f59",
+      "summary": "32 passed, 434 warnings in 78.87s (0:01:18)",
+      "failed_tests": [],
+      "tests": [
+        "tests/test_table_contexts.py",
+        "tests/test_ui_playtable_complete.py"
+      ]
+    },
+    {
+      "id": "unchanged_baseline_string_contracts",
+      "log": "/tmp/tool-groups-baseline-contracts-20261123.log",
+      "log_sha256": "68aac6b35e432cac6045a7dfca72387a54c7f8cdddc3847d64cbb51a8b3d6ad7",
+      "summary": "8 failed, 12 passed, 8 warnings in 16.64s",
+      "failed_tests": [
+        "tests/test_public_surface_and_playtable_contract.py::test_beyond20_review_page_is_public_and_names_the_supported_contract",
+        "tests/test_public_surface_and_playtable_contract.py::test_playtable_add_page_offers_upload_or_copy_never_a_dead_end",
+        "tests/test_public_surface_and_playtable_contract.py::test_playtable_eye_control_activates_pages_without_a_second_activate_row",
+        "tests/test_public_surface_and_playtable_contract.py::test_playtable_floating_widgets_are_draggable_by_their_header",
+        "tests/test_public_surface_and_playtable_contract.py::test_playtable_conditions_picker_merges_metadata_instead_of_overwriting",
+        "tests/test_public_surface_and_playtable_contract.py::test_playtable_action_hotbar_is_a_pure_ui_trigger_over_the_existing_seam",
+        "tests/test_public_surface_and_playtable_contract.py::test_playtable_roll_composer_has_presets_adv_dis_and_visibility",
+        "tests/test_public_surface_and_playtable_contract.py::test_playtable_selecting_a_token_surfaces_its_controls"
+      ],
+      "tests": [
+        "tests/test_public_surface_and_playtable_contract.py"
+      ]
+    },
+    {
+      "id": "unchanged_baseline_old_measure_vision_journeys",
+      "log": "/tmp/tool-groups-baseline-b07-20261123.log",
+      "log_sha256": "2b0566b902c84d72918c1c74d35778cb113d55e2419e0104fa9f36e0f4cbc8f6",
+      "summary": "4 failed, 119 warnings in 83.89s (0:01:23)",
+      "failed_tests": [
+        "tests/test_feedback_b07_browser.py::test_measure_shapes_real_controls_and_independent_player_surface[dm-1440-chromium]",
+        "tests/test_feedback_b07_browser.py::test_measure_shapes_real_controls_and_independent_player_surface[player-390-firefox]",
+        "tests/test_feedback_b07_browser.py::test_dm_light_wall_edit_reload_and_delete_through_ui",
+        "tests/test_feedback_b07_browser.py::test_two_clients_with_fog_receive_successive_edits_and_reload"
+      ],
+      "tests": [
+        "tests/test_feedback_b07_browser.py"
+      ]
+    },
+    {
+      "id": "early_combined_browser",
+      "log": "/tmp/tool-groups-browser-final-20261123.log",
+      "log_sha256": "cd33fb558ca32734e4f27c12f51f66154ccc6837f9e35a3a6a9b9738aa78f172",
+      "summary": "1 failed, 13 passed, 364 warnings in 371.11s (0:06:11)",
+      "failed_tests": [
+        "tests/test_table_companions_browser.py::test_personal_bar_companion_keeps_identity_and_damage_after_reload[chromium-1440]"
+      ],
+      "tests": [
+        "tests/test_play_tool_groups_browser.py",
+        "tests/test_play_window_position_browser.py",
+        "tests/test_table_companions_browser.py",
+        "tests/test_floor_layers_browser.py",
+        "tests/test_table_contexts_browser.py"
+      ]
+    },
+    {
+      "id": "companion_repeat",
+      "log": "/tmp/tool-groups-companions-recheck-20261123.log",
+      "log_sha256": "cf985992d9fb4ee33d8315e99d6be841d304a5462930f8d67320595d3236fbdd",
+      "summary": "2 passed, 71 warnings in 43.40s",
+      "failed_tests": [],
+      "tests": [
+        "tests/test_table_companions_browser.py"
+      ]
+    },
+    {
+      "id": "mobile_rotation_journal_navigation_with_initial_calibration_failure",
+      "log": "/tmp/tool-groups-relocated-mobile-20261123.log",
+      "log_sha256": "a07909e7f200170f36da565be9afd4758f1fabd4b9d89da6f7f61aef1e21fded",
+      "summary": "1 failed, 9 passed, 439 warnings in 306.98s (0:05:06)",
+      "failed_tests": [
+        "tests/test_presentation_browser.py::test_dm_calibration_updates_player_ruler_without_granting_controls"
+      ],
+      "tests": [
+        "tests/test_mobile_playtable_browser.py",
+        "tests/test_ui_playtable_complete_browser.py",
+        "tests/test_feedback_b08_browser.py::test_journal_read_racing_a_context_renewal_recovers_without_error",
+        "tests/test_feedback_b01_browser.py::test_back_maps_is_reachable_without_role_elevation",
+        "tests/test_presentation_browser.py::test_dm_calibration_updates_player_ruler_without_granting_controls"
+      ]
+    },
+    {
+      "id": "corrected_calibration_real_geometry_and_journal",
+      "log": "/tmp/tool-groups-final-contexts-20261123.log",
+      "log_sha256": "5472399b546e80d627e285603b7df73197c17780e3e1bf270560872cb8927127",
+      "summary": "3 passed, 339 warnings in 81.74s (0:01:21)",
+      "failed_tests": [],
+      "tests": [
+        "tests/test_presentation_browser.py::test_dm_calibration_updates_player_ruler_without_granting_controls",
+        "tests/test_feedback_b07_browser.py::test_dm_light_wall_edit_reload_and_delete_through_ui",
+        "tests/test_feedback_b08_browser.py::test_journal_real_upload_sharing_media_and_independent_player"
+      ]
+    },
+    {
+      "id": "final_grouped_surface",
+      "log": "/tmp/tool-groups-final-core-20261123.log",
+      "log_sha256": "1582e39b09f15a1ed5ee73235672d55df6cbc4b7ab1faa8a7987bb524b254534",
+      "summary": "4 passed, 129 warnings in 108.87s (0:01:48)",
+      "failed_tests": [],
+      "tests": [
+        "tests/test_play_tool_groups_browser.py"
+      ]
+    },
+    {
+      "id": "final_regressions",
+      "log": "/tmp/tool-groups-final-regressions-20261123.log",
+      "log_sha256": "f02f949e86ecce47ce54b7a773de94218b53834750c96749ee60b5c8bb4c59da",
+      "summary": "1 failed, 4 passed, 139 warnings in 131.33s (0:02:11)",
+      "failed_tests": [
+        "tests/test_play_window_position_browser.py::test_relocated_windows_textboxes_and_menus_follow_the_display_palette[firefox-paper]"
+      ],
+      "tests": [
+        "tests/test_play_window_position_browser.py",
+        "tests/test_token_layers_browser.py",
+        "tests/test_personal_actions_browser.py",
+        "tests/test_table_seat_memory_browser.py",
+        "tests/test_session_feedback_browser.py",
+        "tests/test_table_companions_browser.py"
+      ]
+    }
+  ],
+  "known_findings": [
+    {
+      "scope": "eight older source-string contract assertions",
+      "baseline_comparison": "same eight failing test IDs in unchanged baseline and implementation",
+      "disposition": "recorded; no unrelated runtime or test rewrites"
+    },
+    {
+      "scope": "older B07 measure/vision tests",
+      "baseline": "all four fail in unchanged baseline (two square-size expectations, two wall-creation paths)",
+      "implementation": "same DM square-size failure; newly introduced Player measure-field contrast corrected; relocated single-client light/wall edit journey passes; two-client fog-count wait failed at a later assertion and remains an unclosed legacy verification gap",
+      "disposition": "not claimed green; no geometry, fog or rule calculations changed by this slice"
+    },
+    {
+      "scope": "initial companion browser load",
+      "observed": "one empty asynchronous companion select in early 14-case run",
+      "repeat": "both engines pass in isolated repeat; that original runner ended 143 after reporting results",
+      "disposition": "no claimed root cause; final regression reruns include both companion cases"
+    },
+    {
+      "scope": "calibration test",
+      "observed": "the test assumed snapping but did not enable it; Firefox reported 0.99 squares",
+      "correction": "explicitly enable the real snap control; fixed measurement options overlay; corrected full calibration journey passes"
+    },
+    {
+      "scope": "human usability",
+      "disposition": "no human comparison study or claim of proven speed improvement"
+    }
+  ],
+  "full_repository_suite_green": false,
+  "runtime_fingerprints": {
+    "vtt/static/css/play-tool-groups.css": "be72ccf986c284682fec042ff02d69b3460b2868fc4a6ddc22e1eb7bd10caeef",
+    "vtt/static/i18n/ui.de.json": "e135370d4bb781b9cbfd8cdbf200b09b7e5ce6441c3a6e7b32355baf06f4f796",
+    "vtt/static/i18n/ui.en.json": "3e5b8ad5269b817056be2aa3832c5ae1ae4f7d18647a3fe24e461a18c967a565",
+    "vtt/static/icons/play-controls.svg": "70f401e36e86ee5483198d8876f6745ef462785caaf1bb8a9d87942563b0e1c1",
+    "vtt/static/js/play-feedback-dm.js": "fd1db2d9a28ae2343cf23915acbd8a04c7a2b2f358f1093aafcde939cc222022",
+    "vtt/static/js/play-tool-groups-dm.js": "8e76074fad562992c913d12b45e7608405a0acb7946b08ff99882ca3a57a7588",
+    "vtt/static/js/play-tool-groups.js": "3b04f9a074d22ac90b9051ccc661c73854acb43cc24b850483eef6671318f819",
+    "vtt/static/js/play-ui.js": "ab438b315e18a392a66098f31223100f93975a6bc39cd347dedcf8aaa932e8d9",
+    "vtt/static/js/play-windows.js": "6fc16fdeb8f395f7bb808be14fe43bd4088f0484f61463fa338fd4af681ee43f",
+    "vtt/static/js/ui-catalog.js": "00b3932049290bf565bdab3e3d842eecbc74ea42c8d68d50f15d9d38555699d3",
+    "vtt/templates/play.html": "90c0b827e09c1ae16b68f05ad20f4c64cff6bcc5d078108bb17f8d79494dcfc3"
+  }
+}

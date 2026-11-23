@@ -69,6 +69,7 @@ def test_relocated_windows_textboxes_and_menus_follow_the_display_palette(action
         page.goto(f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}&seat=player")
         page.locator('#dock-tokenWidget').click()
         page.locator('#btnChatToggle').click()
+        page.locator('#btnTableMore').click()
         page.locator('#btnBack').click()
         expect(page.locator('#appMenu')).to_be_visible()
         # Native colour conversion avoids assuming how the browser serializes CSS variables.
@@ -80,11 +81,11 @@ def test_relocated_windows_textboxes_and_menus_follow_the_display_palette(action
         for row in values:
             assert row['bg']==row['expected'],row
             assert row['ink']==row['expectedInk'],row
-        page.locator('#btnBack').click()
+        page.locator('#appMenu').press('Escape')
         page.evaluate("VTTDisplay.update({theme:'night',accent:'teal'})")
-        assert page.locator('#window-tokenWidget').evaluate("e=>getComputedStyle(e).backgroundColor")=='rgb(28, 28, 28)'
+        expect(page.locator('#window-tokenWidget')).to_have_css('background-color','rgb(28, 28, 28)')
         heading=page.locator('#window-tokenWidget h4').first
-        assert heading.evaluate("e=>getComputedStyle(e).color")=='rgb(248, 244, 233)'
+        expect(heading).to_have_css('color','rgb(248, 244, 233)')
         assert heading.evaluate("e=>getComputedStyle(e).backgroundImage")=='none'
         if os.environ.get('VTT_PROOF_DIR'):
             path=Path(os.environ['VTT_PROOF_DIR']);path.mkdir(parents=True,exist_ok=True)

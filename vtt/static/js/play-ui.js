@@ -205,7 +205,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             this._composedOperator = operator;
             if (operator) {
                 const surface = await this.auth.makeAuthRequest(`/api/play/campaigns/${this.campaignId}/sessions/${this.sessionId}/surface`);
-                for (const source of ["/static/js/play-token-layers-dm.js", "/static/js/play-dm.js", "/static/js/play-feedback-dm.js", "/static/js/play-floor-dm.js"]) await new Promise((resolve, reject) => {
+                for (const source of ["/static/js/play-token-layers-dm.js", "/static/js/play-dm.js", "/static/js/play-feedback-dm.js", "/static/js/play-floor-dm.js", "/static/js/play-tool-groups-dm.js"]) await new Promise((resolve, reject) => {
                     const script = document.createElement("script");
                     script.src = source;
                     script.onload = resolve;
@@ -1087,6 +1087,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (snapBtn) snapBtn.hidden = toolName !== "measure";
             const measureOptions = document.getElementById('measureOptions');
             if (measureOptions) measureOptions.hidden = toolName !== 'measure';
+            this.toolGroups?.sync();
         }
 
         // F4: shared "make the token panel visible" step -- expand
@@ -2989,6 +2990,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             });
 
             if (this._composedOperator) { this._bindMapUpload(); this._bindMapLibrary?.(); this._bindTokenClipboard?.(); }
+            this.toolGroups = new window.PlayToolGroups(this);
+            this.toolGroups.mount();
         }
 
         // Upload a map image straight from the table: asset upload ->
@@ -3862,7 +3865,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 menu.hidden = true;
                 trigger.setAttribute("aria-expanded", "false");
                 document.removeEventListener("click", onOutsideClick, true);
-                if (returnFocus) trigger.focus();
+                if (returnFocus) (trigger.getClientRects().length?trigger:document.getElementById('btnTableMore')||trigger).focus();
             };
             const onOutsideClick = (event) => {
                 if (menu.contains(event.target) || trigger.contains(event.target)) return;
@@ -4341,6 +4344,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
 
         _renderMapCanvas() {
+            this.toolGroups?.sync();
             const statePayload = this.bootstrap?.state_payload || {};
             const activeMap = statePayload.active_map;
             const background = this.floorView ? this.floorView.background(activeMap) : activeMap?.background_url;

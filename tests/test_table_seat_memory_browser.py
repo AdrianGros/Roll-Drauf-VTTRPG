@@ -38,7 +38,7 @@ def test_dm_seat_survives_a_discarded_tab_and_an_explicit_player_seat_stays(acti
         expect(page.locator('#dock-tokenLayersWidget')).to_be_attached()
         assert modes(app, owner_id)[-1] == 'dm', modes(app, owner_id)
         # The owner switches to a Player seat on purpose, through the menu: that choice is remembered too.
-        page.locator('#btnBack').click()
+        page.locator('#btnTableMore').click();page.locator('#btnBack').click()
         with page.expect_navigation():
             page.locator('#appMenuSeat').click()
         expect(page.locator('#mapWorld')).to_have_attribute('data-has-map', 'true')

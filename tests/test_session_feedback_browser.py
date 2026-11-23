@@ -96,7 +96,7 @@ def test_windows_restore_and_token_menu_upload_and_library(action_site, role, wi
             page.locator('#tokenCreateName').fill('Direct menu upload')
             page.locator('#btnTokenCreateConfirm').click()
             expect(page.locator('.token-marker')).to_have_count(3)
-        page.locator('#btnBeyond20Setup').click();expect(page.locator('#window-beyond20')).to_be_visible()
+        page.locator('#btnTableMore').click();page.locator('#btnBeyond20Setup').click();expect(page.locator('#window-beyond20')).to_be_visible()
         expect(page.frame_locator('#window-beyond20 iframe').locator('#beyond20CopyBtn')).to_be_visible()
         assert page.evaluate('document.documentElement.scrollWidth')<=width
         if role=='player':

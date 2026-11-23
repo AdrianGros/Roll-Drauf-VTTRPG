@@ -84,7 +84,7 @@ def test_back_maps_is_reachable_without_role_elevation(action_site, role):
         page.wait_for_function('() => !!window.RollDraufTable')
         if role == 'player':
             assert not page.evaluate('() => !!window.PlayDMSurface')
-        page.locator('#btnBack').click()
+        page.locator('#btnTableMore').click();page.locator('#btnBack').click()
         page.locator('#appMenu [data-book-return-target="/mapmaker"]').click()
         # /mapmaker is the established UI entry; its existing template redirects
         # to the static editor document, where relative asset paths resolve.

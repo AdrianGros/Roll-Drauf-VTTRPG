@@ -1,0 +1,34 @@
+/* One anatomy for every dock command, using the existing display palette. */
+body.play-tool-groups > .left-toolbar{width:max-content;max-width:calc(100vw - 16px)!important;display:flex!important;flex-direction:column!important;gap:6px;padding:6px 8px!important;overflow:visible!important;background:var(--ui-panel)!important;color:var(--ui-ink);border:1px solid var(--ui-line);border-radius:12px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.play-tool-status{margin:0;font-size:12px;color:var(--ui-muted);width:100%;padding:0 4px;white-space:normal}
+.play-command-groups{display:flex;gap:12px;justify-content:center;max-width:100%}
+body.play-tool-groups #tableDockTabs{display:flex!important;position:static!important;overflow:visible;max-width:100%;padding:0}
+.play-command-group{display:flex;gap:4px;align-items:center}
+.play-command-group+.play-command-group{border-left:1px solid var(--ui-line);padding-left:12px}
+body.play-tool-groups>.left-toolbar .play-command{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:64px;min-height:52px;height:52px;max-height:none;padding:5px 8px;font:400 12px system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.2;border:1px solid var(--ui-line);border-radius:8px;background:var(--ui-soft)!important;color:var(--ui-ink)!important;white-space:nowrap;box-sizing:border-box}
+body.play-tool-groups>.left-toolbar .play-command .tool-label{font:inherit;display:block}
+.play-command-icon{display:block;width:20px;height:20px;min-width:20px;flex:0 0 20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+body.play-tool-groups>.left-toolbar .play-command[aria-pressed=true]{background:var(--ui-action-bg)!important;color:var(--ui-action-text)!important;border-color:var(--ui-accent)}
+body.play-tool-groups>.left-toolbar .play-command[aria-expanded=true]{border-color:var(--ui-accent);box-shadow:inset 0 -3px var(--ui-accent)}
+body.play-tool-groups .play-command:focus-visible{outline:3px solid var(--ui-accent);outline-offset:2px}
+body.play-tool-groups .play-command:disabled{opacity:.6;cursor:default}
+body.play-tool-groups .play-command[hidden]{display:none!important}
+body.play-tool-groups .play-window :is(button,input,select,textarea){font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+body.play-tool-groups .play-window button{min-height:44px;border-radius:8px}
+body.play-tool-groups .play-window-head button{min-width:44px;flex:0 0 44px!important}
+body.play-tool-groups .play-command-row{display:flex!important;align-items:center;justify-content:flex-start;flex-direction:row;gap:10px;width:100%;min-height:44px;height:auto;margin:4px 0;padding:8px 10px;white-space:normal;text-align:left;font-size:14px;font-weight:400;line-height:1.3}
+body.play-tool-groups .play-command-row .tool-label{font:inherit;white-space:normal}
+body.play-tool-groups .play-command-row[hidden]{display:none!important}
+body.play-tool-groups .play-command-row[aria-expanded=true]{border-color:var(--ui-accent);box-shadow:inset 3px 0 var(--ui-accent)}
+body.play-tool-groups .play-command-row[aria-pressed=true]{border-color:var(--ui-accent);box-shadow:inset 3px 0 var(--ui-accent)}
+.play-more-commands,.play-command-list,.play-related-commands{display:flex;flex-direction:column;gap:2px}
+.play-related-commands{margin-bottom:10px}
+#window-tableCommands{width:min(480px,calc(100vw - 12px))}
+.play-command-catalog label{display:block;margin-bottom:5px}
+#playCommandSearch{width:100%;min-height:44px;box-sizing:border-box;margin-bottom:8px}
+body.play-tool-groups #appMenu .app-menu-item{display:flex;align-items:center;min-height:44px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;border-radius:8px}
+#measureOptions .play-command-row{width:auto}
+body.play-tool-groups>#measureOptions{position:fixed;left:12px;bottom:calc(var(--play-toolbar-height,90px) + var(--play-personal-height,0px) + var(--play-action-height,0px) + 40px);max-width:calc(100vw - 24px);max-height:40svh;overflow:auto;z-index:59;background:var(--ui-panel);color:var(--ui-ink);border-color:var(--ui-line);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+body.play-tool-groups>#measureOptions :is(select,option,button){background:var(--ui-panel)!important;color:var(--ui-ink)!important;border-color:var(--ui-line);font:inherit;min-height:44px}
+@media(max-width:980px){body.play-tool-groups>.left-toolbar{width:calc(100vw - 16px)}.play-command-groups{flex-wrap:wrap;gap:6px;width:100%}.play-command-group{justify-content:center;flex-wrap:wrap}.play-command-group+.play-command-group{padding-left:0;border-left:0}}
+@media(max-width:620px){.play-command-group{width:100%}body.play-tool-groups>.left-toolbar .play-command{min-width:60px;padding-inline:6px}.play-tool-status{text-align:center}body.play-tool-groups .play-window input,body.play-tool-groups .play-window textarea{font-size:16px}}

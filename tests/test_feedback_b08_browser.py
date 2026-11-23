@@ -22,7 +22,7 @@ def open_table(ctx,origin,info,role,errors):
     page=ctx.new_page();page.set_default_timeout(60000);page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto(f"{origin}/play?campaign_id={info['campaign']}&session_id={info['session']}&seat={role}")
     expect(page.locator('#journalFilesPanel')).to_be_attached(timeout=60000)
-    page.locator('#btnSidebarToggle').click();expect(page.locator('#journalFilesPanel')).to_be_visible();return page
+    page.locator('#btnTableMore').click();page.locator('#btnSidebarToggle').click();expect(page.locator('#journalFilesPanel')).to_be_visible();return page
 
 
 def test_journal_real_upload_sharing_media_and_independent_player(action_site,tmp_path):

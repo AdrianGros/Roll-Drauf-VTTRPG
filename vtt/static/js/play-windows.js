@@ -29,6 +29,7 @@
                 document.documentElement.style.setProperty('--play-toolbar-height', Math.ceil(toolbar.getBoundingClientRect().height) + 'px');
                 document.documentElement.style.setProperty('--play-personal-height', Math.ceil(personal.getBoundingClientRect().height) + 'px');
                 document.documentElement.style.setProperty('--play-action-height', Math.ceil(document.getElementById('actionHotbar').getBoundingClientRect().height) + 'px');
+                if(this.ui.toolGroups)requestAnimationFrame(()=>this.reclamp());
             };
             this.barObserver = new ResizeObserver(size); this.barObserver.observe(toolbar); this.barObserver.observe(personal); this.barObserver.observe(document.getElementById('actionHotbar')); size();
             for (const [id, title, trigger] of [['panel-chat', 'Chat', 'btnChatToggle'], ['panel-journal', 'Journal', 'btnSidebarToggle']]) {
@@ -71,6 +72,7 @@
             window.addEventListener('resize', () => this.reclamp());
             document.addEventListener('fullscreenchange', () => this.reclamp());
             document.addEventListener('keydown', event => {
+                if(event.target.closest?.('#appMenu'))return;
                 if (event.key !== 'Escape' || document.querySelector('dialog[open]') || !this.top()) return;
                 const item = event.target.closest?.('.play-window') || this.top().element;
                 const key = [...this.items].find(([, value]) => value.element === item)?.[0];
@@ -102,8 +104,9 @@
             item.trigger?.setAttribute('aria-expanded', 'true');
             item.element.querySelector('.play-window-head strong')?.focus({preventScroll: true});
             if (id === 'tokenWidget') this.ui.tokenLibrary?.refresh();
+            this.ui.toolGroups?.sync();
         }
-        close(id) { const item = this.items.get(id); if (!item) return; this.save(item.element, id); item.element.hidden = true; item.trigger?.setAttribute('aria-expanded', 'false'); item.trigger?.focus({preventScroll: true}); }
+        close(id) { const item = this.items.get(id); if (!item) return; this.save(item.element, id); item.element.hidden = true; item.trigger?.setAttribute('aria-expanded', 'false'); const trigger=item.trigger?.getClientRects().length?item.trigger:item.fallbackTrigger;trigger?.focus({preventScroll: true});this.ui.toolGroups?.sync(); }
         toggle(id) { const item = this.items.get(id); if (item) item.element.hidden ? this.open(id) : this.close(id); }
         position(element, id, reset = false) {
             if (!element || element.hidden || element.matches('dialog:not([open])')) return;

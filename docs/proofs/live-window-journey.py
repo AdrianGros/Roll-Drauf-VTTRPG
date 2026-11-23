@@ -24,20 +24,48 @@ with sync_playwright() as p:
                                 {'name':'csrf_access_token','value':user['csrf'],'url':origin,'secure':True}])
             page=context.new_page();page.set_default_timeout(25000)
             errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+            page.on('dialog',lambda dialog:dialog.accept() if 'Rastergröße' in dialog.message else dialog.dismiss())
             page.goto(origin+f"/campaigns?campaign_id={fixture['campaign_id']}")
             action='open-session-dm' if role=='dm' else 'open-session'
             page.locator('[data-hub-action="'+action+'"]').first.click()
             expect(page.locator('body')).to_have_attribute('data-table-seat',role)
+            dock=page.locator('.play-command-groups button')
+            expect(dock).to_have_count(10 if role=='dm' else 9)
+            geometry=dock.evaluate_all('rows=>rows.map(e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right,bottom:r.bottom,height:r.height,icons:e.querySelectorAll("svg").length};})')
+            assert all(r['left']>=0 and r['right']<=width+1 and r['bottom']<=1000 and r['height']==52 and r['icons']==1 for r in geometry),geometry
+            activate=lambda locator:locator.tap() if width<600 else locator.click()
+            activate(page.locator('[data-tool=measure]'));activate(page.locator('#btnMeasureSnap'))
+            expect(page.locator('#btnMeasureSnap')).to_have_attribute('aria-pressed','true')
+            activate(page.locator('[data-tool=select]'))
+            activate(page.locator('#btnTableMore'));activate(page.locator('#btnAllTableCommands'))
+            page.locator('#playCommandSearch').fill('Beyond20')
+            activate(page.locator('.play-command-list [data-command=beyond]'))
+            expect(page.locator('#window-beyond20')).to_be_visible()
+            page.locator('#window-beyond20 .play-window-head button').click()
+            if role=='dm':
+                page.locator('#btnMapPresentation').click()
+                page.locator('#presentationGridSize').fill('80');page.locator('#savePresentationSettings').click()
+                expect(page.locator('#window-mapPresentation')).to_contain_text('gespeichert',timeout=30000)
+                page.locator('#btnMapFloors').click();expect(page.locator('#window-mapFloors')).to_be_visible()
+                page.locator('#window-mapFloors .play-window-head button').click()
+                page.locator('#window-mapPresentation .play-window-head button').click()
+                page.locator('#dock-tokenWidget').click();page.locator('#dock-tokenLayersWidget').click()
+                expect(page.locator('#window-tokenLayersWidget')).to_be_visible()
+                page.locator('#window-tokenLayersWidget .play-window-head button').click()
+                page.locator('#window-tokenWidget .play-window-head button').click()
+            else:
+                assert not page.evaluate('Boolean(window.PlayToolGroupsDM || window.PlayFloorDM)')
+                assert page.locator('#btnMapFloors,#toolWall,#toolLight').count()==0
             page.locator('#dock-tokenWidget').click();page.locator('#dock-turnOrderWidget').click()
             first=page.locator('#window-tokenWidget');second=page.locator('#window-turnOrderWidget')
             expect(first).to_be_visible();expect(second).to_be_visible()
-            page.locator('#btnChatToggle').click();page.locator('#btnBack').click()
+            page.locator('#btnChatToggle').click();page.locator('#btnTableMore').click();page.locator('#btnBack').click()
             palette=page.evaluate("""() => {
               const resolve=token=>{const e=document.createElement('span');e.style.color=`var(${token})`;document.body.append(e);const v=getComputedStyle(e).color;e.remove();return v;};
-              return [['#window-tokenWidget','--ui-paper'],['#window-panel-chat .panel','--ui-panel'],['#chatInput','--ui-panel'],['#appMenu','--ui-panel'],['#appMenuReturn','--ui-soft']].map(([selector,token])=>{const s=getComputedStyle(document.querySelector(selector));return {selector,bg:s.backgroundColor,expected:resolve(token),ink:s.color,expectedInk:resolve('--ui-ink')};});
+              return [['#window-tokenWidget','--ui-paper'],['#window-panel-chat .panel','--ui-panel'],['#chatInput','--ui-panel'],['#measureShape','--ui-panel'],['#appMenu','--ui-panel'],['#appMenuReturn','--ui-soft']].map(([selector,token])=>{const s=getComputedStyle(document.querySelector(selector));return {selector,bg:s.backgroundColor,expected:resolve(token),ink:s.color,expectedInk:resolve('--ui-ink')};});
             }""")
             assert all(row['bg']==row['expected'] and row['ink']==row['expectedInk'] for row in palette),palette
-            page.locator('#btnBack').click()
+            page.locator('#appMenu').press('Escape')
             page.locator('#window-panel-chat .play-window-head button').click()
             assert first.evaluate("e=>getComputedStyle(e).position")=='fixed'
             assert second.evaluate("e=>getComputedStyle(e).position")=='fixed'
@@ -67,9 +95,12 @@ with sync_playwright() as p:
             page.reload();page.locator('#dock-tokenWidget').click()
             restored=first.bounding_box();assert abs(restored['x']-moved['x'])<2 and abs(restored['y']-moved['y'])<2
             if role=='player':assert not page.evaluate('Boolean(window.PlayDMSurface)')
+            else:
+                page.locator('#btnMapPresentation').click();expect(page.locator('#presentationGridSize')).to_have_value('80')
+                page.locator('#window-mapPresentation .play-window-head button').click()
             assert errors==[],errors
             page.screenshot(path=str(root/f'windows-{role}-{engine}-{width}.png'))
-            proof['journeys'].append({'role':role,'engine':engine,'width':width,'theme':theme,'palette':palette,'drag':'touch' if width<600 else 'mouse','before':before,'after':moved,'independent_scroll':True,'restored_after_reload':True})
+            proof['journeys'].append({'role':role,'engine':engine,'width':width,'theme':theme,'palette':palette,'grouped_commands':True,'primary_commands':len(geometry),'real_map_setting_save':role=='dm','drag':'touch' if width<600 else 'mouse','before':before,'after':moved,'independent_scroll':True,'restored_after_reload':True})
             save();browser.close()
         proof['status']='pass';save()
     except Exception as error:

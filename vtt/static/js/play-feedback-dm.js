@@ -26,7 +26,7 @@
                 document.getElementById('visionLayer').toggleAttribute('hidden',this.preview.value?true:Boolean(ui.feedback.markerHiddenBeforePreview));ui.feedback.sequence=(ui.feedback.sequence||0)+1;if(this.preview.value)ui.feedback.cover(ui.bootstrap.state_payload.active_map);ui.feedback.scheduleLighting();};
             this.previewStatus=el('p');this.previewStatus.id='previewPerspectiveStatus';
             this.geometry=el('ul');this.geometry.className='play-feedback-list';this.geometry.id='geometryManager';
-            const create=el('div');create.append(button(text('Wand zeichnen','Draw wall'),()=>{ui._setTool('wall');ui.windows.close('mapPresentation');}),button(text('Licht setzen','Place light'),()=>{ui._setTool('light');ui.windows.close('mapPresentation');}));
+            const create=el('div');create.id='mapGeometryTools';create.append(button(text('Wand zeichnen','Draw wall'),()=>{ui._setTool('wall');ui.windows.close('mapPresentation');}),button(text('Licht setzen','Place light'),()=>{ui._setTool('light');ui.windows.close('mapPresentation');}));
             this.root.append(this.save,this.status,this.label(text('Perspektive','Perspective'),this.preview),this.previewStatus,el('h4',text('Wände und Lichter bearbeiten','Edit walls and lights')),create,this.geometry);
             ui.windows.add('mapPresentation',text('Raster, Licht und Wände','Grid, light and walls'),this.root);
             const trigger=button(text('Raster & Licht','Grid & light'),()=>{this.refresh(true);ui.windows.toggle('mapPresentation');});trigger.id='btnMapPresentation';trigger.className='tool-btn';

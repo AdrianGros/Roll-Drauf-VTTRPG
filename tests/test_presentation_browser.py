@@ -106,6 +106,7 @@ def test_dm_calibration_updates_player_ruler_without_granting_controls(action_si
         expect(player.locator('#mapScalePanel')).to_have_count(0)
         assert not player.evaluate('!!window.PlayDMSurface')
         player.locator('[data-tool="measure"]').click()
+        player.locator('#btnMeasureSnap').click()
         world=player.locator('#mapWorld');box=world.bounding_box()
         screen_step=pixels*box['width']/float(world.get_attribute('data-map-width'))
         # Two actual pointer waypoints on the map. Snap yields a one-square segment.
@@ -113,11 +114,11 @@ def test_dm_calibration_updates_player_ruler_without_granting_controls(action_si
         player.mouse.click(box['x']+screen_step*4,box['y']+screen_step*3)
         segment=player.locator('#measureLayer .measure-label').first
         expect(segment).to_have_text('1 squares')
-        dm.locator('#btnSidebarToggle').click();dm.locator('#journalSessionControls summary').click()
+        dm.locator('#btnTableMore').click();dm.locator('#btnSidebarToggle').click();dm.locator('#journalSessionControls summary').click()
         expect(dm.locator('#mapScaleMeters')).to_be_visible();dm.locator('#mapScaleMeters').fill('1.5');dm.locator('#mapScaleSave').click()
         expect(segment).to_have_text('5 ft')
         # Current unit changes redraw the same geometry without another save.
-        player.locator('#btnBack').click();player.locator('#appMenuDisplay').click();player.locator('#vttDisplay-unit').select_option('m');player.locator('.vtt-display-actions button').last.click()
+        player.locator('#btnTableMore').click();player.locator('#btnBack').click();player.locator('#appMenuDisplay').click();player.locator('#vttDisplay-unit').select_option('m');player.locator('.vtt-display-actions button').last.click()
         expect(segment).to_have_text('1.5 m')
         dm.locator('#mapScaleClear').click();expect(segment).to_have_text('1 squares')
         with app.app_context():

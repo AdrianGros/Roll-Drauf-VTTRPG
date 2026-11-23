@@ -91,7 +91,7 @@ def test_personal_bar_and_firefox_reconnect_delivery(action_site, dm_engine):
         expect(player.locator('#chatLog .chat-entry[data-message-id]')).to_have_count(1)
         expect(isolated.locator('#chatLog .chat-entry[data-message-id]')).to_have_count(0)
         # Typing must not trigger another hotbar command.
-        player.locator('#btnSidebarToggle').click()
+        player.locator('#btnTableMore').click();player.locator('#btnSidebarToggle').click()
         player.locator('#btnChatToggle').click()
         player.locator('#chatInput').press_sequentially('1234567890')
         player.locator('#chatInput').fill('')
@@ -109,7 +109,7 @@ def test_personal_bar_and_firefox_reconnect_delivery(action_site, dm_engine):
             eio_sid=socketio.server.manager.eio_sid_from_sid(context.socket_sid,'/')
             socketio.server.eio.disconnect(eio_sid)
         expect(dm.locator('#presenceRoster')).not_to_contain_text('action-player')
-        dm.locator('#btnSidebarToggle').click()
+        dm.locator('#btnTableMore').click();dm.locator('#btnSidebarToggle').click()
         dm.locator('#btnDiceWindow').click()
         dm.locator('#diceInput').fill('1d20+7');dm.locator('#btnRoll').click()
         expect(dm.locator('#chatLog .chat-entry[data-message-id]')).to_have_count(2)
