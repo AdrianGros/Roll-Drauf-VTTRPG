@@ -84,4 +84,12 @@ def test_dashboard_contents_has_consistent_numbered_destinations(site):
         assert rows.locator('.book-toc-label').count() == rows.count()
         sizes = rows.locator('.book-toc-label').evaluate_all('(labels) => labels.map(el => getComputedStyle(el).fontSize)')
         assert len(set(sizes)) == 1
+        # Contents links must reach the external page as well as show the right href.
+        for path in ['/conversations', '/mapmaker', '/atlas', '/regelwerk/compendium']:
+            toc.locator(f'a[href="{path}"]').click()
+            destination = '/static/mapmaker/' if path == '/mapmaker' else path
+            expect(page).to_have_url(re.compile(re.escape(destination)), timeout=15000)
+            page.go_back()
+            expect(page).to_have_url(origin + '/dashboard', timeout=15000)
+            expect(toc).to_be_visible()
         browser.close()

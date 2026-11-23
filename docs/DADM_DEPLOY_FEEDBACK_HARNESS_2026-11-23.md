@@ -1,6 +1,6 @@
 # Deploy: erster gemeinsamer Feedback-Schnitt mit Claude
 
-Status: implementiert und in der gezielten Prüfung; Live-Status und endgültige Lieferidentität folgen im Monitor. Owner-Auftrag: Claude tatsächlich einsetzen, gemeinsam recherchieren/planen und im vorhandenen Harness sauber implementieren. Basis `2fcd28deb`; [Apply/Dateieigentum](DADM_APPLY_FEEDBACK_HARNESS_2026-11-23.md), [Claude-Karteneditorplan](DADM_APPLY_CLAUDE_MAPMAKER_2026-11-23.md).
+Status: implementiert, gezielt geprüft und live ausgeliefert; sieben Live-Reisen bestanden, QA bereinigt. Endgültige Lieferidentität, wiederaufgenommener unabhängiger Quellreview und Rückweg stehen im [Monitor](DADM_MONITOR_FEEDBACK_HARNESS_2026-11-23.md). Owner-Auftrag: Claude tatsächlich einsetzen, gemeinsam recherchieren/planen und im vorhandenen Harness sauber implementieren. Basis `2fcd28deb`; [Apply/Dateieigentum](DADM_APPLY_FEEDBACK_HARNESS_2026-11-23.md), [Claude-Karteneditorplan](DADM_APPLY_CLAUDE_MAPMAKER_2026-11-23.md).
 
 ## Implementierter Umfang
 
@@ -31,4 +31,4 @@ Prüflücken bleiben sichtbar: physische DE-Tastatur nicht getestet; AltGr/Optio
 
 Commit/Push, tatsächliche laufende Quelle/Image/Compose-Konfiguration erneut prüfen, begrenztes Overlay auf dem laufenden App-Image und vollständiger Hashabgleich. PostgreSQL-Sicherung mit lesbarem Archiv; keine Migration. Nur App neu erstellen, andere Dienste/Reminder unverändert lassen. Geschütztes Vorgängerimage und syntaktisch geprüfter Rückweg.
 
-Normale Live-Wege: Hub → Start für eine Solo-`ready`-Sitzung sowie neue Solo-Sitzung ohne Karte/Termin/Mitspieler; Hub → DM, Owner als Player und Mitglied als Player; Übersicht → Karteneditor → Größen/Filter/Wegpunkte; Figuren → Ersteller → Einstellungen/Klassentext. Ausschließlich benannte synthetische QA-Konten und eigene Kampagnen verwenden, anschließend vollständig entfernen. Credentials bleiben außerhalb Git, Browserprüfungen werden als tatsächliche Reisen erfasst. Nächster Schritt: Live-Lieferung und Monitor mit Source/Image, Rückweg und verbleibenden Paketen.
+Normale Live-Wege: Hub → Start für eine Solo-`ready`-Sitzung sowie neue Solo-Sitzung ohne Karte/Termin/Mitspieler; Hub → DM, Owner als Player und Mitglied als Player; Übersicht → Karteneditor → Größen/Filter/Wegpunkte; Figuren → Ersteller → Einstellungen/Klassentext. Ausschließlich benannte synthetische QA-Konten und eigene Kampagnen verwenden, anschließend vollständig entfernen. Credentials bleiben außerhalb Git, Browserprüfungen werden als tatsächliche Reisen erfasst. Ergebnis: vollständig im Monitor belegt, einschließlich Source/Image, Rückweg und verbleibenden Paketen.

@@ -1,0 +1,75 @@
+{
+  "commit": "7e0a3c8595c161eb7ca3442b2d3c7b777366c116",
+  "base_source": "ca61fc4fd0d28ee524bb6353114c30bf8ea83e1b",
+  "running_revision_label": "ca61fc4fd0d28ee524bb6353114c30bf8ea83e1b",
+  "image": "roll-drauf-vtt-app:feedback-feedback-harness-20261123-20261111-7e0a3c859",
+  "base_image_id": "sha256:16304c0ba8313ac37b3129878e3303e74e1cfae4a8010fb1b628181484aa0b7f",
+  "prior_image": "roll-drauf-vtt-app:feedback-feedback-harness-20261123-rollback-20261111-16304c0ba831",
+  "overlay_manifest": {
+    "vtt/campaigns/routes.py": "152c74231c015fea2b1341e03dae1d780111e1d764cc4218575de46223366db9",
+    "vtt/static/css/display-preferences.css": "efc8391ac5215bebed51eb73b9601da9f303282f73341893a26fdbd9a3a628b8",
+    "vtt/static/css/review-web.css": "a29cdc468dac6de3d21161ad7d44ce1ba337e03c8aa52f67622fa09a33f2fc01",
+    "vtt/static/css/srd-creator.css": "67de98bb32208654a967b43033de0f029fcc9c5c23fee0532abe40af9fa19752",
+    "vtt/static/i18n/ui.de.json": "d38a65cc36432576db489042ab76d109da7cf908efdf4717037e1180ef35671c",
+    "vtt/static/i18n/ui.en.json": "d613f391cc60a4d34d3d72c762f1457c50a9b3002796fbf9b528b90d9af16aaa",
+    "vtt/static/js/book-scene.js": "6b50f1780cdc22ed132a38328eadb870933ed83116a81b0e566a07bbd37a7992",
+    "vtt/static/js/creation-engine-nav.js": "6baccd9a24c3d1602a78e7befa5e9a889efa4ba9c252dacc6751c7c5cd7d37a1",
+    "vtt/static/js/regelwerk-navigation.js": "24d977592543506f1aa06f214abbd19969359e2b0c39c3d699b150a9cba774d7",
+    "vtt/static/js/srd-creator.js": "9ab6924c1b1d2abc25835477e4b4cc6d7fe8d1f04771849b4b536aa983c8ae03",
+    "vtt/static/js/ui-catalog.js": "fe14af2ee5e649892b73678c5b1dfd256f027985a43b479bf645056553f096ce",
+    "vtt/static/js/vtt-main-nav.js": "952bec0f1f193f4c66ab3acb51bd2576eb899c918b88027955dc9aae0b798fbc",
+    "vtt/static/mapmaker/index.html": "9994814f561b4e86927f212044ddaa60cd064573b9906422bc390071afc639c1",
+    "vtt/static/mapmaker/js/app.js": "2ca8a0c618e33900695c778743390e88a080a52e513e3e7b5e82e7339a9d44cf",
+    "vtt/static/mapmaker/js/tools.js": "59ecf7646907312a691b2ed7512a816333b0ee8d76d2fcb8664844e757db85d8",
+    "vtt/static/mapmaker/js/ui.js": "5fafb03226c2614595891e3b317c8a3c3453971636b74098099a4fdfb6fe01da",
+    "vtt/static/mapmaker/mapmaker.css": "454ec4b73522253b6dd286d285facb05ff2f34d30289ee107cf7ee3c9993089a"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_before": {
+    "/roll-drauf-vtt-mailserver-1": {
+      "id": "d17377aeced889c1b8f7179bac736196c8985f3440036ea09568b8c7db088743",
+      "started_at": "2026-11-10T16:17:34.845940374Z"
+    },
+    "/roll-drauf-vtt-db-1": {
+      "id": "75d0b239cd1d6a8f2f791e78028aa6c42142a55f679cf663a49c0a731be62a49",
+      "started_at": "2026-11-10T16:17:34.827250527Z"
+    },
+    "/roll-drauf-vtt-redis-1": {
+      "id": "37ac298892f547099b3844172945475c17e206996b6596d68a3189fd240ead4c",
+      "started_at": "2026-11-10T16:17:34.8087529Z"
+    }
+  },
+  "prepared_at": "2026-11-23T14:40:33.181542+00:00",
+  "image_id": "sha256:fd604eee0ca2481eddad4658262a32cc112327a60db847b4a18a02893abc1af7",
+  "built_source_verification": {
+    "checked": 332,
+    "mismatches": []
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-11/feedback-feedback-harness-20261123/7e0a3c859/database-before.dump",
+    "bytes": 539343,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "deployed_at": "2026-11-23T21:46:15.425019927Z",
+  "health": {
+    "now": "2026-11-23T21:46:29.051704",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-23T21:46:25.306588",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-11/feedback-feedback-harness-20261123/7e0a3c859/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false
+}

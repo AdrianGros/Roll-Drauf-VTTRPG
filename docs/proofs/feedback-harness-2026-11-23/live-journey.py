@@ -157,7 +157,7 @@ with sync_playwright() as playwright:
         group = page.locator('.book-dashboard-ribbon:visible .vtt-nav-play')
         group.locator('summary').click()
         group.locator('a[href="/characters"]').click()
-        page.locator('a[href="/srd-creator"]:visible').first.click()
+        page.get_by_role('button', name='Held anlegen', exact=True).click()
         page.locator('#scNewGuided').click()
         page.get_by_role('button', name='Kämpfer', exact=False).first.click()
         page.locator('#vttDisplayOpen').click()

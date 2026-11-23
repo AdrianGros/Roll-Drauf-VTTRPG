@@ -30,7 +30,7 @@
     "num_turns": 98,
     "owned_files_imported": 7,
     "tests_run_by_claude": false,
-    "code_status": "imported; Codex running tests, not deployed yet"
+    "code_status": "integrated and live at 7e0a3c859; seven live journeys passed"
   },
   {
     "phase": "monitor",
@@ -42,5 +42,37 @@
     "reason": "You've hit your 5-hour limit \u00b7 resets 7:30pm (Europe/Berlin)",
     "review_completed": false,
     "fallback": "Codex reviews source and executes checks; no API billing, extra usage or provider switch"
+  },
+  {
+    "phase": "monitor",
+    "task": "FEEDBACK-R1-RESUMED",
+    "auth_method": "claude.ai subscription",
+    "session_id": "e92f00ec-bfb6-4449-9e6c-c16b121d1a06",
+    "is_error": true,
+    "status": "error_max_turns",
+    "review_completed": false,
+    "tools_observed": [
+      "Grep",
+      "Read"
+    ],
+    "num_turns": 16,
+    "raw_log_sha256": "41bf1d53cdcdf0b429cdb82f3366adfe2021ec828413fb6ffc9d5a763f335eb3",
+    "extra_usage_observed": false,
+    "next": "final response-only pass with supplied diff and already-read source excerpts"
+  },
+  {
+    "phase": "monitor",
+    "task": "FEEDBACK-R1-FINAL",
+    "auth_method": "claude.ai subscription",
+    "session_id": "e90bf8ba-52ae-409d-bdfe-dd866b080f32",
+    "is_error": false,
+    "status": "success",
+    "review_completed": true,
+    "tools_observed": [],
+    "num_turns": 2,
+    "duration_ms": 175400,
+    "raw_log_sha256": "852b9b00323555bd3ba3d4f3d18ae32e829562c44374f637800fbf391df2a9b7",
+    "review_scope": "committed diff and 20 source excerpts from resumed read-only pass; no tests or production access by Claude",
+    "result": "no supported blocking high/medium source findings; Codex checks evidence gaps and records low Escape-menu follow-up"
   }
 ]

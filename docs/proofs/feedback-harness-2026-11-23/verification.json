@@ -1,5 +1,5 @@
 {
-  "status": "targeted_verification",
+  "status": "targeted_verification_and_live_acceptance_complete",
   "runs": [
     {
       "id": "new_mapmaker",
@@ -25,8 +25,8 @@
     {
       "id": "hub",
       "log": "/tmp/vtt-feedback-hub-clean-final-20261123.log",
-      "sha256": "f85d30e7d95a052f65167f1f1095186d1190c91502b4ab7aedab460a6eab8870",
-      "summary": "running",
+      "sha256": "80a020fe8645a2601a2af0d9fec349c77f50814c84fc5e246feda3c3521b39cc",
+      "summary": "6 passed, 87 warnings in 333.69s (0:05:33)",
       "failures": []
     },
     {
@@ -71,18 +71,29 @@
       "failures": [
         "tests/test_creation_engine_navigation.py::test_visible_book_navigation_reaches_editor_with_keyboard[/dashboard]"
       ]
+    },
+    {
+      "id": "toc_actual_destination_clicks",
+      "log": "/tmp/vtt-feedback-toc-clicks-final-20261123.log",
+      "sha256": "e7b64cfc5bc297b966ec59b6e008f3d8acbbf1f3fbee5a6d525a76f88d17bb0e",
+      "summary": "1 passed, 7 warnings in 27.19s",
+      "failures": []
     }
   ],
   "full_repository_suite_green": false,
-  "independent_claude_review_completed": false,
+  "independent_claude_review_completed": true,
   "baseline_notes": "Legacy capability/view-as, already-closed disclosure, and existing absolute login href expectations also fail on unchanged 2fcd28deb. No old product behavior restored.",
   "known_gaps": [
     "Physical German keyboard not exercised; synthetic AltGr/Option plus real US keys pass.",
     "One Firefox navigation AbortError was not reproduced in the passing targeted rerun; N20 is not generally closed.",
-    "An extra delayed-navigation test draft assumed same-document header navigation; it was removed after the actual supported header path proved cross-document. Six real hub cases retained."
+    "An extra delayed-navigation test draft assumed same-document header navigation; it was removed after the actual supported header path proved cross-document. Six real hub cases retained.",
+    "Low: Escape in the mapmaker File menu can also leave placement mode; recorded follow-up only.",
+    "390px character-archive probe produced a 432px full-page screenshot; layout cause not investigated or claimed fixed in this slice."
   ],
   "creator_probe": "creator/probe.json",
   "i18n_sources": 3747,
   "schema_change": false,
-  "next": "commit/push, bounded image overlay, backup, normal live UI journeys and QA cleanup"
+  "next": "close this slice; separate Apply for T3/N26 and M2/S2",
+  "live_journeys": 7,
+  "qa_cleanup_complete": true
 }

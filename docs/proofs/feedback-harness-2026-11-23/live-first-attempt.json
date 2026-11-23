@@ -1,0 +1,68 @@
+{
+  "status": "failed",
+  "url": "https://vtt.roll-drauf.de",
+  "journeys": [
+    {
+      "kind": "solo_ready",
+      "width": 1440,
+      "no_other_players_maps_or_date": true,
+      "one_start": true,
+      "one_session_creation": 0,
+      "reload_keeps_seat": true,
+      "browser_errors": []
+    },
+    {
+      "kind": "solo_new",
+      "width": 390,
+      "no_other_players_maps_or_date": true,
+      "one_start": true,
+      "one_session_creation": 1,
+      "reload_keeps_seat": true,
+      "browser_errors": []
+    },
+    {
+      "kind": "owner_dm",
+      "width": 1440,
+      "seat": "dm",
+      "server_role": "DM",
+      "secret_delivery_matches_role": true,
+      "fit_control_works": true,
+      "reload_keeps_seat": true,
+      "browser_errors": []
+    },
+    {
+      "kind": "owner_player",
+      "width": 390,
+      "seat": "player",
+      "server_role": "PLAYER",
+      "secret_delivery_matches_role": true,
+      "fit_control_works": true,
+      "reload_keeps_seat": true,
+      "browser_errors": []
+    },
+    {
+      "kind": "member_player",
+      "width": 1440,
+      "seat": "player",
+      "server_role": "PLAYER",
+      "secret_delivery_matches_role": true,
+      "fit_control_works": true,
+      "reload_keeps_seat": true,
+      "browser_errors": []
+    },
+    {
+      "kind": "mapmaker",
+      "normal_navigation": true,
+      "asset_size_remembered": true,
+      "real_us_bracket_key": true,
+      "synthetic_altgr_event": true,
+      "undeclared_traits_explained": true,
+      "filter_reset": true,
+      "node_drag_and_undo": true,
+      "file_export": true,
+      "browser_errors": []
+    }
+  ],
+  "physical_german_keyboard_tested": false,
+  "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href=\\\"/srd-creator\\\"]:visible\").first\n"
+}
