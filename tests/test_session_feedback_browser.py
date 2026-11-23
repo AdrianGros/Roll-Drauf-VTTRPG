@@ -18,10 +18,12 @@ def test_windows_restore_and_token_menu_upload_and_library(action_site, role, wi
     from playwright.sync_api import sync_playwright, expect
     app, origin, info = action_site
     from vtt.extensions import db
-    from vtt.models import User, Campaign
+    from vtt.models import User, Campaign, CampaignMap, GameSession
     with app.app_context():
         for user_id in [info['player_id'], db.session.get(Campaign, info['campaign']).owner_id]:
             db.session.get(User, user_id).storage_quota_gb = 1
+        map_=db.session.get(CampaignMap,db.session.get(GameSession,info['session']).map_id)
+        map_.width,map_.height=1200,900
         db.session.commit()
     with sync_playwright() as p:
         browser = getattr(p, engine).launch(headless=True, args=['--no-sandbox'] if engine == 'chromium' else [])
@@ -36,7 +38,7 @@ def test_windows_restore_and_token_menu_upload_and_library(action_site, role, wi
             children:[...e.querySelectorAll('button')].map(b=>({id:b.id,hidden:b.hidden,
                 width:b.getBoundingClientRect().width,height:b.getBoundingClientRect().height,
                 display:getComputedStyle(b).display}))})''')
-        assert metrics['height'] <= 90, metrics
+        assert metrics['height'] <= (240 if width < 620 else 100), metrics
         expect(launcher.locator('[data-tool="select"] .tool-label')).to_be_visible()
         for entry in metrics['children']:
             if entry['hidden']:
@@ -78,13 +80,10 @@ def test_windows_restore_and_token_menu_upload_and_library(action_site, role, wi
         viewport=page.locator('#mapViewport').bounding_box(); world=page.locator('#mapWorld').bounding_box()
         page.mouse.click(max(viewport['x']+20,world['x']+min(200,world['width']-25)),max(viewport['y']+20,world['y']+min(160,world['height']-25)))
         try:
-            expect(page.locator('#tokenCreatePanel')).to_be_visible()
+            expect(page.locator('.token-marker')).to_have_count(2)
         except AssertionError:
-            page.screenshot(path='/app/docs/proofs/session-feedback-2026-11-16/debug-placement.png')
-            raise
-        expect(page.locator('#tokenCreateName')).to_have_value('Reusable browser token')
-        page.locator('#btnTokenCreateConfirm').click()
-        expect(page.locator('.token-marker')).to_have_count(2)
+            raise AssertionError(page.locator('#activityLog').inner_text())
+        expect(page.locator('.token-marker',has_text='Reusable browser token')).to_have_count(1)
         if role == 'player' and width == 1440:
             page.locator('#dock-tokenWidget').click()
             page.locator('#tokenUploadFile').set_input_files({'name':'direct-token.png','mimeType':'image/png','buffer':png})

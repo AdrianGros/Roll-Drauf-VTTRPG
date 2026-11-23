@@ -29,6 +29,7 @@ with sync_playwright() as p:
             action='open-session-dm' if role=='dm' else 'open-session'
             page.locator('[data-hub-action="'+action+'"]').first.click()
             expect(page.locator('body')).to_have_attribute('data-table-seat',role)
+            expect(page.locator('html')).to_have_attribute('data-vtt-theme',theme)
             dock=page.locator('.play-command-groups button')
             expect(dock).to_have_count(10 if role=='dm' else 9)
             geometry=dock.evaluate_all('rows=>rows.map(e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right,bottom:r.bottom,height:r.height,icons:e.querySelectorAll("svg").length};})')
@@ -66,6 +67,7 @@ with sync_playwright() as p:
             }""")
             assert all(row['bg']==row['expected'] and row['ink']==row['expectedInk'] for row in palette),palette
             page.locator('#appMenu').press('Escape')
+            expect(page.locator('#appMenu')).to_be_hidden();expect(page.locator('#btnTableMore')).to_be_focused()
             page.locator('#window-panel-chat .play-window-head button').click()
             assert first.evaluate("e=>getComputedStyle(e).position")=='fixed'
             assert second.evaluate("e=>getComputedStyle(e).position")=='fixed'

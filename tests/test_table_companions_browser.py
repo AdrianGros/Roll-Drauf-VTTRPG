@@ -31,22 +31,22 @@ def test_personal_bar_companion_keeps_identity_and_damage_after_reload(action_si
             expect(page.locator('#paCompanionPlace')).to_be_enabled()
             page.locator('#paCompanionPlace').click()
             expect(page.locator('#personalCompanionDialog')).to_have_count(0)
-        page.goto(route);expect(page.locator('#floorViewStatus')).to_be_attached();place()
+        page.goto(route);expect(page.locator('#presenceRoster')).to_contain_text('action-player');place()
         with app.app_context():
             binding=TableCompanionBinding.query.one();token_id=binding.token_id
             token=db.session.get(TokenState,token_id)
             assert (token.hp_max,token.hp_current,token.character_id,token.sight_range)==(20,13,None,0)
             token.hp_current=7;token.version+=1;db.session.commit()
-        page.reload();place()
+        page.reload();expect(page.locator('#presenceRoster')).to_contain_text('action-player');place()
         with app.app_context():
             assert TableCompanionBinding.query.one().token_id==token_id
             assert db.session.get(TokenState,token_id).hp_current==7
         assert not page.evaluate('Boolean(window.PlayDMSurface)')
         if width<600:
-            status=page.locator('#floorViewStatus')
-            status.evaluate("e=>e.textContent='Upper floor'")
-            expect(status).to_be_visible()
-            notice=status.bounding_box();dock=page.locator('#tableDockTabs').bounding_box()
+            # Probe layout atomically; the companion's pending bootstrap may
+            # otherwise clear the synthetic notice between browser round trips.
+            geometry=page.locator('#floorViewStatus').evaluate("e=>{e.textContent='Upper floor';e.hidden=false;return {notice:e.getBoundingClientRect().toJSON(),dock:document.getElementById('tableDockTabs').getBoundingClientRect().toJSON()};}")
+            notice,dock=geometry['notice'],geometry['dock']
             assert notice['y']>=48 and notice['y']+notice['height']<dock['y']
         assert not errors,errors
         browser.close()

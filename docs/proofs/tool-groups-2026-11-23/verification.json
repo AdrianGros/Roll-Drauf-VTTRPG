@@ -1,5 +1,5 @@
 {
-  "status": "pre_activation_checks_in_progress",
+  "status": "targeted_acceptance_complete_with_documented_baseline_gaps",
   "baseline_source": "a6abcce9e34b289efb88cb525a0c4c3ae87037e4",
   "baseline_reproduced_in": "084a05789a7a1aa2398bda21ffc700aa76972e4a (same VTT files as live baseline)",
   "test_environment": {
@@ -143,6 +143,57 @@
         "tests/test_session_feedback_browser.py",
         "tests/test_table_companions_browser.py"
       ]
+    },
+    {
+      "id": "role_transport_and_window_palette_final_prefix",
+      "log": "/tmp/tool-groups-last-regressions-20261123.log",
+      "log_sha256": "a932f3f90addaa5dc7e861b971bfedf029e546857cc211d2511d06f3cac0c469",
+      "summary": "1 failed, 9 passed, 453 warnings in 232.89s (0:03:52)",
+      "tests": [
+        "tests/test_play_window_position_browser.py::test_relocated_windows_textboxes_and_menus_follow_the_display_palette[firefox-paper]",
+        "tests/test_token_layers_browser.py",
+        "tests/test_personal_actions_browser.py",
+        "tests/test_table_seat_memory_browser.py",
+        "tests/test_session_feedback_browser.py",
+        "tests/test_table_companions_browser.py"
+      ],
+      "failed_tests": [
+        "tests/test_session_feedback_browser.py::test_windows_restore_and_token_menu_upload_and_library[player-1440-chromium]"
+      ]
+    },
+    {
+      "id": "final_companions_after_socket_presence",
+      "log": "/tmp/tool-groups-companions-ready-20261123.log",
+      "log_sha256": "a8875cba73fce65a332960b1b8aac4451d42570641a4b84ab44d377654ef1cb2",
+      "summary": "2 passed, 71 warnings in 47.14s",
+      "tests": [
+        "tests/test_table_companions_browser.py"
+      ],
+      "failed_tests": []
+    },
+    {
+      "id": "baseline_with_current_placement_expectation",
+      "log": "/tmp/tool-groups-baseline-placement-20261123.log",
+      "log_sha256": "a396f28904e268b4f2e8c5565189fa41fc357b5838253987e826b91662f23ebd",
+      "summary": "1 failed, 76 warnings in 29.04s",
+      "tests": [
+        "tests/test_session_feedback_browser.py::test_windows_restore_and_token_menu_upload_and_library[player-1440-chromium]"
+      ],
+      "failed_tests": [
+        "tests/test_session_feedback_browser.py::test_windows_restore_and_token_menu_upload_and_library[player-1440-chromium]"
+      ]
+    },
+    {
+      "id": "implementation_with_current_placement_expectation",
+      "log": "/tmp/tool-groups-final-placement-20261123.log",
+      "log_sha256": "4de44cb8304025f0f933decfb9d019b2fc18968a4414d3e808d67226c0514087",
+      "summary": "1 failed, 78 warnings in 31.54s",
+      "tests": [
+        "tests/test_session_feedback_browser.py::test_windows_restore_and_token_menu_upload_and_library[player-1440-chromium]"
+      ],
+      "failed_tests": [
+        "tests/test_session_feedback_browser.py::test_windows_restore_and_token_menu_upload_and_library[player-1440-chromium]"
+      ]
     }
   ],
   "known_findings": [
@@ -171,6 +222,22 @@
     {
       "scope": "human usability",
       "disposition": "no human comparison study or claim of proven speed improvement"
+    },
+    {
+      "scope": "palette test scheduling",
+      "observation": "Firefox could still report the paper colour in the immediate sample following theme update",
+      "test_correction": "wait for the actual computed CSS value with Playwright expect; final Firefox case passes"
+    },
+    {
+      "scope": "companion test readiness/layout probe",
+      "observation": "socket initialization could rebuild selection; a pending bootstrap could remove a synthetic floor notice between browser round trips",
+      "test_correction": "wait for own socket presence before interacting; sample the synthetic notice geometry in a single browser evaluation; both final cases pass"
+    },
+    {
+      "scope": "older template placement journey",
+      "observation": "after aligning the fixture to pixel dimensions and the current direct-placement contract, the placement request still fails with the same generic error on unchanged baseline and implementation",
+      "comparison": "unchanged runtime mounted read-only; same current test overlay; failure occurs before the new More entry is used",
+      "disposition": "open existing verification gap; no token library, server, geometry or placement runtime code changed by this release; do not claim this journey passed"
     }
   ],
   "full_repository_suite_green": false,
@@ -186,5 +253,15 @@
     "vtt/static/js/play-windows.js": "6fc16fdeb8f395f7bb808be14fe43bd4088f0484f61463fa338fd4af681ee43f",
     "vtt/static/js/ui-catalog.js": "00b3932049290bf565bdab3e3d842eecbc74ea42c8d68d50f15d9d38555699d3",
     "vtt/templates/play.html": "90c0b827e09c1ae16b68f05ad20f4c64cff6bcc5d078108bb17f8d79494dcfc3"
+  },
+  "runtime_source_commit": "e29cd96f90c59c5389bf3aab13beb40c9d650ec3",
+  "successful_targeted_coverage": {
+    "authorized_api": "32 passed",
+    "grouped_surface": "4 passed in final-core, exit 0",
+    "window_positions_and_palettes": "all 5 cases pass cumulatively: first 4 in final-regressions, Firefox-paper in last-regressions",
+    "token_layers_personal_actions_seat_memory": "all 8 cases pass before the later template assertion in last-regressions; total successful prefix 9 including Firefox-paper",
+    "calibration_real_wall_light_edit_journal_media": "3 passed in final-contexts, exit 0",
+    "companion_identity_damage_reload": "2 passed in companions-ready, exit 0",
+    "earlier_mobile_and_existing_ui_journeys": "9 pass before calibration assertion; includes Chromium/WebKit touch/rotation, UI journeys, journal context race, return-to-maps. Calibration subsequently passes in final-contexts"
   }
 }
