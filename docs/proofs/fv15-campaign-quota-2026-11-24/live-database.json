@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "scope": "only manifest-owned synthetic users/requests",
+  "request_ids": [
+    1,
+    2,
+    3
+  ],
+  "states": [
+    "cancelled",
+    "approved",
+    "rejected"
+  ],
+  "quota_change": {
+    "user_id": 164,
+    "from": 4,
+    "to": 9
+  },
+  "audit_events": 6,
+  "roles_tiers_storage_preserved": true
+}

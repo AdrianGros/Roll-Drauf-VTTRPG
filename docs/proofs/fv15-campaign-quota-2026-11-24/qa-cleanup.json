@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "scope": "only four qa_feedback_ users, their own quota requests/audits and three owned QA campaigns; no deletion by reviewer ID alone",
+  "removed": {
+    "token_states": 1,
+    "scene_layers": 1,
+    "session_states": 1,
+    "scene_stacks": 1,
+    "game_sessions": 2,
+    "campaign_members": 4,
+    "campaign_maps": 1,
+    "sessions": 4,
+    "campaigns": 3,
+    "campaign_quota_requests": 3,
+    "audit_logs": 6,
+    "users": 4
+  },
+  "container_credentials_removed": true,
+  "host_credentials_removed": true
+}

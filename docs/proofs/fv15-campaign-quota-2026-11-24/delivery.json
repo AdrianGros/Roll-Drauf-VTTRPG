@@ -1,0 +1,76 @@
+{
+  "commit": "8395527e9d7314892c965a4a943ada39ab7c5121",
+  "base_source": "e7e8f20d9ff4714e7d0e098d75e1afad3a2977e6",
+  "running_revision_label": "e7e8f20d9ff4714e7d0e098d75e1afad3a2977e6",
+  "image": "roll-drauf-vtt-app:fv15-campaign-quota-20261124-8395527e9",
+  "base_image_id": "sha256:b9d690f7967903d4e9061fb6de7bd1378f22f66e6188dfc087db54a8021c4748",
+  "prior_image": "roll-drauf-vtt-app:fv15-campaign-quota-rollback-b9d690f79679",
+  "overlay_manifest": {
+    "vtt/__init__.py": "7e3d537b9df684caefacb1bd8c4f37b1c9d26e273037eea68dee3a884d142a76",
+    "vtt/campaign_quota.py": "70e0bfce461f429c5a1d1fdac2b03e61abc7d63f5a50ae45563cf96c5007b1ba",
+    "vtt/models/__init__.py": "2352a7192553eb34223461d67375f7db6c9f9467ff16be997006f61b48c0094c",
+    "vtt/models/campaign_quota_request.py": "edd21f0ca4c5e742b4e66d9ae4b33c927ebbbe9e93b224b966a272565165cc7c",
+    "vtt/review_web.py": "bf1028f8e8656a73111bb76fd91460ede269504574ecdba15e2bb714ea0b4ef0",
+    "vtt/static/css/campaign-quota.css": "95d77811299360c5030a0b9507982ff1e5741e6963d496241d077090827e2fb6",
+    "vtt/static/i18n/ui.de.json": "f11e5815fb2ba1db4db02ec337fa607f03c6b43017d578c3d7d5fa47d99a1103",
+    "vtt/static/i18n/ui.en.json": "588c97735733ca2824177dbcb9e72aab13a5f0f574049089e38c9bfa4aecb82e",
+    "vtt/static/js/campaign-quota-ui.js": "d448196abb117e607a5b62acca32912e37227c1d8af23fc065c655f4af0c3009",
+    "vtt/static/js/ui-catalog.js": "75bad220830f070c1785cade560e33ad568b2b33c661490a00f1ce4fa2d126bb",
+    "vtt/static/js/vtt-main-nav.js": "137ab30aa3047f395e696e58562bc6a4635d0989762e0fce7b5eae868cebc313"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_before": {
+    "/roll-drauf-vtt-mailserver-1": {
+      "id": "d17377aeced889c1b8f7179bac736196c8985f3440036ea09568b8c7db088743",
+      "started_at": "2026-11-10T16:17:34.845940374Z"
+    },
+    "/roll-drauf-vtt-db-1": {
+      "id": "75d0b239cd1d6a8f2f791e78028aa6c42142a55f679cf663a49c0a731be62a49",
+      "started_at": "2026-11-10T16:17:34.827250527Z"
+    },
+    "/roll-drauf-vtt-redis-1": {
+      "id": "37ac298892f547099b3844172945475c17e206996b6596d68a3189fd240ead4c",
+      "started_at": "2026-11-10T16:17:34.8087529Z"
+    }
+  },
+  "prepared_at": "2026-11-24T14:27:26.543647+00:00",
+  "verification_scope": "all shipped Python/JS/CSS/HTML, app.py, requirements.txt and changed JSON; 64 reviewed rule-data inputs plus the preserved compiled creator overlay; unchanged artwork inherited from the checked image",
+  "baseline_source_verification": {
+    "checked": 401,
+    "mismatches": []
+  },
+  "image_id": "sha256:287563aeb13e38f220b197e4b702d2ee2ad82d3b0089a8a5729467c59597a7bc",
+  "built_source_verification": {
+    "checked": 405,
+    "mismatches": []
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-24/fv15-campaign-quota/8395527e9/database-before.dump",
+    "bytes": 539344,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [
+      "campaign_quota_requests"
+    ],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "deployed_at": "2026-11-24T14:30:46.766894076Z",
+  "health": {
+    "now": "2026-11-24T14:31:04.270779",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-24T14:30:59.824396",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-24/fv15-campaign-quota/8395527e9/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false
+}

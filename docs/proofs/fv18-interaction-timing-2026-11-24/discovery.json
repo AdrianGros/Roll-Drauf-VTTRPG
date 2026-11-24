@@ -1,0 +1,25 @@
+{
+  "status": "source_discovery_returned; instrumented verification and Apply pending",
+  "task": "FV18 interaction timing",
+  "executor": "actual Claude Code, existing claude.ai subscription",
+  "base": "96f2f510a759ce881eff4c72796a6edc6580ca23",
+  "coordinator_release_source": "8395527e9d7314892c965a4a943ada39ab7c5121",
+  "report": "docs/DADM_DISCOVER_FV18_INTERACTION_TIMING_2026-11-24.md",
+  "report_sha256": "d45364f802ea3654265f37c83af6bc83a303cf5ccb2b078c866fdd5e4ed2719e",
+  "tool_calls": 48,
+  "tools_used": [
+    "Glob",
+    "Grep",
+    "Read",
+    "Write"
+  ],
+  "only_written_path": "docs/DADM_DISCOVER_FV18_INTERACTION_TIMING_2026-11-24.md",
+  "extra_usage_used": false,
+  "commands_tests_live_actions": false,
+  "root_review": [
+    "Discrete creator mutations use renderAll unless render:none; an after-save full rebuild is conditional on dirty/typing/finalization/status. Do not read the report summary as an unconditional two-rebuild invariant.",
+    "400/800ms plus PUT RTT describes scheduling offset to a possible rebuild, not a measured race-window width. Pointer/event/replacement causality remains unproven.",
+    "Dashboard loading/final shell replacement is a source fact; why the replacement profile button was not actionable within8s remains unproven.",
+    "Use bounded local instrumentation to obtain evidence before implementation design; no generic timeout increase or real-user tracing."
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "status": "targeted_pass_pending_delivery",
+  "status": "delivered_live_verified",
   "distinct_passing_cases": 114,
   "runs": [
     {
@@ -61,7 +61,37 @@
   ],
   "limits": [
     "No full repository suite, physical device or real OAuth claim",
-    "Production delivery/live synthetic journeys and cleanup pending",
-    "Existing quota default/enforcement/count and startup/nav/autosave timing findings retained in FV18"
-  ]
+    "Existing quota default/enforcement/count and startup/nav/autosave timing findings remain FV18 work"
+  ],
+  "live": {
+    "roles": [
+      "dm",
+      "player",
+      "owner",
+      "admin"
+    ],
+    "engines": [
+      "chromium",
+      "firefox"
+    ],
+    "widths": [
+      390,
+      1440
+    ],
+    "ui_languages": [
+      "de",
+      "en"
+    ],
+    "checks": [
+      "ordinary dashboard profile entry",
+      "request/cancel without increase",
+      "Player ineligibility/own-only privacy",
+      "explicit owner approval9 vs requested7 from4",
+      "admin rejection keeps9",
+      "literal reasons/notes and requester reload",
+      "3 terminal request rows/6 audit events",
+      "roles/tiers/storage preserved",
+      "4 QA users/3 campaigns/all requests/audits and credentials cleaned"
+    ]
+  }
 }

@@ -1,0 +1,12 @@
+{
+  "status": "pass",
+  "table": "campaign_quota_requests",
+  "checks": [
+    "ck_campaign_quota_request_approved_total",
+    "ck_campaign_quota_request_pending_key",
+    "ck_campaign_quota_request_status",
+    "ck_campaign_quota_request_totals"
+  ],
+  "unique_pending_key": true,
+  "requester_reviewer_user_foreign_keys": true
+}

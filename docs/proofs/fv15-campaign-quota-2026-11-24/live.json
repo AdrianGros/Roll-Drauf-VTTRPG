@@ -1,0 +1,64 @@
+{
+  "status": "pass",
+  "origin": "https://vtt.roll-drauf.de",
+  "journeys": [
+    {
+      "role": "dm",
+      "engine": "chromium",
+      "width": 1440,
+      "language": "de",
+      "normal_profile_entry": true,
+      "request_then_cancel_without_increase": true,
+      "second_request_without_increase": true,
+      "authored_reason_literal": true,
+      "request_ids": [
+        1,
+        2
+      ]
+    },
+    {
+      "role": "player",
+      "engine": "firefox",
+      "width": 390,
+      "language": "en",
+      "normal_profile_entry": true,
+      "truthful_ineligibility_without_review_controls": true,
+      "other_request_not_exposed": true
+    },
+    {
+      "role": "owner",
+      "engine": "firefox",
+      "width": 390,
+      "language": "en",
+      "normal_profile_review_entry": true,
+      "only_manifest_owned_request_decided": true,
+      "explicit_manual_total": 9,
+      "requested_total": 7,
+      "old_total": 4,
+      "literal_review_note": true
+    },
+    {
+      "role": "admin",
+      "engine": "chromium",
+      "width": 1440,
+      "language": "de",
+      "normal_profile_review_entry": true,
+      "only_manifest_owned_request_decided": true,
+      "explicit_rejection_without_increase": true
+    }
+  ],
+  "real_accounts_adjusted": false,
+  "real_oauth_tested": false,
+  "requester_reload_status_notes": true,
+  "only_synthetic_quota_adjusted": {
+    "user_id": 164,
+    "from": 4,
+    "to": 9
+  },
+  "request_ids": [
+    1,
+    2,
+    3
+  ],
+  "browser_errors": []
+}

@@ -1,5 +1,5 @@
 {
-  "status": "reviewed_tested_pending_integration",
+  "status": "delivered_verified_by_codex",
   "base": "1f9179d5b5f4f747c1f6fa9ff4da2150956bafb0",
   "worktree": "/home/admin/projects/roll-drauf-vtt-fv15-quota-20261124",
   "branch": "feat/campaign-quota-fv15-20261124",
@@ -18,10 +18,9 @@
     "subtype": "success"
   },
   "tests_executed_by_worker": false,
-  "integration_and_live_delivery": "pending Codex review and verification",
+  "integration_and_live_delivery": "Complete; docs/DADM_DEPLOY_MONITOR_FV15_CAMPAIGN_QUOTA_2026-11-24.md",
   "root_review_open": [
-    "Finish quota panel-failure browser retry, then integrate/rebuild catalog/commit/push and deliver through ordinary profile journeys. No quota workflow is live yet.",
-    "Existing startup/nav DOM replacement timing and creator autosave/click timing remain FV18 stability follow-ups."
+    "Existing quota default/enforcement/count and startup/nav/creator autosave timing findings remain assigned to FV18; no full-version completion claim."
   ],
   "root_corrections": [
     "Pending-key DB CHECK now explicitly requires non-NULL for pending; corrected a proposed invalid fixture that actually used the valid requester key.",

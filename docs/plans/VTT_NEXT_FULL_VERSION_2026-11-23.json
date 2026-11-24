@@ -441,7 +441,7 @@
       "id": "FV15",
       "title": "Campaign quota extension request",
       "priority": "P2",
-      "status": "integrated_pending_delivery",
+      "status": "delivered_verified",
       "source_refs": [
         "2026-11-13:S15",
         "B10"
@@ -461,14 +461,26 @@
         "worktree": "/home/admin/projects/roll-drauf-vtt-fv15-quota-20261124",
         "branch": "feat/campaign-quota-fv15-20261124",
         "base": "1f9179d5b5f4f747c1f6fa9ff4da2150956bafb0",
-        "phase": "Claude implementation returned; Codex review/testing/integration pending",
+        "phase": "Claude implementation delivered by Codex after root review/testing/integration/live verification and cleanup",
         "root_responsibilities": "Review, test execution, catalog generation, integration/commit/push, schema application, production deployment/live acceptance/cleanup",
         "tools": "Read,Write,Edit,Grep,Glob only; no code execution, MCP, nested agents or billing fallback",
-        "verification": "Worker ran no tests/catalog/git/schema/live actions. Proposed SQLite/browser/PostgreSQL tests require Codex execution; exact own-profile assertion needs additive user_id expectation. SQLite ignores row locks; rolling-rate serialization must be verified on isolated PostgreSQL."
+        "verification": "Complete bounded delivery; see root Monitor and actual worker/root proof records."
       },
       "implementation_handoff": "docs/DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md",
-      "root_verification": "114 distinct cases have passing results on final affected source across overlapping worker-worktree runs (86 API,10 quota browser,4 isolated PG concurrency,14 existing profile). Corrections/timing failures recorded in docs/proofs/fv15-claude-handoff-2026-11-24/assignment.json. Integration/catalog regeneration and live delivery remain pending. Coordinator integration/catalog preservation also passes4 overlapping browser cases in209.14s.",
-      "root_monitor": "docs/DADM_DEPLOY_MONITOR_FV15_CAMPAIGN_QUOTA_2026-11-24.md"
+      "root_verification": "114 distinct targeted cases pass across overlapping runs, plus4 overlapping final coordinator integration/browser checks. Four normal live profile journeys, additive schema/constraint/source/health verification, audit/state checks and scoped cleanup pass. Existing FV18 findings remain open.",
+      "root_monitor": "docs/DADM_DEPLOY_MONITOR_FV15_CAMPAIGN_QUOTA_2026-11-24.md",
+      "delivery": {
+        "source": "8395527e9d7314892c965a4a943ada39ab7c5121",
+        "image": "sha256:287563aeb13e38f220b197e4b702d2ee2ad82d3b0089a8a5729467c59597a7bc",
+        "monitor": "docs/DADM_DEPLOY_MONITOR_FV15_CAMPAIGN_QUOTA_2026-11-24.md",
+        "live_roles": [
+          "dm",
+          "player",
+          "owner",
+          "admin"
+        ],
+        "qa_cleanup": "pass; all scoped users/campaigns/requests/audits/sessions and credentials removed"
+      }
     },
     {
       "id": "FV16",
@@ -568,7 +580,9 @@
         "Firefox390 live creator rapid mutations were followed by a source click with no modal and a card click with no selection. Settled native label acceptance passes; investigate autosave/full-render interaction timing before full release; cause/fix not claimed.",
         "Quota browser profile-entry click detached during initial dashboard/nav composition and exceeded8s; exact unchanged retry passed. Preserve startup/nav timing follow-up rather than calling this an app fix.",
         "FV15 review retained existing inconsistencies: new headmaster NULL quota, campaign creation routes lacking quota enforcement, and differing active-vs-profile count filters. Triage before full release; request/review feature does not silently alter these contracts."
-      ]
+      ],
+      "timing_discovery": "docs/DADM_DISCOVER_FV18_INTERACTION_TIMING_2026-11-24.md",
+      "timing_discovery_review": "docs/proofs/fv18-interaction-timing-2026-11-24/discovery.json"
     }
   ],
   "coverage": {
@@ -1127,11 +1141,11 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "FV15 integrated and targeted-tested with creator/catalog preserved; commit/push release, archive DB, apply/inspect only new campaign_quota_requests table, app-only deploy, ordinary four-role synthetic profile/request/review acceptance and scoped cleanup. Then continue all retained technical packets/FV18 findings.",
+  "next_step": "FV15 delivered/cleaned. Continue retained technical packets. FV18 timing source discovery returned from Claude; run bounded local pointer/render and nav-composition traces before its Apply. Other outstanding language/editor/navigation/grid/geometry/assets/terrain/world/homebrew/publication and integrated checks remain in scope.",
   "current_delivery": {
-    "source": "e7e8f20d9ff4714e7d0e098d75e1afad3a2977e6",
-    "image": "sha256:b9d690f7967903d4e9061fb6de7bd1378f22f66e6188dfc087db54a8021c4748",
-    "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_SPECIES_LABELS_2026-11-24.md"
+    "source": "8395527e9d7314892c965a4a943ada39ab7c5121",
+    "image": "sha256:287563aeb13e38f220b197e4b702d2ee2ad82d3b0089a8a5729467c59597a7bc",
+    "monitor": "docs/DADM_DEPLOY_MONITOR_FV15_CAMPAIGN_QUOTA_2026-11-24.md"
   },
   "last_updated": "2026-11-24",
   "delivery_history": [

@@ -8,7 +8,7 @@ Complete, integrate, deploy and verify all retained outstanding packets below as
 
 All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.
 
-The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `e7e8f20d9`, image `sha256:b9d690f7967903d4e9061fb6de7bd1378f22f66e6188dfc087db54a8021c4748`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
+The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `8395527e9`, image `sha256:287563aeb13e38f220b197e4b702d2ee2ad82d3b0089a8a5729467c59597a7bc`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
 
 ## Current packet progress
 
@@ -56,7 +56,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV12 | Land fill and coastline tools | P2 | Planned |
 | FV13 | World campaign and map place relationships | P2 | Plan and inputs needed |
 | FV14 | Campaign homebrew approvals | P2 | Planned |
-| FV15 | Campaign quota extension request | P2 | Integrated/tested; live delivery pending |
+| FV15 | Campaign quota extension request | P2 | Delivered and live verified |
 | FV16 | Content provenance and publication policy | P2 | Plan and inputs needed |
 | FV17 | Identify the deferred zero percent control | P2 | Closed by owner scope decision |
 | FV18 | Integrated verification and full version release | release gate | In progress; five obsolete map assertions reconciled |
@@ -297,7 +297,7 @@ Acceptance:
 - Keep approval and actual quota changes under the existing authorized administration contract; a request cannot grant itself slots.
 - Do not automatically alter real users, add a Donutarian test slot or introduce a payment system.
 
-Implementation assignment: [completed Apply](../DADM_APPLY_FV15_CAMPAIGN_QUOTA_2026-11-24.md), [exclusive Claude handoff](../CLAUDE_HANDOFF_FV15_2026-11-24.md). Finite existing quota/creator eligibility, one pending request, bounded submission history, explicit owner/admin review and stale/account guards are specified. Submission never grants slots. No default entitlement or billing change. Claude has returned [implementation/proposed tests and a precise handoff](../DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md) in the isolated worktree. Codex corrected the DB pending-key check, conflict response helper and native hidden-state CSS, and verified114 distinct cases across overlapping API/browser/isolated-PostgreSQL/existing-profile runs. See [actual handoff/root review evidence](../proofs/fv15-claude-handoff-2026-11-24/assignment.json). Integration, catalog regeneration and live delivery remain pending; no FV15 live completion claim.
+Implementation assignment: [completed Apply](../DADM_APPLY_FV15_CAMPAIGN_QUOTA_2026-11-24.md), [exclusive Claude handoff](../CLAUDE_HANDOFF_FV15_2026-11-24.md). Finite existing quota/creator eligibility, one pending request, bounded submission history, explicit owner/admin review and stale/account guards are specified. Submission never grants slots. No default entitlement or billing change. Claude has returned [implementation/proposed tests and a precise handoff](../DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md) in the isolated worktree. Codex corrected the DB pending-key check, conflict response helper and native hidden-state CSS, and verified114 distinct cases across overlapping API/browser/isolated-PostgreSQL/existing-profile runs. See [actual handoff/root review evidence](../proofs/fv15-claude-handoff-2026-11-24/assignment.json). [FV15 is now delivered and live verified](../DADM_DEPLOY_MONITOR_FV15_CAMPAIGN_QUOTA_2026-11-24.md): final catalog preserves newer species work,114 targeted cases plus4 overlapping integration checks pass, additive schema/constraints verify, four normal synthetic role journeys and audit/state checks pass, all scoped QA data/credentials removed. No real quota adjustments.
 
 ### FV16 Content provenance and publication policy
 
@@ -336,6 +336,8 @@ Acceptance:
 - Repeat complete normal UI journeys across campaigns/session entry, Player/DM, character creation/editing, map editing/library/Atlas, chat, calendar, companions and floors.
 - For each functional slice commit/push, reconcile the running source/image, preserve unrelated live work, record backup/migrations/rollback, deploy only the app when appropriate, verify live and remove QA data.
 - Resolve blocking findings, record owner acceptance for the new full version and keep the previously accepted playtable baseline intact.
+
+Claude returned [bounded source discovery](../DADM_DISCOVER_FV18_INTERACTION_TIMING_2026-11-24.md), with [root qualifications](../proofs/fv18-interaction-timing-2026-11-24/discovery.json). Local instrumentation and later Apply remain required; no causal fix is claimed.
 
 FV18 timing follow-ups: rapid Firefox390 creator autosave/card/source clicks sometimes did not apply; settled label journeys pass without a cause/fix claim. One quota profile-entry/nav composition click exceeded8s after DOM replacement, then passed unchanged on retry. Retain these with the existing creator startup observation.
 
