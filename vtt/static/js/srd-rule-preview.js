@@ -31,25 +31,25 @@
     }
     const n=node('aside');if(b.title)n.append(node('strong',b.title));if(b.text)n.append(node('p',b.text));return n;
   }
-  function subclass(id, level, newLevelOnly = false) {
+  function subclass(id, level, newLevelOnly = false, ui=globalThis.VTTUi) {
     const wrap=node('section');wrap.className='srd-rule-preview';wrap.dataset.subclassPreview=id;
-    wrap.setAttribute('aria-live','polite');wrap.append(node('p',globalThis.VTTUi('Merkmale werden geladen …')));
+    wrap.setAttribute('aria-live','polite');wrap.append(node('p',ui('Merkmale werden geladen …')));
     (async () => {
       const data=await entry(id);
       const features=await Promise.all((data.entity.features || []).map(entry));
       const reached=features.filter(f => newLevelOnly ? f.entity.level === level : f.entity.level <= level);
-      wrap.replaceChildren(node('h4',globalThis.VTTUi('Unterklasse: {name}',{name:data.entity.name})));
-      wrap.append(node('p',globalThis.VTTUi('Merkmale bis Klassenstufe {level}',{level})));
-      if (!reached.length) wrap.append(node('p',globalThis.VTTUi('Auf dieser Stufe kommen keine neuen Unterklassenmerkmale hinzu.')));
+      wrap.replaceChildren(node('h4',ui('Unterklasse: {name}',{name:data.entity.name})));
+      wrap.append(node('p',ui('Merkmale bis Klassenstufe {level}',{level})));
+      if (!reached.length) wrap.append(node('p',ui('Auf dieser Stufe kommen keine neuen Unterklassenmerkmale hinzu.')));
       reached.forEach(f => {
         const detail=node('details');detail.open=true;detail.dataset.featureLevel=f.entity.level;
-        detail.append(node('summary',globalThis.VTTUi('Stufe {level}: {name}',{level:f.entity.level,name:f.entity.name})));
+        detail.append(node('summary',ui('Stufe {level}: {name}',{level:f.entity.level,name:f.entity.name})));
         f.blocks.forEach(b => {if(b.ruleId !== f.entity.id)detail.append(block(b));});wrap.append(detail);
       });
       const later=features.filter(f => f.entity.level > level);
-      if(later.length){const d=node('details');d.append(node('summary',globalThis.VTTUi('Spätere Unterklassenmerkmale')));
-        later.forEach(f => d.append(node('p',globalThis.VTTUi('Stufe {level}: {name}',{level:f.entity.level,name:f.entity.name}))));wrap.append(d);}
-    })().catch(() => wrap.replaceChildren(node('p',globalThis.VTTUi('Die Merkmale konnten nicht geladen werden. Öffne den Regeltext oder versuche es erneut.'))));
+      if(later.length){const d=node('details');d.append(node('summary',ui('Spätere Unterklassenmerkmale')));
+        later.forEach(f => d.append(node('p',ui('Stufe {level}: {name}',{level:f.entity.level,name:f.entity.name}))));wrap.append(d);}
+    })().catch(() => wrap.replaceChildren(node('p',ui('Die Merkmale konnten nicht geladen werden. Öffne den Regeltext oder versuche es erneut.'))));
     return wrap;
   }
   window.SrdRulePreview=Object.freeze({subclass});

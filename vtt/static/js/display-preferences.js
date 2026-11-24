@@ -30,20 +30,38 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   const language=prefs.language; // A language change takes effect on the explicitly requested reload.
   const messages=window.VTTUiMessages || {};
   const bySource=new Map(Object.entries(messages).filter(([,row])=>row.source).map(([key,row])=>[row.source,key]));
-  function t(key,parameters={}){
-    const row=messages[key];let result=row?(row[language] || row.de):key;
+  function localized(key,parameters={},locale=language){
+    const row=messages[key];let result=row?(row[locale] || row.de):key;
     return String(result).replace(/\{([a-zA-Z0-9_]+)\}/g,(match,name)=>own(parameters,name)?String(parameters[name]):match);
   }
+  const t=(key,parameters={})=>localized(key,parameters,language);
   function literal(source,parameters={}){const key=bySource.get(source);return key?t(key,parameters):String(source).replace(/\{([a-zA-Z0-9_]+)\}/g,(m,name)=>own(parameters,name)?String(parameters[name]):m);}
-  function translate(root=document){
+  function translate(root=document,rules=false){
     const nodes=[];if(root.nodeType===1)nodes.push(root);
     if(root.querySelectorAll)nodes.push(...root.querySelectorAll('[data-ui-key],[data-ui-title],[data-ui-placeholder],[data-ui-aria-label],[data-ui-alt]'));
     for(const node of nodes){
+      if(!!node.closest?.('[data-rules-locale-scope]')!==rules)continue;
+      const t=(key,parameters={})=>localized(key,parameters,rules?contentLocale():language);
       if(node.dataset.uiKey && messages[node.dataset.uiKey]){const value=t(node.dataset.uiKey);if(node.textContent!==value)node.textContent=value;}
       for(const attribute of ['title','placeholder','aria-label','alt']){
         const key=node.getAttribute('data-ui-'+attribute);if(key && messages[key])node.setAttribute(attribute,t(key));
       }
     }
+  }
+  // Only explicitly marked authored labels enter either translator. Rule/user text is untouched.
+  const rulesI18n=Object.freeze({locale:()=>contentLocale(),
+    t:(key,parameters={})=>localized(key,parameters,contentLocale()),
+    literal:(source,parameters={})=>{
+      const key=bySource.get(source);
+      return key?localized(key,parameters,contentLocale()):String(source).replace(/\{([a-zA-Z0-9_]+)\}/g,(m,k)=>own(parameters,k)?String(parameters[k]):m);
+    },
+    translate:(root=document)=>translate(root,true)});
+  function translateAll(root=document){
+    translate(root);rulesI18n.translate(root);
+    const scopes=[];
+    if(root.matches?.('[data-rules-locale-scope]'))scopes.push(root);
+    if(root.querySelectorAll)scopes.push(...root.querySelectorAll('[data-rules-locale-scope]'));
+    for(const scope of scopes)scope.lang=contentLocale();
   }
   function number(value,maximumFractionDigits=2){return new Intl.NumberFormat(language==='en'?'en-US':'de-DE',{maximumFractionDigits}).format(value);}
   function formatDistance(meters){return `${number(prefs.unit==='ft'?Number(meters)/.3:Number(meters))} ${prefs.unit}`;}
@@ -74,7 +92,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     if(document.body)document.body.dataset.sheetTheme=prefs.theme;
     for(const [id,value] of [['sfTheme',prefs.theme],['sfUnits',prefs.unit]]){const node=document.getElementById(id);if(node)node.value=value;}
     window.SheetFeedback?.applyDisplay?.({...prefs});
-    translate();
+    translateAll();
     window.dispatchEvent(new CustomEvent('vtt:displaychange',{detail:{...prefs}}));
   }
   function update(changes){
@@ -208,7 +226,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     i18n.format=(key,parameters={})=>messages[key]?t(key,parameters):format(key,parameters);
     i18n.lang=language;i18n.vttDisplayInstalled=true;
   }
-  window.VTTI18n={t,literal,translate,error:apiError,report,installEagle,locale:()=>language,contentLocale};
+  window.VTTI18n={t,literal,translate:root=>translate(root),error:apiError,report,installEagle,locale:()=>language,contentLocale,module:()=>rulesI18n};
   globalThis.VTTUi=(source,parameters={})=>literal(source,parameters);
   globalThis.VTTUiHTML=source=>literal(source).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   window.VTTDisplay={get:()=>({...prefs}),update,open,formatDistance,number,contrast,nightPalette:()=>({...NIGHT}),
@@ -216,7 +234,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
   apply();
   document.addEventListener('DOMContentLoaded',()=>{
     apply();
-    new MutationObserver(records=>{for(const record of records)for(const node of record.addedNodes)if(node.nodeType===1)translate(node);}).observe(document.body,{childList:true,subtree:true});
+    new MutationObserver(records=>{for(const record of records)for(const node of record.addedNodes)if(node.nodeType===1)translateAll(node);}).observe(document.body,{childList:true,subtree:true});
     fetch('/api/theme/settings',{credentials:'include'}).then(response=>response.ok?response.json():null).then(data=>{branding=data?.theme || null;apply();}).catch(()=>{});
   });
   window.addEventListener('storage',event=>{if(event.key===KEY){try{prefs=clean(JSON.parse(event.newValue || '{}'));apply();}catch(_){}}});

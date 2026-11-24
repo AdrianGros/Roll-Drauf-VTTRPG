@@ -1,0 +1,55 @@
+{
+  "status": "pass",
+  "scope": "FV01 partial: creator authored interface labels and locale-only state preservation; full rule content and editor remain outstanding",
+  "tests": [
+    {
+      "command": "/tmp/vtt-feedback-py -m pytest -q tests/test_creator_rules_locale_browser.py::test_rules_locale_switch_preserves_uncommitted_input tests/test_creator_rules_locale_browser.py::test_rules_locale_switch_preserves_final_campaign_and_pending_result tests/test_creator_rules_locale_browser.py::test_live_locale_switch_preserves_home_file_and_dirty_draft",
+      "result": "3 passed, 7 warnings in 67.23s",
+      "source": "final functional source; includes pending input commit on actual blur and preserved in-flight finalization subtree"
+    },
+    {
+      "command": "/tmp/vtt-feedback-py -m pytest -q tests/test_creator_rules_locale_browser.py::test_creator_authored_labels_use_rules_locale tests/test_srd_creator_browser.py::test_guided_flow_builds_a_valid_fighter tests/test_srd_creator_browser.py::test_random_character_finalizes_from_home",
+      "result": "8 passed, 11 warnings in 108.57s",
+      "coverage": "All six UI/rules/automatic combinations, global vs scoped mutation handling, actual guided creation and random finalization"
+    }
+  ],
+  "earlier_runs": [
+    {
+      "result": "8 passed; 1 failure plus teardown error",
+      "reason": "test wait expression used unsafe string evaluation under existing CSP; replaced by function expression"
+    },
+    {
+      "result": "4 passed; 1 failure",
+      "reason": "new uncommitted-input test did not select a class before expecting its level field; corrected fixture journey"
+    },
+    {
+      "result": "uncommitted-input assertion exposed a genuine browser change-on-blur commit during replacement",
+      "handling": "temporarily suppress only replacement-induced change; retain pending edit flag on new input until actual user blur, covered by final focused checks"
+    },
+    {
+      "result": "2 passed; 1 failure",
+      "reason": "campaign test selected before pending draft autosave completed; wait for dirty=false and saving=false before DOM-only campaign selection; the actual locale and finalize assertions are retained"
+    }
+  ],
+  "static_checks": {
+    "catalog_sources": 3773,
+    "catalog_check": "pass",
+    "changed_js_syntax": "pass",
+    "proof_python_syntax": "pass",
+    "git_diff_check": "pass"
+  },
+  "source_reviews": [
+    "review-initial.json",
+    "review-reworked.json"
+  ],
+  "retained_limitations": [
+    "Full canonical ID crosswalk and approved EN content",
+    "Structured validation and API errors",
+    "Character sheet, inventory, progression and shared view",
+    "Old import/conflict/dialog status messages can retain prior locale after a live switch",
+    "Async subclass feature disclosure expansion retains pre-existing reset on rerender"
+  ],
+  "tests_use": "throwaway SQLite fixtures, no lane or production database",
+  "unique_browser_cases": 11,
+  "repository_suite_claim": "No full-suite green claim; inherited findings remain FV18"
+}

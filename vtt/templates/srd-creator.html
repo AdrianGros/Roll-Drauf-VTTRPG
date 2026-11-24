@@ -6,7 +6,7 @@
     <script src="/static/js/display-preferences.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-ui-key="u_a830aeb004f1">Charakter erstellen · SRD 5.2.1 · Roll Drauf VTT</title>
+    <title data-rules-locale-scope data-ui-key="u_a830aeb004f1">Charakter erstellen · SRD 5.2.1 · Roll Drauf VTT</title>
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/book-page.css">
     <link rel="stylesheet" href="/static/css/book-scene.css">
@@ -25,7 +25,7 @@
             <a class="book-dashboard-ribbon-btn" href="/regelwerk"><span data-ui-key="u_1a2d1786f33e">Regelwerk</span></a>
             <a class="book-dashboard-ribbon-btn" href="/regelwerk/compendium"><span data-ui-key="u_ddedf884b06c">Compendium</span></a>
         </nav>
-        <div class="regelwerk-titlebar">
+        <div class="regelwerk-titlebar" data-rules-locale-scope>
             <div>
                 <p class="regelwerk-kicker"><span data-ui-key="u_7335361e5645">Roll Drauf VTT · SRD 5.2.1</span></p>
                 <h1><span data-ui-key="u_1c2253b1fe62">Charakter erstellen</span></h1>
@@ -33,7 +33,8 @@
         </div>
     </header>
 
-    <main class="sc-main" id="scMain" tabindex="-1">
+    <main class="sc-main" id="scMain" data-rules-locale-scope tabindex="-1">
+        <p id="scLanguageNotice" class="sc-muted" hidden data-ui-key="u_ea6d56ca07f6">Einige Regelnamen und Regeltexte sind derzeit nur auf Deutsch verfügbar.</p>
         <p id="scStatus" class="regelwerk-status" role="status" aria-live="polite"><span data-ui-key="u_c7f82aa6d8b8">Wird geladen …</span></p>
         <section id="scHome" hidden></section>
         <section id="scBuilder" class="sc-builder" hidden>
@@ -44,8 +45,8 @@
                 </div>
                 <div class="sc-mode" role="group" aria-label="Erstellungsweg" data-ui-aria-label="u_ba3a385e4658">
                     <button type="button" id="scModeGuided" class="sc-btn sc-btn-toggle"><span data-ui-key="u_95d4cfead8f1">Geführt</span></button>
-                    <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle"><span data-review-label="">Alles auf einmal</span></button>
-                    <p class="review-mode-help" data-review-label="">Geführt: Schritt für Schritt. Alles auf einmal: alle Abschnitte auf einer Seite.</p>
+                    <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle"><span data-ui-key="u_8ad66543e17b">Alles auf einmal</span></button>
+                    <p class="review-mode-help" data-ui-key="u_9108f681f17c">Geführt: Schritt für Schritt. Alles auf einmal: alle Abschnitte auf einer Seite.</p>
                 </div>
             </div>
             <div id="scConflict" class="sc-banner sc-banner-warn" role="alert" hidden></div>
@@ -63,7 +64,7 @@
         </section>
     </main>
 
-    <dialog id="scDialog" class="sc-dialog" aria-labelledby="scDialogTitle">
+    <dialog id="scDialog" data-rules-locale-scope class="sc-dialog" aria-labelledby="scDialogTitle">
         <div class="sc-dialog-head">
             <h2 id="scDialogTitle" tabindex="-1"></h2>
             <button type="button" id="scDialogClose" class="sc-btn sc-btn-quiet" aria-label="Schließen" data-ui-aria-label="u_44424b18700e"><span data-ui-key="u_44424b18700e">Schließen</span></button>
@@ -71,7 +72,7 @@
         <div id="scDialogBody" class="sc-dialog-body"></div>
     </dialog>
 
-    <footer class="regelwerk-footer">
+    <footer class="regelwerk-footer" data-rules-locale-scope>
         <p><span data-ui-key="u_c6627fdd13a6">Quelle: Systemreferenzdokument 5.2.1 (Deutsch).</span></p>
         <p><a href="/regelwerk/lizenz"><span data-ui-key="u_630fe80c048d">CC BY 4.0 · Quellenangabe und Lizenz</span></a></p>
     </footer>
@@ -83,6 +84,5 @@
     <script src="/static/js/creation-engine-nav.js"></script>
     <script src="/static/js/regelwerk-navigation.js"></script>
     <script src="/static/js/vtt-main-nav.js"></script>
-<script>document.querySelectorAll("[data-review-label]").forEach(n => n.textContent = VTTUi(n.textContent));</script>
 </body>
 </html>
