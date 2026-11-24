@@ -439,7 +439,7 @@
       "id": "FV15",
       "title": "Campaign quota extension request",
       "priority": "P2",
-      "status": "implementation_assigned",
+      "status": "implementation_ready_unverified",
       "source_refs": [
         "2026-11-13:S15",
         "B10"
@@ -459,11 +459,12 @@
         "worktree": "/home/admin/projects/roll-drauf-vtt-fv15-quota-20261124",
         "branch": "feat/campaign-quota-fv15-20261124",
         "base": "1f9179d5b5f4f747c1f6fa9ff4da2150956bafb0",
-        "phase": "Deploy implementation only",
+        "phase": "Claude implementation returned; Codex review/testing/integration pending",
         "root_responsibilities": "Review, test execution, catalog generation, integration/commit/push, schema application, production deployment/live acceptance/cleanup",
         "tools": "Read,Write,Edit,Grep,Glob only; no code execution, MCP, nested agents or billing fallback",
-        "verification": "not yet run; assignment is not delivery"
-      }
+        "verification": "Worker ran no tests/catalog/git/schema/live actions. Proposed SQLite/browser/PostgreSQL tests require Codex execution; exact own-profile assertion needs additive user_id expectation. SQLite ignores row locks; rolling-rate serialization must be verified on isolated PostgreSQL."
+      },
+      "implementation_handoff": "docs/DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md"
     },
     {
       "id": "FV16",
@@ -1119,7 +1120,7 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Claude implements isolated FV15 under exclusive file ownership; Codex continues FV01 language/editor work, then reviews/tests/integrates/delivers the quota workflow. All retained technical packets remain in scope; unavailable rules content is owner-deferred.",
+  "next_step": "Finish Codex FV01 species-label verification/delivery; then review, test, integrate and deliver Claude FV15 implementation from the preserved isolated worktree. All retained technical packets remain in scope; unavailable rules content is owner-deferred.",
   "current_delivery": {
     "source": "14e9d528ac8d423458e251a3f3c579723da45f44",
     "image": "sha256:5ecdfd5242e224508ec16365f5df7627845f9fea2c410cd4298ab70c90762eae",

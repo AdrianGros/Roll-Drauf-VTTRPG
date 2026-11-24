@@ -56,7 +56,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV12 | Land fill and coastline tools | P2 | Planned |
 | FV13 | World campaign and map place relationships | P2 | Plan and inputs needed |
 | FV14 | Campaign homebrew approvals | P2 | Planned |
-| FV15 | Campaign quota extension request | P2 | Implementation assigned to Claude |
+| FV15 | Campaign quota extension request | P2 | Claude implementation returned; unverified |
 | FV16 | Content provenance and publication policy | P2 | Plan and inputs needed |
 | FV17 | Identify the deferred zero percent control | P2 | Closed by owner scope decision |
 | FV18 | Integrated verification and full version release | release gate | In progress; five obsolete map assertions reconciled |
@@ -297,7 +297,7 @@ Acceptance:
 - Keep approval and actual quota changes under the existing authorized administration contract; a request cannot grant itself slots.
 - Do not automatically alter real users, add a Donutarian test slot or introduce a payment system.
 
-Implementation assignment: [completed Apply](../DADM_APPLY_FV15_CAMPAIGN_QUOTA_2026-11-24.md), [exclusive Claude handoff](../CLAUDE_HANDOFF_FV15_2026-11-24.md). Finite existing quota/creator eligibility, one pending request, bounded submission history, explicit owner/admin review and stale/account guards are specified. Submission never grants slots. No default entitlement or billing change. Worker writes implementation/proposed tests; Codex executes verification and delivery. No FV15 tests or live acceptance claimed yet.
+Implementation assignment: [completed Apply](../DADM_APPLY_FV15_CAMPAIGN_QUOTA_2026-11-24.md), [exclusive Claude handoff](../CLAUDE_HANDOFF_FV15_2026-11-24.md). Finite existing quota/creator eligibility, one pending request, bounded submission history, explicit owner/admin review and stale/account guards are specified. Submission never grants slots. No default entitlement or billing change. Claude has returned [implementation/proposed tests and a precise handoff](../DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md) in the isolated worktree. Codex review, SQLite/browser/isolated-PostgreSQL testing, catalog build, integration and live delivery remain pending. No FV15 tests or live acceptance claimed yet.
 
 ### FV16 Content provenance and publication policy
 
