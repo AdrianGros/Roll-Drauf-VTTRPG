@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "origin": "https://vtt.roll-drauf.de",
+  "journeys": [
+    {
+      "engine": "chromium",
+      "role": "dm",
+      "width": 1440,
+      "ui_language": "de",
+      "initial_rules_language": "en",
+      "switched_rules_language": "de",
+      "normal_navigation": true,
+      "localized_class_name_and_source": true,
+      "localized_tool_mastery_armor_pack_coin_labels": true,
+      "canonical_armor_mastery_ids_preserved": true,
+      "draft_id_version_state_data_evaluation_preserved": true,
+      "saved_draft_reload": true,
+      "step_navigation_version_advance": 1,
+      "name_and_unit_preference_preserved": true,
+      "state_sha256": "3d9bd78af27a97c636cb740ad5e8638773780b5e32705bfb3ee832fbc2baea97",
+      "browser_errors": []
+    },
+    {
+      "engine": "firefox",
+      "role": "player",
+      "width": 390,
+      "ui_language": "en",
+      "initial_rules_language": "de",
+      "switched_rules_language": "en",
+      "normal_navigation": true,
+      "localized_class_name_and_source": true,
+      "localized_tool_mastery_armor_pack_coin_labels": true,
+      "canonical_armor_mastery_ids_preserved": true,
+      "draft_id_version_state_data_evaluation_preserved": true,
+      "saved_draft_reload": true,
+      "step_navigation_version_advance": 1,
+      "name_and_unit_preference_preserved": true,
+      "state_sha256": "3d9bd78af27a97c636cb740ad5e8638773780b5e32705bfb3ee832fbc2baea97",
+      "browser_errors": []
+    }
+  ],
+  "real_oauth_tested": false
+}

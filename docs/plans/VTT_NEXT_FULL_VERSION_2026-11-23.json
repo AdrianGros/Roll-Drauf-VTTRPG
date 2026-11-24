@@ -47,23 +47,25 @@
       "apply": "docs/DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md",
       "candidate_inventory": "docs/proofs/full-version-layers-2026-11-23/fv01-spell-candidates.json",
       "delivery": {
-        "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md",
+        "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md",
         "delivered": [
           "Creator explicitly cataloged interface labels follow resolved rules locale, separately from the site UI",
           "Live switching preserves draft identity/state/data/evaluation, focus, selected import file, pending user input and final campaign/in-flight result",
           "Six locale combinations and normal DM/Player settings/reload journeys verified",
           "663 reviewed core/spell names and52 source-backed terms with immutable canonical mechanics",
           "Genuine mapped EN class/spell/subclass details, actual source-difference notice, explicit DE fallback and stale response guards",
-          "Stable caster/list/spell keys preserve checked canonical IDs after localized sorting; normal DM/Player source/selection/settings/reload verified"
+          "Stable caster/list/spell keys preserve checked canonical IDs after localized sorting; normal DM/Player source/selection/settings/reload verified",
+          "184 reviewed equipment identities plus mastery/property/coin source terms:847 total names and74 terms; canonical worn armor/mastery selections, pack/currency labels and live DM/Player settings/reload verified"
         ],
         "remaining": [
-          "Equipment, species subchoices/trinkets and remaining rule-derived labels",
+          "Species subchoices and remaining rule-derived labels/formulas/variants/prerequisites; unused trinket data has no current UI consumer",
           "Structured validation and API errors",
           "Character sheet, inventory, progression and shared character views",
           "Remaining dynamic status text, async preview own expansion reset and retained low view issues"
         ]
       },
-      "content_apply": "docs/DADM_APPLY_FV01_CREATOR_CONTENT_2026-11-24.md"
+      "content_apply": "docs/DADM_APPLY_FV01_CREATOR_CONTENT_2026-11-24.md",
+      "equipment_apply": "docs/DADM_APPLY_FV01_CREATOR_EQUIPMENT_2026-11-24.md"
     },
     {
       "id": "FV02",
@@ -223,7 +225,7 @@
       "id": "FV07",
       "title": "Object list and label placement",
       "priority": "P1",
-      "status": "assigned_claude_in_progress",
+      "status": "implemented_awaiting_codex_integration",
       "source_refs": [
         "S3",
         "2026-11-23:E16",
@@ -241,13 +243,13 @@
         "FV04"
       ],
       "decisions_or_inputs": [],
-      "owner_assignment": "Owner assignment 2026-11-24: Claude implements this packet in worktree /home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124 (branch feat/mapmaker-fv07-fv08-20261124). Codex: do not start it; integrate, verify and deploy after Claude's handoff."
+      "owner_assignment": "Owner assignment 2026-11-24: implemented by Claude on branch feat/mapmaker-fv07-fv08-20261124 (worktree /home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124), locally tested, not pushed or deployed. Codex: integrate, verify and deploy per docs/DADM_DEPLOY_FV07_FV08_MAPMAKER_2026-11-24.md on that branch."
     },
     {
       "id": "FV08",
       "title": "Path drawing and editing modes",
       "priority": "P1",
-      "status": "assigned_claude_in_progress",
+      "status": "implemented_awaiting_codex_integration",
       "source_refs": [
         "S6",
         "2026-11-23:E12",
@@ -263,7 +265,7 @@
         "FV04"
       ],
       "decisions_or_inputs": [],
-      "owner_assignment": "Owner assignment 2026-11-24: Claude implements this packet in worktree /home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124 (branch feat/mapmaker-fv07-fv08-20261124). Codex: do not start it; integrate, verify and deploy after Claude's handoff."
+      "owner_assignment": "Owner assignment 2026-11-24: implemented by Claude on branch feat/mapmaker-fv07-fv08-20261124 (worktree /home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124), locally tested, not pushed or deployed. Codex: integrate, verify and deploy per docs/DADM_DEPLOY_FV07_FV08_MAPMAKER_2026-11-24.md on that branch."
     },
     {
       "id": "FV09",
@@ -1084,11 +1086,11 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Continue retained FV01 language coverage, then all remaining technical packets through FV18. Preserve delivered source842f57e58. FV17 is closed by owner scope decision. Ducky originals are inventoried under a strict no-generation/no-generative-use constraint; select actual integrations in FV11/FV16 Apply. Missing rules/text inputs remain visible.",
+  "next_step": "Integrate, verify and deploy Claude's completed FV07/FV08 handoff under the recorded owner assignment. Preserve live source11384877a. Continue FV01 language/editor coverage and all other retained technical packets through FV18. FV17 remains owner-scope closed; Ducky originals prohibit generation/generative use; missing content inputs remain visible.",
   "current_delivery": {
-    "source": "842f57e58965c182e46ee6c4f81ad404373bd6d9",
-    "image": "sha256:d04f4ee8fce80226544116f51a73cc3791d7cedb69f351bb9b9906e729761a18",
-    "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md"
+    "source": "11384877aecdf8c00dbac753c7b3f3012e0e4b24",
+    "image": "sha256:6def74eab5d7b628a8afbf556c559fe97ca82fb826a450dbdf9b60921a1b5eef",
+    "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md"
   },
   "last_updated": "2026-11-24",
   "delivery_history": [
@@ -1101,6 +1103,11 @@
       "source": "a28afce53838d73abfc2d5602f02f7fb50996e45",
       "image": "sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0",
       "monitor": "docs/DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md"
+    },
+    {
+      "source": "842f57e58965c182e46ee6c4f81ad404373bd6d9",
+      "image": "sha256:d04f4ee8fce80226544116f51a73cc3791d7cedb69f351bb9b9906e729761a18",
+      "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md"
     }
   ],
   "owner_decisions": [
