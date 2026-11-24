@@ -300,6 +300,14 @@ def test_draft_buttons_and_tool_switch(open_editor):
     page.locator('input[name="pathMode"][value="nodes"]').check()
     ed.click_doc(400, 400)
     expect(page.locator('#pathDraftFinish')).to_be_disabled()
+    expect(page.locator('#undoBtn')).to_be_enabled()
+    expect(page.locator('#undoVisible')).to_be_enabled()
+    expect(page.locator('#redoBtn')).to_be_disabled()
+    page.locator('#undoBtn').click()
+    expect(page.locator('#pathDraftBar')).to_be_hidden()
+    expect(page.locator('#undoBtn')).to_be_disabled()
+    assert not paths(ed)
+    ed.click_doc(400, 400)
     ed.click_doc(700, 400)
     page.locator('#pathDraftUndo').click()
     expect(page.locator('#pathDraftStatus')).to_have_text('Punkte gesetzt: 1')
@@ -340,4 +348,33 @@ def test_freehand_still_draws_and_draw_edit_switch_is_explicit(open_editor):
     expect(page.locator('#selPathDraw')).to_be_visible()
     page.locator('#selPathDraw').click()
     assert ed.summary()['tool'] == 'path'
+    ed.assert_clean()
+
+
+def test_node_mode_drag_return_and_pinch_do_not_add_accidental_nodes(open_editor):
+    ed = open_editor(choose_template=False)
+    new_empty(ed)
+    page = ed.page
+    ed.tool('path')
+    page.locator('input[name="pathMode"][value="nodes"]').check()
+    # A drag that returns to its origin remains a drag, even when release is close to press.
+    ed.drag([(400, 400), (700, 500), (400, 400)])
+    expect(page.locator('#pathDraftBar')).to_be_hidden()
+    assert not paths(ed)
+    ed.click_doc(400, 400)
+    expect(page.locator('#pathDraftStatus')).to_have_text('Punkte gesetzt: 1')
+    before = ed.summary()
+    ed.pointer([
+        {'type':'pointerdown','id':71,'kind':'touch','primary':True,'x':700,'y':700},
+        {'type':'pointerdown','id':72,'kind':'touch','primary':False,'x':900,'y':700},
+        {'type':'pointermove','id':72,'kind':'touch','primary':False,'x':1000,'y':750},
+        {'type':'pointerup','id':72,'kind':'touch','primary':False,'x':1000,'y':750},
+        {'type':'pointerup','id':71,'kind':'touch','primary':True,'x':700,'y':700},
+    ])
+    expect(page.locator('#pathDraftStatus')).to_have_text('Punkte gesetzt: 1')
+    after = ed.summary()
+    assert after['items'] == before['items'] and after['historySteps'] == before['historySteps']
+    ed.click_doc(800, 600)
+    page.locator('#pathDraftFinish').click()
+    assert len(paths(ed)) == 1 and len(paths(ed)[0]['points']) == 2
     ed.assert_clean()

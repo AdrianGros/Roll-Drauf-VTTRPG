@@ -1,6 +1,7 @@
 """Static contract checks for the Kartenwerkstatt prototype (no browser needed)."""
 
 import json
+from html.parser import HTMLParser
 import re
 from pathlib import Path
 
@@ -22,10 +23,22 @@ def test_app_files_and_entry_stub_exist():
 
 def test_index_uses_only_relative_local_resources():
     html = (APP / "index.html").read_text(encoding="utf-8")
-    refs = re.findall(r'(?:src|href)="([^"]+)"', html)
-    assert refs, "expected script/style references"
-    for ref in refs:
+    class References(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.refs = []
+        def handle_starttag(self, tag, attrs):
+            attrs = dict(attrs)
+            for key in ['src', 'href']:
+                if key in attrs:self.refs.append((tag, attrs.get('id'), attrs[key]))
+    parser = References()
+    parser.feed(html)
+    assert parser.refs, "expected script/style references"
+    for tag, identity, ref in parser.refs:
         assert not re.match(r"^(?:[a-z]+:)?//", ref), ref
+        if tag == 'a' and identity == 'libraryLogin':
+            assert ref == '/login.html'  # authenticated app navigation, not a preview resource
+            continue
         assert not ref.startswith("/"), f"{ref} would break the preview server"
         assert (APP / ref).exists(), ref
     assert '<script type="module" src="js/app.js"></script>' in html

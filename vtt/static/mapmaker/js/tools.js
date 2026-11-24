@@ -198,7 +198,7 @@ export function attachInput(ed) {
             if (ed.beginTiles(point)) gesture = { type: "tiles", pointerId: event.pointerId };
         } else if (ed.tool === "path" && ed.pathOpts.mode === "nodes") {
             // A node is set on release, so a drag, pan or pinch never adds one by accident.
-            gesture = { type: "pathClick", pointerId: event.pointerId, startLocal: local(event) };
+            gesture = { type: "pathClick", pointerId: event.pointerId, startLocal: local(event), moved: false };
         } else if (ed.tool === "path") {
             if (!ed.insideMap(point)) return;
             const target = ed.pathTarget();
@@ -341,6 +341,8 @@ export function attachInput(ed) {
             }
             ed.requestFrame();
         } else if (gesture.type === "pathClick") {
+            const now = local(event);
+            if (Math.hypot(now.x - gesture.startLocal.x, now.y - gesture.startLocal.y) >= TAP_SLOP) gesture.moved = true;
             if (draft) {
                 draft.cursor = point;
                 ed.requestFrame();
@@ -453,7 +455,7 @@ export function attachInput(ed) {
             }
         } else if (done.type === "pathClick") {
             const now = local(event);
-            if (Math.hypot(now.x - done.startLocal.x, now.y - done.startLocal.y) < TAP_SLOP) addDraftNode(ed.clientToDoc(event.clientX, event.clientY));
+            if (!done.moved && Math.hypot(now.x - done.startLocal.x, now.y - done.startLocal.y) < TAP_SLOP) addDraftNode(ed.clientToDoc(event.clientX, event.clientY));
         } else if (done.type === "pathNode" && done.moved) {
             ed.updateItem(done.item, done.orig, JSON.parse(JSON.stringify(done.item)), "Wegpunkt verschieben");
         }

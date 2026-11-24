@@ -439,7 +439,8 @@ def test_escape_cancels_first_then_leaves_the_placement_tool(open_editor):
     ed.tool('label')
     ed.click_doc(900, 800)
     assert ed.summary()['selection']
-    expect(page.locator('#selText')).to_be_focused()
+    # FV04 keeps canvas focus for repeated placement; editing is explicit.
+    expect(page.locator('#mapCanvas')).to_be_focused()
     focus_canvas(page)
     page.keyboard.press('Escape')
     summary = ed.summary()

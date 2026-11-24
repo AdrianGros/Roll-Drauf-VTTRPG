@@ -757,6 +757,7 @@ export class UI {
         $("pathDraftBar").hidden = !count;
         $("pathDraftStatus").textContent = globalThis.VTTUi("Punkte gesetzt: {count}", { count });
         $("pathDraftFinish").disabled = count < 2;
+        this.updateUndo();
     }
 
     buildPalette() {
@@ -1753,9 +1754,12 @@ export class UI {
     }
 
     updateUndo() {
-        $("undoBtn").disabled = !this.ed.history.canUndo;
-        $("redoBtn").disabled = !this.ed.history.canRedo;
-        $("undoVisible").disabled=!this.ed.history.canUndo;$("redoVisible").disabled=!this.ed.history.canRedo;
+        const undo = !!this.ed.pathDraft || this.ed.history.canUndo;
+        const redo = !this.ed.pathDraft && this.ed.history.canRedo;
+        $("undoBtn").disabled = !undo;
+        $("redoBtn").disabled = !redo;
+        $("undoVisible").disabled = !undo;
+        $("redoVisible").disabled = !redo;
     }
 
     updateZoom() {

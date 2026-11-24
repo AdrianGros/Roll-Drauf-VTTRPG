@@ -1,0 +1,53 @@
+{
+  "status": "pass_after_reconciling_obsolete_baselines",
+  "distinct_cases_covered": 43,
+  "runs": [
+    {
+      "scope": "FV07/FV08 original7, C27, full-version layer and static files",
+      "passed": 37,
+      "failed": 2,
+      "duration_seconds": 701.19,
+      "failures": [
+        "tests/test_c27_mapmaker_browser.py::test_escape_cancels_first_then_leaves_the_placement_tool",
+        "tests/test_mapmaker_static.py::test_index_uses_only_relative_local_resources"
+      ],
+      "classification": "Both exactly match handoff baseline failures and contradict documented shipped contracts; corrected in test-only FV18 Apply and both pass in the affected recheck."
+    },
+    {
+      "scope": "Final node-mode finish/roundtrip, draft toolbar buttons, freehand/edit switch and accidental drag-return/pinch",
+      "passed": 4,
+      "deselected": 4,
+      "duration_seconds": 86.71
+    },
+    {
+      "scope": "Five legacy baseline cases after test-only reconciliation: two focus, narrow scrolling, occupied grid safety and static login anchor",
+      "passed": 5,
+      "duration_seconds": 108.73
+    }
+  ],
+  "checks": [
+    "3826 UI catalog sources fresh and DE/EN complete",
+    "847 creator names/74 terms remain source-fresh",
+    "All five changed JS modules parse",
+    "Proof Python scripts parse",
+    "git diff --check"
+  ],
+  "codex_review": {
+    "handoff_commits": [
+      "25e449ac6",
+      "77d005c0f",
+      "984524f2a"
+    ],
+    "merge": "c36c8ec76",
+    "resolved_implementation_findings": [
+      "Draft undo controls were disabled on an empty document: update from actual draft state, while redo stays disabled during drafting.",
+      "Drag ending near its press location could add a node: latch maximum movement, tested with a return drag and a pinch."
+    ],
+    "no_format_schema_dependency_or_permission_change": true
+  },
+  "limits": [
+    "Author reported130 passes/6 baseline failures on a broader pre-rebase set; this is not an independent full-suite result by Codex.",
+    "The remaining playtable hidden layers-widget baseline and other repository-suite gaps stay FV18.",
+    "No physical touch/keyboard device or real OAuth in automated checks."
+  ]
+}

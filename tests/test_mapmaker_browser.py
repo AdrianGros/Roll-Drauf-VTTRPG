@@ -539,6 +539,8 @@ def test_place_with_lore_is_rendered_as_literal_text(open_editor):
     ed.tool("label")
     ed.click_doc(*SEA_B)
     name = ed.page.locator("#selText")
+    expect(ed.page.locator("#mapCanvas")).to_be_focused()
+    ed.page.locator("#editPlacedLabel").click()
     expect(name).to_be_focused()
     ed.page.keyboard.press("Space")  # typing in a field must not switch to panning
     assert ed.summary()["tool"] == "label"
@@ -1023,6 +1025,7 @@ def test_narrow_viewport_sheet_and_tools(open_editor):
     expect(pane).to_be_hidden()
     ed.tab("Werkzeug")
     expect(pane).to_be_visible()
+    ed.page.locator("#brushSize").scroll_into_view_if_needed()
     expect(ed.page.locator("#brushSize")).to_be_in_viewport()
     ed.tab("Werkzeug")
     expect(pane).to_be_hidden()
@@ -1766,11 +1769,17 @@ def test_tile_tool_paints_grid_cells_with_undo_size_and_file_roundtrip(open_edit
     ed.click_doc(32 * 37 + 5, 32 * 31 + 5)
     tiles = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')
     assert len(tiles['tiles']) == 7 and (37, 31) not in {(t['col'], t['row']) for t in tiles['tiles']}
-    # Changing the layer's tile size rescales the layer and is one undo step.
+    # FV05 refuses silent movement of occupied cells; a new empty layer is explicit and undoable.
+    steps = ed.summary()['historySteps']
     ed.page.locator('#tileSize').select_option('48')
-    assert next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')['grid'] == 48
+    assert next(l for l in ed.summary()['layers'] if l['id'] == tiles['id']) == tiles
+    assert ed.summary()['historySteps'] == steps
+    expect(ed.page.locator('#tileSize')).to_have_value('32')
+    ed.page.locator('#tileNewLayer').click()
+    new_layer = next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles' and l['id'] != tiles['id'])
+    assert new_layer['grid'] == 48 and not new_layer['tiles']
     ed.page.keyboard.press('Control+z')
-    assert next(l for l in ed.summary()['layers'] if l['kind'] == 'tiles')['grid'] == 32
+    assert [l for l in ed.summary()['layers'] if l['kind'] == 'tiles'] == [tiles]
     with ed.page.expect_download() as download:
         ed.menu('Als Datei speichern')
     project = tmp_path / 'tiles.rdmap.json'
