@@ -1,0 +1,37 @@
+{
+  "status": "targeted_checks_complete",
+  "distinct_cases_covered": 17,
+  "runs": [
+    {
+      "scope": "Six new behavior cases across overlapping runs",
+      "first_run": "4 passed,1 failed: color reload was attempted before actual autosave completed; test now waits for saved state",
+      "roundtrip_recheck": "1 passed in60.39s",
+      "captured_color_and_clipped_noop": "1 passed in24.17s"
+    },
+    {
+      "scope": "Eleven existing brush/pixels/Undo/size/opacity/pan/zoom/order/image/AltGr/node/static regressions",
+      "initial_result": "10 passed,1 failed in242.10s",
+      "failure": "Linux AltGraph modifier state without Ctrl/Alt flags reached the new digit-opacity branch. Actual source conflict fixed with explicit AltGraph guard."
+    },
+    {
+      "scope": "New opacity/wheel, native palette and existing AltGr after input corrections",
+      "result": "2 passed,1 failed in61.71s",
+      "failure": "Neutral close autofocus made native Tab leave the modal final button; explicit boundary cycling and reopen-safe focus restoration added."
+    },
+    {
+      "scope": "Final native Q/button/Tab/Esc palette, color choice and preserved node draft",
+      "result": "1 passed in32.61s"
+    }
+  ],
+  "final_assessment": "All17 distinct cases have passing results on their final affected source; unaffected earlier passes were not repeatedly rerun. No full-suite success claimed.",
+  "checks": [
+    "3842-source catalog freshness",
+    "Three changed JS modules parse",
+    "Proof Python scripts parse",
+    "git diff --check"
+  ],
+  "limits": [
+    "Production deployment, role-specific UI acceptance and cleanup still pending.",
+    "No physical keyboard/touch or real OAuth in automated checks."
+  ]
+}

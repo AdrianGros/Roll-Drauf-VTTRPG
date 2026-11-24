@@ -149,7 +149,7 @@
         </div>
 
         <section class="mm-pane" id="pane-tool" role="tabpanel" aria-labelledby="tab-tool">
-            <div class="mm-history-actions"><button id="undoVisible" type="button" class="mm-btn" disabled>Rückgängig</button><button id="redoVisible" type="button" class="mm-btn" disabled>Wiederholen</button></div>
+            <div class="mm-history-actions"><button id="undoVisible" type="button" class="mm-btn" disabled>Rückgängig</button><button id="redoVisible" type="button" class="mm-btn" disabled>Wiederholen</button><button id="quickPaletteOpen" type="button" class="mm-btn" aria-haspopup="dialog">Schnellpalette</button></div>
             <label class="mm-field mm-tool-layer" id="toolLayerField"><span id="toolLayerLabel">Ebene für dieses Werkzeug</span><select id="toolLayer"></select><small id="toolLayerHint">Alt+↑ / Alt+↓ wechselt die Ebene.</small></label>
             <div class="mm-group" data-options="brush eraser">
                 <p class="mm-target"><span data-ui-key="u_27ac40f67979">Malt auf:</span> <strong id="brushTarget">–</strong></p>
@@ -164,6 +164,9 @@
                 <div data-options="brush">
                     <label class="mm-check"><input id="brushColorEnabled" type="checkbox" aria-describedby="brushImageInfo"><span id="brushColorLabel" data-ui-key="u_dc1e43384526">Eigene Materialfarbe</span></label>
                     <label class="mm-field"><span id="brushColorValueLabel" data-ui-key="u_89b7957dae43">Farbe</span><input id="brushColor" type="color" value="#8ea566" aria-describedby="brushImageInfo"></label>
+                    <p id="recentColorsLabel" class="mm-h3">Zuletzt gemalte eigene Farben</p>
+                    <div id="recentColors" class="mm-recent-colors" role="group" aria-labelledby="recentColorsLabel"></div>
+                    <p id="recentColorsEmpty" class="mm-hint"></p>
                     <label class="mm-range"><span id="brushTextureLabel" data-ui-key="u_f10b70a508d5">Texturanteil</span><input id="brushTexture" type="range" min="0" max="100" value="100" aria-describedby="brushImageInfo"><output id="brushTextureOut">100 %</output></label>
                     <div id="brushCoastControls">
                         <p id="brushCoastTarget" class="mm-hint"></p>
@@ -179,6 +182,7 @@
                 <label class="mm-range"><span><span data-ui-key="u_ea1b9ed680db">Weichheit</span></span><input id="brushSoftness" type="range" min="0" max="100" step="1"><output id="brushSoftnessOut"></output></label>
                 <label class="mm-check" id="pressureRow" hidden><input id="brushPressure" type="checkbox" checked> <span data-ui-key="u_b0e515e0257a">Stiftdruck steuert Größe und Deckkraft</span></label>
                 <canvas id="brushPreview" class="mm-brush-preview" width="480" height="96" aria-hidden="true"></canvas>
+                <p id="brushShortcutHint" class="mm-hint"></p>
                 <p class="mm-hint" data-options="eraser"><span data-ui-key="u_585987ea3b75">Radieren auf „Land“ formt Küsten, Buchten und Seen.</span></p>
                 <p class="mm-hint"><span data-ui-key="u_5dadd1804c71">Tasten:</span> <kbd>[</kbd> <kbd>]</kbd> <span data-ui-key="u_3ec882f61145">Größe,</span> <kbd>{</kbd> <kbd>}</kbd> <span data-ui-key="u_cb230dfc1dec">Weichheit.</span></p>
             </div>
@@ -533,6 +537,7 @@
                 <dt><kbd>Alt</kbd>+<kbd>↑</kbd> <kbd>↓</kbd></dt><dd id="helpLayer">Ebene des Werkzeugs wechseln</dd>
                 <dt><kbd>Umschalt</kbd>+<span id="helpNodeKey">Ziehen</span></dt><dd id="helpNode">Wegpunkt des ausgewählten Wegs verschieben (Auswählen)</dd>
                 <dt><kbd>Enter</kbd> / <kbd>Rücktaste</kbd></dt><dd id="helpPathNodes">„Punkte setzen“: Weg abschließen / letzten Punkt entfernen</dd>
+                <dt><kbd>Q</kbd></dt><dd id="helpQuickPalette">Q halten: Schnellpalette; die Schaltfläche öffnet sie auch ohne Tastatur.</dd>
             </dl>
             <p id="helpBracketNote" class="mm-hint">Deutsche Tastatur: AltGr+8/9 für [ ], AltGr+7/0 für { }.</p>
         </div>
@@ -554,6 +559,13 @@
 </dialog>
 
 <input type="file" id="fileInput" accept=".json,application/json" hidden>
+    <dialog id="quickPalette" class="mm-quick-dialog" aria-labelledby="quickPaletteTitle" aria-describedby="quickPaletteHint">
+        <h2 id="quickPaletteTitle" class="sr-only"></h2>
+        <p id="quickPaletteHint" class="sr-only"></p>
+        <div id="quickTools"></div>
+        <div id="quickColors"></div>
+        <button id="quickPaletteClose" type="button" class="mm-quick-close" autofocus>×</button>
+    </dialog>
     <script src="../js/auth.js"></script>
     <script src="../js/vtt-main-nav.js"></script>
     <script src="../js/document-book-frame.js"></script>

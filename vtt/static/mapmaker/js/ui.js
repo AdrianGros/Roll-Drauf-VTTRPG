@@ -45,6 +45,8 @@ const ICONS = {
 };
 
 const OBJECT_ROWS_MAX = 250; // the object list stops here and asks for a narrower filter
+const RECENT_COLORS_KEY = "rd.mapmaker.recentColors.v1";
+const validColor = (value) => typeof value === "string" && /^#[0-9a-f]{6}$/i.test(value);
 const KIND_LABEL = { raster: globalThis.VTTUi("Malen"), paths: globalThis.VTTUi("Wege"), stamps: globalThis.VTTUi("Symbole"), labels: globalThis.VTTUi("Text"), tiles: globalThis.VTTUi("Kacheln") };
 
 /** Thumbnail without object URLs (CSP): catalog images by src, own and built-in images drawn to a canvas. */
@@ -137,6 +139,7 @@ export class UI {
         this.rasterContent = new WeakMap();
         this.objectsStale = true;
         this.objectLayerSig = "";
+        this.recentColors = this.loadRecentColors();
     }
 
     // ---- wiring ------------------------------------------------------------
@@ -255,6 +258,7 @@ export class UI {
         this.bindLayers();
         this.bindObjects();
         this.bindReviewControls();
+        this.bindQuickPalette();
         $("addPlaceBtn").addEventListener("click", () => {
             ed.setTool("label");
             this.openPane("tool");
@@ -458,21 +462,7 @@ export class UI {
             cctx.fillStyle = cctx.createPattern(materialTile(material.id), "repeat");
             cctx.fillRect(0, 0, 40, 40);
             button.append(chip, el("span", {}, material.name));
-            button.addEventListener("click", () => {
-                ed.brush.material = material.id;
-                ed.paintBrush.image = null;
-                if (ed.paintBrush.shape === 'image') ed.paintBrush.shape = 'round';
-                this.syncBrush();
-                this.syncMaterials();
-                this.drawBrushPreview();
-                const targetId = material.id === "land" ? "land"
-                    : material.id === "river" || material.id === "road" ? "rivers" : "terrain";
-                const target = ed.layerById(targetId);
-                if (target && target.kind === "raster" && target.visible && target.id !== ed.activeLayerId) {
-                    ed.setActiveLayer(target.id);
-                    this.toast(globalThis.VTTUi("Malt jetzt auf „{p0}“.",{p0:(target.name)}));
-                }
-            });
+            button.addEventListener("click", () => this.chooseBrushMaterial(material.id));
             container.appendChild(button);
         }
         this.brushSize = this.range("brushSize", "brushSizeOut", (v) => `${v} px`, (v) => { ed.brush.size = v; this.drawBrushPreview(); ed.requestFrame(); });
@@ -497,6 +487,159 @@ export class UI {
         });
         this.syncMaterials();
         this.drawBrushPreview();
+        $("recentColorsLabel").textContent = globalThis.VTTUi("Zuletzt gemalte eigene Farben");
+        $("recentColorsEmpty").textContent = globalThis.VTTUi("Mit einer eigenen Materialfarbe malen, um sie hier wiederzuwählen.");
+        $("brushShortcutHint").textContent = globalThis.VTTUi("Auf der Zeichenfläche: 1–0 Deckkraft, Umschalt+Mausrad Größe, Alt+Mausrad Materialpinsel. Q halten öffnet die Schnellpalette.");
+        this.renderRecentColors();
+    }
+
+    chooseBrushMaterial(id) {
+        if (!MATERIALS.some((material) => material.id === id)) return;
+        const ed = this.ed;
+        ed.brush.material = id;
+        ed.paintBrush.image = null;
+        if (ed.paintBrush.shape === "image") ed.paintBrush.shape = "round";
+        this.syncBrush();
+        this.drawBrushPreview();
+        const targetId = id === "land" ? "land" : id === "river" || id === "road" ? "rivers" : "terrain";
+        const target = ed.layerById(targetId);
+        if (target?.kind === "raster" && target.visible && target.id !== ed.activeLayerId) {
+            ed.setActiveLayer(target.id);
+            this.toast(globalThis.VTTUi("Malt jetzt auf „{p0}“.", {p0:target.name}));
+        }
+        ed.requestFrame();
+    }
+
+    cycleBrush(up) {
+        const index = MATERIALS.findIndex((material) => material.id === this.ed.paintBrush.material);
+        this.chooseBrushMaterial(MATERIALS[(Math.max(0,index) + (up ? 1 : MATERIALS.length - 1)) % MATERIALS.length].id);
+    }
+
+    setBrushOpacity(percent) {
+        this.ed.brush.opacity = clamp(percent,10,100) / 100;
+        this.brushOpacity.set(Math.round(this.ed.brush.opacity * 100));
+        this.drawBrushPreview();
+        this.ed.requestFrame();
+    }
+
+    loadRecentColors() {
+        try {
+            const raw = localStorage.getItem(RECENT_COLORS_KEY);
+            if (!raw || raw.length > 256) return [];
+            const values = JSON.parse(raw);
+            return Array.isArray(values) ? [...new Set(values.filter(validColor).map((color) => color.toLowerCase()))].slice(0,8) : [];
+        } catch (_error) { return []; }
+    }
+
+    rememberBrushColor(color) {
+        if (!validColor(color)) return;
+        color = color.toLowerCase();
+        this.recentColors = [color,...this.recentColors.filter((entry) => entry !== color)].slice(0,8);
+        try { localStorage.setItem(RECENT_COLORS_KEY,JSON.stringify(this.recentColors)); } catch (_error) { /* memory remains usable */ }
+        this.renderRecentColors();
+    }
+
+    chooseRecentColor(color) {
+        if (!validColor(color)) return;
+        this.ed.setTool("brush");
+        this.ed.paintBrush.color = color.toLowerCase();
+        this.ed.paintBrush.colorEnabled = true;
+        this.chooseBrushMaterial(this.ed.paintBrush.material);
+    }
+
+    colorButton(color) {
+        const name = globalThis.VTTUi("Materialpinsel mit Farbe {color}", {color});
+        const button = el("button", {type:"button",class:"mm-recent-color",title:name,"aria-label":name,dataset:{color}});
+        button.style.backgroundColor = color;
+        return button;
+    }
+
+    renderRecentColors() {
+        const list = $("recentColors");
+        list.replaceChildren();
+        $("recentColorsEmpty").hidden = this.recentColors.length > 0;
+        for (const color of this.recentColors) {
+            const button = this.colorButton(color);
+            button.addEventListener("click", () => this.chooseRecentColor(color));
+            list.appendChild(button);
+        }
+    }
+
+    bindQuickPalette() {
+        const dialog = $("quickPalette");
+        $("quickPaletteOpen").textContent = globalThis.VTTUi("Schnellpalette");
+        $("helpQuickPalette").textContent = globalThis.VTTUi("Q halten: Schnellpalette; die Schaltfläche öffnet sie auch ohne Tastatur.");
+        $("quickPaletteTitle").textContent = globalThis.VTTUi("Werkzeuge und letzte Farben");
+        $("quickPaletteHint").textContent = globalThis.VTTUi("Q loslassen wählt das berührte Feld. Über die Schaltfläche öffnen: mit Tab und Enter oder Antippen wählen. Esc schließt.");
+        $("quickPaletteClose").setAttribute("aria-label",globalThis.VTTUi("Palette schließen"));
+        $("quickPaletteOpen").addEventListener("click", () => this.showQuickPalette(false));
+        $("quickPaletteClose").addEventListener("click", () => dialog.close());
+        dialog.addEventListener("close", () => {
+            this.quickHeld = false;
+            this.quickChoice = null;
+            const target = this.quickTrigger?.isConnected && this.quickTrigger.getClientRects().length ? this.quickTrigger : this.ed.canvas;
+            requestAnimationFrame(() => { if (!dialog.open) target.focus({preventScroll:true}); });
+        });
+        dialog.addEventListener("keydown", (event) => {
+            if (event.key !== "Tab" || event.ctrlKey || event.metaKey || event.altKey) return;
+            const controls = Array.from(dialog.querySelectorAll("button:not([disabled])"));
+            const first = controls[0], last = controls[controls.length-1], active = document.activeElement;
+            if (!first) return;
+            if (!dialog.contains(active) || (!event.shiftKey && active === last) || (event.shiftKey && active === first)) {
+                event.preventDefault();
+                (event.shiftKey ? last : first).focus();
+            }
+        });
+        dialog.addEventListener("click", (event) => {
+            if (event.target !== dialog) return;
+            const rect = dialog.getBoundingClientRect();
+            if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+        });
+        document.addEventListener("keyup", (event) => {
+            if (event.key.toLowerCase() !== "q" || !this.quickHeld || !dialog.open) return;
+            const choice = this.quickChoice;
+            this.quickHeld = false;
+            if (choice?.isConnected) choice.click(); else dialog.close();
+        });
+        window.addEventListener("blur", () => { if (dialog.open) dialog.close(); });
+    }
+
+    showQuickPalette(held) {
+        if (this.ed.input?.busy() || document.querySelector("dialog[open]")) return;
+        const dialog = $("quickPalette"), size = Math.min(360,innerWidth-16,innerHeight-16);
+        this.quickHeld = !!held;
+        this.quickChoice = null;
+        this.quickTrigger = document.activeElement;
+        const rect = this.ed.canvas.getBoundingClientRect(), cursor = held && this.ed.cursor;
+        const x = cursor ? rect.left+this.ed.view.panX+cursor.x*this.ed.view.zoom : innerWidth/2;
+        const y = cursor ? rect.top+this.ed.view.panY+cursor.y*this.ed.view.zoom : innerHeight/2;
+        dialog.style.width = `${size}px`; dialog.style.height = `${size}px`;
+        dialog.style.left = `${clamp(x-size/2,8,innerWidth-size-8)}px`;
+        dialog.style.top = `${clamp(y-size/2,8,innerHeight-size-8)}px`;
+        dialog.dataset.compact = String(size < 304);
+        const tools = $("quickTools"), colors = $("quickColors");
+        tools.replaceChildren(); colors.replaceChildren();
+        const outer = size/2-30, inner = Math.max(60,outer-68);
+        const wire = (button,index,radius,action) => {
+            const angle = (index/8)*Math.PI*2-Math.PI/2;
+            button.style.left = `${size/2+Math.cos(angle)*radius}px`;
+            button.style.top = `${size/2+Math.sin(angle)*radius}px`;
+            button.addEventListener("mouseenter", () => { this.quickChoice = button; });
+            button.addEventListener("mouseleave", () => { if (this.quickChoice === button) this.quickChoice = null; });
+            button.addEventListener("click", () => { dialog.close(); action(); });
+        };
+        ["pan","brush","eraser","path","stamp","tile","label","select"].forEach((tool,index) => {
+            const source = document.querySelector(`.mm-tool[data-tool="${tool}"]`), name = source.textContent.trim();
+            const button = el("button", {type:"button",class:"mm-quick-tool",title:name,"aria-label":name,dataset:{tool}});
+            const icon = source.querySelector("svg");
+            if (icon) button.appendChild(icon.cloneNode(true)); else button.textContent = name;
+            wire(button,index,inner,() => this.ed.setTool(tool)); tools.appendChild(button);
+        });
+        this.recentColors.forEach((color,index) => {
+            const button = this.colorButton(color);
+            wire(button,index,outer,() => this.chooseRecentColor(color)); colors.appendChild(button);
+        });
+        dialog.showModal();
     }
 
     syncBrush() {

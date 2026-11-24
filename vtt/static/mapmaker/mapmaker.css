@@ -639,3 +639,21 @@ img.mm-pixel { image-rendering: pixelated; }
 .mm-object .mm-place-name { font-family: var(--font-body); font-size: 14px; font-weight: 600; }
 .mm-object-layer { font-size: 12px; color: var(--ink-soft); overflow-wrap: anywhere; }
 .mm-object:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* FV06: bounded local color history and native temporary tools/colors dialog. */
+.mm-history-actions { flex-wrap: wrap; }
+.mm-recent-colors { display: flex; flex-wrap: wrap; gap: 5px; }
+.mm-recent-color, .mm-quick-tool, .mm-quick-close { width: 44px; height: 44px; min-width: 44px; padding: 7px; border: 2px solid var(--ink-soft); border-radius: 50%; cursor: pointer; }
+.mm-recent-color:focus-visible, .mm-quick-tool:focus-visible, .mm-quick-close:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.mm-quick-dialog { position: fixed; inset: auto; margin: 0; padding: 0; max-width: none; max-height: none; border: 1px solid var(--ink-soft); border-radius: 50%; background: var(--paper); color: var(--ink); overflow: hidden; }
+.mm-quick-dialog::backdrop { background: rgba(0,0,0,.18); }
+.mm-quick-dialog .mm-recent-color, .mm-quick-tool { position: absolute; transform: translate(-50%,-50%); }
+.mm-quick-tool, .mm-quick-close { background: var(--paper); color: var(--ink); }
+.mm-quick-tool svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.mm-quick-tool:hover, .mm-quick-tool:focus-visible { background: var(--gold); }
+.mm-quick-close { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-size: 24px; line-height: 1; }
+.mm-quick-dialog[data-compact="true"] { height: auto !important; max-height: calc(100dvh - 16px); overflow: auto; border-radius: 10px; padding: 12px; }
+.mm-quick-dialog[data-compact="true"] #quickTools, .mm-quick-dialog[data-compact="true"] #quickColors { display: grid; grid-template-columns: repeat(auto-fit,44px); gap: 8px; justify-content: center; margin-bottom: 8px; }
+.mm-quick-dialog[data-compact="true"] button { position: static; transform: none; }
+.mm-quick-dialog[data-compact="true"] .mm-quick-close { display: block; margin: auto; }
+.mm-quick-dialog .mm-recent-color:hover { outline: 3px solid var(--gold); outline-offset: 2px; }

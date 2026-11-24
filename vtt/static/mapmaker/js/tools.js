@@ -147,6 +147,7 @@ export function attachInput(ed) {
         removeDraftNode,
         discardDraft: () => discardDraft(false),
         undoDraftNode: removeDraftNode,
+        busy: () => !!gesture || pointers.size > 0,
         // live, uncommitted document changes (autosave must not persist them)
         mutating: () => !!gesture && (gesture.type === "stroke" || gesture.type === "erase" || gesture.type === "scatter" || gesture.type === "tiles"
             || (gesture.type === "groupDrag" && gesture.moved) || (gesture.type === "drag" && gesture.moved) || (gesture.type === "pathNode" && gesture.moved)),
@@ -489,8 +490,28 @@ export function attachInput(ed) {
     });
 
     let wheelCarry = 0;
+    let brushWheelCarry = 0, brushWheelMode = "", brushWheelAt = 0, brushWheelSign = 0;
     canvas.addEventListener("wheel", (event) => {
         event.preventDefault();
+        const mode = !event.ctrlKey && !event.metaKey && event.shiftKey && !event.altKey && ["brush","eraser","stamp"].includes(ed.tool) ? "size"
+            : !event.ctrlKey && !event.metaKey && event.altKey && !event.shiftKey && ed.tool === "brush" ? "material" : "";
+        if (mode !== brushWheelMode) { brushWheelCarry = 0; brushWheelMode = mode; }
+        if (mode) {
+            wheelCarry = 0;
+            if (ed.input.busy()) return;
+            const delta = event.deltaY || event.deltaX;
+            const pixels = event.deltaMode === 1 ? delta*33 : event.deltaMode === 2 ? delta*400 : delta;
+            const now = performance.now(), sign = Math.sign(pixels);
+            if (now-brushWheelAt > 400 || sign !== brushWheelSign) brushWheelCarry = 0;
+            brushWheelAt = now; brushWheelSign = sign;
+            brushWheelCarry = Math.max(-300,Math.min(300,brushWheelCarry+pixels));
+            while (Math.abs(brushWheelCarry) >= 100) {
+                const up = brushWheelCarry < 0;
+                if (mode === "size") ed.ui.nudge("size",up); else ed.ui.cycleBrush(up);
+                brushWheelCarry -= Math.sign(brushWheelCarry)*100;
+            }
+            return;
+        }
         // Optional Alt+wheel reorders a selection in the select tool; every other
         // wheel (including Ctrl/pinch) keeps zooming as before.
         if (event.altKey && !event.ctrlKey && !event.metaKey && ed.tool === "select" && ed.selectionSet.count && !ed.selectionSet.tiles) {
@@ -533,6 +554,19 @@ export function attachInput(ed) {
             return;
         }
         if (typing) return;
+        if (!mod && !event.altKey && !event.shiftKey && !altGraph(event) && event.target === canvas && !ed.input.busy()) {
+            if (key === "q") {
+                event.preventDefault();
+                if (!event.repeat) ed.ui.showQuickPalette(true);
+                return;
+            }
+            const digit = /^Digit([0-9])$/.exec(event.code);
+            if (digit && ["brush","eraser"].includes(ed.tool)) {
+                event.preventDefault();
+                ed.ui.setBrushOpacity(Number(digit[1] || 0) === 0 ? 100 : Number(digit[1])*10);
+                return;
+            }
+        }
         if (mod && key === "z") {
             event.preventDefault();
             if (event.shiftKey) ed.redo();

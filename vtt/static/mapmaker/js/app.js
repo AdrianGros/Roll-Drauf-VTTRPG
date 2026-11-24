@@ -1449,6 +1449,7 @@ class Editor {
         // The clip reference is captured once at stroke start (frozen for this gesture).
         const clip = this.tool === "brush" ? this.clipReference() : null;
         this.engine.begin(layer, { ...this.brush, erase: this.tool === "eraser" }, clip);
+        this.strokeColor = this.tool === "brush" && this.paintBrush.colorEnabled && !(this.paintBrush.shape === "image" && this.paintBrush.image) ? this.paintBrush.color : null;
         this.engine.addPoint(point.x, point.y, pressure);
         this.strokeActive = true;
         this.requestFrame();
@@ -1476,6 +1477,8 @@ class Editor {
         const before = this.engine.active.total;
         const pending = this.engine.active.pending;
         const result = this.engine.end();
+        const usedColor = this.strokeColor;
+        this.strokeColor = null;
         this.strokeActive = false;
         const touched = rectUnion(before, pending);
         if (touched) this.invalidate(pad(touched, coastPad));
@@ -1492,9 +1495,15 @@ class Editor {
             undo: () => put(imgBefore),
             redo: () => put(imgAfter),
         }, [layer]);
+        if (usedColor) {
+            for (let index=0; index<imgBefore.data.length; index++) {
+                if (imgBefore.data[index] !== imgAfter.data[index]) { this.ui.rememberBrushColor(usedColor); break; }
+            }
+        }
     }
 
     cancelStroke() {
+        this.strokeColor = null;
         if (!this.strokeActive) return;
         const layer = this.engine.active.layer;
         const rect = this.engine.cancel();
