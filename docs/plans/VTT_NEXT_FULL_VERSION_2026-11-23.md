@@ -56,7 +56,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV12 | Land fill and coastline tools | P2 | Planned |
 | FV13 | World campaign and map place relationships | P2 | Plan and inputs needed |
 | FV14 | Campaign homebrew approvals | P2 | Planned |
-| FV15 | Campaign quota extension request | P2 | Reviewed/tested; integration and live delivery pending |
+| FV15 | Campaign quota extension request | P2 | Integrated/tested; live delivery pending |
 | FV16 | Content provenance and publication policy | P2 | Plan and inputs needed |
 | FV17 | Identify the deferred zero percent control | P2 | Closed by owner scope decision |
 | FV18 | Integrated verification and full version release | release gate | In progress; five obsolete map assertions reconciled |

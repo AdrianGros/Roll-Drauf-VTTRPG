@@ -1,0 +1,67 @@
+{
+  "status": "targeted_pass_pending_delivery",
+  "distinct_passing_cases": 114,
+  "runs": [
+    {
+      "scope": "SQLite API",
+      "initial": "81 passed,5 failed,3 deselected in117.28s; conflict HTTP-status argument collision",
+      "affected_recheck": "5 passed in13.19s after correction",
+      "logs": [
+        "/tmp/fv15-quota-api-20261124.log",
+        "/tmp/fv15-quota-conflicts-recheck-20261124.log"
+      ]
+    },
+    {
+      "scope": "Quota browser",
+      "initial": "8 passed,2 failed in616.01s",
+      "corrections": "Stale response helper fixed; profile-entry8s DOM detach occurred before quota route, exact unchanged retry passed. Scoped hidden-state CSS corrected before this run.",
+      "affected_rechecks": [
+        "1 passed in71.34s",
+        "1 passed in56.94s"
+      ],
+      "logs": [
+        "/tmp/fv15-quota-browser-20261124.log",
+        "/tmp/fv15-quota-stale-browser-recheck-20261124.log",
+        "/tmp/fv15-quota-panel-failure-recheck-20261124.log"
+      ]
+    },
+    {
+      "scope": "Isolated PostgreSQL concurrency",
+      "initial": "Three setup errors from existing unnamed moderation FK cycle; no concurrency verdict from that run",
+      "final": "4 passed,86 deselected in114.28s after guarded disposable-schema fixture reset",
+      "coverage": [
+        "one pending under8 concurrent submissions",
+        "one quota/audit change under6 concurrent approvals",
+        "cancel-vs-approve terminal consistency",
+        "5-per-day cap under concurrent submit/cancel churn"
+      ],
+      "test_database": "isolated port55495; container and private test credentials removed",
+      "logs": [
+        "/tmp/fv15-quota-pg-20261124.log",
+        "/tmp/fv15-quota-pg-recheck-20261124.log"
+      ]
+    },
+    {
+      "scope": "Existing profile API/browser",
+      "result": "14 passed in157.34s",
+      "log": "/tmp/fv15-existing-profile-regressions-20261124.log"
+    },
+    {
+      "scope": "Coordinator integration with preserved newer species/catalog",
+      "result": "4 overlapping owner/player/species browser cases passed in209.14s",
+      "log": "/tmp/fv15-integrated-browser-20261124.log"
+    }
+  ],
+  "checks": [
+    "3899-source DE/EN catalog built; newer FV01 message preserved",
+    "847 identity/147 term creator overlay unchanged and fresh",
+    "Quota backend/shared integration paths exactly match reviewed worker commit",
+    "Changed JS and proof Python parse",
+    "git diff --check"
+  ],
+  "limits": [
+    "No full repository suite, physical device or real OAuth claim",
+    "Production delivery/live synthetic journeys and cleanup pending",
+    "Existing quota default/enforcement/count and startup/nav/autosave timing findings retained in FV18"
+  ]
+}

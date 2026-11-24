@@ -441,7 +441,7 @@
       "id": "FV15",
       "title": "Campaign quota extension request",
       "priority": "P2",
-      "status": "reviewed_tested_pending_integration",
+      "status": "integrated_pending_delivery",
       "source_refs": [
         "2026-11-13:S15",
         "B10"
@@ -467,7 +467,8 @@
         "verification": "Worker ran no tests/catalog/git/schema/live actions. Proposed SQLite/browser/PostgreSQL tests require Codex execution; exact own-profile assertion needs additive user_id expectation. SQLite ignores row locks; rolling-rate serialization must be verified on isolated PostgreSQL."
       },
       "implementation_handoff": "docs/DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md",
-      "root_verification": "114 distinct cases have passing results on final affected source across overlapping worker-worktree runs (86 API,10 quota browser,4 isolated PG concurrency,14 existing profile). Corrections/timing failures recorded in docs/proofs/fv15-claude-handoff-2026-11-24/assignment.json. Integration/catalog regeneration and live delivery remain pending."
+      "root_verification": "114 distinct cases have passing results on final affected source across overlapping worker-worktree runs (86 API,10 quota browser,4 isolated PG concurrency,14 existing profile). Corrections/timing failures recorded in docs/proofs/fv15-claude-handoff-2026-11-24/assignment.json. Integration/catalog regeneration and live delivery remain pending. Coordinator integration/catalog preservation also passes4 overlapping browser cases in209.14s.",
+      "root_monitor": "docs/DADM_DEPLOY_MONITOR_FV15_CAMPAIGN_QUOTA_2026-11-24.md"
     },
     {
       "id": "FV16",
@@ -565,7 +566,8 @@
       "remaining_observations": [
         "One creator DE-site/EN-rules home-startup test exceeded the5-second assertion and passed unchanged on retry; retain timing/stability follow-up before full release.",
         "Firefox390 live creator rapid mutations were followed by a source click with no modal and a card click with no selection. Settled native label acceptance passes; investigate autosave/full-render interaction timing before full release; cause/fix not claimed.",
-        "Quota browser profile-entry click detached during initial dashboard/nav composition and exceeded8s; exact unchanged retry passed. Preserve startup/nav timing follow-up rather than calling this an app fix."
+        "Quota browser profile-entry click detached during initial dashboard/nav composition and exceeded8s; exact unchanged retry passed. Preserve startup/nav timing follow-up rather than calling this an app fix.",
+        "FV15 review retained existing inconsistencies: new headmaster NULL quota, campaign creation routes lacking quota enforcement, and differing active-vs-profile count filters. Triage before full release; request/review feature does not silently alter these contracts."
       ]
     }
   ],
@@ -1125,7 +1127,7 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "FV01 species-label slice delivered/cleaned. Integrate, rebuild catalog and deliver reviewed/tested Claude FV15 with additive schema, ordinary synthetic profile/request/review journeys and cleanup. Continue retained packets and FV18 timing findings; unavailable rules additions remain owner-deferred.",
+  "next_step": "FV15 integrated and targeted-tested with creator/catalog preserved; commit/push release, archive DB, apply/inspect only new campaign_quota_requests table, app-only deploy, ordinary four-role synthetic profile/request/review acceptance and scoped cleanup. Then continue all retained technical packets/FV18 findings.",
   "current_delivery": {
     "source": "e7e8f20d9ff4714e7d0e098d75e1afad3a2977e6",
     "image": "sha256:b9d690f7967903d4e9061fb6de7bd1378f22f66e6188dfc087db54a8021c4748",
