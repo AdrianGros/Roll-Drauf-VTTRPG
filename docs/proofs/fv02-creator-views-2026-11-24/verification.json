@@ -1,0 +1,25 @@
+{
+  "status": "matrix_pending",
+  "existing_state_cases_passed": 4,
+  "runs": [
+    {
+      "scope": "Pending input and final confirmation",
+      "passed": 2,
+      "history": "Final-source four-case run had2 passes and2 obsolete caption failures; both caption cases then rechecked successfully."
+    },
+    {
+      "scope": "Quick/mobile and home/import-file/dirty draft after caption updates",
+      "passed": 2,
+      "duration_seconds": 47.7
+    }
+  ],
+  "matrix": "Six existing DE/EN/auto cases running",
+  "static": [
+    "3833 catalog sources fresh",
+    "All creator template data-ui-key markers exist",
+    "Changed JS syntax",
+    "Proof Python AST",
+    "git diff --check"
+  ],
+  "limits": "No full repository suite claim; live delivery pending."
+}

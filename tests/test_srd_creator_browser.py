@@ -260,7 +260,7 @@ def test_quick_mode_and_mobile_layout(wiz):
     _saved(page)
     assert page.evaluate("document.documentElement.scrollWidth") <= 391
     _proof(page, "creator-quick")
-    page.get_by_role("button", name="Geführt", exact=True).click()
+    page.locator("#scModeGuided").click()
     expect(page.locator(".sc-section")).to_have_count(1)
     assert page.evaluate("document.documentElement.scrollWidth") <= 391
 

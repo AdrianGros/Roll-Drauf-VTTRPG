@@ -16,7 +16,7 @@ def test_creator_authored_labels_use_rules_locale(wiz, ui, content, resolved):
     page.add_init_script("localStorage.setItem('vtt.display.v1'," + json.dumps(json.dumps({
         'language':ui,'contentLanguage':content,'unit':'ft'})) + ")")
     page.goto(origin+'/srd-creator')
-    expect(page.locator('#scNewGuided')).to_have_text('Guided, step by step' if resolved=='en' else 'Geführt, Schritt für Schritt')
+    expect(page.locator('#scNewGuided')).to_have_text('Start with guided steps' if resolved=='en' else 'Mit einzelnen Schritten starten')
     expect(page.locator('h1')).to_have_text('Create character' if resolved=='en' else 'Charakter erstellen')
     expect(page.locator('html')).to_have_attribute('lang',ui)
     expect(page.locator('#scMain')).to_have_attribute('lang',resolved)
@@ -48,7 +48,7 @@ def test_live_locale_switch_preserves_home_file_and_dirty_draft(wiz):
     page.locator('#scImportFile').set_input_files({'name':'user.json','mimeType':'application/json','buffer':b'{"name":"Charaktere"}'})
     page.locator('#scImportGo').focus()
     page.evaluate("VTTDisplay.update({contentLanguage:'en'})")
-    expect(page.locator('#scNewGuided')).to_have_text('Guided, step by step')
+    expect(page.locator('#scNewGuided')).to_have_text('Start with guided steps')
     assert page.locator('#scImportFile').evaluate('(n)=>n.files[0].name')=='user.json'
     expect(page.locator('#scImportGo')).to_be_focused()
     page.locator('#scNewGuided').click()
@@ -76,10 +76,10 @@ def test_live_locale_switch_preserves_home_file_and_dirty_draft(wiz):
     }""")
     page.evaluate("VTTDisplay.update({contentLanguage:'en'})")
     expect(page.locator('#scH-beschreibung')).to_have_text('Description')
-    expect(page.locator('#scModeQuick')).to_have_text('All at once')
+    expect(page.locator('#scModeQuick')).to_have_text('Full form')
     # Global translation can be called repeatedly without overriding module markers.
     page.evaluate('VTTI18n.translate()')
-    expect(page.locator('#scModeGuided')).to_have_text('Guided')
+    expect(page.locator('#scModeGuided')).to_have_text('Guided steps')
     page.evaluate('SrdCreator.app.dirty=false')
 
 

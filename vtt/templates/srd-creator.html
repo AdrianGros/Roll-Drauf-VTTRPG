@@ -44,12 +44,15 @@
                     <button type="button" id="scBackHome" class="sc-btn sc-btn-quiet"><span data-ui-key="u_6bbc8669f6f9">Alle Entwürfe</span></button>
                     <span id="scSave" class="sc-save" role="status" aria-live="polite"></span>
                 </div>
-                <div class="sc-mode" role="group" aria-label="Erstellungsweg" data-ui-aria-label="u_ba3a385e4658">
-                    <button type="button" id="scModeGuided" class="sc-btn sc-btn-toggle"><span data-ui-key="u_95d4cfead8f1">Geführt</span></button>
-                    <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle"><span data-ui-key="u_8ad66543e17b">Alles auf einmal</span></button>
-                    <p class="review-mode-help" data-ui-key="u_9108f681f17c">Geführt: Schritt für Schritt. Alles auf einmal: alle Abschnitte auf einer Seite.</p>
+                <div class="sc-view-choice">
+                    <p id="scViewLabel" class="sc-view-label"><span data-ui-key="u_228b1625d9da">Ansicht wechseln</span></p>
+                    <div class="sc-mode" role="group" aria-labelledby="scViewLabel" aria-describedby="scModeHint">
+                        <button type="button" id="scModeGuided" class="sc-btn sc-btn-toggle"><span data-ui-key="u_0b5782fb68a8">Einzelne Schritte</span></button>
+                        <button type="button" id="scModeQuick" class="sc-btn sc-btn-toggle"><span data-ui-key="u_8a5a93f70e85">Vollständiges Formular</span></button>
+                    </div>
                 </div>
             </div>
+            <p id="scModeHint" class="sc-muted sc-view-hint"><span data-ui-key="u_367e76a30094">Die Schrittansicht zeigt einen Abschnitt nach dem anderen. Das vollständige Formular zeigt alle Abschnitte. Beide Ansichten verwenden denselben Entwurf.</span></p>
             <div id="scConflict" class="sc-banner sc-banner-warn" role="alert" hidden></div>
             <div class="sc-layout">
                 <div class="sc-content">

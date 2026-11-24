@@ -27,9 +27,18 @@
 .sc-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem; margin-bottom: 0.8rem; }
 .sc-toolbar-left { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
 .sc-toolbar .sc-save { color: var(--sc-muted); font-size: 0.9rem; }
+.sc-view-choice { min-width: 0; max-width: 100%; }
+.sc-main .sc-view-label { margin-bottom: 0.35rem; font-weight: 600; }
+.sc-main .sc-view-hint { margin-bottom: 0.9rem; max-width: 64rem; }
 .sc-mode { display: flex; }
+.sc-mode .sc-btn { min-width: 0; white-space: normal; overflow-wrap: anywhere; flex: 1; }
 .sc-mode .sc-btn:first-child { border-radius: 4px 0 0 4px; }
 .sc-mode .sc-btn:last-child { border-radius: 0 4px 4px 0; border-left: 0; }
+
+@media (max-width: 600px) {
+    .sc-view-choice { flex-basis: 100%; }
+    .sc-mode { width: 100%; }
+}
 
 .sc-banner { padding: 0.7rem 1rem; border-radius: 4px; margin-bottom: 0.8rem; background: #fff3d6; color: #5a3b00; border: 1px solid #b68a3a; }
 
