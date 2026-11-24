@@ -349,6 +349,168 @@
       "documentId": "character-creation.overview",
       "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-11",
       "quote": "Chaotic Evil"
+    },
+    "coins:EM": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.coins.table-1",
+      "name": "Electrum Piece",
+      "quote": "Electrum Piece",
+      "abbreviation": {
+        "documentId": "equipment.coins-and-weapons",
+        "ruleId": "equipment.coins-and-weapons.coins.table-1",
+        "value": "EP",
+        "quote": "EP"
+      }
+    },
+    "coins:GM": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.coins.table-1",
+      "name": "Gold Piece",
+      "quote": "Gold Piece",
+      "abbreviation": {
+        "documentId": "equipment.coins-and-weapons",
+        "ruleId": "equipment.coins-and-weapons.coins.table-1",
+        "value": "GP",
+        "quote": "GP"
+      }
+    },
+    "coins:KM": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.coins.table-1",
+      "name": "Copper Piece",
+      "quote": "Copper Piece",
+      "abbreviation": {
+        "documentId": "equipment.coins-and-weapons",
+        "ruleId": "equipment.coins-and-weapons.coins.table-1",
+        "value": "CP",
+        "quote": "CP"
+      }
+    },
+    "coins:PM": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.coins.table-1",
+      "name": "Platinum Piece",
+      "quote": "Platinum Piece",
+      "abbreviation": {
+        "documentId": "equipment.coins-and-weapons",
+        "ruleId": "equipment.coins-and-weapons.coins.table-1",
+        "value": "PP",
+        "quote": "PP"
+      }
+    },
+    "coins:SM": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.coins.table-1",
+      "name": "Silver Piece",
+      "quote": "Silver Piece",
+      "abbreviation": {
+        "documentId": "equipment.coins-and-weapons",
+        "ruleId": "equipment.coins-and-weapons.coins.table-1",
+        "value": "SP",
+        "quote": "SP"
+      }
+    },
+    "weaponMasteries:Auslaugen": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.mastery-properties.sap",
+      "name": "Sap",
+      "quote": "Sap"
+    },
+    "weaponMasteries:Einkerben": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.mastery-properties.nick",
+      "name": "Nick",
+      "quote": "Nick"
+    },
+    "weaponMasteries:Plagen": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.mastery-properties.vex",
+      "name": "Vex",
+      "quote": "Vex"
+    },
+    "weaponMasteries:Spalten": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.mastery-properties.cleave",
+      "name": "Cleave",
+      "quote": "Cleave"
+    },
+    "weaponMasteries:Stoßen": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.mastery-properties.push",
+      "name": "Push",
+      "quote": "Push"
+    },
+    "weaponMasteries:Streifen": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.mastery-properties.graze",
+      "name": "Graze",
+      "quote": "Graze"
+    },
+    "weaponMasteries:Umstoßen": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.mastery-properties.topple",
+      "name": "Topple",
+      "quote": "Topple"
+    },
+    "weaponMasteries:Verlangsamen": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.mastery-properties.slow",
+      "name": "Slow",
+      "quote": "Slow"
+    },
+    "weaponProperties:Finesse": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.finesse",
+      "name": "Finesse",
+      "quote": "Finesse"
+    },
+    "weaponProperties:Geschosse": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.ammunition",
+      "name": "Ammunition",
+      "quote": "Ammunition"
+    },
+    "weaponProperties:Laden": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.loading",
+      "name": "Loading",
+      "quote": "Loading"
+    },
+    "weaponProperties:Leicht": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.light",
+      "name": "Light",
+      "quote": "Light"
+    },
+    "weaponProperties:Schwer": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.heavy",
+      "name": "Heavy",
+      "quote": "Heavy"
+    },
+    "weaponProperties:Vielseitig": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.versatile",
+      "name": "Versatile",
+      "quote": "Versatile"
+    },
+    "weaponProperties:Weitreichend": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.reach",
+      "name": "Reach",
+      "quote": "Reach"
+    },
+    "weaponProperties:Wurfwaffe": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.thrown",
+      "name": "Thrown",
+      "quote": "Thrown"
+    },
+    "weaponProperties:Zweihändig": {
+      "documentId": "equipment.coins-and-weapons",
+      "ruleId": "equipment.coins-and-weapons.properties.two-handed",
+      "name": "Two-Handed",
+      "quote": "Two-Handed"
     }
   }
 }

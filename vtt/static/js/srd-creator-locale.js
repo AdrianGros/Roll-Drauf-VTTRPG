@@ -45,6 +45,9 @@
     SC.abilityAbbr=id=>overlay()?.terms['abilities:'+id]?.abbreviation ?? SC.L.abilities[id]?.abbreviation ?? id;
     SC.languageName=id=>term('languages',id,SC.L.langs[id]?.name);
     SC.alignmentName=id=>term('alignments',id,app.data.alignments.find(entry=>entry.id===id)?.name);
+    SC.weaponMasteryName=name=>term('weaponMasteries',name,name);
+    SC.weaponPropertyName=name=>term('weaponProperties',name,name);
+    SC.coinAbbr=key=>overlay()?.terms['coins:'+key]?.abbreviation ?? key;
     SC.className=key=>SC.ruleName(SC.L.classes[key],key);
     SC.subclassName=id=>SC.ruleName(id,String(id).split('subclass-').pop().replace(/-/g,' '));
     SC.spellName=id=>SC.ruleName(id,app.data.spells[id]?.name);

@@ -151,16 +151,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     // ================================================================ KLASSE
     function labelList(items) { return items.filter(Boolean).join(', '); }
     function classPreview(c) {
-        const weapons = c.weaponProficiencies.map((g) => (g.category === 'martial' ? 'Kriegswaffen' : 'Einfache Waffen') + (g.requiresProperty ? ` (mit ${g.requiresProperty.join('/')})` : ''));
+        const weapons = c.weaponProficiencies.map((g) => ui(g.category === 'martial' ? 'Kriegswaffen' : 'Einfache Waffen') + (g.requiresProperty ? ui(' (mit {properties})',{properties:g.requiresProperty.map(SC.weaponPropertyName).join('/')}) : ''));
         return h('div', { class: 'sc-detail' },
             h('h3', { text: SC.ruleName(c) }),
             h('dl', {class:'sc-class-facts'},
-                h('dt', { text: ui("Trefferwürfel") }), h('dd', { text: `W${c.hitDie}` }),
-                h('dt', { text: ui("Hauptattribut") }), h('dd', { text: c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und ') }),
+                h('dt', { text: ui("Trefferwürfel") }), h('dd', { text: ui('W{p0}',{p0:c.hitDie}) }),
+                h('dt', { text: ui("Hauptattribut") }), h('dd', { text: c.primaryAbilities.abilities.map(SC.abilityName).join(ui(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und ')) }),
                 h('dt', { text: ui("Rettungswürfe") }), h('dd', { text: c.savingThrows.map(SC.abilityName).join(', ') }),
                 h('dt', { text: ui("Rüstungen") }), h('dd', { text: labelList(c.armorProficiencies.map((a) => ARMOR_LABELS[a] || a)) || ui("Keine") }),
                 h('dt', { text: ui("Waffen") }), h('dd', { text: labelList(weapons) }),
-                h('dt', { text: ui("Fertigkeiten") }), h('dd', { text: ui("{p0} aus: {p1}",{p0:(c.skillChoices.count),p1:(c.skillChoices.options ? c.skillChoices.options.map(SC.skillName).join(', ') : 'allen Fertigkeiten')}) }),
+                h('dt', { text: ui("Fertigkeiten") }), h('dd', { text: ui("{p0} aus: {p1}",{p0:(c.skillChoices.count),p1:(c.skillChoices.options ? c.skillChoices.options.map(SC.skillName).join(', ') : ui('allen Fertigkeiten'))}) }),
                 h('dt', { text: ui("Zauberwirken") }), h('dd', { text: c.spellcasting ? ui("Ja ({p0})",{p0:(SC.abilityName(c.spellcasting.ability))}) : ui("Nein") }),
                 h('dt', { text: ui("Merkmale Stufe 1") }), h('dd', null, h('ul', null, c.levels[0].features.map(f => h('li', {text:SC.ruleLabel(f)}))))),
             SC.detailButton(c.id, ui("Klassentext lesen"), SC.ruleName(c)));
@@ -524,7 +524,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const picks = Array.isArray(value) ? value : [];
         let options = [];
         if (choice.kind === 'weapon-mastery') {
-            options = app.data.equipment.weapons.filter((w) => weaponAllowed(c, w) && (!/-melee$/.test(choice.weapons || '') || w.kind === 'melee')).map((w) => ({ id: w.id, name: w.name, sub: w.mastery }));
+            options = app.data.equipment.weapons.filter((w) => weaponAllowed(c, w) && (!/-melee$/.test(choice.weapons || '') || w.kind === 'melee')).map((w) => ({ id: w.id, name: w.name, sub: SC.weaponMasteryName(w.mastery) }));
         } else if (choice.kind === 'class-option') {
             options = app.data.classOptions.filter((o) => o.classKey === key && o.kind === choice.optionKind && (o.minClassLevel || 1) <= classLevel)
                 .map((o) => {
@@ -660,8 +660,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     // ================================================================ AUSRÜSTUNG
     function packageContents(items) {
         return h('ul', null, items.map((i) => {
-            if (i.kind === 'coins') return h('li', { text: `${i.amount} ${i.coin}` });
-            if (i.kind === 'choice') return h('li', { text: `${i.quantity}× ${i.category === 'holy-symbol' ? 'Heiliges Symbol (nach Wahl)' : i.category}` });
+            if (i.kind === 'coins') return h('li', { text: `${i.amount} ${SC.coinAbbr(i.coin)}` });
+            if (i.kind === 'choice') return h('li', { text: `${i.quantity}× ${i.category === 'holy-symbol' ? ui('Heiliges Symbol (nach Wahl)') : i.category}` });
             return h('li', { text: `${i.quantity}× ${SC.itemName(i.itemId)}${i.variant ? ` (${i.variant})` : ''}` });
         }));
     }
@@ -676,7 +676,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         });
         return h('div', null, h('h4', { text: title }),
             h('div', { class: 'sc-grid' }, Object.keys(source).sort().map((p) => h('div', null,
-                card(ui("Paket {p0}",{p0:(p)}), (source[p] || []).every((item) => item.kind === 'coins') ? 'Nur Gold' : 'Ausrüstung', cur === p, () => set(p)), packageContents(source[p] || [])))));
+                card(ui("Paket {p0}",{p0:(p)}), ui((source[p] || []).every((item) => item.kind === 'coins') ? 'Nur Gold' : 'Ausrüstung'), cur === p, () => set(p)), packageContents(source[p] || [])))));
     }
 
     function startingItems(state) {
@@ -689,7 +689,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const contents = app.data.equipment.packs[item.itemId]?.contents || [item];
                 for (const entry of contents) if (entry.kind === 'item') {
                     const sources = owned.get(entry.itemId) || [];
-                    sources.push(`${label}: ${SC.ruleName(source)} · Paket ${state.equipment[key]}`);
+                    sources.push(ui('{source}: {name} · Paket {package}',{source:ui(label),name:SC.ruleName(source),package:state.equipment[key]}));
                     owned.set(entry.itemId, sources);
                 }
             }
@@ -703,8 +703,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const first = firstClass();
         const bg = st().background && SC.L.backgrounds[st().background.id];
         wrap.append(panel(h('h3', { text: ui("Ausgangsausrüstung") }),
-            first ? packageChooser(`Klasse: ${SC.className(first)}`, cls(first).startingEquipment, 'classPackage') : h('p', { class: 'sc-muted', text: ui("Wähle zuerst eine Klasse.") }),
-            bg ? packageChooser(`Hintergrund: ${bg.name}`, bg.startingEquipment, 'backgroundPackage') : null,
+            first ? packageChooser(ui('Klasse: {name}',{name:SC.className(first)}), cls(first).startingEquipment, 'classPackage') : h('p', { class: 'sc-muted', text: ui("Wähle zuerst eine Klasse.") }),
+            bg ? packageChooser(ui('Hintergrund: {name}',{name:SC.ruleName(bg)}), bg.startingEquipment, 'backgroundPackage') : null,
             h('p', { class: 'sc-muted', text: ui("Hinweis: Das Inventar wird erst mit dem Charakterbogen aufgebaut; hier hältst du die Wahl der Pakete fest.") })));
         const equip = st().equipment || {};
         const owned = startingItems(st());
@@ -718,9 +718,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         wrap.append(panel(h('h3', { text: ui("Anlegen aus deinen Startpaketen") }),
             h('p', { class: 'sc-muted', text: ui("Hier legst du vorhandene Ausrüstung an; du erhältst keine zusätzliche Rüstung. Weitere Gegenstände kannst du später im Inventar mit deiner Spielleitung verwalten.") }),
             h('div', { class: 'sc-fields' },
-                field(ui("Getragene Rüstung"), select('scArmor', armors.map((a) => [a.id, `${a.name} (RK ${a.base}${a.dex === 'none' ? '' : a.dex === 'capped' ? ` + GES max. ${a.dexCap}` : ' + GES'}) · ${owned.get(a.id).join('; ')}${classTrained(a.category) ? '' : ' – ungeübt'}`]), equip.armor, (v) => set('armor', v), 'Keine Rüstung'), 'scArmor')),
+                field(ui("Getragene Rüstung"), select('scArmor', armors.map((a) => [a.id, ui('{name} (RK {base}{dex}) · {source}{training}',{name:SC.ruleName(a),base:a.base,dex:a.dex === 'none' ? '' : a.dex === 'capped' ? ui(' + GES max. {cap}',{cap:a.dexCap}) : ui(' + GES'),source:owned.get(a.id).join('; '),training:classTrained(a.category) ? '' : ui(' – ungeübt')})]), equip.armor, (v) => set('armor', v), 'Keine Rüstung'), 'scArmor')),
             !armors.length ? h('p', { class: 'sc-muted', text: ui("Deine gewählten Startpakete enthalten keine Rüstung.") }) : null,
-            checkRow('Schild führen (+2 RK)', !!equip.shield, !ownsShield, (checked) => set('shield', checked), !ownsShield ? 'In den gewählten Startpaketen ist kein Schild enthalten.' : classTrained('shield') ? 'Schild aus deinen Startpaketen.' : 'Du bist mit Schilden nicht vertraut.'),
+            checkRow(ui('Schild führen (+2 RK)'), !!equip.shield, !ownsShield, (checked) => set('shield', checked), ui(!ownsShield ? 'In den gewählten Startpaketen ist kein Schild enthalten.' : classTrained('shield') ? 'Schild aus deinen Startpaketen.' : 'Du bist mit Schilden nicht vertraut.')),
             ev() ? h('p', null, h('strong', { text: ui("Rüstungsklasse {p0}",{p0:(ev().armorClass.value)}) }), h('span', { class: 'sc-muted', text: ` · ${ev().armorClass.formula}` })) : null));
         const level = (ev() && ev().level) || 1;
         if (level > 1) {

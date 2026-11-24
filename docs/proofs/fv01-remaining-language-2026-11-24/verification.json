@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "bounded_total": 15,
+  "runs": [
+    {
+      "command": "/tmp/vtt-feedback-py -m pytest -q tests/test_creator_equipment_browser.py tests/test_creator_display.py",
+      "passed": 5,
+      "duration_seconds": 70.06
+    },
+    {
+      "command": "/tmp/vtt-feedback-py -m pytest -q tests/test_creator_content_browser.py::test_spell_sort_switch_keeps_checked_ids_data_and_draft tests/test_creator_rules_locale_browser.py",
+      "passed": 10,
+      "duration_seconds": 201.38
+    }
+  ],
+  "initial_attempt": "A setup run was interrupted to correct the step-body selector. First completed run had 3 API/builder passes and 2 test-script failures: expected Pack vs existing Package, and navigation-save version/state-key ordering misclassified as locale mutation. Tests corrected; no application fix for those test assumptions.",
+  "checks": [
+    "Source display freshness:847 names/74 terms/64 pinned files",
+    "UI catalog freshness:3796 sources",
+    "Two changed JS syntax checks",
+    "Proof Python AST parse",
+    "git diff --check"
+  ],
+  "limits": "No full repository suite or real OAuth/physical-keyboard acceptance in these targeted tests. Existing SQLAlchemy/deprecation warnings remain."
+}

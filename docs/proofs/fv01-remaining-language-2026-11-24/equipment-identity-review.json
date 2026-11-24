@@ -1,0 +1,22 @@
+{
+  "status": "approved_identity_pairs",
+  "reviewer": "Codex integration",
+  "pairsReviewed": 184,
+  "canonicalSetExact": true,
+  "bijective": true,
+  "basis": "All paired semantic names read; source rows checked for ambiguous parser labels/ammunition; parseable source costs corroborated against canonical copper values, without using costs as identity proof. No full mechanical equivalence asserted.",
+  "counts": {
+    "armor": 13,
+    "weapon": 38,
+    "tool": 25,
+    "gear": 108
+  },
+  "sourceNameExceptions": {
+    "Schwere Armbrust": "Heavy Crossbow",
+    "Schlitten": "Sled",
+    "Stallmiete (pro Tag)": "Stabling per day",
+    "Wagen": "Wagon"
+  },
+  "mechanics": "Canonical German model unchanged; English parsed weights/costs not imported.",
+  "apply": "docs/DADM_APPLY_FV01_CREATOR_EQUIPMENT_2026-11-24.md"
+}

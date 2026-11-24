@@ -12,7 +12,8 @@ CONTENT = ROOT / 'vtt/rules_content'
 PIN_DIR = ROOT / 'tools/creator_locale'
 OUTPUT = CONTENT / 'srd-5.2.1-en/generated/creator-display.json'
 CORE = {'class': 12, 'subclass': 12, 'class-feature': 232, 'class-option': 38,
-        'species': 9, 'background': 4, 'feat': 17, 'spell': 339}
+        'species': 9, 'background': 4, 'feat': 17, 'spell': 339,
+        'armor': 13, 'weapon': 38, 'tool': 25, 'gear': 108}
 
 
 def read(path):
@@ -55,6 +56,8 @@ def compile_display(root=ROOT):
     sources = pins['sourceHashes']
     model_ids={entry['id'] for collection in ['classes','species','backgrounds','feats','classOptions'] for entry in canonical[collection]}
     model_ids.update(canonical['spells'])
+    model_ids.update(entry['id'] for kind in ['items', 'weapons', 'armor']
+                     for entry in canonical['equipment'][kind])
     for cls in canonical['classes']:
         for row in cls['levels']:
             model_ids.update(feature['id'] for feature in row['features'] if feature.get('id'))
@@ -76,6 +79,16 @@ def compile_display(root=ROOT):
         document=read(content / f'srd-5.2.1-de/documents/{entry["documentId"]}.json')
         if entry['url'].split('#',1)[-1] not in {block['ruleId'] for block in document['blocks']}:
             raise ValueError('Reading-only feature lacks a canonical source anchor')
+    def source_term(pin, field='name'):
+        path = f'vtt/rules_content/srd-5.2.1-en/documents/{pin["documentId"]}.json'
+        if path not in sources:
+            raise ValueError('Term source must be pinned')
+        block = next(block for block in read(root / path)['blocks'] if block['ruleId'] == pin['ruleId'])
+        value = pin[field]
+        if pin['quote'] != value or not any(re.search(r'(?<!\w)'+re.escape(value)+r'(?!\w)',text) for text in strings(block)):
+            raise ValueError(f'Term not found verbatim in its source: {value}')
+        return value
+
     names, seen, counts = {}, set(), Counter()
     for canonical_id, pin in sorted(pins['entities'].items()):
         de = entities['de'][canonical_id]
@@ -90,6 +103,14 @@ def compile_display(root=ROOT):
         counts[de['type']] += 1
         names[canonical_id] = {'name': en['name'], 'enEntityId': en['id'],
                                'documentId': en['documentId'], 'url': en['url']}
+        if pin.get('displayNameSource'):
+            ref = pin['displayNameSource']
+            if (de['type'] not in {'armor', 'weapon', 'tool', 'gear'} or
+                    ref['documentId'] != en['documentId'] or
+                    ref['ruleId'] != en['url'].split('#', 1)[-1]):
+                raise ValueError('Display name source must match the equipment entity anchor')
+            names[canonical_id]['name'] = source_term(ref)
+            names[canonical_id]['displayNameSource'] = dict(ref)
         if de['type']=='subclass':
             document=read(content / f'srd-5.2.1-en/documents/{en["documentId"]}.json')
             order={block['ruleId']:index for index,block in enumerate(document['blocks'])}
@@ -111,34 +132,33 @@ def compile_display(root=ROOT):
                 pin['enEntityId'] for key, pin in pins['entities'].items() if entities['de'][key]['type'] == kind}:
             raise ValueError(f'English identity coverage differs: {kind}')
 
-    def source_term(pin, field='name'):
-        path = f'vtt/rules_content/srd-5.2.1-en/documents/{pin["documentId"]}.json'
-        if path not in sources:
-            raise ValueError('Term source must be pinned')
-        block = next(block for block in read(root / path)['blocks'] if block['ruleId'] == pin['ruleId'])
-        value = pin[field]
-        if pin['quote'] != value or not any(re.search(r'(?<!\w)'+re.escape(value)+r'(?!\w)',text) for text in strings(block)):
-            raise ValueError(f'Term not found verbatim in its source: {value}')
-        return value
-
+    term_ids = {kind: {entry['id'] for entry in canonical[kind]}
+                for kind in ['abilities', 'skills', 'languages', 'alignments']}
+    term_ids.update({
+        'weaponMasteries': {entry['mastery'] for entry in canonical['equipment']['weapons']},
+        'weaponProperties': {prop['name'] for entry in canonical['equipment']['weapons'] for prop in entry['properties']},
+        'coins': set(canonical['equipment']['coins']),
+    })
     labels = {}
     for key, pin in sorted(terms['terms'].items()):
         kind, canonical_id = key.split(':', 1)
-        if kind not in {'abilities','skills','languages','alignments'}:
+        if kind not in term_ids:
             raise ValueError('Unsupported creator term kind')
-        if canonical_id not in {entry['id'] for entry in canonical[kind]}:
+        if canonical_id not in term_ids[kind]:
             raise ValueError(f'Unknown canonical term: {key}')
+        if kind == 'coins' and not pin.get('abbreviation'):
+            raise ValueError('Coin display needs a source-backed abbreviation')
         labels[key] = {'name': source_term(pin), 'documentId': pin['documentId'], 'ruleId': pin['ruleId']}
         if pin.get('abbreviation'):
             labels[key]['abbreviation'] = source_term(pin['abbreviation'], 'value')
-    for kind in ['abilities', 'skills', 'languages', 'alignments']:
-        if {key.split(':')[1] for key in labels if key.startswith(kind + ':')} != {entry['id'] for entry in canonical[kind]}:
+    for kind, expected_ids in term_ids.items():
+        if {key.split(':', 1)[1] for key in labels if key.startswith(kind + ':')} != expected_ids:
             raise ValueError(f'Incomplete term coverage: {kind}')
     return {'schemaVersion': 1, 'locale': 'en',
             'canonicalHash': digest(content / 'srd-5.2.1-de/generated/creator-data.json'),
             'sourceHashes': sources, 'names': names, 'terms': labels,
             'coverage': {kind: {'total': count, 'mapped': counts[kind]} for kind, count in CORE.items()},
-            'unresolved': ['equipment', 'species-subchoices', 'remaining-rule-labels', 'validation', 'editor']}
+            'unresolved': ['species-subchoices', 'remaining-rule-labels', 'validation', 'editor']}
 
 
 def main():
@@ -151,7 +171,7 @@ def main():
             raise SystemExit('Stale creator display data; review sources and regenerate')
     else:
         OUTPUT.write_text(payload, encoding='utf-8')
-    print('663 reviewed entity names, 52 source-backed terms; pinned sources verified')
+    print('847 reviewed entity names, 74 source-backed terms; pinned sources verified')
 
 
 if __name__ == '__main__':

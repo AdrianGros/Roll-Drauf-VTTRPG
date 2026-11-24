@@ -5,7 +5,8 @@
     "date": "2026-11-24",
     "owner": "Codex integration",
     "basis": "Semantic names/class-level context for all pairs, explicit stale-ID corrections, genuine source entry checks for uncertain cases; independent read-only Claude review. Does not assert full mechanical equivalence of translated source texts.",
-    "audit": "docs/proofs/fv01-creator-content-2026-11-24/identity-review.json"
+    "audit": "docs/proofs/fv01-creator-content-2026-11-24/identity-review.json",
+    "equipmentAudit": "docs/proofs/fv01-remaining-language-2026-11-24/equipment-identity-review.json"
   },
   "sourceHashes": {
     "vtt/rules_content/srd-5.2.1-de/documents/character-origins.backgrounds.json": "ffd13bfdee56767b4b3ebdd13f1632985476176fff802b86cb5e0d0902b0abe7",
@@ -22,6 +23,11 @@
     "vtt/rules_content/srd-5.2.1-de/documents/classes.sorcerer.json": "84a693be99bfce2c21420dedf1c9d225e1d13b4a9838a5fc784e519865e52262",
     "vtt/rules_content/srd-5.2.1-de/documents/classes.warlock.json": "4d3200f204ce14f37fe851f466cb4dc5ac9c0fe66421659aa281bb5dda9eb207",
     "vtt/rules_content/srd-5.2.1-de/documents/classes.wizard.json": "3f203e0176aa2974dd73c49d73b86b3078c29ad3b05acbd1575f3b5adbc61b2a",
+    "vtt/rules_content/srd-5.2.1-de/documents/equipment.adventuring-gear.json": "78513fe8a929396d37f5a39f84a0275cb20bd14efdf3f223a80b5c39383c926d",
+    "vtt/rules_content/srd-5.2.1-de/documents/equipment.armor.json": "f42506c071bbf6ba7246a6aa9a0b1f77c68f33a898dbe3cd28e30a28c044b72c",
+    "vtt/rules_content/srd-5.2.1-de/documents/equipment.coins-and-weapons.json": "325115235e21a13fe2a519933997ec5bb5ca830dcd7b4b1cd6cbbe65f58838e7",
+    "vtt/rules_content/srd-5.2.1-de/documents/equipment.mounts-and-vehicles.json": "c79f1fb1ef838035c5975657b53d45a97fac94bfa7f26f1bc02ec6016adc5848",
+    "vtt/rules_content/srd-5.2.1-de/documents/equipment.tools.json": "d45099913e8b30e2378022e13434fc342fc00ff6ae76d84ebd9b797d7f7a23a2",
     "vtt/rules_content/srd-5.2.1-de/documents/feats.descriptions.json": "4fc3d65e120dd3dd6d11bfbe2ba392a2e1fcc0dea9ed76d1dee7c27f729a3d14",
     "vtt/rules_content/srd-5.2.1-de/documents/spells.a-b.json": "b3528f13df848ea093a00b14a985ed53a94c805a12b9526dd7d9bdeb774d28e0",
     "vtt/rules_content/srd-5.2.1-de/documents/spells.c-e.json": "301c4fa30fed1e4b597463affa1afd2c31ff0bbbb448e4be2fa9a5bcc20241f6",
@@ -48,6 +54,11 @@
     "vtt/rules_content/srd-5.2.1-en/documents/classes.wizard.json": "0e0353bacde711a679b3e4f0f916f9e47dc91c064acc8978fe4c4923bfecae2c",
     "vtt/rules_content/srd-5.2.1-en/documents/core.proficiency.json": "9f47ec5588a5f103ed134e9fe0c0b01ee18a4c55224278056abe33cab585898e",
     "vtt/rules_content/srd-5.2.1-en/documents/core.rhythm-and-abilities.json": "2d00e3c15fa3d497f8c14f14a9e4fc1663aa483bef22333a39ec54247c7b949e",
+    "vtt/rules_content/srd-5.2.1-en/documents/equipment.adventuring-gear.json": "f884a8bcec63387e73dc134873945bac49db93070ca7c1d3b29fa2e26ed0c6dc",
+    "vtt/rules_content/srd-5.2.1-en/documents/equipment.armor.json": "bc88bce73a4b33bb329eada0d03d5aa6ce2719309af95d10fc38ef3ffe802cc8",
+    "vtt/rules_content/srd-5.2.1-en/documents/equipment.coins-and-weapons.json": "859836e7be3c75d3890aecd597c6cf3deaf738483612cdbd6d1424c774c9a1e6",
+    "vtt/rules_content/srd-5.2.1-en/documents/equipment.mounts-and-vehicles.json": "e244c1f33fe4a33d9bfb6e70f39df1296c6cf3c9d27e1f30995748a7a0af21fe",
+    "vtt/rules_content/srd-5.2.1-en/documents/equipment.tools.json": "3c6b555e428798881bf25ea5797d0e48b70ba96f698b33e4e3d6aaab343ba75c",
     "vtt/rules_content/srd-5.2.1-en/documents/feats.json": "9bd198c997176ceb6f4a9b7dd1d80adff28cc682a011c87a8d9b3c8cd7150f5d",
     "vtt/rules_content/srd-5.2.1-en/documents/origins.backgrounds.json": "e5d8dbbb7f4d3bd606356769e88576750dbaf9f06af0efb2078f5111f8ca42d5",
     "vtt/rules_content/srd-5.2.1-en/documents/origins.species.json": "15c53e8cce01f961910764f3e09ccf220ec0c1c07b4b409b36b2a3e958db9c17",
@@ -984,6 +995,582 @@
     },
     "classes.wizard.wizard": {
       "enEntityId": "classes.wizard"
+    },
+    "equipment.adventuring-gear.ammunition.bolzen": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-2.bolts"
+    },
+    "equipment.adventuring-gear.ammunition.munition-feuerwaffe": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-2.bullets-firearm"
+    },
+    "equipment.adventuring-gear.ammunition.munition-schleuder": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-2.bullets-sling"
+    },
+    "equipment.adventuring-gear.ammunition.pfeile": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-2.arrows"
+    },
+    "equipment.adventuring-gear.ammunition.pfeile-blasrohr": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-2.needles"
+    },
+    "equipment.adventuring-gear.arcane-foci.kristall": {
+      "enEntityId": "equipment.adventuring-gear.arcane-focus-varies.table-1.crystal"
+    },
+    "equipment.adventuring-gear.arcane-foci.kugel": {
+      "enEntityId": "equipment.adventuring-gear.arcane-focus-varies.table-1.orb"
+    },
+    "equipment.adventuring-gear.arcane-foci.rute": {
+      "enEntityId": "equipment.adventuring-gear.arcane-focus-varies.table-1.rod"
+    },
+    "equipment.adventuring-gear.arcane-foci.stab-auch-kampfstab": {
+      "enEntityId": "equipment.adventuring-gear.arcane-focus-varies.table-1.staff-also-a-quarterstaff"
+    },
+    "equipment.adventuring-gear.arcane-foci.zauberstab": {
+      "enEntityId": "equipment.adventuring-gear.arcane-focus-varies.table-1.wand"
+    },
+    "equipment.adventuring-gear.druidic-foci.holzstab-auch-kampfstab": {
+      "enEntityId": "equipment.adventuring-gear.druidic-focus-varies.table-1.wooden-staff-also-a-quarterstaff"
+    },
+    "equipment.adventuring-gear.druidic-foci.mistelzweig": {
+      "enEntityId": "equipment.adventuring-gear.druidic-focus-varies.table-1.sprig-of-mistletoe"
+    },
+    "equipment.adventuring-gear.druidic-foci.zauberstab-aus-eibe": {
+      "enEntityId": "equipment.adventuring-gear.druidic-focus-varies.table-1.yew-wand"
+    },
+    "equipment.adventuring-gear.gear-table.abdeckbare-laterne": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.lantern-hooded"
+    },
+    "equipment.adventuring-gear.gear-table.alchemistenfeuer": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.alchemists-fire"
+    },
+    "equipment.adventuring-gear.gear-table.arkaner-fokus": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.arcane-focus"
+    },
+    "equipment.adventuring-gear.gear-table.behaelter-armbrustbolzen": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.case-crossbow-bolt"
+    },
+    "equipment.adventuring-gear.gear-table.behaelter-karte-oder-schriftrolle": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.case-map-or-scroll"
+    },
+    "equipment.adventuring-gear.gear-table.beutel": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.pouch"
+    },
+    "equipment.adventuring-gear.gear-table.blendlaterne": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.lantern-bullseye"
+    },
+    "equipment.adventuring-gear.gear-table.brechstange": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.crowbar"
+    },
+    "equipment.adventuring-gear.gear-table.buch": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.book"
+    },
+    "equipment.adventuring-gear.gear-table.decke": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.blanket"
+    },
+    "equipment.adventuring-gear.gear-table.diplomatenausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.diplomats-pack"
+    },
+    "equipment.adventuring-gear.gear-table.druidischer-fokus": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.druidic-focus"
+    },
+    "equipment.adventuring-gear.gear-table.eimer": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.bucket"
+    },
+    "equipment.adventuring-gear.gear-table.einbrecherausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.burglars-pack"
+    },
+    "equipment.adventuring-gear.gear-table.entdeckerausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.explorers-pack"
+    },
+    "equipment.adventuring-gear.gear-table.enterhaken": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.grappling-hook"
+    },
+    "equipment.adventuring-gear.gear-table.fackel": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.torch"
+    },
+    "equipment.adventuring-gear.gear-table.fass": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.barrel"
+    },
+    "equipment.adventuring-gear.gear-table.fernrohr": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.spyglass"
+    },
+    "equipment.adventuring-gear.gear-table.flasche": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.flask"
+    },
+    "equipment.adventuring-gear.gear-table.flasche-glas": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.bottle-glass"
+    },
+    "equipment.adventuring-gear.gear-table.flaschenzug": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.block-and-tackle"
+    },
+    "equipment.adventuring-gear.gear-table.gegengift": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.antitoxin"
+    },
+    "equipment.adventuring-gear.gear-table.gelehrtenausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.scholars-pack"
+    },
+    "equipment.adventuring-gear.gear-table.geschosse": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.ammunition"
+    },
+    "equipment.adventuring-gear.gear-table.gewoelbeforscherausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.dungeoneers-pack"
+    },
+    "equipment.adventuring-gear.gear-table.gift-einfach": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.poison-basic"
+    },
+    "equipment.adventuring-gear.gear-table.glocke": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.bell"
+    },
+    "equipment.adventuring-gear.gear-table.handschellen": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.manacles"
+    },
+    "equipment.adventuring-gear.gear-table.heilerausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.healers-kit"
+    },
+    "equipment.adventuring-gear.gear-table.heiliges-symbol": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.holy-symbol"
+    },
+    "equipment.adventuring-gear.gear-table.heiltrank": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.potion-of-healing"
+    },
+    "equipment.adventuring-gear.gear-table.jagdfalle": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.hunting-trap"
+    },
+    "equipment.adventuring-gear.gear-table.karte": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.map"
+    },
+    "equipment.adventuring-gear.gear-table.kerze": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.candle"
+    },
+    "equipment.adventuring-gear.gear-table.kette": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.chain"
+    },
+    "equipment.adventuring-gear.gear-table.kleidung-fein": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.clothes-fine"
+    },
+    "equipment.adventuring-gear.gear-table.kleidung-reise": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.clothes-travelers"
+    },
+    "equipment.adventuring-gear.gear-table.kletterausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.climbers-kit"
+    },
+    "equipment.adventuring-gear.gear-table.koecher": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.quiver"
+    },
+    "equipment.adventuring-gear.gear-table.korb": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.basket"
+    },
+    "equipment.adventuring-gear.gear-table.kostuem": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.costume"
+    },
+    "equipment.adventuring-gear.gear-table.kraehenfuesse": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.caltrops"
+    },
+    "equipment.adventuring-gear.gear-table.krug": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.jug"
+    },
+    "equipment.adventuring-gear.gear-table.lampe": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.lamp"
+    },
+    "equipment.adventuring-gear.gear-table.leiter": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.ladder"
+    },
+    "equipment.adventuring-gear.gear-table.lupe": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.magnifying-glass"
+    },
+    "equipment.adventuring-gear.gear-table.materialkomponentenbeutel": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.component-pouch"
+    },
+    "equipment.adventuring-gear.gear-table.metallkuegelchen": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.ball-bearings"
+    },
+    "equipment.adventuring-gear.gear-table.netz": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.net"
+    },
+    "equipment.adventuring-gear.gear-table.oel": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.oil"
+    },
+    "equipment.adventuring-gear.gear-table.papier": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.paper"
+    },
+    "equipment.adventuring-gear.gear-table.parfuem": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.perfume"
+    },
+    "equipment.adventuring-gear.gear-table.pergament": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.parchment"
+    },
+    "equipment.adventuring-gear.gear-table.phiole": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.vial"
+    },
+    "equipment.adventuring-gear.gear-table.priesterausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.priests-pack"
+    },
+    "equipment.adventuring-gear.gear-table.rammbock-tragbar": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.ram-portable"
+    },
+    "equipment.adventuring-gear.gear-table.rationen": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.rations"
+    },
+    "equipment.adventuring-gear.gear-table.robe": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.robe"
+    },
+    "equipment.adventuring-gear.gear-table.rucksack": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.backpack"
+    },
+    "equipment.adventuring-gear.gear-table.sack": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.sack"
+    },
+    "equipment.adventuring-gear.gear-table.saeure": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.acid"
+    },
+    "equipment.adventuring-gear.gear-table.schaufel": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.shovel"
+    },
+    "equipment.adventuring-gear.gear-table.schlafsack": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.bedroll"
+    },
+    "equipment.adventuring-gear.gear-table.schloss": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.lock"
+    },
+    "equipment.adventuring-gear.gear-table.schnur": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.string"
+    },
+    "equipment.adventuring-gear.gear-table.seil": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.rope"
+    },
+    "equipment.adventuring-gear.gear-table.signalpfeife": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.signal-whistle"
+    },
+    "equipment.adventuring-gear.gear-table.spiegel": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.mirror"
+    },
+    "equipment.adventuring-gear.gear-table.stachel-eisen": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.spikes-iron"
+    },
+    "equipment.adventuring-gear.gear-table.stange": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.pole"
+    },
+    "equipment.adventuring-gear.gear-table.tinte": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.ink"
+    },
+    "equipment.adventuring-gear.gear-table.tintenfueller": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.ink-pen"
+    },
+    "equipment.adventuring-gear.gear-table.topf-eisen": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.pot-iron"
+    },
+    "equipment.adventuring-gear.gear-table.trinkschlauch": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.waterskin"
+    },
+    "equipment.adventuring-gear.gear-table.truhe": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.chest"
+    },
+    "equipment.adventuring-gear.gear-table.unterhaltungskuenstler-ausruestung": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.entertainers-pack"
+    },
+    "equipment.adventuring-gear.gear-table.weihwasser": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.holy-water"
+    },
+    "equipment.adventuring-gear.gear-table.zauberschriftrolle-1-grad": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.spell-scroll-level-1"
+    },
+    "equipment.adventuring-gear.gear-table.zauberschriftrolle-zaubertrick": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.spell-scroll-cantrip"
+    },
+    "equipment.adventuring-gear.gear-table.zelt": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.tent"
+    },
+    "equipment.adventuring-gear.gear-table.zunderkaestchen": {
+      "enEntityId": "equipment.adventuring-gear.ammunition-varies.table-1.tinderbox"
+    },
+    "equipment.adventuring-gear.holy-symbols.amulett-getragen-oder-gehalten": {
+      "enEntityId": "equipment.adventuring-gear.holy-symbol-varies.table-1.amulet-worn-or-held"
+    },
+    "equipment.adventuring-gear.holy-symbols.emblem-auf-stoff-oder-schild": {
+      "enEntityId": "equipment.adventuring-gear.holy-symbol-varies.table-1.emblem-borne-on-fabric-or-a-shield"
+    },
+    "equipment.adventuring-gear.holy-symbols.reliquie-gehalten": {
+      "enEntityId": "equipment.adventuring-gear.holy-symbol-varies.table-1.reliquary-held"
+    },
+    "equipment.armor.armor-heavy.kettenpanzer": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.chain-mail"
+    },
+    "equipment.armor.armor-heavy.ringpanzer": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.ring-mail"
+    },
+    "equipment.armor.armor-heavy.ritterruestung": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.plate-armor"
+    },
+    "equipment.armor.armor-heavy.schienenpanzer": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.splint-armor"
+    },
+    "equipment.armor.armor-light.beschlagene-lederruestung": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.studded-leather-armor"
+    },
+    "equipment.armor.armor-light.gepolsterte-ruestung": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.padded-armor"
+    },
+    "equipment.armor.armor-light.lederruestung": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.leather-armor"
+    },
+    "equipment.armor.armor-medium.brustplatte": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.breastplate"
+    },
+    "equipment.armor.armor-medium.fellruestung": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.hide-armor"
+    },
+    "equipment.armor.armor-medium.kettenhemd": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.chain-shirt"
+    },
+    "equipment.armor.armor-medium.plattenpanzer": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.half-plate-armor"
+    },
+    "equipment.armor.armor-medium.schuppenpanzer": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.scale-mail"
+    },
+    "equipment.armor.armor-shield-table.schild": {
+      "enEntityId": "equipment.armor.one-at-a-time.table-1.shield"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.dreizack": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.trident"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.flegel": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.flail"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.glefe": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.glaive"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.hellebarde": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.halberd"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.kriegshammer": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.warhammer"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.kriegspicke": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.war-pick"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.krummsaebel": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.scimitar"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.kurzschwert": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.shortsword"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.langschwert": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.longsword"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.lanze": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.lance"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.morgenstern": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.morningstar"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.peitsche": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.whip"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.pike": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.pike"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.rapier": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.rapier"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.streitaxt": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.battleaxe"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.zweihandaxt": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.greataxe"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.zweihandhammer": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.maul"
+    },
+    "equipment.coins-and-weapons.weapons-martial-melee.zweihandschwert": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.greatsword"
+    },
+    "equipment.coins-and-weapons.weapons-martial-ranged.blasrohr": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.blowgun"
+    },
+    "equipment.coins-and-weapons.weapons-martial-ranged.handarmbrust": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.hand-crossbow"
+    },
+    "equipment.coins-and-weapons.weapons-martial-ranged.langbogen": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.longbow"
+    },
+    "equipment.coins-and-weapons.weapons-martial-ranged.muskete": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.musket"
+    },
+    "equipment.coins-and-weapons.weapons-martial-ranged.pistole": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.pistol"
+    },
+    "equipment.coins-and-weapons.weapons-martial-ranged.schwere-armbrust": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.heavy-crossbow-1d10-piercing",
+      "displayNameSource": {
+        "documentId": "equipment.coins-and-weapons",
+        "ruleId": "equipment.coins-and-weapons.mastery-properties.vex.table-1",
+        "name": "Heavy Crossbow",
+        "quote": "Heavy Crossbow"
+      }
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.beil": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.handaxe"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.dolch": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.dagger"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.kampfstab": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.quarterstaff"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.knueppel": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.club"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.leichter-hammer": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.light-hammer"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.sichel": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.sickle"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.speer": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.spear"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.streitkolben": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.mace"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.wurfspeer": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.javelin"
+    },
+    "equipment.coins-and-weapons.weapons-simple-melee.zweihandknueppel": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.greatclub"
+    },
+    "equipment.coins-and-weapons.weapons-simple-ranged.kurzbogen": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.shortbow"
+    },
+    "equipment.coins-and-weapons.weapons-simple-ranged.leichte-armbrust": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.light-crossbow"
+    },
+    "equipment.coins-and-weapons.weapons-simple-ranged.schleuder": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.sling"
+    },
+    "equipment.coins-and-weapons.weapons-simple-ranged.wurfpfeil": {
+      "enEntityId": "equipment.coins-and-weapons.mastery-properties.vex.table-1.dart"
+    },
+    "equipment.mounts-and-vehicles.saddles-table.exotischer-sattel": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.saddle-exotic"
+    },
+    "equipment.mounts-and-vehicles.saddles-table.militaersattel": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.saddle-military"
+    },
+    "equipment.mounts-and-vehicles.saddles-table.reitsattel": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.saddle-riding"
+    },
+    "equipment.mounts-and-vehicles.tack-and-vehicles-table.futter-pro-tag": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.feed-per-day"
+    },
+    "equipment.mounts-and-vehicles.tack-and-vehicles-table.karren": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.cart"
+    },
+    "equipment.mounts-and-vehicles.tack-and-vehicles-table.kutsche": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.carriage"
+    },
+    "equipment.mounts-and-vehicles.tack-and-vehicles-table.schlitten": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.saddle-sled",
+      "displayNameSource": {
+        "documentId": "equipment.mounts-and-vehicles",
+        "ruleId": "equipment.mounts-and-vehicles.saddles.table-2",
+        "name": "Sled",
+        "quote": "Sled"
+      }
+    },
+    "equipment.mounts-and-vehicles.tack-and-vehicles-table.stallmiete-pro-tag": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.saddle-stabling-per-day",
+      "displayNameSource": {
+        "documentId": "equipment.mounts-and-vehicles",
+        "ruleId": "equipment.mounts-and-vehicles.saddles.table-2",
+        "name": "Stabling per day",
+        "quote": "Stabling per day"
+      }
+    },
+    "equipment.mounts-and-vehicles.tack-and-vehicles-table.streitwagen": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.chariot"
+    },
+    "equipment.mounts-and-vehicles.tack-and-vehicles-table.wagen": {
+      "enEntityId": "equipment.mounts-and-vehicles.saddles.table-2.saddle-wagon",
+      "displayNameSource": {
+        "documentId": "equipment.mounts-and-vehicles",
+        "ruleId": "equipment.mounts-and-vehicles.saddles.table-2",
+        "name": "Wagon",
+        "quote": "Wagon"
+      }
+    },
+    "equipment.tools.tool-alchemistenausruestung": {
+      "enEntityId": "equipment.tools.alchemists-supplies-50-gp"
+    },
+    "equipment.tools.tool-brauereizubehoer": {
+      "enEntityId": "equipment.tools.brewers-supplies-20-gp"
+    },
+    "equipment.tools.tool-diebeswerkzeug": {
+      "enEntityId": "equipment.tools.thieves-tools-25-gp"
+    },
+    "equipment.tools.tool-faelscherausruestung": {
+      "enEntityId": "equipment.tools.forgery-kit-15-gp"
+    },
+    "equipment.tools.tool-giftmischerausruestung": {
+      "enEntityId": "equipment.tools.poisoners-kit-50-gp"
+    },
+    "equipment.tools.tool-glasblaeserwerkzeug": {
+      "enEntityId": "equipment.tools.glassblowers-tools-30-gp"
+    },
+    "equipment.tools.tool-holzschnitzwerkzeug": {
+      "enEntityId": "equipment.tools.woodcarvers-tools-1-gp"
+    },
+    "equipment.tools.tool-juwelierwerkzeug": {
+      "enEntityId": "equipment.tools.jewelers-tools-25-gp"
+    },
+    "equipment.tools.tool-kalligrafiewerkzeug": {
+      "enEntityId": "equipment.tools.calligraphers-supplies-10-gp"
+    },
+    "equipment.tools.tool-kartografenwerkzeug": {
+      "enEntityId": "equipment.tools.cartographers-tools-15-gp"
+    },
+    "equipment.tools.tool-kochutensilien": {
+      "enEntityId": "equipment.tools.cooks-utensils-1-gp"
+    },
+    "equipment.tools.tool-kraeuterkundeausruestung": {
+      "enEntityId": "equipment.tools.herbalism-kit-5-gp"
+    },
+    "equipment.tools.tool-ledererwerkzeug": {
+      "enEntityId": "equipment.tools.leatherworkers-tools-5-gp"
+    },
+    "equipment.tools.tool-malutensilien": {
+      "enEntityId": "equipment.tools.painters-supplies-10-gp"
+    },
+    "equipment.tools.tool-maurerwerkzeug": {
+      "enEntityId": "equipment.tools.masons-tools-10-gp"
+    },
+    "equipment.tools.tool-musikinstrument": {
+      "enEntityId": "equipment.tools.musical-instrument-varies"
+    },
+    "equipment.tools.tool-navigationswerkzeug": {
+      "enEntityId": "equipment.tools.navigators-tools-25-gp"
+    },
+    "equipment.tools.tool-schmiedewerkzeug": {
+      "enEntityId": "equipment.tools.smiths-tools-20-gp"
+    },
+    "equipment.tools.tool-schreinerwerkzeug": {
+      "enEntityId": "equipment.tools.carpenters-tools-8-gp"
+    },
+    "equipment.tools.tool-schusterwerkzeug": {
+      "enEntityId": "equipment.tools.cobblers-tools-5-gp"
+    },
+    "equipment.tools.tool-spielset": {
+      "enEntityId": "equipment.tools.gaming-set-varies"
+    },
+    "equipment.tools.tool-toepferwerkzeug": {
+      "enEntityId": "equipment.tools.potters-tools-10-gp"
+    },
+    "equipment.tools.tool-tueftlerwerkzeug": {
+      "enEntityId": "equipment.tools.tinkers-tools-50-gp"
+    },
+    "equipment.tools.tool-verkleidungsausruestung": {
+      "enEntityId": "equipment.tools.disguise-kit-25-gp"
+    },
+    "equipment.tools.tool-weberwerkzeug": {
+      "enEntityId": "equipment.tools.weavers-tools-1-gp"
     },
     "feats.descriptions.ability-score-improvement": {
       "enEntityId": "feats.general-feats.ability-score-improvement"

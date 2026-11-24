@@ -15,8 +15,8 @@ from vtt.rules_content.creator_rules import load_creator_data
 def test_reviewed_names_terms_and_source_differences_keep_canonical_data():
     before=copy.deepcopy(load_creator_data())
     value=compile_display()
-    assert len(value['names'])==663 and len(value['terms'])==52
-    assert len({x['enEntityId'] for x in value['names'].values()})==663
+    assert len(value['names'])==847 and len(value['terms'])==74
+    assert len({x['enEntityId'] for x in value['names'].values()})==847
     for key,expected in {
         'spells.a-b.ablenkung':'Mislead',
         'spells.h-l.hypnotisches-muster':'Hypnotic Pattern',
@@ -32,6 +32,13 @@ def test_reviewed_names_terms_and_source_differences_keep_canonical_data():
     assert value['terms']['alignments:neutral']['name']=='Neutral'
     for entry in value['names'].values():
         if 'featureIds' in entry:assert entry['featureIds'] and all(fid in {n['enEntityId'] for n in value['names'].values()} for fid in entry['featureIds'])
+    assert value['terms']['coins:GM']['abbreviation']=='GP'
+    assert value['terms']['weaponMasteries:Auslaugen']['name']=='Sap'
+    assert value['terms']['weaponProperties:Zweihändig']['name']=='Two-Handed'
+    equipment={entry['id'] for kind in ['items','weapons','armor'] for entry in before['equipment'][kind]}
+    assert len(equipment)==184 and equipment<=value['names'].keys()
+    exceptions=[entry for entry in value['names'].values() if 'displayNameSource' in entry]
+    assert {entry['name'] for entry in exceptions}=={'Heavy Crossbow','Sled','Stabling per day','Wagon'}
     assert before==load_creator_data()
     assert not {'category','column','kind','classKey'} & set().union(*(row.keys() for row in value['names'].values()))
     generated=json.loads((ROOT/'vtt/rules_content/srd-5.2.1-en/generated/creator-display.json').read_text())
@@ -57,6 +64,14 @@ def test_builder_refuses_source_drift_and_duplicate_identity(tmp_path):
     del broken['sourceHashes']['vtt/rules_content/srd-5.2.1-en/generated/compendium.json']
     pinfile.write_text(json.dumps(broken))
     with pytest.raises(ValueError,match='both compendia must be pinned'):compile_display(tmp_path)
+    pinfile.write_text(json.dumps(original))
+    exception=next(key for key,pin in original['entities'].items() if pin.get('displayNameSource'))
+    wrong=copy.deepcopy(original);wrong['entities'][exception]['displayNameSource']['ruleId']='equipment.coins-and-weapons.coins.table-1'
+    pinfile.write_text(json.dumps(wrong))
+    with pytest.raises(ValueError,match='equipment entity anchor'):compile_display(tmp_path)
+    wrong=copy.deepcopy(original);ref=wrong['entities'][exception]['displayNameSource'];ref['name']=ref['quote']='Invented Weapon'
+    pinfile.write_text(json.dumps(wrong))
+    with pytest.raises(ValueError,match='not found verbatim'):compile_display(tmp_path)
     pinfile.write_text(json.dumps(original))
     termfile=tmp_path/'tools/creator_locale/terms.json';original_terms=json.loads(termfile.read_text())
     bad_terms=copy.deepcopy(original_terms);bad_terms['terms']['feats:feats.descriptions.skilled']=bad_terms['terms']['abilities:str']
