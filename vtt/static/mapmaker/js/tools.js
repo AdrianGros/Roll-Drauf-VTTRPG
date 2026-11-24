@@ -10,6 +10,8 @@ const BRACKET_NUDGE = { "[": ["size", false], "]": ["size", true], "{": ["softne
 const altGraph = (event) => event.getModifierState?.("AltGraph") || (event.ctrlKey && event.altKey);
 // Escape without a gesture or selection leaves these tools; clicking keeps placing repeatedly.
 const PLACEMENT_TOOLS = new Set(["stamp", "label", "tile", "path"]);
+const PATH_POINTS_MAX = 128; // LIMITS.pathPoints
+const TAP_SLOP = 6; // CSS px a click may move and still set a node
 
 function isTextEntry(target) {
     if (!target || !target.closest) return false;
@@ -27,6 +29,8 @@ export function attachInput(ed) {
     const pointers = new Map();
     let gesture = null;
     let spaceDown = false;
+    // Node-by-node path ("Punkte setzen"): lives across clicks, outside the document until finished.
+    let draft = null;
 
     const local = (event) => {
         const rect = canvas.getBoundingClientRect();
@@ -73,8 +77,76 @@ export function attachInput(ed) {
         ed.gestureEnded();
     }
 
+    function syncDraft() {
+        ed.pathDraft = draft;
+        ed.ui.syncPathDraft(draft ? draft.item.points.length : 0);
+        ed.requestFrame();
+    }
+
+    function addDraftNode(point) {
+        if (!ed.insideMap(point)) return;
+        const at = ed.clampToMap(Math.round(point.x), Math.round(point.y));
+        if (!draft) {
+            const target = ed.pathTarget();
+            if (target === false) return;
+            ed.commitEdit();
+            ed.select(null);
+            draft = { targetId: target?.id || null, cursor: at,
+                item: { id: null, x: at.x, y: at.y, material: ed.pathOpts.material, width: ed.pathOpts.width,
+                    curve: ed.pathOpts.curve, points: [{ x: 0, y: 0 }] } };
+            syncDraft();
+            return;
+        }
+        const { item } = draft;
+        const last = item.points[item.points.length - 1];
+        const next = { x: at.x - item.x, y: at.y - item.y };
+        if (Math.hypot(next.x - last.x, next.y - last.y) * ed.view.zoom <= 3) return; // second click of a double-click
+        if (item.points.length >= PATH_POINTS_MAX) {
+            ed.ui.toast(globalThis.VTTUi("Höchstens {count} Wegpunkte – Enter schließt den Weg ab.", { count: PATH_POINTS_MAX }));
+            return;
+        }
+        item.points.push(next);
+        syncDraft();
+    }
+
+    function removeDraftNode() {
+        if (!draft) return false;
+        draft.item.points.pop();
+        if (!draft.item.points.length) draft = null;
+        syncDraft();
+        return true;
+    }
+
+    function discardDraft(notice) {
+        if (!draft) return;
+        draft = null;
+        syncDraft();
+        if (notice) ed.ui.toast(globalThis.VTTUi("Unfertiger Weg verworfen."));
+    }
+
+    /** Same rule as a freehand path: at least two nodes and leaving the start by 5 px. */
+    function finishDraft() {
+        if (!draft) return;
+        const { item, targetId } = draft;
+        if (item.points.length < 2 || !item.points.some((p) => Math.hypot(p.x, p.y) >= 5)) {
+            ed.ui.toast(globalThis.VTTUi("Für einen Weg mindestens zwei Punkte setzen."));
+            return;
+        }
+        draft = null;
+        syncDraft();
+        item.id = ed.newPathId();
+        if (ed.addPath(item, targetId)) ed.select(item.id);
+    }
+
     ed.input = {
-        cancel: cancelGesture,
+        cancel: (keepDraft = false) => {
+            cancelGesture();
+            if (!keepDraft) discardDraft(true);
+        },
+        finishDraft,
+        removeDraftNode,
+        discardDraft: () => discardDraft(false),
+        undoDraftNode: removeDraftNode,
         // live, uncommitted document changes (autosave must not persist them)
         mutating: () => !!gesture && (gesture.type === "stroke" || gesture.type === "erase" || gesture.type === "scatter" || gesture.type === "tiles"
             || (gesture.type === "groupDrag" && gesture.moved) || (gesture.type === "drag" && gesture.moved) || (gesture.type === "pathNode" && gesture.moved)),
@@ -124,6 +196,9 @@ export function attachInput(ed) {
             if (ed.beginStroke(point, pressureOf(event))) gesture = { type: "stroke", pointerId: event.pointerId };
         } else if (ed.tool === "tile") {
             if (ed.beginTiles(point)) gesture = { type: "tiles", pointerId: event.pointerId };
+        } else if (ed.tool === "path" && ed.pathOpts.mode === "nodes") {
+            // A node is set on release, so a drag, pan or pinch never adds one by accident.
+            gesture = { type: "pathClick", pointerId: event.pointerId, startLocal: local(event) };
         } else if (ed.tool === "path") {
             if (!ed.insideMap(point)) return;
             const target = ed.pathTarget();
@@ -169,6 +244,7 @@ export function attachInput(ed) {
             const item = ed.createLabel(point);
             if (ed.addItems(layer, [item], "Ort setzen")) {
                 ed.select(item.id);
+                ed.cursor = null; // the preview returns with the next pointer move, not on top of the new label
             }
         } else if (ed.tool === "select") {
             const selected = selectedPath();
@@ -224,7 +300,8 @@ export function attachInput(ed) {
                 const path = (ed.editPathNodes || event.shiftKey) && !event.altKey ? selectedPath() : null;
                 canvas.dataset.cursor = path && nodeUnder(path, point) >= 0 ? "node" : "select";
             }
-            if (ed.tool === "brush" || ed.tool === "eraser" || ed.tool === "stamp" || ed.tool === "tile") ed.requestFrame();
+            if (draft) draft.cursor = point;
+            if (ed.tool === "brush" || ed.tool === "eraser" || ed.tool === "stamp" || ed.tool === "tile" || ed.tool === "label" || draft) ed.requestFrame();
             return;
         }
         if (gesture.pointerId !== event.pointerId) return;
@@ -263,6 +340,11 @@ export function attachInput(ed) {
                 gesture.item.points.push(next);
             }
             ed.requestFrame();
+        } else if (gesture.type === "pathClick") {
+            if (draft) {
+                draft.cursor = point;
+                ed.requestFrame();
+            }
         } else if (gesture.type === "pathNode") {
             const now = local(event);
             if (!gesture.moved && Math.hypot(now.x - gesture.startLocal.x, now.y - gesture.startLocal.y) < 3) return;
@@ -369,6 +451,9 @@ export function attachInput(ed) {
                 done.item.id = ed.newPathId();
                 if (ed.addPath(done.item, done.targetId)) ed.select(done.item.id);
             }
+        } else if (done.type === "pathClick") {
+            const now = local(event);
+            if (Math.hypot(now.x - done.startLocal.x, now.y - done.startLocal.y) < TAP_SLOP) addDraftNode(ed.clientToDoc(event.clientX, event.clientY));
         } else if (done.type === "pathNode" && done.moved) {
             ed.updateItem(done.item, done.orig, JSON.parse(JSON.stringify(done.item)), "Wegpunkt verschieben");
         }
@@ -395,6 +480,11 @@ export function attachInput(ed) {
     });
 
     canvas.addEventListener("contextmenu", (event) => event.preventDefault());
+    canvas.addEventListener("dblclick", (event) => {
+        if (!draft) return;
+        event.preventDefault();
+        finishDraft();
+    });
 
     let wheelCarry = 0;
     canvas.addEventListener("wheel", (event) => {
@@ -474,6 +564,16 @@ export function attachInput(ed) {
             ed.reorderSelection(event.shiftKey ? (up ? "front" : "back") : (up ? "forward" : "backward"));
             return;
         }
+        if (draft && event.key === "Enter" && (!isControl(event.target) || event.target === canvas)) {
+            event.preventDefault();
+            finishDraft();
+            return;
+        }
+        if (draft && (event.key === "Backspace" || event.key === "Delete")) {
+            event.preventDefault();
+            removeDraftNode();
+            return;
+        }
         if (toolKeys[key]) {
             ed.setTool(toolKeys[key]);
             return;
@@ -487,8 +587,9 @@ export function attachInput(ed) {
         }
         if (event.key === "Escape") {
             // Staged: first cancel the gesture or clear the selection, then leave the placement tool.
-            const busy = !!gesture || ed.selectionSet.count > 0;
+            const busy = !!gesture || !!draft || ed.selectionSet.count > 0;
             cancelGesture();
+            discardDraft(false);
             ed.select(null);
             if (!busy && PLACEMENT_TOOLS.has(ed.tool)) {
                 ed.setTool("select");

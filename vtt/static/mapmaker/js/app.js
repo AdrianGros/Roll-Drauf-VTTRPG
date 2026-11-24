@@ -13,7 +13,7 @@ import { reorderItems } from "./selection.js";
 import { OwnImageDialogs } from "./asset-dialogs.js";
 import { History } from "./history.js";
 import { drawStampImage, stampExtent, loadPalette } from "./stamps.js";
-import { COAST_PAD, Renderer, drawPath, itemBounds, pathHit, replacedTitleLabel } from "./render.js";
+import { COAST_PAD, Renderer, drawLabel, drawPath, itemBounds, pathHit, replacedTitleLabel } from "./render.js";
 import { StrokeEngine, imageBrush, rectClamp, rectUnion, registerMaterialTextures } from "./brush.js";
 import { createEmptyMap, createStarterMap } from "./starter.js";
 import { AutosaveUnavailable, DraftStore, downloadBlob, slugify } from "./storage.js";
@@ -63,12 +63,14 @@ class Editor {
         this.clipOpts = { layerId: null, notice: "" };
         this.wheelOrder = null; // Alt+wheel reorder session: one undo step per gesture
         this.areaPreview = null;
-        this.pathOpts = { material: "road", width: 14, curve: true };
+        // mode: "freehand" drags a path, "nodes" adds one node per click (page-session tool option)
+        this.pathOpts = { material: "road", width: 14, curve: true, mode: "freehand" };
         this.tileOpts = { asset: null, erase: false, size: TILE_GRID_DEFAULT, radius: 0, variants: [] };
         this.tileGesture = null;
         this.eraseScope = "active"; // "active" (default) or explicit "visible"
         this.eraseGesture = null;
         this.previewPath = null;
+        this.pathDraft = null; // node-by-node path being placed: { item, cursor }, not document state
         this.showReferenceGrid = false; // page-session view state, never part of a document
         this.selectionSet = new Selection(this);
         this.selection = null;
@@ -128,7 +130,7 @@ class Editor {
         });
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden || !this.doc) return;
-            this.cancelInteractions();
+            this.cancelInteractions({ keepDraft: true }); // an unfinished node path is not document state
             this.commitEdit();
             clearTimeout(this.autosave.timer);
             if (this.drafts) this.runAutosave();
@@ -369,6 +371,25 @@ class Editor {
             drawPath(ctx, this.previewPath);
             ctx.restore();
         }
+        if (this.pathDraft) {
+            const { item, cursor } = this.pathDraft;
+            const rubber = cursor && this.insideMap(cursor) ? [{ x: Math.round(cursor.x) - item.x, y: Math.round(cursor.y) - item.y }] : [];
+            const points = [...item.points, ...rubber];
+            ctx.save();
+            ctx.globalAlpha = 0.78;
+            if (points.length > 1) drawPath(ctx, { ...item, points });
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = "#f2c66d";
+            ctx.strokeStyle = "#17424b";
+            ctx.lineWidth = 2 / zoom;
+            for (const point of item.points) {
+                ctx.beginPath();
+                ctx.arc(item.x + point.x, item.y + point.y, 5 / zoom, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
         if (this.areaPreview) {
             const { a, b, count } = this.areaPreview;
             ctx.save();
@@ -404,6 +425,12 @@ class Editor {
             ctx.lineWidth = 1 / zoom;
             ctx.strokeStyle = "rgba(20,20,20,0.9)";
             ctx.stroke();
+            ctx.restore();
+        } else if (this.tool === "label" && this.insideMap(this.cursor) && this.targetLayer("labels", { quiet: true })) {
+            // The label a click would place, with its pin or symbol (no id, nothing stored).
+            ctx.save();
+            ctx.globalAlpha = 0.55;
+            drawLabel(ctx, this.createLabel(this.cursor, { preview: true }), this.palette);
             ctx.restore();
         } else if (this.tool === "stamp" && this.stampOpts.asset) {
             const stamp = this.palette.stamps.get(this.stampOpts.asset);
@@ -1393,12 +1420,12 @@ class Editor {
         return newId("w", collectIds(this.doc));
     }
 
-    createLabel(point) {
+    createLabel(point, { preview = false } = {}) {
         const style = this.labelOpts.style;
         const kind = this.labelOpts.kind;
         const at = this.clampToMap(point.x, point.y);
         return {
-            id: newId("p", collectIds(this.doc)),
+            id: preview ? null : newId("p", collectIds(this.doc)),
             x: at.x,
             y: at.y,
             text: this.labelOpts.named || (!this.labelOpts.pin && !this.labelOpts.symbol) ? globalThis.VTTUi("Neuer Ort") : "",
@@ -1684,8 +1711,8 @@ class Editor {
         }
     }
 
-    cancelInteractions() {
-        if (this.input) this.input.cancel();
+    cancelInteractions({ keepDraft = false } = {}) {
+        if (this.input) this.input.cancel(keepDraft);
         this.cancelStroke();
         this.cancelErase();
         this.cancelTiles();
@@ -1701,6 +1728,8 @@ class Editor {
     }
 
     undo() {
+        // While a node-by-node path is being placed, undo removes its last node instead.
+        if (this.input?.undoDraftNode()) return;
         this.cancelInteractions();
         this.commitEdit();
         const command = this.history.undo();
@@ -1708,6 +1737,7 @@ class Editor {
     }
 
     redo() {
+        if (this.pathDraft) return; // nothing to redo inside an unfinished path
         this.cancelInteractions();
         this.commitEdit();
         const command = this.history.redo();

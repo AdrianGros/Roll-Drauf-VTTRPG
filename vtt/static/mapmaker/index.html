@@ -145,6 +145,7 @@
             <button type="button" role="tab" id="tab-tool" data-pane="tool" aria-controls="pane-tool" aria-selected="true"><span data-ui-key="u_dfa660bfef7f">Werkzeug</span></button>
             <button type="button" role="tab" id="tab-layers" data-pane="layers" aria-controls="pane-layers" aria-selected="false" tabindex="-1"><span data-ui-key="u_c8f2bacd6bfb">Ebenen</span></button>
             <button type="button" role="tab" id="tab-places" data-pane="places" aria-controls="pane-places" aria-selected="false" tabindex="-1"><span data-ui-key="u_b226fcbce2cd">Orte</span></button>
+            <button type="button" role="tab" id="tab-objects" data-pane="objects" aria-controls="pane-objects" aria-selected="false" tabindex="-1"><span id="tabObjectsLabel">Objekte</span></button>
         </div>
 
         <section class="mm-pane" id="pane-tool" role="tabpanel" aria-labelledby="tab-tool">
@@ -184,10 +185,24 @@
 
             <div class="mm-group" data-options="path">
                 <p class="mm-target"><span data-ui-key="u_71cb4043fe52">Zeichnet auf:</span> <strong id="pathTarget"><span data-ui-key="u_ce8c8bb5c91b">Neue Ebene beim ersten Weg</span></strong></p>
+                <fieldset class="mm-modes">
+                    <legend id="pathModeLegend">Zeichnen</legend>
+                    <label class="mm-check"><input type="radio" name="pathMode" value="freehand" checked><span id="pathModeFreehand">Freihand ziehen</span></label>
+                    <label class="mm-check"><input type="radio" name="pathMode" value="nodes"><span id="pathModeNodes">Punkte setzen</span></label>
+                </fieldset>
                 <label class="mm-field"><span><span data-ui-key="u_308e17d2200a">Art</span></span><select id="pathMaterial"><option value="road" data-ui-key="u_d5c00e9a2be3">Weg</option><option value="river" data-ui-key="u_200b8c04671b">Fluss</option></select></label>
                 <label class="mm-check"><input id="pathCurve" type="checkbox" checked><span id="pathCurveLabel">Geglätteter Verlauf</span></label>
                 <div class="mm-range mm-range-edit"><label for="pathWidth"><span data-ui-key="u_861387c8ffe9">Breite</span></label><input id="pathWidth" type="range" min="2" max="80" step="1"><output id="pathWidthOut"></output><input id="pathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel" data-ui-aria-label="u_85804ab92648"></div>
-                <p class="mm-hint"><span data-ui-key="u_42afd96dfc30">Ziehen zeichnet einen editierbaren Verlauf. Mit Auswählen (V) kannst du ihn oder einzelne Punkte verschieben.</span></p>
+                <p id="pathFreehandHint" class="mm-hint"><span data-ui-key="u_42afd96dfc30">Ziehen zeichnet einen editierbaren Verlauf. Mit Auswählen (V) kannst du ihn oder einzelne Punkte verschieben.</span></p>
+                <p id="pathNodesHint" class="mm-hint" hidden>Klicken setzt Punkte. Enter oder Doppelklick schließt den Weg ab, Rücktaste entfernt den letzten Punkt, Esc bricht ab.</p>
+                <div id="pathDraftBar" class="mm-path-draft" role="group" aria-labelledby="pathDraftStatus" hidden>
+                    <p id="pathDraftStatus" class="mm-target" role="status"></p>
+                    <button id="pathDraftFinish" type="button" class="mm-btn mm-btn-small mm-btn-primary">Weg fertigstellen</button>
+                    <button id="pathDraftUndo" type="button" class="mm-btn mm-btn-small">Letzten Punkt entfernen</button>
+                    <button id="pathDraftCancel" type="button" class="mm-btn mm-btn-small">Abbrechen</button>
+                </div>
+                <button id="pathEditNodes" type="button" class="mm-btn mm-btn-small">Wegpunkte bearbeiten (V)</button>
+                <p id="pathNameHint" class="mm-hint">Namen vergeben: den Weg mit Auswählen (V) oder im Tab „Objekte“ wählen, dann „Name des Wegs“.</p>
             </div>
 
             <div class="mm-group" data-options="stamp">
@@ -290,6 +305,7 @@
                     <p class="mm-meta" id="selStampName"></p>
                     <label class="mm-range"><span><span data-ui-key="u_d9130ae841c9">Größe</span></span><input id="selStampSize" type="range" min="16" max="320" step="1"><output id="selStampSizeOut"></output></label>
                     <label class="mm-range"><span><span data-ui-key="u_bb151d57d178">Drehung</span></span><input id="selStampRot" type="range" min="-180" max="180" step="1"><output id="selStampRotOut"></output></label>
+                    <div class="mm-rot-presets" role="group"><button type="button" class="mm-btn mm-btn-small" data-rot="-90">−90°</button><button type="button" class="mm-btn mm-btn-small" data-rot="-45">−45°</button><button type="button" class="mm-btn mm-btn-small" data-rot="0">0°</button><button type="button" class="mm-btn mm-btn-small" data-rot="45">45°</button><button type="button" class="mm-btn mm-btn-small" data-rot="90">90°</button><button type="button" class="mm-btn mm-btn-small" data-rot="180">180°</button></div>
                     <label class="mm-check"><input id="selStampFlip" type="checkbox"> <span data-ui-key="u_254cb97a9f54">Spiegeln</span></label>
                 </div>
                 <div id="inspectLabel" hidden>
@@ -301,6 +317,7 @@
                     <label class="mm-field"><span id="selFontLabel">Schriftfamilie</span><select id="selFont"></select></label>
                     <label class="mm-range"><span><span data-ui-key="u_d9130ae841c9">Größe</span></span><input id="selSize" type="range" min="8" max="200" step="1"><output id="selSizeOut"></output></label>
                     <label class="mm-range"><span><span data-ui-key="u_bb151d57d178">Drehung</span></span><input id="selRot" type="range" min="-180" max="180" step="1"><output id="selRotOut"></output></label>
+                    <div class="mm-rot-presets" role="group"><button type="button" class="mm-btn mm-btn-small" data-rot="-90">−90°</button><button type="button" class="mm-btn mm-btn-small" data-rot="-45">−45°</button><button type="button" class="mm-btn mm-btn-small" data-rot="0">0°</button><button type="button" class="mm-btn mm-btn-small" data-rot="45">45°</button><button type="button" class="mm-btn mm-btn-small" data-rot="90">90°</button><button type="button" class="mm-btn mm-btn-small" data-rot="180">180°</button></div>
                     <label class="mm-check"><input id="selPin" type="checkbox"> <span data-ui-key="u_3203ec4b4b77">Ortsnadel zeigen</span></label>
                     <label class="mm-field"><span><span data-ui-key="u_bec9cc1234ae">Ortsart</span></span><select id="selKind"></select></label>
                     <label class="mm-field"><span><span data-ui-key="u_e84a549a8c99">Ortssymbol</span></span><select id="selSymbol"></select></label>
@@ -314,6 +331,7 @@
                     <div class="mm-range mm-range-edit"><label for="selPathWidth"><span data-ui-key="u_861387c8ffe9">Breite</span></label><input id="selPathWidth" type="range" min="2" max="80" step="1"><output id="selPathWidthOut"></output><input id="selPathWidthNumber" class="mm-number" type="number" min="2" max="80" step="1" aria-label="Wegbreite in Pixel" data-ui-aria-label="u_85804ab92648"></div>
                     <label class="mm-check"><input id="selPathCurve" type="checkbox"><span id="selPathCurveLabel">Geglätteter Verlauf</span></label>
                     <label class="mm-check"><input id="pathNodeMode" type="checkbox"><span id="pathNodeModeLabel">Wegpunkte bearbeiten</span></label>
+                    <button id="selPathDraw" type="button" class="mm-btn mm-btn-small">Neuen Weg zeichnen (W)</button>
                     <p id="pathEditHint" class="mm-hint">Wegpunkte bearbeiten einschalten und einen sichtbaren Punkt ziehen. Umschalt + Ziehen funktioniert ebenfalls.</p>
                     <button id="selPathConnect" type="button" class="mm-btn mm-btn-small">Endpunkt mit Nachbarweg verbinden</button>
                     <p id="selPathConnectHint" class="mm-hint">Verbindet nur mit einem Endpunkt derselben Ebene und Art in höchstens 32 px Abstand. Kreuzungen bleiben getrennt.</p>
@@ -365,6 +383,21 @@
             <p class="mm-hint"><span data-ui-key="u_f5a6d3490ca9">Orte mit Kurzbeschreibung. Antippen zeigt den Ort auf der Karte.</span></p>
             <ul id="placeList" class="mm-places"></ul>
             <button id="addPlaceBtn" type="button" class="mm-btn mm-btn-small"><span data-ui-key="u_8f4c05bb36fb">+ Ort setzen</span></button>
+        </section>
+
+        <section class="mm-pane" id="pane-objects" role="tabpanel" aria-labelledby="tab-objects" hidden>
+            <p id="objectsHint" class="mm-hint">Alle Wege, Symbole, Kacheln und Beschriftungen. Antippen wählt das Objekt auf der Karte aus; Umschalt-Klick erweitert die Auswahl.</p>
+            <div class="mm-layer-filters">
+                <label class="mm-field"><span id="objectKindLabel">Art</span><select id="objectKind"></select></label>
+                <label class="mm-field"><span id="objectLayerLabel">Ebene</span><select id="objectLayer"><option value="">Alle Ebenen</option></select></label>
+                <label class="mm-field"><span id="objectSearchLabel">Objekte suchen</span><input id="objectSearch" type="search" maxlength="80" autocomplete="off"></label>
+            </div>
+            <div class="mm-object-bar">
+                <p id="objectCount" class="mm-target" role="status"></p>
+                <button id="objectEdit" type="button" class="mm-btn mm-btn-small" disabled>Auswahl bearbeiten</button>
+            </div>
+            <ul id="objectList" class="mm-places"></ul>
+            <p id="objectMore" class="mm-hint" hidden></p>
         </section>
     </aside>
 </div>
@@ -499,6 +532,7 @@
                 <dt><kbd>Alt</kbd>+<span id="helpWheelKey">Mausrad</span></dt><dd id="helpWheel">Reihenfolge der Auswahl ändern (Auswählen-Werkzeug)</dd>
                 <dt><kbd>Alt</kbd>+<kbd>↑</kbd> <kbd>↓</kbd></dt><dd id="helpLayer">Ebene des Werkzeugs wechseln</dd>
                 <dt><kbd>Umschalt</kbd>+<span id="helpNodeKey">Ziehen</span></dt><dd id="helpNode">Wegpunkt des ausgewählten Wegs verschieben (Auswählen)</dd>
+                <dt><kbd>Enter</kbd> / <kbd>Rücktaste</kbd></dt><dd id="helpPathNodes">„Punkte setzen“: Weg abschließen / letzten Punkt entfernen</dd>
             </dl>
             <p id="helpBracketNote" class="mm-hint">Deutsche Tastatur: AltGr+8/9 für [ ], AltGr+7/0 für { }.</p>
         </div>

@@ -154,7 +154,7 @@ function drawStamp(ctx, item, palette) {
     ctx.restore();
 }
 
-function drawLabel(ctx, item, palette) {
+export function drawLabel(ctx, item, palette) {
     const { font, spacing } = labelFont(item);
     const text = labelText(item);
     ctx.save();
