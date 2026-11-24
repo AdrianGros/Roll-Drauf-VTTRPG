@@ -1,7 +1,7 @@
 {
   "title": "Roll Drauf VTT next full version",
   "defined_on": "2026-11-23",
-  "status": "goal_active_one_packet_delivered_three_partial",
+  "status": "full_version_in_progress",
   "phase": "Bounded packet Apply, Deploy and Monitor; full-version scope retained",
   "owner_instruction": "Define all outstanding work packets as the goal for the next full version and provide a completed versus remaining rundown.",
   "scope": "All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.",
@@ -450,13 +450,14 @@
       "depends_on": [],
       "decisions_or_inputs": [
         "Owner decision on public AI labeling/publication; actual approved English Oglan material, additional backgrounds/artwork and any additional-system sources."
-      ]
+      ],
+      "publication_policy": "AI-generated images may be public with a required AI label and existing rights confirmation; implement and verify this policy."
     },
     {
       "id": "FV17",
       "title": "Identify the deferred zero percent control",
       "priority": "P2",
-      "status": "planned_input_needed",
+      "status": "closed_owner_scope_decision",
       "source_refs": [
         "2026-11-13:N11"
       ],
@@ -469,7 +470,12 @@
       "depends_on": [],
       "decisions_or_inputs": [
         "The original control is still unidentified and was explicitly deferred by the owner."
-      ]
+      ],
+      "closure": {
+        "date": "2026-11-24",
+        "reason": "Unidentified report disregarded by the owner; existing notes only identify it as deferred N11 and do not establish a reproducible control.",
+        "implemented": false
+      }
     },
     {
       "id": "FV18",
@@ -1070,7 +1076,7 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Continue FV01 with semantically reviewed canonical-ID presentation mappings and remaining module/editor coverage. Preserve delivered FV01 labels and FV04. Complete all remaining FV05/FV06 and other retained packets; unresolved policy/source/control inputs gate only dependent work.",
+  "next_step": "Continue FV01 with semantically reviewed canonical-ID presentation mappings and remaining module/editor coverage. Preserve delivered FV01 labels and FV04. Complete all remaining FV05/FV06 and other retained packets; The AI publication policy is now decided and FV17 is closed by owner scope decision; remaining content/source inputs gate only dependent work.",
   "current_delivery": {
     "source": "a28afce53838d73abfc2d5602f02f7fb50996e45",
     "image": "sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0",
@@ -1082,6 +1088,21 @@
       "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
       "image": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
       "monitor": "docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md"
+    }
+  ],
+  "owner_decisions": [
+    {
+      "date": "2026-11-24",
+      "packet": "FV16",
+      "decision": "Public AI-generated images are allowed with a required AI label and the existing rights confirmation.",
+      "source": "Explicit owner reply to the publication-policy question."
+    },
+    {
+      "date": "2026-11-24",
+      "packet": "FV17",
+      "decision": "Disregard the unidentified old 0% report; the owner does not know its origin and no reliable identity was recovered.",
+      "source": "Explicit owner instruction: unless its origin is known, disregard it.",
+      "closure": "Closed by owner scope decision, not by a technical fix."
     }
   ]
 }

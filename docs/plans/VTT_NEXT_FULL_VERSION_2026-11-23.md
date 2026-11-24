@@ -12,6 +12,8 @@ The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live ap
 
 ## Current packet progress
 
+Owner decisions, 24 November: public AI-generated images are allowed with a required AI label and the existing rights confirmation (FV16). The unidentified older 0% report is disregarded at the owner’s instruction; FV17 closes by scope decision, without claiming a technical fix.
+
 FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 now has a [partly delivered creator interface](../DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md): cataloged labels follow the rules language, with safe live switching and unchanged canonical data. Complete English rules presentation, validation and editor coverage remain open. Its reproducible inventory covers 339 spells (310 single candidates, 29 ambiguous, no approved identities). The overall goal remains active.
 
 ## Already delivered
@@ -46,7 +48,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV14 | Campaign homebrew approvals | P2 | Planned |
 | FV15 | Campaign quota extension request | P2 | Plan and inputs needed |
 | FV16 | Content provenance and publication policy | P2 | Plan and inputs needed |
-| FV17 | Identify the deferred zero percent control | P2 | Plan and inputs needed |
+| FV17 | Identify the deferred zero percent control | P2 | Closed by owner scope decision |
 | FV18 | Integrated verification and full version release | release gate | Planned |
 
 ### FV01 Character module language
@@ -291,7 +293,7 @@ Decisions or inputs:
 
 ### FV16 Content provenance and publication policy
 
-Preserve truthful content provenance, settle the public AI-content policy and resolve the outstanding requests for additional approved rules or artwork.
+Preserve truthful content provenance, implement the decided public AI-content policy and resolve the outstanding requests for additional approved rules or artwork.
 
 Sources: 2026-11-23:E25, 2026-11-23:N08 content inputs, 2026-11-23:N23 content inputs, review web English Oglan and additional system content.
 
@@ -304,23 +306,13 @@ Acceptance:
 
 Decisions or inputs:
 
-- Owner decision on public AI labeling/publication; actual approved English Oglan material, additional backgrounds/artwork and any additional-system sources.
+- Public AI policy is decided: require an AI label and the existing rights confirmation. Actual approved English Oglan material, additional backgrounds/artwork and any additional-system sources remain inputs.
 
 ### FV17 Identify the deferred zero percent control
 
-Identify the originally reported control that should reach zero percent and establish the intended behavior.
+Closed by explicit owner scope decision, 24 November 2026. The owner does not know the origin of the old 0% report and instructed that it may be disregarded unless its identity is known. Existing evidence only records an unidentified deferred control; it establishes no reproducible identity.
 
-Sources: 2026-11-13:N11.
-
-Acceptance:
-
-- Locate the exact control and reproduce the report before changing a range or minimum.
-- Preserve the existing owner deferral until identification; do not reinterpret this as brush size, eraser softness or grid calibration.
-- Once identified, create a bounded implementation/verification contract or record an explicit owner deferral.
-
-Decisions or inputs:
-
-- The original control is still unidentified and was explicitly deferred by the owner.
+Sources: 2026-11-13:N11 and the owner's 24 November reply. No range/minimum was changed. This closure is a scope decision, not an implemented fix. It does not reinterpret the report as brush size, eraser softness or grid calibration.
 
 ### FV18 Integrated verification and full version release
 
@@ -381,7 +373,7 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | E22 | delivered | Delivered | Per-asset and crop sizes are remembered for the page session. |
 | E23 | delivered | Delivered | FV04 delivered and verified at 207c8e9fc. |
 | E24 | partial | FV10 | Private upload, crop and pixel creation exist; full tileset packages and existing-asset editing remain. |
-| E25 | decision needed | FV16 |  |
+| E25 | policy decided; implementation open | FV16 | Required AI label and existing rights confirmation. |
 | E26 | partial | FV11 | Honest filter matching, unknown traits, counts and reset delivered; semantic classification and catalog completion remain. |
 | E27 | open | FV11 |  |
 
@@ -422,7 +414,7 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | --- | --- | --- | --- |
 | 2026-11-13:N07 | open | FV14 | Campaign-specific published homebrew allowlist. |
 | 2026-11-13:S15/B10 | open | FV15 | Authorized campaign-quota extension request. |
-| 2026-11-13:N11 | owner deferred input needed | FV17 | Unidentified zero-percent control. |
+| 2026-11-13:N11 | closed by owner scope decision | FV17 | Unidentified report disregarded on 24 November. |
 | B11 | open | FV18 | Combined acceptance for the new full version; previously accepted playtable behavior stays accepted. |
 | review-web-existing-custom-asset-editing | open | FV10 |  |
 | review-web-English-Oglan-and-additional-system-content | content input needed | FV16 |  |
