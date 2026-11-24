@@ -1,0 +1,41 @@
+{
+  "status": "pass",
+  "origin": "https://vtt.roll-drauf.de",
+  "journeys": [
+    {
+      "engine": "chromium",
+      "role": "dm",
+      "width": 1440,
+      "ui_language": "de",
+      "initial_rules_language": "en",
+      "switched_rules_language": "de",
+      "theme": "night",
+      "normal_dashboard_characters_creator_navigation": true,
+      "real_settings_change": true,
+      "draft_id_version_state_and_evaluation_preserved": true,
+      "reload_existing_draft": true,
+      "user_name_unchanged": true,
+      "unit_preference_independent": true,
+      "state_sha256": "cf0525f96242d690bd51ebf21aa2682416ce60fadd67b05f5984388e9b669bcd",
+      "browser_errors": []
+    },
+    {
+      "engine": "firefox",
+      "role": "player",
+      "width": 390,
+      "ui_language": "en",
+      "initial_rules_language": "de",
+      "switched_rules_language": "en",
+      "theme": "paper",
+      "normal_dashboard_characters_creator_navigation": true,
+      "real_settings_change": true,
+      "draft_id_version_state_and_evaluation_preserved": true,
+      "reload_existing_draft": true,
+      "user_name_unchanged": true,
+      "unit_preference_independent": true,
+      "state_sha256": "cf0525f96242d690bd51ebf21aa2682416ce60fadd67b05f5984388e9b669bcd",
+      "browser_errors": []
+    }
+  ],
+  "real_oauth_tested": false
+}

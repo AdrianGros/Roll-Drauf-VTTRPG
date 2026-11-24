@@ -1,8 +1,8 @@
 {
   "title": "Roll Drauf VTT next full version",
   "defined_on": "2026-11-23",
-  "status": "goal_active_first_packet_delivered",
-  "phase": "Apply release scope only",
+  "status": "goal_active_one_packet_delivered_three_partial",
+  "phase": "Bounded packet Apply, Deploy and Monitor; full-version scope retained",
   "owner_instruction": "Define all outstanding work packets as the goal for the next full version and provide a completed versus remaining rundown.",
   "scope": "All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.",
   "baseline": {
@@ -31,7 +31,7 @@
       "id": "FV01",
       "title": "Character module language",
       "priority": "P1",
-      "status": "apply_reviewed_candidate_inventory_created_delivery_outstanding",
+      "status": "partial_delivered_verified",
       "source_refs": [
         "T3",
         "2026-11-23:N26"
@@ -45,7 +45,21 @@
       "depends_on": [],
       "decisions_or_inputs": [],
       "apply": "docs/DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md",
-      "candidate_inventory": "docs/proofs/full-version-layers-2026-11-23/fv01-spell-candidates.json"
+      "candidate_inventory": "docs/proofs/full-version-layers-2026-11-23/fv01-spell-candidates.json",
+      "delivery": {
+        "monitor": "docs/DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md",
+        "delivered": [
+          "Creator explicitly cataloged interface labels follow resolved rules locale, separately from the site UI",
+          "Live switching preserves draft identity/state/data/evaluation, focus, selected import file, pending user input and final campaign/in-flight result",
+          "Six locale combinations and normal DM/Player settings/reload journeys verified"
+        ],
+        "remaining": [
+          "Reviewed canonical-ID display mapping and complete English rules content",
+          "Structured validation and API errors",
+          "Character sheet, inventory, progression and shared character views",
+          "Remaining dynamic status text and asynchronous subclass disclosure expansion"
+        ]
+      }
     },
     {
       "id": "FV02",
@@ -1056,11 +1070,18 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Implement FV01 with reviewed canonical-ID display mappings and module-scoped locale; preserve live FV04. Complete the remaining FV05/FV06 contracts and all other retained packets. Await explicit policy/source/control inputs only for dependent work.",
+  "next_step": "Continue FV01 with semantically reviewed canonical-ID presentation mappings and remaining module/editor coverage. Preserve delivered FV01 labels and FV04. Complete all remaining FV05/FV06 and other retained packets; unresolved policy/source/control inputs gate only dependent work.",
   "current_delivery": {
-    "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
-    "image": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
-    "monitor": "docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md"
+    "source": "a28afce53838d73abfc2d5602f02f7fb50996e45",
+    "image": "sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0",
+    "monitor": "docs/DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md"
   },
-  "last_updated": "2026-11-24"
+  "last_updated": "2026-11-24",
+  "delivery_history": [
+    {
+      "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
+      "image": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
+      "monitor": "docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md"
+    }
+  ]
 }

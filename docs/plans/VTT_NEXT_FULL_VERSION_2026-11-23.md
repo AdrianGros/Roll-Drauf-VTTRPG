@@ -1,6 +1,6 @@
 # Roll Drauf VTT next full version
 
-Status: the owner defined this full-version goal on 23 November 2026; delivery remains outstanding. Phase: Apply for release scope. Completed work forms the baseline; all remaining packets below belong to the next full version.
+Status: the owner defined this full-version goal on 23 November 2026; delivery remains outstanding. Phase: bounded packet Apply, Deploy and Monitor within the retained release scope. Completed work forms the baseline; all remaining packets below belong to the next full version.
 
 ## Full version goal
 
@@ -8,11 +8,11 @@ Complete, integrate, deploy and verify all retained outstanding packets below as
 
 All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.
 
-The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `207c8e9fc`, image `sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c`. The working release name is **next full version**; no version number or deadline has been assigned. This planning change does not deploy application code.
+The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `a28afce53`, image `sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
 
 ## Current packet progress
 
-FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 has a [reviewed language design](../DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md) and a reproducible candidate inventory covering 339 spells (310 single candidates, 29 ambiguous, no approved identities). Creator/editor localization is not implemented yet. The overall goal remains active.
+FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 now has a [partly delivered creator interface](../DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md): cataloged labels follow the rules language, with safe live switching and unchanged canonical data. Complete English rules presentation, validation and editor coverage remain open. Its reproducible inventory covers 339 spells (310 single candidates, 29 ambiguous, no approved identities). The overall goal remains active.
 
 ## Already delivered
 
@@ -22,7 +22,7 @@ FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-1
 - Bronze/teal surfaces and ordinary counters follow the chosen accent; class facts use a readable responsive layout.
 - Earlier integrated work remains the baseline: grouped playtable tools, free pan/zoom/FIT, readable scene management, movable persistent windows, calendar notes/reminders/one-shots, companions, private chat threads, private own map assets, Atlas links/publication and masked 2D floors.
 
-The goal baseline passed seven live journeys and the added contents-link regression; its temporary QA users and data were removed. The subsequent FV04 delivery passed two additional authenticated Maps journeys, recorded in its own Monitor. Claude completed a source review with no supported blocking findings. The full repository suite has recorded pre-existing failures and verification gaps; these are assigned to FV18. See the [delivery monitor](../DADM_MONITOR_FEEDBACK_HARNESS_2026-11-23.md).
+The goal baseline passed seven live journeys and the added contents-link regression; its temporary QA users and data were removed. The subsequent FV04 delivery passed two authenticated Maps journeys; the FV01 label slice passed two more creator/settings/reload journeys. Both deliveries record scoped QA cleanup in their own Monitors. Claude completed a source review with no supported blocking findings. The full repository suite has recorded pre-existing failures and verification gaps; these are assigned to FV18. See the [delivery monitor](../DADM_MONITOR_FEEDBACK_HARNESS_2026-11-23.md).
 
 ## Full version work packets
 
@@ -30,7 +30,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 
 | Packet | Scope | Priority | Status |
 | --- | --- | --- | --- |
-| FV01 | Character module language | P1 | Design and candidate inventory |
+| FV01 | Character module language | P1 | Partly live |
 | FV02 | Creator workflow and backgrounds | P2 | Plan and inputs needed |
 | FV03 | Navigation and responsive page layouts | P1 | Planned |
 | FV04 | Layer targets and editor panels | P1 | Delivered live |

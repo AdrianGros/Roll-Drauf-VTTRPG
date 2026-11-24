@@ -1,0 +1,78 @@
+{
+  "commit": "a28afce53838d73abfc2d5602f02f7fb50996e45",
+  "base_source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
+  "running_revision_label": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
+  "image": "roll-drauf-vtt-app:fv01-creator-labels-20261124-a28afce53",
+  "base_image_id": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
+  "prior_image": "roll-drauf-vtt-app:fv01-creator-labels-rollback-384ab8657919",
+  "overlay_manifest": {
+    "vtt/static/i18n/ui.de.json": "b960d5c5ecb08c004a9499cec45b5f37eaa4b73b3f5d46d0045b26c67bf2a577",
+    "vtt/static/i18n/ui.en.json": "df740fdfd1b7ef0cadcc432b61e3ce5ce617fc0e0d65e2da4dcacd4ae4b938ba",
+    "vtt/static/js/display-preferences.js": "2b181736932768b5dac7fda434b090d2017b69020e4673899c10852051fef7d4",
+    "vtt/static/js/srd-creator-steps.js": "4f1f24e1467afa9cfa65fe2f9a76fb2116b3c8feeb2e66c4de28d997e3b17601",
+    "vtt/static/js/srd-creator.js": "efe520d06aac74054111456ad568815e6f49b3a8f8fe265a07b6c5ca7987c29a",
+    "vtt/static/js/srd-rule-preview.js": "2e74e4f1bd45bafe4167714ad7e5ef16cd7af4e826a25e5d0aa012ce37235417",
+    "vtt/static/js/ui-catalog.js": "84964d1d55421451d82abe993c8312ffc258c7100378d5ad30b79a9bd5922c41",
+    "vtt/templates/srd-creator.html": "8ff10415f1754c6818384714687d618e58a00fe329cceebccf7f0371080606fd"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_before": {
+    "/roll-drauf-vtt-mailserver-1": {
+      "id": "d17377aeced889c1b8f7179bac736196c8985f3440036ea09568b8c7db088743",
+      "started_at": "2026-11-10T16:17:34.845940374Z"
+    },
+    "/roll-drauf-vtt-db-1": {
+      "id": "75d0b239cd1d6a8f2f791e78028aa6c42142a55f679cf663a49c0a731be62a49",
+      "started_at": "2026-11-10T16:17:34.827250527Z"
+    },
+    "/roll-drauf-vtt-redis-1": {
+      "id": "37ac298892f547099b3844172945475c17e206996b6596d68a3189fd240ead4c",
+      "started_at": "2026-11-10T16:17:34.8087529Z"
+    }
+  },
+  "prepared_at": "2026-11-24T03:29:34.304221+00:00",
+  "verification_scope": "all shipped Python/JS/CSS/HTML, app.py, requirements.txt and changed JSON; unchanged artwork inherited from the checked image",
+  "baseline_source_verification": {
+    "checked": 334,
+    "mismatches": []
+  },
+  "image_id": "sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0",
+  "built_source_verification": {
+    "checked": 334,
+    "mismatches": []
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-24/fv01-creator-labels/a28afce53/database-before.dump",
+    "bytes": 539343,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "deployed_at": "2026-11-24T03:31:35.140079879Z",
+  "health": {
+    "now": "2026-11-24T03:31:46.929443",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-24T03:31:43.436799",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-24/fv01-creator-labels/a28afce53/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "live_acceptance": {
+    "status": "pass",
+    "journeys": 2,
+    "proof": "/srv/migration/2026-11-24/fv01-creator-labels/a28afce53/live.json",
+    "qa_cleanup": "pass",
+    "credentials_removed": true
+  }
+}
