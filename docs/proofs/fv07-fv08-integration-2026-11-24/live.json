@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "origin": "https://vtt.roll-drauf.de",
+  "journeys": [
+    {
+      "engine": "chromium",
+      "role": "dm",
+      "width": 1440,
+      "language": "de",
+      "theme": "night",
+      "normal_maps_navigation": true,
+      "node_draft_toolbar_undo": true,
+      "node_finish_remove_undo_redo": true,
+      "explicit_draw_edit_switch": true,
+      "preview_does_not_change_document_history_or_generation": true,
+      "rotation_presets_persist": true,
+      "all_four_object_kinds_select_same_map_state": true,
+      "filter_and_naming_route": true,
+      "file_roundtrip_exact_nodes_rotations_tiles": true,
+      "no_horizontal_overflow": true,
+      "file_sha256": "89e8f32b28369917e9d354478ddf3059badabc000648e58445be6fa85e114ebd",
+      "browser_errors": []
+    },
+    {
+      "engine": "firefox",
+      "role": "player",
+      "width": 390,
+      "language": "en",
+      "theme": "paper",
+      "normal_maps_navigation": true,
+      "node_draft_toolbar_undo": true,
+      "node_finish_remove_undo_redo": true,
+      "explicit_draw_edit_switch": true,
+      "preview_does_not_change_document_history_or_generation": true,
+      "rotation_presets_persist": true,
+      "all_four_object_kinds_select_same_map_state": true,
+      "filter_and_naming_route": true,
+      "file_roundtrip_exact_nodes_rotations_tiles": true,
+      "no_horizontal_overflow": true,
+      "file_sha256": "352235025f0764690c8dd78f6935e998a86dee53cdcc46bbc65ae6cd0752fe75",
+      "browser_errors": []
+    }
+  ],
+  "real_oauth_tested": false,
+  "remote_projects_created": false
+}

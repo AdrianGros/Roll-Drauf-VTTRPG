@@ -1,0 +1,19 @@
+{
+  "status": "final_pass",
+  "initial_attempts": [
+    {
+      "attempt": 1,
+      "classification": "Acceptance script assumed Redo reselected the restored path; actual normal route requires selecting it from Objects."
+    },
+    {
+      "attempt": 2,
+      "classification": "Script asserted node-mode checkbox after explicitly starting a new path, which intentionally cleared selection; moved edit-switch check to the finished-path state."
+    },
+    {
+      "attempt": 3,
+      "classification": "Script assumed repeated stamp placement selected the stamp; use Objects\u2192Edit selection to reach its inspector."
+    }
+  ],
+  "application_changes_for_these_attempts": false,
+  "phone_navigation": "Close the bottom tool sheet before canvas placement, then reopen for controls; no force clicks or injected document mutations."
+}

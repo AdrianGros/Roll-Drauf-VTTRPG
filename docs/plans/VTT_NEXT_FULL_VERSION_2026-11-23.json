@@ -71,23 +71,22 @@
       "id": "FV02",
       "title": "Creator workflow and backgrounds",
       "priority": "P2",
-      "status": "planned_input_needed",
+      "status": "planned",
       "source_refs": [
         "T4 remaining",
         "2026-11-23:N22",
         "2026-11-23:N23"
       ],
-      "outcome": "Make guided creation and the full form easy to distinguish and expand the available backgrounds using approved content.",
+      "outcome": "Make guided creation and the full form easy to distinguish while preserving existing approved background workflows.",
       "acceptance": [
         "Both modes remain available and use the same draft; mode labels and hierarchy explain their purpose.",
-        "Approved additional backgrounds appear in the intended language and pass existing choice and prerequisite validation."
+        "Preserve validation/language behavior for available approved backgrounds; unavailable additional rules content is deferred by the owner."
       ],
       "depends_on": [
         "FV01"
       ],
-      "decisions_or_inputs": [
-        "The exact additional backgrounds and their usable sources must be selected; FV16 tracks the shared content inputs."
-      ]
+      "decisions_or_inputs": [],
+      "deferred_by_owner": "Unavailable additional approved rules/background content is deferred; existing creator workflow and supplied rules stay in scope."
     },
     {
       "id": "FV03",
@@ -225,7 +224,7 @@
       "id": "FV07",
       "title": "Object list and label placement",
       "priority": "P1",
-      "status": "implemented_awaiting_codex_integration",
+      "status": "delivered_verified",
       "source_refs": [
         "S3",
         "2026-11-23:E16",
@@ -243,13 +242,18 @@
         "FV04"
       ],
       "decisions_or_inputs": [],
-      "owner_assignment": "Owner assignment 2026-11-24: implemented by Claude on branch feat/mapmaker-fv07-fv08-20261124 (worktree /home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124), locally tested, not pushed or deployed. Codex: integrate, verify and deploy per docs/DADM_DEPLOY_FV07_FV08_MAPMAKER_2026-11-24.md on that branch."
+      "owner_assignment": "Implemented by Claude, integrated/reviewed/corrected/committed/pushed/deployed by Codex; normal DM/Player acceptance and QA cleanup recorded in docs/DADM_DEPLOY_MONITOR_FV07_FV08_2026-11-24.md",
+      "delivery": {
+        "source": "d116b7679a8d77dd35fd307919133a4e39c5cee1",
+        "image": "sha256:939254c3ae4f25bab7fb6bec5f193aa7ff8e980c6f286d73b86802414e3954f5",
+        "monitor": "docs/DADM_DEPLOY_MONITOR_FV07_FV08_2026-11-24.md"
+      }
     },
     {
       "id": "FV08",
       "title": "Path drawing and editing modes",
       "priority": "P1",
-      "status": "implemented_awaiting_codex_integration",
+      "status": "delivered_verified",
       "source_refs": [
         "S6",
         "2026-11-23:E12",
@@ -265,7 +269,12 @@
         "FV04"
       ],
       "decisions_or_inputs": [],
-      "owner_assignment": "Owner assignment 2026-11-24: implemented by Claude on branch feat/mapmaker-fv07-fv08-20261124 (worktree /home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124), locally tested, not pushed or deployed. Codex: integrate, verify and deploy per docs/DADM_DEPLOY_FV07_FV08_MAPMAKER_2026-11-24.md on that branch."
+      "owner_assignment": "Implemented by Claude, integrated/reviewed/corrected/committed/pushed/deployed by Codex; normal DM/Player acceptance and QA cleanup recorded in docs/DADM_DEPLOY_MONITOR_FV07_FV08_2026-11-24.md",
+      "delivery": {
+        "source": "d116b7679a8d77dd35fd307919133a4e39c5cee1",
+        "image": "sha256:939254c3ae4f25bab7fb6bec5f193aa7ff8e980c6f286d73b86802414e3954f5",
+        "monitor": "docs/DADM_DEPLOY_MONITOR_FV07_FV08_2026-11-24.md"
+      }
     },
     {
       "id": "FV09",
@@ -442,7 +451,7 @@
       "id": "FV16",
       "title": "Content provenance and publication policy",
       "priority": "P2",
-      "status": "planned_input_needed",
+      "status": "planned",
       "source_refs": [
         "2026-11-23:E25",
         "2026-11-23:N08 content inputs",
@@ -452,16 +461,16 @@
       "outcome": "Preserve truthful content provenance, settle the public AI-content policy and resolve the outstanding requests for additional approved rules or artwork.",
       "acceptance": [
         "Keep source/license information and rights confirmation through private editing and export; public policy is a separate explicit owner decision.",
-        "Use genuine approved material for more backgrounds, missing artwork and an English Oglan edition; never fabricate an official translation or content rights.",
+        "Use genuine approved material for available artwork; unavailable additional rules content including English Oglan/backgrounds is deferred by the owner. Never fabricate an official translation or content rights.",
         "Record the DSA/additional-system request against available sources and actual required mechanics before promising support; do not imply a complete new rules engine.",
         "Missing inputs remain visible until supplied or explicitly deferred by the owner."
       ],
       "depends_on": [],
-      "decisions_or_inputs": [
-        "Owner decision on public AI labeling/publication; actual approved English Oglan material, additional backgrounds/artwork and any additional-system sources."
-      ],
+      "decisions_or_inputs": [],
       "publication_policy": "AI-generated images may be public with a required AI label and existing rights confirmation; implement and verify this policy.",
-      "asset_source_inventory": "docs/DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md"
+      "asset_source_inventory": "docs/DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md",
+      "rules_content_owner_deferral": "Unavailable rules content, including English Oglan/additional approved backgrounds, deferred by explicit owner reply. Available source provenance, AI publication labels and artwork restrictions remain technical scope.",
+      "source_scan": "docs/DADM_DISCOVER_FV16_CONTENT_SOURCES_2026-11-24.md"
     },
     {
       "id": "FV17",
@@ -491,7 +500,7 @@
       "id": "FV18",
       "title": "Integrated verification and full version release",
       "priority": "release gate",
-      "status": "planned",
+      "status": "in_progress",
       "source_refs": [
         "B11",
         "feedback harness residuals",
@@ -527,7 +536,10 @@
         "FV16",
         "FV17"
       ],
-      "decisions_or_inputs": []
+      "decisions_or_inputs": [],
+      "completed_subscope": [
+        "Five obsolete map test assertions reconciled with delivered FV04/FV05 contracts; all affected cases pass. Full integrated release and remaining baseline work stay open."
+      ]
     }
   ],
   "coverage": {
@@ -853,12 +865,12 @@
         "note": ""
       },
       "N23": {
-        "status": "content_input_needed",
+        "status": "owner_deferred_unavailable_rules_content",
         "packets": [
           "FV02",
           "FV16"
         ],
-        "note": ""
+        "note": "Owner explicitly deferred unavailable rules additions on2026-11-24; technical workflows and available artwork provenance remain in scope."
       },
       "N24": {
         "status": "delivered",
@@ -915,11 +927,11 @@
         "note": ""
       },
       "review-web-English-Oglan-and-additional-system-content": {
-        "status": "content_input_needed",
+        "status": "owner_deferred_unavailable_rules_content",
         "packets": [
           "FV16"
         ],
-        "note": ""
+        "note": "Owner explicitly deferred unavailable rules additions on2026-11-24; technical workflows and available artwork provenance remain in scope."
       },
       "review-web-clipped-tree": {
         "status": "asset_id_needed",
@@ -1086,11 +1098,11 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Integrate, verify and deploy Claude's completed FV07/FV08 handoff under the recorded owner assignment. Preserve live source11384877a. Continue FV01 language/editor coverage and all other retained technical packets through FV18. FV17 remains owner-scope closed; Ducky originals prohibit generation/generative use; missing content inputs remain visible.",
+  "next_step": "Continue FV02 creator view clarity under owner deferral of unavailable rules content; preserve delivered FV07/FV08 source d116b7679 and continue all remaining technical packets through FV18. No image generation or generative use of Ducky originals.",
   "current_delivery": {
-    "source": "11384877aecdf8c00dbac753c7b3f3012e0e4b24",
-    "image": "sha256:6def74eab5d7b628a8afbf556c559fe97ca82fb826a450dbdf9b60921a1b5eef",
-    "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md"
+    "source": "d116b7679a8d77dd35fd307919133a4e39c5cee1",
+    "image": "sha256:939254c3ae4f25bab7fb6bec5f193aa7ff8e980c6f286d73b86802414e3954f5",
+    "monitor": "docs/DADM_DEPLOY_MONITOR_FV07_FV08_2026-11-24.md"
   },
   "last_updated": "2026-11-24",
   "delivery_history": [
@@ -1108,6 +1120,11 @@
       "source": "842f57e58965c182e46ee6c4f81ad404373bd6d9",
       "image": "sha256:d04f4ee8fce80226544116f51a73cc3791d7cedb69f351bb9b9906e729761a18",
       "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md"
+    },
+    {
+      "source": "11384877aecdf8c00dbac753c7b3f3012e0e4b24",
+      "image": "sha256:6def74eab5d7b628a8afbf556c559fe97ca82fb826a450dbdf9b60921a1b5eef",
+      "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md"
     }
   ],
   "owner_decisions": [
@@ -1132,6 +1149,15 @@
       ],
       "decision": "Use the RD Team Discord as a source inventory for Ducky assets. Do not generate new images and do not use Ducky artwork in any generative workflow. Preserve originals, attribution and source-specific usage restrictions.",
       "source": "Explicit owner instructions, including clarification that the source is the RD Team Discord."
+    },
+    {
+      "date": "2026-11-24",
+      "packets": [
+        "FV02",
+        "FV16"
+      ],
+      "decision": "Defer unavailable rules content from this full version; continue technical packets. This covers the unavailable English Oglan/additional character-background rules asked about, rather than dropping the technical workflows or Ducky artwork/provenance restrictions.",
+      "source": "Explicit owner reply: Defer unavailable rules content; continue the technical packets."
     }
   ],
   "asset_constraints": {

@@ -1,0 +1,13 @@
+# FV16 approved-content source follow-up
+
+Status: bounded Discover complete. Retention permanent. Input: owner's explicit RD Team Discord source instruction, previous [Ducky original-asset discovery](DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md), and still-missing English Oglan/additional character-background/other-system source inputs.
+
+After the nine Ducky art threads, review covered the full available histories of five source-oriented Team text channels (sharing, collection, website, sharing-list and text): 20 messages total, all five history ends reached. No candidate rules attachments or relevant source links were found. Two keyword hits were recruitment prose about a character backstory, not background mechanics. Prior non-art forum title inventory yielded no Oglan/rules package source; internal staff rules are unrelated. This is a bounded scan, not a claim about every staff/personal conversation or inaccessible server content. [Sanitized counts](proofs/ducky-asset-discovery-2026-11-24/rules-source-summary.json).
+
+Access used the existing Team bot's read-only Discord GET capability. No Discord post, bot code/config/service/role change, lane database read/test, credential forwarding, image download/processing/generation or generative artwork use occurred in this follow-up. Raw messages stay in the protected original audit directory and are not committed. The earlier preserved originals remain unchanged; QR-code creator credit remains Anne rather than the uploader.
+
+No new approved rules content is inferred from the art archive or from silence. The existing German Oglan and four SRD character backgrounds remain the known inputs. English Oglan, additional approved character-background rules and other-system source material stay explicit FV02/FV16 inputs. Public AI-image labeling does not grant rights to Ducky artwork. Medium wrong-source risk is resolved by retaining the distinction between image backgrounds and rules backgrounds and refusing to invent official translations or rights.
+
+Next: implement the independent retained technical packets. Use an actual approved source or an explicit owner deferral before closing the dependent content additions; no whole-goal blocked/complete status follows from this bounded content gap.
+
+Owner resolution, 24 November: explicit reply “Defer unavailable rules content; continue the technical packets.” Unavailable English Oglan/additional approved background rules are therefore outside this full-version delivery scope; the technical workflows and artwork/provenance constraints remain. The earlier discovery findings stay unchanged.

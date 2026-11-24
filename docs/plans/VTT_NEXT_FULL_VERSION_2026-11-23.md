@@ -8,13 +8,15 @@ Complete, integrate, deploy and verify all retained outstanding packets below as
 
 All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.
 
-The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `11384877a`, image `sha256:6def74eab5d7b628a8afbf556c559fe97ca82fb826a450dbdf9b60921a1b5eef`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
+The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `d116b7679`, image `sha256:939254c3ae4f25bab7fb6bec5f193aa7ff8e980c6f286d73b86802414e3954f5`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
 
 ## Current packet progress
 
-Owner assignment, 24 November: Claude implements FV07 and FV08 in `/home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124` (branch `feat/mapmaker-fv07-fv08-20261124`). Both are implemented and locally tested (not pushed or deployed); Codex integrates, verifies and deploys them following `docs/DADM_DEPLOY_FV07_FV08_MAPMAKER_2026-11-24.md` on that branch.
+Owner assignment, 24 November: Claude implements FV07 and FV08 in `/home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124` (branch `feat/mapmaker-fv07-fv08-20261124`). Both are now integrated, corrected, committed/pushed, deployed and live verified by Codex; see [delivery Monitor](../DADM_DEPLOY_MONITOR_FV07_FV08_2026-11-24.md). The handoff worktree is preserved.
 
 Asset constraint, 24 November: scan the RD Team Discord for Ducky’s existing assets and permission notes. Generate no new images and use none of her artwork in a generative workflow. Preserve originals and source-specific restrictions; labeling never grants missing rights.
+
+Owner content decision, 24 November: defer unavailable rules additions (including the missing English Oglan and additional character-background sources) from this full version and continue the technical packets. Technical workflows, available source provenance and Ducky's artwork constraints remain in scope. The [bounded Team source scan](../DADM_DISCOVER_FV16_CONTENT_SOURCES_2026-11-24.md) found no such rules inputs.
 
 Owner decisions, 24 November: public AI-generated images are allowed with a required AI label and the existing rights confirmation (FV16). The unidentified older 0% report is disregarded at the owner’s instruction; FV17 closes by scope decision, without claiming a technical fix.
 
@@ -37,13 +39,13 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | Packet | Scope | Priority | Status |
 | --- | --- | --- | --- |
 | FV01 | Character module language | P1 | Partly live |
-| FV02 | Creator workflow and backgrounds | P2 | Plan and inputs needed |
+| FV02 | Creator workflow and backgrounds | P2 | Planned; unavailable rules additions deferred by owner |
 | FV03 | Navigation and responsive page layouts | P1 | Planned |
 | FV04 | Layer targets and editor panels | P1 | Delivered live |
 | FV05 | Reference grids snapping and tile transforms | P1 | Partly live |
 | FV06 | Brush controls colors and quick palette | P1 | Partly live |
-| FV07 | Object list and label placement | P1 | Implemented by Claude, awaiting Codex integration |
-| FV08 | Path drawing and editing modes | P1 | Implemented by Claude, awaiting Codex integration |
+| FV07 | Object list and label placement | P1 | Delivered live |
+| FV08 | Path drawing and editing modes | P1 | Delivered live |
 | FV09 | Line styles node curves and text geometry | P1 | Plan and inputs needed |
 | FV10 | Own images and tileset packages | P1 | Plan and inputs needed |
 | FV11 | Catalog metadata and personal sets | P1 | Plan and inputs needed |
@@ -53,7 +55,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV15 | Campaign quota extension request | P2 | Plan and inputs needed |
 | FV16 | Content provenance and publication policy | P2 | Plan and inputs needed |
 | FV17 | Identify the deferred zero percent control | P2 | Closed by owner scope decision |
-| FV18 | Integrated verification and full version release | release gate | Planned |
+| FV18 | Integrated verification and full version release | release gate | In progress; five obsolete map assertions reconciled |
 
 ### FV01 Character module language
 
@@ -69,14 +71,14 @@ Acceptance:
 
 ### FV02 Creator workflow and backgrounds
 
-Make guided creation and the full form easy to distinguish and expand the available backgrounds using approved content.
+Make guided creation and the full form easy to distinguish while preserving existing approved background workflows.
 
 Sources: T4 remaining, 2026-11-23:N22, 2026-11-23:N23.
 
 Acceptance:
 
 - Both modes remain available and use the same draft; mode labels and hierarchy explain their purpose.
-- Approved additional backgrounds appear in the intended language and pass existing choice and prerequisite validation.
+- Available approved backgrounds preserve intended-language, choice and prerequisite behavior; unavailable additional rules content is deferred by the owner.
 
 Dependencies: FV01.
 
@@ -304,13 +306,13 @@ Sources: 2026-11-23:E25, 2026-11-23:N08 content inputs, 2026-11-23:N23 content i
 Acceptance:
 
 - Keep source/license information and rights confirmation through private editing and export; public policy is a separate explicit owner decision.
-- Use genuine approved material for more backgrounds, missing artwork and an English Oglan edition; never fabricate an official translation or content rights.
+- Use genuine approved material for available artwork; unavailable rules additions including English Oglan/backgrounds are deferred by the owner. Never fabricate an official translation or content rights.
 - Record the DSA/additional-system request against available sources and actual required mechanics before promising support; do not imply a complete new rules engine.
 - Missing inputs remain visible until supplied or explicitly deferred by the owner.
 
 Decisions or inputs:
 
-- Public AI policy is decided: require an AI label and the existing rights confirmation. Actual approved English Oglan material, additional backgrounds/artwork and any additional-system sources remain inputs.
+- Public AI policy is decided: require an AI label and the existing rights confirmation. Unavailable rules content is explicitly deferred; available artwork provenance and the non-generative-use restrictions remain technical scope.
 
 ### FV17 Identify the deferred zero percent control
 
@@ -407,7 +409,7 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | N20 | reproduce | FV03 |  |
 | N21 | delivered | Delivered | The active navigation group remains marked when closed. |
 | N22 | open | FV02 |  |
-| N23 | content input needed | FV02, FV16 |  |
+| N23 | Owner deferred unavailable rules | FV02, FV16 | Technical workflows retained. |
 | N24 | delivered | Delivered | Bronze/teal affect semantic surfaces and ordinary counters. |
 | N25 | delivered | Delivered | Class facts use responsive readable definition lists. |
 | N26 | open | FV01 |  |
@@ -421,7 +423,7 @@ IDs are namespaced by review date: for example, the November 13 N07 is campaign 
 | 2026-11-13:N11 | closed by owner scope decision | FV17 | Unidentified report disregarded on 24 November. |
 | B11 | open | FV18 | Combined acceptance for the new full version; previously accepted playtable behavior stays accepted. |
 | review-web-existing-custom-asset-editing | open | FV10 |  |
-| review-web-English-Oglan-and-additional-system-content | content input needed | FV16 |  |
+| review-web-English-Oglan-and-additional-system-content | Owner deferred unavailable rules | FV16 | No fabricated translation/content rights. |
 | review-web-clipped-tree | asset id needed | FV11 |  |
 | feedback-harness-menu-Escape | delivered | Delivered | FV06 menu propagation subcase verified at 207c8e9fc; other FV06 work remains. |
 | feedback-harness-character-archive-width | reproduce | FV03 |  |

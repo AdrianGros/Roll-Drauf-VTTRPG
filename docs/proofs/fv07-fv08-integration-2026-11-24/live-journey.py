@@ -19,7 +19,14 @@ def save(): (root/'live.json').write_text(json.dumps(proof,indent=2)+'\n')
 def tool(ed,name):
     ed.tool(name)
     if not ed.page.locator('#pane-tool').is_visible():ed.page.locator('#tab-tool').click()
+def show_tool(ed):
+    if not ed.page.locator('#pane-tool').is_visible():ed.page.locator('#tab-tool').click()
+def place(ed,x,y):
+    if ed.page.viewport_size['width']<760 and ed.page.locator('#pane-tool').is_visible():ed.page.locator('#tab-tool').click()
+    ed.click_doc(x,y)
 def path_items(ed):return [x for x in ed.summary()['items'] if 'points' in x]
+
+save()
 
 with sync_playwright() as p:
     for engine,role,width,language,theme in [('chromium','dm',1440,'de','night'),('firefox','player',390,'en','paper')]:
@@ -38,35 +45,46 @@ with sync_playwright() as p:
             page.wait_for_selector('#app[data-state=ready]');page.locator('#newEmpty').click()
             ed=Editor(context,page,errors)
             tool(ed,'path');page.locator('input[name="pathMode"][value="nodes"]').check()
-            ed.click_doc(400,400)
+            place(ed,400,400);show_tool(ed)
             expect(page.locator('#undoVisible')).to_be_enabled()
             page.locator('#undoVisible').click()
             expect(page.locator('#pathDraftBar')).to_be_hidden()
             assert not path_items(ed)
             steps=ed.summary()['historySteps']
-            for point in [(400,400),(650,500),(900,420)]:ed.click_doc(*point)
-            page.keyboard.press('Backspace');ed.click_doc(900,500);page.keyboard.press('Enter')
+            for point in [(400,400),(650,500),(900,420)]:place(ed,*point)
+            page.keyboard.press('Backspace');place(ed,900,500);page.keyboard.press('Enter')
             (path,)=path_items(ed);assert len(path['points'])==3 and ed.summary()['historySteps']==steps+1
-            page.locator('#mapCanvas').focus();page.keyboard.press('Control+z');assert not path_items(ed)
-            page.keyboard.press('Control+Shift+z');assert path_items(ed)==[path]
-            page.locator('#selPathName').fill('QA Route');page.locator('#selPathName').press('Enter')
-            path=path_items(ed)[0]
+            show_tool(ed)
             page.locator('#pathEditNodes').click()
             assert ed.summary()['tool']=='select';expect(page.locator('#pathNodeMode')).to_be_checked()
             page.locator('#selPathDraw').click();assert ed.summary()['tool']=='path'
+            page.locator('#mapCanvas').focus();page.keyboard.press('Control+z');assert not path_items(ed)
+            page.keyboard.press('Control+Shift+z');assert path_items(ed)==[path]
+            # Redo restores content, not the former selection. Use the delivered object-list edit route.
+            page.locator('#tab-objects').click()
+            page.locator('#objectList .mm-object[data-key="'+path['id']+'"]').click()
+            page.locator('#objectEdit').click()
+            expect(page.locator('#selPathName')).to_be_focused()
+            page.locator('#selPathName').fill('QA Route');page.locator('#selPathName').press('Enter')
+            path=path_items(ed)[0]
             # Label preview is transient; neither an ID nor a history step is allocated by hovering.
             tool(ed,'label');before=ed.summary();page.mouse.move(*ed.client(1400,600))
             page.evaluate('() => new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)))')
             after=ed.summary();assert before['items']==after['items'] and before['historySteps']==after['historySteps'] and before['generation']==after['generation']
-            ed.click_doc(1400,600)
+            place(ed,1400,600);show_tool(ed)
             page.locator('#selText').fill('QA Place');page.locator('#selText').press('Enter')
             page.locator('#inspectLabel .mm-rot-presets button[data-rot="45"]').click()
             label=next(x for x in ed.summary()['items'] if 'text' in x);assert label['rot']==45
-            tool(ed,'stamp');choose_stamp(page,'kenney-cartography',CASTLE);ed.click_doc(1000,1000)
+            tool(ed,'stamp');choose_stamp(page,'kenney-cartography',CASTLE);place(ed,1000,1000)
+            stamp=next(x for x in ed.summary()['items'] if 'asset' in x)
+            # Stamp placement intentionally stays ready for repeated placement; select it for inspection.
+            page.locator('#tab-objects').click()
+            page.locator('#objectList .mm-object[data-key="'+stamp['id']+'"]').click()
+            page.locator('#objectEdit').click()
             page.locator('#inspectStamp .mm-rot-presets button[data-rot="90"]').click()
             stamp=next(x for x in ed.summary()['items'] if 'asset' in x);assert stamp['rot']==90
             tool(ed,'tile');page.locator('#tilePack').select_option('kenney-tiny');page.locator('#tileSearch').fill('Gras')
-            page.locator('.mm-tile-btn[data-tile="'+GRASS+'"]').click();ed.click_doc(1600,1300)
+            page.locator('.mm-tile-btn[data-tile="'+GRASS+'"]').click();place(ed,1600,1300)
             tiles=next(x for x in ed.summary()['layers'] if x['kind']=='tiles')
             page.locator('#tab-objects').click()
             expect(page.locator('#objectList .mm-object')).to_have_count(4)
