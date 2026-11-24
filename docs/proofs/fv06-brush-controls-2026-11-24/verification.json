@@ -1,5 +1,5 @@
 {
-  "status": "targeted_checks_complete",
+  "status": "delivered_live_verified",
   "distinct_cases_covered": 17,
   "runs": [
     {
@@ -31,7 +31,7 @@
     "git diff --check"
   ],
   "limits": [
-    "Production deployment, role-specific UI acceptance and cleanup still pending.",
+    "Both normal live journeys, runtime checks and scoped QA cleanup pass; no full repository suite claim.",
     "No physical keyboard/touch or real OAuth in automated checks."
   ]
 }

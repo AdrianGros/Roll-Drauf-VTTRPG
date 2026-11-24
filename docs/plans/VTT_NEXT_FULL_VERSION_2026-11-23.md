@@ -8,7 +8,7 @@ Complete, integrate, deploy and verify all retained outstanding packets below as
 
 All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.
 
-The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `39c333a69`, image `sha256:90f953f9556008454b12df3eb158fc09117f9e4106ad8dbd7130833a6aca125c`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
+The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `14e9d528a`, image `sha256:5ecdfd5242e224508ec16365f5df7627845f9fea2c410cd4298ab70c90762eae`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
 
 ## Current packet progress
 
@@ -23,6 +23,8 @@ Owner decisions, 24 November: public AI-generated images are allowed with a requ
 FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 now has a [partly delivered creator interface](../DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md): cataloged labels follow the rules language, with safe live switching and unchanged canonical data. The [next content slice](../DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md) adds 663 reviewed core/spell names,52 terms and genuine English details, with stable spell checks and live DM/Player proof. The [equipment slice](../DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md) adds 184 reviewed equipment identities and mastery/property/coin terms (847 names/74 terms total), with live canonical armor/mastery/settings/reload proof. Species subchoices, remaining labels, validation and editor coverage stay open. Unused trinket data has no current UI consumer; this does not add a trinket feature. The earlier 339-spell facet inventory remains candidate-only; actual core/spell identities now have separate reviewed source pins. [Ducky source discovery](../DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md) preserves50 original graphics candidates without image processing or generative use. The overall goal remains active.
 
 FV02 [creator view clarity is delivered](../DADM_DEPLOY_MONITOR_FV02_CREATOR_VIEWS_2026-11-24.md): both starting views, same-draft switching/reload and independent language settings pass normal DM/Player journeys. Controls fit at390px; unavailable additional rules/background content closes by owner deferral, not by invented content. FV18 retains the recorded startup-timing observation.
+
+FV06 [brush controls and quick palette are delivered](../DADM_DEPLOY_MONITOR_FV06_BRUSH_CONTROLS_2026-11-24.md): recent colors, opacity/size/material shortcuts and the temporary tools/colors palette pass DM/Player live journeys and scoped cleanup. Owner now asks for independent Claude work after this step; FV15 is the bounded handoff, with Codex retaining integration/testing/deployment.
 
 ## Already delivered
 
@@ -45,7 +47,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV03 | Navigation and responsive page layouts | P1 | Planned |
 | FV04 | Layer targets and editor panels | P1 | Delivered live |
 | FV05 | Reference grids snapping and tile transforms | P1 | Partly live |
-| FV06 | Brush controls colors and quick palette | P1 | Partly live |
+| FV06 | Brush controls colors and quick palette | P1 | Delivered live |
 | FV07 | Object list and label placement | P1 | Delivered live |
 | FV08 | Path drawing and editing modes | P1 | Delivered live |
 | FV09 | Line styles node curves and text geometry | P1 | Plan and inputs needed |
