@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "journeys": [
+    {
+      "engine": "chromium",
+      "role": "dm",
+      "width": 1440,
+      "ui_language": "de",
+      "initial_rules_language": "en",
+      "switched_rules_language": "de",
+      "initial_view": "guided",
+      "normal_characters_navigation": true,
+      "both_start_actions_clear": true,
+      "same_draft_id_version_state_data_evaluation_across_view_switches": true,
+      "selected_background_preserved": true,
+      "quick_view_reload": true,
+      "independent_site_rules_language_and_units": true,
+      "view_controls_fit_and_no_page_overflow": true,
+      "browser_errors": []
+    },
+    {
+      "engine": "firefox",
+      "role": "player",
+      "width": 390,
+      "ui_language": "en",
+      "initial_rules_language": "de",
+      "switched_rules_language": "en",
+      "initial_view": "quick",
+      "normal_characters_navigation": true,
+      "both_start_actions_clear": true,
+      "same_draft_id_version_state_data_evaluation_across_view_switches": true,
+      "selected_background_preserved": true,
+      "quick_view_reload": true,
+      "independent_site_rules_language_and_units": true,
+      "view_controls_fit_and_no_page_overflow": true,
+      "browser_errors": []
+    }
+  ],
+  "real_oauth_tested": false
+}

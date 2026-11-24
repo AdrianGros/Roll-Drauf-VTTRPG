@@ -1,5 +1,5 @@
 {
-  "status": "matrix_pending",
+  "status": "delivered_live_verified",
   "existing_state_cases_passed": 4,
   "runs": [
     {
@@ -11,9 +11,20 @@
       "scope": "Quick/mobile and home/import-file/dirty draft after caption updates",
       "passed": 2,
       "duration_seconds": 47.7
+    },
+    {
+      "scope": "Six existing rules/site/automatic language combinations",
+      "passed": 5,
+      "failed": 1,
+      "duration_seconds": 157.56,
+      "failure": "DE site/EN rules case still Loading after the existing5-second home-caption assertion; no wrong label or state mismatch."
+    },
+    {
+      "scope": "Exact unchanged DE site/EN rules startup case repeated",
+      "passed": 1,
+      "duration_seconds": 50.02
     }
   ],
-  "matrix": "Six existing DE/EN/auto cases running",
   "static": [
     "3833 catalog sources fresh",
     "All creator template data-ui-key markers exist",
@@ -21,5 +32,7 @@
     "Proof Python AST",
     "git diff --check"
   ],
-  "limits": "No full repository suite claim; live delivery pending."
+  "limits": "No full repository suite success or guaranteed startup timing; real OAuth/physical input untested. Both live journeys and cleanup pass.",
+  "distinct_cases_covered": 10,
+  "startup_timing_followup": "One5-second startup threshold was exceeded; unchanged exact case passed on retry. Retain as FV18 startup-timing evidence, without a causal or performance-guarantee claim."
 }

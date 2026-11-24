@@ -71,7 +71,7 @@
       "id": "FV02",
       "title": "Creator workflow and backgrounds",
       "priority": "P2",
-      "status": "planned",
+      "status": "delivered_verified",
       "source_refs": [
         "T4 remaining",
         "2026-11-23:N22",
@@ -86,7 +86,13 @@
         "FV01"
       ],
       "decisions_or_inputs": [],
-      "deferred_by_owner": "Unavailable additional approved rules/background content is deferred; existing creator workflow and supplied rules stay in scope."
+      "deferred_by_owner": "Unavailable additional approved rules/background content is deferred; existing creator workflow and supplied rules stay in scope.",
+      "apply": "docs/DADM_APPLY_FV02_CREATOR_VIEWS_2026-11-24.md",
+      "delivery": {
+        "source": "39c333a690eeb4e79631109291ba39fbadb314d9",
+        "image": "sha256:90f953f9556008454b12df3eb158fc09117f9e4106ad8dbd7130833a6aca125c",
+        "monitor": "docs/DADM_DEPLOY_MONITOR_FV02_CREATOR_VIEWS_2026-11-24.md"
+      }
     },
     {
       "id": "FV03",
@@ -539,6 +545,9 @@
       "decisions_or_inputs": [],
       "completed_subscope": [
         "Five obsolete map test assertions reconciled with delivered FV04/FV05 contracts; all affected cases pass. Full integrated release and remaining baseline work stay open."
+      ],
+      "remaining_observations": [
+        "One creator DE-site/EN-rules home-startup test exceeded the5-second assertion and passed unchanged on retry; retain timing/stability follow-up before full release."
       ]
     }
   ],
@@ -1098,11 +1107,11 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Continue FV02 creator view clarity under owner deferral of unavailable rules content; preserve delivered FV07/FV08 source d116b7679 and continue all remaining technical packets through FV18. No image generation or generative use of Ducky originals.",
+  "next_step": "Implement the approved remaining FV06 brush controls/recent colors/temporary radial palette, then all other retained technical packets through FV18. Preserve live FV02/FV07/FV08 and partial FV01/FV05. Unavailable rules content is owner-deferred; no image generation or generative use of Ducky originals.",
   "current_delivery": {
-    "source": "d116b7679a8d77dd35fd307919133a4e39c5cee1",
-    "image": "sha256:939254c3ae4f25bab7fb6bec5f193aa7ff8e980c6f286d73b86802414e3954f5",
-    "monitor": "docs/DADM_DEPLOY_MONITOR_FV07_FV08_2026-11-24.md"
+    "source": "39c333a690eeb4e79631109291ba39fbadb314d9",
+    "image": "sha256:90f953f9556008454b12df3eb158fc09117f9e4106ad8dbd7130833a6aca125c",
+    "monitor": "docs/DADM_DEPLOY_MONITOR_FV02_CREATOR_VIEWS_2026-11-24.md"
   },
   "last_updated": "2026-11-24",
   "delivery_history": [
@@ -1125,6 +1134,11 @@
       "source": "11384877aecdf8c00dbac753c7b3f3012e0e4b24",
       "image": "sha256:6def74eab5d7b628a8afbf556c559fe97ca82fb826a450dbdf9b60921a1b5eef",
       "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md"
+    },
+    {
+      "source": "d116b7679a8d77dd35fd307919133a4e39c5cee1",
+      "image": "sha256:939254c3ae4f25bab7fb6bec5f193aa7ff8e980c6f286d73b86802414e3954f5",
+      "monitor": "docs/DADM_DEPLOY_MONITOR_FV07_FV08_2026-11-24.md"
     }
   ],
   "owner_decisions": [
