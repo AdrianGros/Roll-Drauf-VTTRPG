@@ -241,10 +241,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         let control;
         let note = null;
         if (choice.kind === 'option') {
-            const options = choice.options.map((o) => [o.id, o.name + (o.damageType ? ` (${o.damageType})` : '')]);
+            const options = choice.options.map((o) => [o.id, SC.speciesOptionName(species, choice, o) + (o.damageType ? ` (${SC.speciesDamageTypeName(species, o.damageType)})` : ''), false, SC.speciesLabelsLocale(species)]);
             control = select(id, options, current, set, 'Bitte wählen');
             const chosen = choice.options.find((o) => o.id === current);
-            if (chosen && chosen.description) note = h('p', { class: 'sc-muted', text: chosen.description });
+            if (chosen && chosen.description) note = h('p', { class: 'sc-muted' },
+                !species.homebrew && window.VTTI18n.contentLocale()==='en'
+                    ? h('small', { text: ui('Dieser Regeltext ist derzeit nur auf Deutsch verfügbar.') }) : null, ' ',
+                h('span', { lang: species.homebrew ? undefined : 'de', text: chosen.description }));
         } else if (choice.kind === 'ability') {
             control = select(id, choice.options.map((a) => [a, SC.abilityName(a)]), current, set, 'Bitte wählen');
         } else if (choice.kind === 'skill') {
@@ -253,7 +256,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         } else if (choice.kind === 'feat-category') {
             control = select(id, app.data.feats.filter((f) => f.category === choice.category).map((f) => [f.id, SC.ruleName(f)]), current, set, 'Bitte wählen');
         } else if (choice.kind === 'size') {
-            control = select(id, species.sizes.map((s) => [s, s]), current, set, 'Bitte wählen');
+            control = select(id, species.sizes.map((s) => [s, SC.speciesSizeName(species, s), false, SC.speciesLabelsLocale(species)]), current, set, 'Bitte wählen');
         } else {
             control = h('span', { text: ui("Nicht unterstützt") });
         }
@@ -312,13 +315,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const curSpecies = st().species && SC.L.species[st().species.id];
         wrap.append(panel(
             h('h3', { text: ui("Spezies") }),
-            h('div', { class: 'sc-grid' }, app.data.species.map((s) => card(SC.ruleLabel(s), `${s.sizes.join('/')} · ${fmtMeters(s.speedMeters)}${s.homebrew ? ` · Homebrew (${(s.origin && s.origin.scope && s.origin.scope.label) || 'veröffentlicht'})` : ''}`, curSpecies && curSpecies.id === s.id, () => {
+            h('div', { class: 'sc-grid' }, app.data.species.map((s) => card(SC.ruleLabel(s), `${s.sizes.map(size => SC.speciesSizeName(s, size)).join('/')} · ${fmtMeters(s.speedMeters)}${s.homebrew ? ` · Homebrew (${(s.origin && s.origin.scope && s.origin.scope.label) || 'veröffentlicht'})` : ''}`, curSpecies && curSpecies.id === s.id, () => {
                 SC.mutate((state) => { if (!state.species || state.species.id !== s.id) state.species = { id: s.id, choices: {} }; });
             }))),
             curSpecies ? h('div', { class: 'sc-detail' },
                 h('h3', { text: SC.ruleName(curSpecies) }),
-                h('p', { text: ui("{p0} · Größe {p1} · Bewegungsrate {p2}{p3}",{p0:(curSpecies.creatureType),p1:(curSpecies.sizes.join(' oder ')),p2:(fmtMeters(curSpecies.speedMeters)),p3:(curSpecies.darkvisionMeters ? ` · Dunkelsicht ${curSpecies.darkvisionMeters} m` : '')}) }),
-                h('p', null, h('strong', { text: ui("Merkmale: ") }), curSpecies.traits.join(', ')),
+                h('p', { text: ui("{p0} · Größe {p1} · Bewegungsrate {p2}{p3}",{p0:SC.speciesCreatureTypeName(curSpecies),p1:curSpecies.sizes.map(size => SC.speciesSizeName(curSpecies, size)).join(ui(' oder ')),p2:fmtMeters(curSpecies.speedMeters),p3:curSpecies.darkvisionMeters ? ui(' · Dunkelsicht {distance}', {distance:fmtMeters(curSpecies.darkvisionMeters)}) : ''}) }),
+                h('p', null, h('strong', { text: ui("Merkmale: ") }), h('span', {lang:SC.speciesLabelsLocale(curSpecies),text:curSpecies.traits.map(name => SC.speciesTraitName(curSpecies, name)).join(', ')})),
                 curSpecies.homebrew ? homebrewSpeciesDetail(curSpecies) : SC.detailButton(curSpecies.id, ui("Spezies-Text lesen"), SC.ruleName(curSpecies)),
                 curSpecies.choices.map((c) => speciesChoiceControl(curSpecies, c))) : null));
         const curBg = st().background && SC.L.backgrounds[st().background.id];

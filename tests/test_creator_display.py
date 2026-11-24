@@ -15,7 +15,7 @@ from vtt.rules_content.creator_rules import load_creator_data
 def test_reviewed_names_terms_and_source_differences_keep_canonical_data():
     before=copy.deepcopy(load_creator_data())
     value=compile_display()
-    assert len(value['names'])==847 and len(value['terms'])==74
+    assert len(value['names'])==847 and len(value['terms'])==147
     assert len({x['enEntityId'] for x in value['names'].values()})==847
     for key,expected in {
         'spells.a-b.ablenkung':'Mislead',
@@ -39,6 +39,11 @@ def test_reviewed_names_terms_and_source_differences_keep_canonical_data():
     assert len(equipment)==184 and equipment<=value['names'].keys()
     exceptions=[entry for entry in value['names'].values() if 'displayNameSource' in entry]
     assert {entry['name'] for entry in exceptions}=={'Heavy Crossbow','Sled','Stabling per day','Wagon'}
+    assert value['terms']['speciesTraits:character-origins.species.halfling/Halblingsglück']['name']=='Luck'
+    assert value['terms']['speciesTraits:character-origins.species.goliath/Felsenfestigkeit (Steinriese)']['name']=='Stone’s Endurance (Stone Giant)'
+    legacy=value['terms']['speciesOptions:character-origins.species.tiefling/lineage/abyssisch']
+    assert legacy['name']=='Abyssal' and legacy['ruleId']=='origins.species.human.table-1'
+    assert value['terms']['damageTypes:Säure']['name']=='Acid'
     assert before==load_creator_data()
     assert not {'category','column','kind','classKey'} & set().union(*(row.keys() for row in value['names'].values()))
     generated=json.loads((ROOT/'vtt/rules_content/srd-5.2.1-en/generated/creator-display.json').read_text())
@@ -81,6 +86,21 @@ def test_builder_refuses_source_drift_and_duplicate_identity(tmp_path):
     path=tmp_path/'vtt/rules_content/srd-5.2.1-en/generated/compendium.json'
     path.write_text(path.read_text()+' ')
     with pytest.raises(ValueError,match='Reviewed source changed'):compile_display(tmp_path)
+
+
+
+def test_builder_rejects_missing_or_wrong_scoped_species_labels(tmp_path):
+    _pinned_tree(tmp_path)
+    path=tmp_path/'tools/creator_locale/terms.json';original=json.loads(path.read_text())
+    key='speciesOptions:character-origins.species.elf/lineage/hochelf'
+    broken=copy.deepcopy(original);del broken['terms'][key];path.write_text(json.dumps(broken))
+    with pytest.raises(ValueError,match='Incomplete term coverage: speciesOptions'):compile_display(tmp_path)
+    broken=copy.deepcopy(original);broken['terms'][key.replace('/lineage/','/wrong-choice/')]=broken['terms'].pop(key)
+    path.write_text(json.dumps(broken))
+    with pytest.raises(ValueError,match='Unknown canonical term'):compile_display(tmp_path)
+    broken=copy.deepcopy(original);broken['terms'][key]['name']=broken['terms'][key]['quote']='Invented Elf'
+    path.write_text(json.dumps(broken))
+    with pytest.raises(ValueError,match='not found verbatim'):compile_display(tmp_path)
 
 
 def test_display_api_auth_cache_locale_hash_and_unavailable(site,monkeypatch,tmp_path):

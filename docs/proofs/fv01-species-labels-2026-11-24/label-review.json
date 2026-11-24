@@ -1,0 +1,599 @@
+{
+  "status": "approved_source_backed_labels",
+  "reviewer": "Codex",
+  "counts": {
+    "traits": 41,
+    "namedOptions": 24,
+    "sizes": 2,
+    "creatureTypes": 1,
+    "damageTypes": 5
+  },
+  "sourcePlacementNote": "Fiendish Legacies is actually captioned as such at origins.species.human.table-1; retain its real parsed anchor.",
+  "scope": "Presentation labels only; descriptions and mechanics not translated/changed.",
+  "labels": [
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dragonborn/Drakonische Abstammung",
+      "name": "Draconic Ancestry",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.p-2",
+      "quote": "Draconic Ancestry"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dragonborn/Drakonischer Flug",
+      "name": "Draconic Flight",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.p-7",
+      "quote": "Draconic Flight"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dragonborn/Dunkelsicht",
+      "name": "Darkvision",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.p-6",
+      "quote": "Darkvision"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dragonborn/Schadensresistenz",
+      "name": "Damage Resistance",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.p-5",
+      "quote": "Damage Resistance"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dragonborn/Odemwaffe",
+      "name": "Breath Weapon",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.p-3",
+      "quote": "Breath Weapon"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/blau",
+      "name": "Blue",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Blue"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/bronze",
+      "name": "Bronze",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Bronze"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/gold",
+      "name": "Gold",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Gold"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/gruen",
+      "name": "Green",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Green"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/kupfer",
+      "name": "Copper",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Copper"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/messing",
+      "name": "Brass",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Brass"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/rot",
+      "name": "Red",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Red"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/schwarz",
+      "name": "Black",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Black"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/silber",
+      "name": "Silver",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Silver"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.dragonborn/draconic-ancestry/weiss",
+      "name": "White",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "White"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.elf/Dunkelsicht",
+      "name": "Darkvision",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.elf.p-2",
+      "quote": "Darkvision"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.elf/Elfische Abstammung",
+      "name": "Elven Lineage",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.elf.p-3",
+      "quote": "Elven Lineage"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.elf/Feenblut",
+      "name": "Fey Ancestry",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.elf.p-6",
+      "quote": "Fey Ancestry"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.elf/Scharfe Sinne",
+      "name": "Keen Senses",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.elf.p-7",
+      "quote": "Keen Senses"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.elf/Trance",
+      "name": "Trance",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.elf.p-8",
+      "quote": "Trance"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.elf/lineage/drow",
+      "name": "Drow",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.elf.table-1",
+      "quote": "Drow"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.elf/lineage/hochelf",
+      "name": "High Elf",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.elf.table-1",
+      "quote": "High Elf"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.elf/lineage/waldelf",
+      "name": "Wood Elf",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.elf.table-1",
+      "quote": "Wood Elf"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.gnome/Dunkelsicht",
+      "name": "Darkvision",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.gnome.p-2",
+      "quote": "Darkvision"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.gnome/Gnomische Abstammung",
+      "name": "Gnomish Lineage",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.gnome.p-4",
+      "quote": "Gnomish Lineage"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.gnome/Felsengnom",
+      "name": "Rock Gnome",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.gnome.p-4",
+      "quote": "Rock Gnome"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.gnome/Waldgnom",
+      "name": "Forest Gnome",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.gnome.p-4",
+      "quote": "Forest Gnome"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.gnome/Gnomische Gerissenheit",
+      "name": "Gnomish Cunning",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.gnome.p-3",
+      "quote": "Gnomish Cunning"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.gnome/lineage/rock-gnome",
+      "name": "Rock Gnome",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.gnome.p-4",
+      "quote": "Rock Gnome"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.gnome/lineage/forest-gnome",
+      "name": "Forest Gnome",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.gnome.p-4",
+      "quote": "Forest Gnome"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Große Gestalt",
+      "name": "Large Form",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Large Form"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Kräftiger Körperbau",
+      "name": "Powerful Build",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-2",
+      "quote": "Powerful Build"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Riesische Abstammung",
+      "name": "Giant Ancestry",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Giant Ancestry"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Eiseskälte (Frostriese)",
+      "name": "Frost’s Chill (Frost Giant)",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Frost’s Chill (Frost Giant)"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Felsenfestigkeit (Steinriese)",
+      "name": "Stone’s Endurance (Stone Giant)",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Stone’s Endurance (Stone Giant)"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Feuersbrunst (Feuerriese)",
+      "name": "Fire’s Burn (Fire Giant)",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Fire’s Burn (Fire Giant)"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Hügelsturz (Hügelriese)",
+      "name": "Hill’s Tumble (Hill Giant)",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Hill’s Tumble (Hill Giant)"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Sturmdonner (Sturmriese)",
+      "name": "Storm’s Thunder (Storm Giant)",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Storm’s Thunder (Storm Giant)"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.goliath/Wolkensprung (Wolkenriese)",
+      "name": "Cloud’s Jaunt (Cloud Giant)",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Cloud’s Jaunt (Cloud Giant)"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.goliath/giant-ancestry/frost",
+      "name": "Frost Giant",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Frost Giant"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.goliath/giant-ancestry/stone",
+      "name": "Stone Giant",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Stone Giant"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.goliath/giant-ancestry/fire",
+      "name": "Fire Giant",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Fire Giant"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.goliath/giant-ancestry/hill",
+      "name": "Hill Giant",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Hill Giant"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.goliath/giant-ancestry/storm",
+      "name": "Storm Giant",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Storm Giant"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.goliath/giant-ancestry/cloud",
+      "name": "Cloud Giant",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.goliath.p-1",
+      "quote": "Cloud Giant"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.halfling/Angeborene Verstohlenheit",
+      "name": "Naturally Stealthy",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.halfling.p-5",
+      "quote": "Naturally Stealthy"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.halfling/Halblingsgewandtheit",
+      "name": "Halfling Nimbleness",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.halfling.p-3",
+      "quote": "Halfling Nimbleness"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.halfling/Halblingsglück",
+      "name": "Luck",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.halfling.p-4",
+      "quote": "Luck"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.halfling/Tapferkeit",
+      "name": "Brave",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.halfling.p-2",
+      "quote": "Brave"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.human/Einfallsreich",
+      "name": "Resourceful",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.human.p-2",
+      "quote": "Resourceful"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.human/Geschickt",
+      "name": "Skillful",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.human.p-3",
+      "quote": "Skillful"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.human/Vielseitig",
+      "name": "Versatile",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.human.p-4",
+      "quote": "Versatile"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.orc/Adrenalinrausch",
+      "name": "Adrenaline Rush",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.orc.p-2",
+      "quote": "Adrenaline Rush"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.orc/Dunkelsicht",
+      "name": "Darkvision",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.orc.p-4",
+      "quote": "Darkvision"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.orc/Durchhaltevermögen",
+      "name": "Relentless Endurance",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.orc.p-5",
+      "quote": "Relentless Endurance"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.tiefling/Außerweltliche Präsenz",
+      "name": "Otherworldly Presence",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.tiefling.p-6",
+      "quote": "Otherworldly Presence"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.tiefling/Dunkelsicht",
+      "name": "Darkvision",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.tiefling.p-2",
+      "quote": "Darkvision"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.tiefling/Unholdisches Erbe",
+      "name": "Fiendish Legacy",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.tiefling.p-3",
+      "quote": "Fiendish Legacy"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.tiefling/lineage/abyssisch",
+      "name": "Abyssal",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.human.table-1",
+      "quote": "Abyssal"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.tiefling/lineage/chthonisch",
+      "name": "Chthonic",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.human.table-1",
+      "quote": "Chthonic"
+    },
+    {
+      "kind": "speciesOptions",
+      "canonicalKey": "character-origins.species.tiefling/lineage/infernalisch",
+      "name": "Infernal",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.human.table-1",
+      "quote": "Infernal"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dwarf/Dunkelsicht",
+      "name": "Darkvision",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dwarf.p-2",
+      "quote": "Darkvision"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dwarf/Steingespür",
+      "name": "Stonecunning",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dwarf.p-5",
+      "quote": "Stonecunning"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dwarf/Zwergische Unverwüstlichkeit",
+      "name": "Dwarven Resilience",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dwarf.p-3",
+      "quote": "Dwarven Resilience"
+    },
+    {
+      "kind": "speciesTraits",
+      "canonicalKey": "character-origins.species.dwarf/Zwergische Zähigkeit",
+      "name": "Dwarven Toughness",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dwarf.p-4",
+      "quote": "Dwarven Toughness"
+    },
+    {
+      "kind": "sizes",
+      "canonicalKey": "Klein",
+      "name": "Small",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.human.dl-1",
+      "quote": "Small"
+    },
+    {
+      "kind": "sizes",
+      "canonicalKey": "Mittelgroß",
+      "name": "Medium",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.human.dl-1",
+      "quote": "Medium"
+    },
+    {
+      "kind": "creatureTypes",
+      "canonicalKey": "Humanoide",
+      "name": "Humanoid",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.dl-1",
+      "quote": "Humanoid"
+    },
+    {
+      "kind": "damageTypes",
+      "canonicalKey": "Blitz",
+      "name": "Lightning",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Lightning"
+    },
+    {
+      "kind": "damageTypes",
+      "canonicalKey": "Feuer",
+      "name": "Fire",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Fire"
+    },
+    {
+      "kind": "damageTypes",
+      "canonicalKey": "Gift",
+      "name": "Poison",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Poison"
+    },
+    {
+      "kind": "damageTypes",
+      "canonicalKey": "Säure",
+      "name": "Acid",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Acid"
+    },
+    {
+      "kind": "damageTypes",
+      "canonicalKey": "Kälte",
+      "name": "Cold",
+      "documentId": "origins.species",
+      "ruleId": "origins.species.dragonborn.table-1",
+      "quote": "Cold"
+    }
+  ]
+}

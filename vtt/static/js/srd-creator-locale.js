@@ -48,6 +48,16 @@
     SC.weaponMasteryName=name=>term('weaponMasteries',name,name);
     SC.weaponPropertyName=name=>term('weaponProperties',name,name);
     SC.coinAbbr=key=>overlay()?.terms['coins:'+key]?.abbreviation ?? key;
+    // Species keys are scoped canonical identities. Authored homebrew is always literal.
+    function speciesTerm(species,kind,key,fallback){
+        return species.homebrew?fallback:term(kind,key,fallback);
+    }
+    SC.speciesTraitName=(species,name)=>speciesTerm(species,'speciesTraits',species.id+'/'+name,name);
+    SC.speciesOptionName=(species,choice,option)=>speciesTerm(species,'speciesOptions',species.id+'/'+choice.id+'/'+option.id,option.name);
+    SC.speciesSizeName=(species,size)=>speciesTerm(species,'sizes',size,size);
+    SC.speciesCreatureTypeName=species=>speciesTerm(species,'creatureTypes',species.creatureType,species.creatureType);
+    SC.speciesDamageTypeName=(species,name)=>speciesTerm(species,'damageTypes',name,name);
+    SC.speciesLabelsLocale=species=>species.homebrew?undefined:(overlay()?'en':'de');
     SC.className=key=>SC.ruleName(SC.L.classes[key],key);
     SC.subclassName=id=>SC.ruleName(id,String(id).split('subclass-').pop().replace(/-/g,' '));
     SC.spellName=id=>SC.ruleName(id,app.data.spells[id]?.name);

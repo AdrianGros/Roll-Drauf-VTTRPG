@@ -138,6 +138,13 @@ def compile_display(root=ROOT):
         'weaponMasteries': {entry['mastery'] for entry in canonical['equipment']['weapons']},
         'weaponProperties': {prop['name'] for entry in canonical['equipment']['weapons'] for prop in entry['properties']},
         'coins': set(canonical['equipment']['coins']),
+        'speciesTraits': {s['id']+'/'+trait for s in canonical['species'] for trait in s['traits']},
+        'speciesOptions': {s['id']+'/'+choice['id']+'/'+option['id'] for s in canonical['species']
+                           for choice in s['choices'] if choice['kind']=='option' for option in choice['options']},
+        'sizes': {size for s in canonical['species'] for size in s['sizes']},
+        'creatureTypes': {s['creatureType'] for s in canonical['species']},
+        'damageTypes': {o['damageType'] for s in canonical['species'] for c in s['choices']
+                        if c['kind']=='option' for o in c['options'] if o.get('damageType')},
     })
     labels = {}
     for key, pin in sorted(terms['terms'].items()):
@@ -158,7 +165,7 @@ def compile_display(root=ROOT):
             'canonicalHash': digest(content / 'srd-5.2.1-de/generated/creator-data.json'),
             'sourceHashes': sources, 'names': names, 'terms': labels,
             'coverage': {kind: {'total': count, 'mapped': counts[kind]} for kind, count in CORE.items()},
-            'unresolved': ['species-subchoices', 'remaining-rule-labels', 'validation', 'editor']}
+            'unresolved': ['species-option-descriptions', 'remaining-rule-labels', 'validation', 'editor']}
 
 
 def main():
@@ -171,7 +178,7 @@ def main():
             raise SystemExit('Stale creator display data; review sources and regenerate')
     else:
         OUTPUT.write_text(payload, encoding='utf-8')
-    print('847 reviewed entity names, 74 source-backed terms; pinned sources verified')
+    print('847 reviewed entity names, 147 source-backed terms; pinned sources verified')
 
 
 if __name__ == '__main__':

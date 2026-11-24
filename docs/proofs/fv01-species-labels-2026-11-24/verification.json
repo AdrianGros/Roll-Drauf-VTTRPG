@@ -1,0 +1,29 @@
+{
+  "status": "targeted_pass_pending_live",
+  "distinct_cases": 22,
+  "runs": [
+    {
+      "scope": "Four source/compiler/API plus three new species/browser cases",
+      "result": "7 passed,7 existing mapper warnings in182.66s",
+      "log": "/tmp/fv01-species-labels-20261124.log"
+    },
+    {
+      "scope": "Equipment/mastery, pending input and source/overlay/dialog/subclass regression cases",
+      "result": "15 passed,7 existing mapper warnings in416.77s",
+      "log": "/tmp/fv01-species-regressions-20261124.log"
+    }
+  ],
+  "checks": [
+    "847 identity/147 term display freshness",
+    "3843-source catalog freshness",
+    "Two changed JS modules parse",
+    "Proof Python scripts parse",
+    "Canonical creator-data and64 source pins unchanged",
+    "git diff --check"
+  ],
+  "limits": [
+    "No full repository suite claim",
+    "Descriptions/validation/editor remain FV01 work",
+    "Live acceptance and cleanup pending"
+  ]
+}
