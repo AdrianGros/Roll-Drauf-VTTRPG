@@ -29,6 +29,7 @@ from vtt.rules_content.creator_drafts import (
     sanitize_state,
 )
 from vtt.rules_content.creator_rules import evaluate, load_creator_data
+from vtt.rules_content.creator_locale import DisplayUnavailable, canonical_data_hash, display_etag, load_creator_display
 from vtt.rules_content.creator_sources import default_source_ids, pin_status, registered_sources
 from vtt.rules_content.species_profiles import origin_view, pinned
 from vtt.utils.time import utcnow
@@ -115,7 +116,29 @@ def meta():
 def creator_data():
     response = jsonify(load_creator_data())
     response.headers['Cache-Control'] = 'private, max-age=300'
+    response.headers['X-Creator-Data-SHA256'] = canonical_data_hash()
     return response
+
+
+@srd_creator_bp.get('/creator-display')
+@jwt_required()
+def creator_display():
+    locale = request.args.get('locale', 'de')
+    if locale not in {'de', 'en'}:
+        return _bad('invalid_locale', 'Ungültige Regelsprache.')
+    try:
+        payload = load_creator_display() if locale == 'en' else {
+            'schemaVersion': 1, 'locale': 'de', 'canonicalHash': canonical_data_hash(), 'names': {}, 'terms': {},
+            'sourceHashes': {'vtt/rules_content/srd-5.2.1-de/generated/creator-data.json': canonical_data_hash()},
+            'coverage': {}, 'unresolved': []}
+    except DisplayUnavailable:
+        response = jsonify({'error': 'creator_display_unavailable'})
+        response.headers['Cache-Control'] = 'private, no-store'
+        return response, 503
+    response = jsonify(payload)
+    response.headers['Cache-Control'] = 'private, no-cache'
+    response.set_etag(display_etag(payload))
+    return response.make_conditional(request)
 
 
 @srd_creator_bp.post('/evaluate')

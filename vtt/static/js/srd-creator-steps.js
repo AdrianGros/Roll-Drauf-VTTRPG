@@ -28,8 +28,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     }
     function select(id, options, value, onchange, placeholder) {
         const node = h('select', { id, onchange: (e) => onchange(e.target.value) },
-            placeholder ? h('option', { value: '', text: placeholder }) : null,
-            options.map(([v, t, disabled]) => h('option', { value: v, text: t, disabled: !!disabled })));
+            placeholder ? h('option', { value: '', text: ui(placeholder) }) : null,
+            options.map(([v, t, disabled, language]) => h('option', { value: v, text: t, disabled: !!disabled, lang:language || SC.nameLocale(v) })));
         node.value = value == null ? '' : String(value);
         return node;
     }
@@ -37,21 +37,22 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         return h('button', { type: 'button', class: 'sc-card', 'aria-pressed': String(!!pressed), onclick },
             h('strong', { text: title }), sub ? h('span', { text: sub }) : null, extra || null);
     }
-    function checkRow(text, checked, disabled, onchange, sub, detailId) {
+    function checkRow(text, checked, disabled, onchange, sub, detailId, controlKey=detailId) {
+        const caption=text?.nodeType?text.textContent:String(text);
         return h('div', { class: `sc-check${checked ? ' is-selected' : ''}` },
-            h('label', { class: 'sc-check-label' }, h('input', { type: 'checkbox', checked, disabled, onchange: (e) => onchange(e.target.checked) }),
+            h('label', { class: 'sc-check-label' }, h('input', { type: 'checkbox', checked, disabled, 'data-focus-key':controlKey, onchange: (e) => onchange(e.target.checked) }),
                 h('span', null, text, sub ? h('small', { text: sub }) : null)),
-            detailId ? h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-quiet', onclick: () => SC.openEntry(detailId, text), 'aria-label': ui("Regeltext zu {p0}",{p0:(text)}) }, '?') : null);
+            detailId ? h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-btn-quiet', 'data-focus-key':controlKey?'detail:'+controlKey:null, onclick: () => SC.openEntry(detailId, caption), 'aria-label': ui("Regeltext zu {p0}",{p0:caption}) }, '?') : null);
     }
     function countedList(options, selected, max, onchange, group) {
         const full = selected.length >= max;
         return h('div', { class: 'sc-choice-list', role: 'group', 'aria-label': group || null },
             options.map((o) => {
                 const on = selected.includes(o.id);
-                return checkRow(o.name, on, !on && (full || o.disabled), (checked) => {
+                return checkRow(SC.ruleLabel(o), on, !on && (full || o.disabled), (checked) => {
                     const next = checked ? selected.concat(o.id) : selected.filter((x) => x !== o.id);
                     onchange(next);
-                }, o.sub, o.detail);
+                }, o.sub, o.detail, o.id);
             }));
     }
     function counter(have, need) {
@@ -152,7 +153,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     function classPreview(c) {
         const weapons = c.weaponProficiencies.map((g) => (g.category === 'martial' ? 'Kriegswaffen' : 'Einfache Waffen') + (g.requiresProperty ? ` (mit ${g.requiresProperty.join('/')})` : ''));
         return h('div', { class: 'sc-detail' },
-            h('h3', { text: c.name }),
+            h('h3', { text: SC.ruleName(c) }),
             h('dl', {class:'sc-class-facts'},
                 h('dt', { text: ui("Trefferwürfel") }), h('dd', { text: `W${c.hitDie}` }),
                 h('dt', { text: ui("Hauptattribut") }), h('dd', { text: c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und ') }),
@@ -161,8 +162,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 h('dt', { text: ui("Waffen") }), h('dd', { text: labelList(weapons) }),
                 h('dt', { text: ui("Fertigkeiten") }), h('dd', { text: ui("{p0} aus: {p1}",{p0:(c.skillChoices.count),p1:(c.skillChoices.options ? c.skillChoices.options.map(SC.skillName).join(', ') : 'allen Fertigkeiten')}) }),
                 h('dt', { text: ui("Zauberwirken") }), h('dd', { text: c.spellcasting ? ui("Ja ({p0})",{p0:(SC.abilityName(c.spellcasting.ability))}) : ui("Nein") }),
-                h('dt', { text: ui("Merkmale Stufe 1") }), h('dd', null, h('ul', null, c.levels[0].features.map(f => h('li', {text:f.name}))))),
-            SC.detailButton(c.id, ui("Klassentext lesen"), c.name));
+                h('dt', { text: ui("Merkmale Stufe 1") }), h('dd', null, h('ul', null, c.levels[0].features.map(f => h('li', {text:SC.ruleLabel(f)}))))),
+            SC.detailButton(c.id, ui("Klassentext lesen"), SC.ruleName(c)));
     }
 
     function setLevelCount(n) {
@@ -187,7 +188,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     if (!first || window.confirm(ui("Alle bisherigen Auswahlen werden durch einen Zufallscharakter ersetzt. Fortfahren?"))) SC.randomize((st().levels || []).length || 1);
                 } }, ui("Zufallscharakter würfeln"))),
             h('p', { class: 'sc-muted', text: ui("Deine erste Klasse bestimmt Rettungswürfe, Rüstungen und Ausgangsausrüstung.") }),
-            h('div', { class: 'sc-grid' }, app.data.classes.map((c) => card(c.name, `W${c.hitDie} · ${c.primaryAbilities.abilities.map(SC.abilityAbbr).join(c.primaryAbilities.mode === 'any' ? '/' : '+')}`, first === c.classKey, () => {
+            h('div', { class: 'sc-grid' }, app.data.classes.map((c) => card(SC.ruleLabel(c), `${ui("W{p0}",{p0:c.hitDie})} · ${c.primaryAbilities.abilities.map(SC.abilityAbbr).join(c.primaryAbilities.mode === 'any' ? '/' : '+')}`, first === c.classKey, () => {
                 const oldFirst = firstClass();
                 SC.mutate((state) => {
                     if (!state.levels || !state.levels.length) state.levels = [{ classKey: c.classKey, hp: 'fixed' }];
@@ -206,14 +207,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     l.hp === 'fixed' ? null : [' ', h('input', { type: 'number', min: 1, max: die, value: l.hp, 'aria-label': ui("Gewürfelter Wert Stufe {p0}",{p0:(i + 1)}), style: 'width:4.5rem', onchange: (e) => {
                         SC.mutate((state) => { state.levels[i].hp = Math.max(1, Math.min(die, Number(e.target.value) || 1)); });
                     } }), ' ', h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => SC.mutate((state) => { state.levels[i].hp = SC.randInt(die) + 1; }) }, ui("W{p0} würfeln",{p0:(die)}))]);
-                const classCell = i === 0 ? h('td', { text: cls(l.classKey).name }) : h('td', null, select(`scLvlClass${i}`, app.data.classes.map((c) => [c.classKey, c.name]), l.classKey, (v) => {
+                const classCell = i === 0 ? h('td', { text: SC.className(l.classKey) }) : h('td', null, select(`scLvlClass${i}`, app.data.classes.map((c) => [c.classKey, SC.ruleName(c)]), l.classKey, (v) => {
                     SC.mutate((state) => { state.levels[i].classKey = v; prune(state, firstClass()); });
                 }));
                 const classLevel = levels.slice(0, i + 1).filter((entry) => entry.classKey === l.classKey).length;
                 const levelData = cls(l.classKey).levels.find((entry) => entry.level === classLevel);
-                const features = (levelData?.features || []).map((feature) => feature.name);
+                const features = (levelData?.features || []).map((feature) => SC.ruleName(feature));
                 return h('tr', null, h('td', { text: i + 1 }), classCell, hpCell,
-                    h('td', { class: 'sc-level-features' }, h('small', { class: 'sc-muted', text: ui("{p0} · Klassenstufe {p1}",{p0:(cls(l.classKey).name),p1:(classLevel)}) }),
+                    h('td', { class: 'sc-level-features' }, h('small', { class: 'sc-muted', text: ui("{p0} · Klassenstufe {p1}",{p0:(SC.className(l.classKey)),p1:(classLevel)}) }),
                         h('div', { text: features.join(' · ') || ui("Keine neuen Klassenmerkmale") })));
             });
             wrap.append(panel(
@@ -250,7 +251,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const ids = choice.options || Object.keys(SC.L.skills);
             control = select(id, ids.map((s) => [s, SC.skillName(s)]), current, set, 'Bitte wählen');
         } else if (choice.kind === 'feat-category') {
-            control = select(id, app.data.feats.filter((f) => f.category === choice.category).map((f) => [f.id, f.name]), current, set, 'Bitte wählen');
+            control = select(id, app.data.feats.filter((f) => f.category === choice.category).map((f) => [f.id, SC.ruleName(f)]), current, set, 'Bitte wählen');
         } else if (choice.kind === 'size') {
             control = select(id, species.sizes.map((s) => [s, s]), current, set, 'Bitte wählen');
         } else {
@@ -311,14 +312,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const curSpecies = st().species && SC.L.species[st().species.id];
         wrap.append(panel(
             h('h3', { text: ui("Spezies") }),
-            h('div', { class: 'sc-grid' }, app.data.species.map((s) => card(s.name, `${s.sizes.join('/')} · ${fmtMeters(s.speedMeters)}${s.homebrew ? ` · Homebrew (${(s.origin && s.origin.scope && s.origin.scope.label) || 'veröffentlicht'})` : ''}`, curSpecies && curSpecies.id === s.id, () => {
+            h('div', { class: 'sc-grid' }, app.data.species.map((s) => card(SC.ruleLabel(s), `${s.sizes.join('/')} · ${fmtMeters(s.speedMeters)}${s.homebrew ? ` · Homebrew (${(s.origin && s.origin.scope && s.origin.scope.label) || 'veröffentlicht'})` : ''}`, curSpecies && curSpecies.id === s.id, () => {
                 SC.mutate((state) => { if (!state.species || state.species.id !== s.id) state.species = { id: s.id, choices: {} }; });
             }))),
             curSpecies ? h('div', { class: 'sc-detail' },
-                h('h3', { text: curSpecies.name }),
+                h('h3', { text: SC.ruleName(curSpecies) }),
                 h('p', { text: ui("{p0} · Größe {p1} · Bewegungsrate {p2}{p3}",{p0:(curSpecies.creatureType),p1:(curSpecies.sizes.join(' oder ')),p2:(fmtMeters(curSpecies.speedMeters)),p3:(curSpecies.darkvisionMeters ? ` · Dunkelsicht ${curSpecies.darkvisionMeters} m` : '')}) }),
                 h('p', null, h('strong', { text: ui("Merkmale: ") }), curSpecies.traits.join(', ')),
-                curSpecies.homebrew ? homebrewSpeciesDetail(curSpecies) : SC.detailButton(curSpecies.id, ui("Spezies-Text lesen"), curSpecies.name),
+                curSpecies.homebrew ? homebrewSpeciesDetail(curSpecies) : SC.detailButton(curSpecies.id, ui("Spezies-Text lesen"), SC.ruleName(curSpecies)),
                 curSpecies.choices.map((c) => speciesChoiceControl(curSpecies, c))) : null));
         const curBg = st().background && SC.L.backgrounds[st().background.id];
         wrap.append(panel(
@@ -326,16 +327,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             h('p', {class:'sc-muted',text:ui('Wähle einen SRD-Hintergrund oder veröffentliche einen eigenen Hintergrund mit der vereinbarten Attributauswahl.')}),
             h('div', {class:'sc-row'}, h('a',{class:'sc-btn',href:'/api/ce/authoring#ce-origins',target:'_blank',rel:'noopener',text:ui('Eigenen Hintergrund erstellen')}),
                 h('button',{type:'button',class:'sc-btn',id:'scRefreshOrigins',onclick:SC.refreshOrigins,text:ui('Eigene Hintergründe aktualisieren')})),
-            h('div', { class: 'sc-grid' }, app.data.backgrounds.map((b) => card(b.name, `${b.abilities.map(SC.abilityAbbr).join(' / ')} · ${b.feat} · ${b.skills.map(SC.skillName).join(', ')}`, curBg && curBg.id === b.id, () => {
+            h('div', { class: 'sc-grid' }, app.data.backgrounds.map((b) => card(SC.ruleLabel(b), `${b.abilities.map(SC.abilityAbbr).join(' / ')} · ${SC.featName(b.featId || b.feat)} · ${b.skills.map(SC.skillName).join(', ')}`, curBg && curBg.id === b.id, () => {
                 SC.mutate((state) => { if (!state.background || state.background.id !== b.id) state.background = { id: b.id, abilityBonus: {} }; });
             }))),
             curBg ? h('div', { class: 'sc-detail' },
-                h('h3', { text: curBg.name }),
+                h('h3', { text: SC.ruleName(curBg) }),
                 h('p', null, h('strong', { text: ui("Attribute: ") }), curBg.abilities.map(SC.abilityName).join(', ')),
-                h('p', null, h('strong', { text: ui("Herkunftstalent: ") }), curBg.feat + (curBg.featChoice ? ` (${curBg.featChoice})` : '')),
+                h('p', null, h('strong', { text: ui("Herkunftstalent: ") }), SC.featName(curBg.featId || curBg.feat) + (curBg.featChoice ? ` (${curBg.featChoice})` : '')),
                 h('p', null, h('strong', { text: ui("Fertigkeiten: ") }), curBg.skills.map(SC.skillName).join(', ')),
                 h('p', null, h('strong', { text: ui("Werkzeug: ") }), SC.itemName(curBg.tool)),
-                SC.detailButton(curBg.id, ui("Hintergrund-Text lesen"), curBg.name),
+                SC.detailButton(curBg.id, ui("Hintergrund-Text lesen"), SC.ruleName(curBg)),
                 curBg.featChoice ? h('p', { class: 'sc-muted', text: ui("Die Detailwahl des Herkunftstalents (z. B. die Zauberauswahl) wird noch nicht abgebildet.") }) : null) : null));
         if (curBg) wrap.append(backgroundBonusControl(curBg));
         return wrap;
@@ -439,8 +440,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                     if (id === 'point-buy') ABIL.forEach((a) => { state.abilityBase[a] = 8; });
                     if (id === 'manual') ABIL.forEach((a) => { state.abilityBase[a] = 10; });
                 }) }, text))),
-            c ? h('p', { class: 'sc-muted', text: ui("{p0}: Hauptattribut {p1}.",{p0:(c.name),p1:(c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und '))}) }) : null,
-            c && method === 'standard-array' ? h('button', { type: 'button', class: 'sc-btn', id: 'scRecommend', onclick: () => SC.mutate((state) => { state.abilityBase = { ...c.standardAbilityScores }; }) }, ui("Empfehlung für {p0} übernehmen",{p0:(c.name)})) : null,
+            c ? h('p', { class: 'sc-muted', text: ui("{p0}: Hauptattribut {p1}.",{p0:(SC.ruleName(c)),p1:(c.primaryAbilities.abilities.map(SC.abilityName).join(c.primaryAbilities.mode === 'any' ? ' oder ' : ' und '))}) }) : null,
+            c && method === 'standard-array' ? h('button', { type: 'button', class: 'sc-btn', id: 'scRecommend', onclick: () => SC.mutate((state) => { state.abilityBase = { ...c.standardAbilityScores }; }) }, ui("Empfehlung für {p0} übernehmen",{p0:(SC.ruleName(c))})) : null,
             method ? methodControls(method) : h('p', { class: 'sc-muted', text: ui("Wähle zuerst eine Methode.") }),
             h('p', { class: 'sc-muted', text: ui("Boni aus Hintergrund und Attributswerterhöhungen werden automatisch addiert.") }));
         return wrap;
@@ -456,7 +457,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const chosen = (st().skills || {}).class || [];
         const set = (key, list) => SC.mutate((state) => { state.skills = state.skills || {}; state.skills[key] = list; });
         const options = SC.util.classSkillOptions(c).map((id) => ({ id, name: SC.skillName(id), sub: fromBg.includes(id) ? 'bereits durch Hintergrund' : null }));
-        const wrap = panel(h('h3', { text: ui("Fertigkeiten ({p0})",{p0:(c.name)}) }),
+        const wrap = panel(h('h3', { text: ui("Fertigkeiten ({p0})",{p0:(SC.ruleName(c))}) }),
             bg ? h('p', null, h('strong', { text: ui("Vom Hintergrund: ") }), fromBg.map(SC.skillName).join(', ')) : h('p', { class: 'sc-muted', text: ui("Hintergrund noch nicht gewählt.") }),
             counter(chosen.length, c.skillChoices.count),
             countedList(options, chosen, c.skillChoices.count, (next) => set('class', next), 'Klassenfertigkeiten'));
@@ -466,21 +467,21 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const picked = ((st().skills || {}).multiclass || {})[key] || [];
             const pool = grant.from === 'class' ? SC.util.classSkillOptions(cls(key)) : Object.keys(SC.L.skills);
             const options = pool.map((id) => ({ id, name: SC.skillName(id) }));
-            wrap.append(h('h3', { 'data-focus-path': `skills.multiclass.${key}`, tabindex: '-1', text: ui("Mehrklassigkeit: {p0}",{p0:(cls(key).name)}) }), counter(picked.length, grant.count),
+            wrap.append(h('h3', { 'data-focus-path': `skills.multiclass.${key}`, tabindex: '-1', text: ui("Mehrklassigkeit: {p0}",{p0:(SC.className(key))}) }), counter(picked.length, grant.count),
                 countedList(options, picked, grant.count, (next) => SC.mutate((state) => {
                     state.skills = state.skills || {};
                     state.skills.multiclass = { ...(state.skills.multiclass || {}), [key]: next };
-                }), `Fertigkeit durch ${cls(key).name}`));
+                }), `Fertigkeit durch ${SC.className(key)}`));
         });
         const need = expectedExpertise();
         if (need) {
-            const prof = Object.entries((ev() || { skills: {} }).skills).filter(([, v]) => v.proficiency !== 'none').map(([id, v]) => ({ id, name: v.name }));
+            const prof = Object.entries((ev() || { skills: {} }).skills).filter(([, v]) => v.proficiency !== 'none').map(([id, v]) => ({ id, name: SC.skillName(id) }));
             const exp = (st().skills || {}).expertise || [];
             wrap.append(h('h3', { text: ui("Expertise") }), counter(exp.length, need), countedList(prof, exp, need, (next) => set('expertise', next), 'Expertise'));
         }
         const other = (st().skills || {}).other || [];
         wrap.append(h('details', null, h('summary', { text: ui("Weitere Fertigkeitsübungen (z. B. aus Talenten)") }),
-            countedList(Object.values(SC.L.skills).map((s) => ({ id: s.id, name: s.name })), other, 99, (next) => set('other', next), 'Weitere Fertigkeiten')));
+            countedList(Object.values(SC.L.skills).map((s) => ({ id: s.id, name: SC.skillName(s.id) })), other, 99, (next) => set('other', next), 'Weitere Fertigkeiten')));
         return wrap;
     }
 
@@ -491,12 +492,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         return panel(h('h3', { text: ui("Unterklassen") }), keys.map((key) => {
             const c = cls(key);
             const unlock = c.subclassLevels[0];
-            if (lv[key] < unlock) return h('p', { class: 'sc-muted', text: ui("{p0}: Unterklasse ab Stufe {p1}.",{p0:(c.name),p1:(unlock)}) });
+            if (lv[key] < unlock) return h('p', { class: 'sc-muted', text: ui("{p0}: Unterklasse ab Stufe {p1}.",{p0:(SC.ruleName(c)),p1:(unlock)}) });
             const cur = (st().subclasses || {})[key];
-            return h('div', null, h('h4', { text: c.name }),
+            return h('div', null, h('h4', { text: SC.ruleName(c) }),
                 h('div', { class: 'sc-grid' }, c.subclasses.map((id) => card(SC.subclassName(id), null, cur === id, () => SC.mutate((state) => { state.subclasses = state.subclasses || {}; state.subclasses[key] = id; })))),
                 cur ? SC.detailButton(cur, ui("Unterklassen-Text lesen"), SC.subclassName(cur)) : null,
-                cur ? window.SrdRulePreview.subclass(cur, lv[key], false, ui) : null);
+                cur ? window.SrdRulePreview.subclass(cur, lv[key], false, ui, SC.entrySource) : null);
         }));
     }
 
@@ -516,8 +517,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         }
         if (choice.kind === 'feat-category') {
             const feats = app.data.feats.filter((f) => f.category.startsWith(choice.category));
-            return h('div', { 'data-focus-path': `featureChoices.${key}.${choice.id}` }, field(`${label(choice.id)} (${choice.category})`, select(`scFc-${key}-${choice.id}`, feats.map((f) => [f.id, f.name]), value, set, 'Bitte wählen'), `scFc-${key}-${choice.id}`),
-                value ? SC.detailButton(value, ui("Regeltext"), SC.L.feats[value].name) : null);
+            return h('div', { 'data-focus-path': `featureChoices.${key}.${choice.id}` }, field(`${label(choice.id)} (${choice.category})`, select(`scFc-${key}-${choice.id}`, feats.map((f) => [f.id, SC.ruleName(f)]), value, set, 'Bitte wählen'), `scFc-${key}-${choice.id}`),
+                value ? SC.detailButton(value, ui("Regeltext"), SC.ruleName(SC.L.feats[value])) : null);
         }
         const need = choiceNeed(choice, classLevel);
         const picks = Array.isArray(value) ? value : [];
@@ -529,12 +530,12 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 .map((o) => {
                     const verdict = app.evaluation?.classOptionEligibility?.[key]?.[o.id];
                     const pending = app.dirty || app.saving;
-                    return { id: o.id, name: o.name,
+                    return { id: o.id, name: SC.ruleName(o),
                         sub: [o.prerequisite, o.cost, pending ? ui('Voraussetzungen werden geprüft …') : verdict?.reasons?.join(' ')].filter(Boolean).join(' · ') || null,
                         disabled: pending || !verdict?.eligible, detail: o.id };
                 });
         } else if (choice.kind === 'language') {
-            options = app.data.languages.filter((l) => !l.automatic).map((l) => ({ id: l.id, name: l.name }));
+            options = app.data.languages.filter((l) => !l.automatic).map((l) => ({ id: l.id, name: SC.languageName(l.id) }));
         }
         const elsewhere = Object.entries((st().featureChoices || {})[key] || {}).filter(([id, v]) => id !== choice.id && Array.isArray(v)).flatMap(([, v]) => v);
         options = options.filter((o) => !elsewhere.includes(o.id));
@@ -547,7 +548,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const blocks = [];
         classOrder().forEach((key) => {
             const list = cls(key).featureChoices.filter((c) => c.kind !== 'expertise' && c.level <= lv[key]);
-            if (list.length) blocks.push(h('div', null, h('h3', { text: ui("{p0}: Klassenmerkmale",{p0:(cls(key).name)}) }), list.map((c) => featureChoiceControl(key, c, lv[key]))));
+            if (list.length) blocks.push(h('div', null, h('h3', { text: ui("{p0}: Klassenmerkmale",{p0:(SC.className(key))}) }), list.map((c) => featureChoiceControl(key, c, lv[key]))));
         });
         return blocks.length ? panel(blocks) : null;
     }
@@ -592,7 +593,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         });
         const idp = `scAdv-${slot.key}-${slot.level}`;
         const kind = adv && adv.kind;
-        const wrap = h('div', { class: 'sc-detail', 'data-focus-path': idx >= 0 ? `advancements[${idx}]` : null }, h('h4', { text: ui("{p0}, Stufe {p1}: {p2}",{p0:(cls(slot.key).name),p1:(slot.level),p2:(slot.epic ? 'Epische Gabe' : 'Attributswerterhöhung oder Talent')}) }),
+        const wrap = h('div', { class: 'sc-detail', 'data-focus-path': idx >= 0 ? `advancements[${idx}]` : null }, h('h4', { text: ui("{p0}, Stufe {p1}: {p2}",{p0:(SC.className(slot.key)),p1:(slot.level),p2:(slot.epic ? 'Epische Gabe' : 'Attributswerterhöhung oder Talent')}) }),
             h('div', { class: 'sc-row', role: 'group', 'aria-label': ui("Art") },
                 h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(kind === 'asi'), onclick: () => write((e) => { e.kind = 'asi'; e.increases = {}; delete e.featId; delete e.increaseAbility; }) }, ui("Attributswerterhöhung")),
                 h('button', { type: 'button', class: 'sc-btn sc-btn-toggle', 'aria-pressed': String(kind === 'feat'), onclick: () => write((e) => { e.kind = 'feat'; delete e.increases; }) }, slot.epic ? ui("Epische Gabe") : ui("Talent"))));
@@ -622,7 +623,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             // non-repeatable feat that the origin or another improvement already took.
             const taken = takenFeatIds(adv);
             const optionFor = (f) => {
-                const base = f.name + (f.prerequisite && f.prerequisite.raw ? ` (${f.prerequisite.raw})` : '');
+                const base = SC.ruleName(f) + (f.prerequisite && f.prerequisite.raw ? ` (${f.prerequisite.raw})` : '');
                 const blocked = !f.repeatable && taken.has(f.id);
                 if (!blocked || (f.id === adv.featId && !takenFeatIds(adv, true).has(f.id))) return [f.id, base];
                 // A feat saved earlier stays visible (never silently dropped) but is explained.
@@ -633,14 +634,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const currentFeat = current && app.data.feats.find((f) => f.id === adv.featId);
             if (currentFeat && !currentFeat.repeatable && takenFeatIds(adv, true).has(currentFeat.id)) {
                 wrap.append(h('p', { class: 'sc-finding-note', role: 'status', 'data-feat-repeat': adv.featId,
-                    text: ui("„{name}“ kann nicht mehrfach gewählt werden und ist bereits vergeben. Wähle hier ein anderes Talent; andere Entscheidungen bleiben unverändert.", { name: currentFeat.name }) }));
+                    text: ui("„{name}“ kann nicht mehrfach gewählt werden und ist bereits vergeben. Wähle hier ein anderes Talent; andere Entscheidungen bleiben unverändert.", { name: SC.ruleName(currentFeat) }) }));
             }
             const feat = adv.featId && SC.L.feats[adv.featId];
             if (feat) {
-                wrap.append(SC.detailButton(feat.id, ui("Talent-Text lesen"), feat.name));
+                wrap.append(SC.detailButton(feat.id, ui("Talent-Text lesen"), SC.ruleName(feat)));
                 if (feat.abilityIncrease) {
                     const allowed = feat.abilityIncrease.abilities === 'any' ? ABIL : feat.abilityIncrease.abilities;
-                    wrap.append(field(ui("{p0}: +1 auf",{p0:(feat.name)}), select(`${idp}-i`, allowed.map((a) => [a, SC.abilityName(a)]), adv.increaseAbility, (v) => write((e) => { e.increaseAbility = v || undefined; }), 'Bitte wählen'), `${idp}-i`));
+                    wrap.append(field(ui("{p0}: +1 auf",{p0:(SC.ruleName(feat))}), select(`${idp}-i`, allowed.map((a) => [a, SC.abilityName(a)]), adv.increaseAbility, (v) => write((e) => { e.increaseAbility = v || undefined; }), 'Bitte wählen'), `${idp}-i`));
                 }
             }
         }
@@ -688,7 +689,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 const contents = app.data.equipment.packs[item.itemId]?.contents || [item];
                 for (const entry of contents) if (entry.kind === 'item') {
                     const sources = owned.get(entry.itemId) || [];
-                    sources.push(`${label}: ${source.name} · Paket ${state.equipment[key]}`);
+                    sources.push(`${label}: ${SC.ruleName(source)} · Paket ${state.equipment[key]}`);
                     owned.set(entry.itemId, sources);
                 }
             }
@@ -702,7 +703,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const first = firstClass();
         const bg = st().background && SC.L.backgrounds[st().background.id];
         wrap.append(panel(h('h3', { text: ui("Ausgangsausrüstung") }),
-            first ? packageChooser(`Klasse: ${cls(first).name}`, cls(first).startingEquipment, 'classPackage') : h('p', { class: 'sc-muted', text: ui("Wähle zuerst eine Klasse.") }),
+            first ? packageChooser(`Klasse: ${SC.className(first)}`, cls(first).startingEquipment, 'classPackage') : h('p', { class: 'sc-muted', text: ui("Wähle zuerst eine Klasse.") }),
             bg ? packageChooser(`Hintergrund: ${bg.name}`, bg.startingEquipment, 'backgroundPackage') : null,
             h('p', { class: 'sc-muted', text: ui("Hinweis: Das Inventar wird erst mit dem Charakterbogen aufgebaut; hier hältst du die Wahl der Pakete fest.") })));
         const equip = st().equipment || {};
@@ -736,11 +737,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const sel = ((st().spells || {})[key] || {})[listName] || [];
         const set = (next) => SC.mutate((state) => { state.spells = state.spells || {}; state.spells[key] = state.spells[key] || {}; state.spells[key][listName] = next; });
         const full = sel.length >= max;
-        const items = options.slice().sort((a,b) => (spellFilter.sort === 'level' ? app.data.spells[a].level - app.data.spells[b].level : 0) || app.data.spells[a].name.localeCompare(app.data.spells[b].name,document.documentElement.lang)).map((id) => {
+        const items = options.slice().sort((a,b) => (spellFilter.sort === 'level' ? app.data.spells[a].level - app.data.spells[b].level : 0) || SC.spellName(a).localeCompare(SC.spellName(b),window.VTTI18n.contentLocale())).map((id) => {
             const s = app.data.spells[id];
             const on = sel.includes(id);
-            const row = checkRow(s.name, on, !on && full, (checked) => set(checked ? sel.concat(id) : sel.filter((x) => x !== id)), `${s.level === 0 ? 'Zaubertrick' : `${s.level}. Grad`}${s.ritual ? ' · Ritual' : ''}`, id);
-            row.dataset.name = s.name.toLowerCase();
+            const row = checkRow(SC.ruleLabel({id,name:s.name}), on, !on && full, (checked) => set(checked ? sel.concat(id) : sel.filter((x) => x !== id)), `${s.level === 0 ? ui('Zaubertrick') : ui('Grad {level}',{level:s.level})}${s.ritual ? ' · '+ui('Ritual') : ''}`, id, `${key}:${listName}:${id}`);
+            row.dataset.name = SC.spellName(id).toLowerCase();
+            row.dataset.search=(SC.spellName(id)+' '+s.name).toLowerCase();
+            row.dataset.canonicalId=id;
             row.dataset.level = String(s.level);
             return row;
         });
@@ -750,7 +753,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     }
     function applyFilter(list) {
         list.querySelectorAll('[data-name]').forEach((row) => {
-            const textOk = !spellFilter.text || row.dataset.name.includes(spellFilter.text);
+            const textOk = !spellFilter.text || row.dataset.search.includes(spellFilter.text);
             const levelOk = spellFilter.level === '' || row.dataset.level === spellFilter.level;
             row.hidden = !(textOk && levelOk);
         });
@@ -765,9 +768,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             h('h3', { text: ui("Zauber filtern") }),
             h('div', { class: 'sc-fields' },
                 field(ui("Suche"), h('input', { type: 'search', id: 'scSpellSearch', value: spellFilter.text, oninput: (e) => { spellFilter.text = e.target.value.toLowerCase(); wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); } }), 'scSpellSearch'),
-                field(ui("Grad"), select('scSpellLevel', [['0', 'Zaubertricks'], ...Array.from({ length: 9 }, (_, i) => [String(i + 1), `${i + 1}. Grad`])], spellFilter.level, (v) => { spellFilter.level = v; wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); }, 'Alle'), 'scSpellLevel'),
+                field(ui("Grad"), select('scSpellLevel', [['0', ui('Zaubertricks')], ...Array.from({ length: 9 }, (_, i) => [String(i + 1), ui('Grad {level}',{level:i+1})])], spellFilter.level, (v) => { spellFilter.level = v; wrap.querySelectorAll('.sc-choice-list').forEach(applyFilter); }, 'Alle'), 'scSpellLevel'),
                 field(ui('Sortierung'),select('scSpellSort',[['level',ui('Grad, dann Name')],['name',ui('Name')]],spellFilter.sort,v => {spellFilter.sort=v;wrap.querySelectorAll('.sc-choice-list').forEach(list => {
-                    [...list.children].sort((a,b) => (v === 'level' ? Number(a.dataset.level)-Number(b.dataset.level) : 0) || a.dataset.name.localeCompare(b.dataset.name,document.documentElement.lang)).forEach(row => list.append(row));
+                    [...list.children].sort((a,b) => (v === 'level' ? Number(a.dataset.level)-Number(b.dataset.level) : 0) || a.dataset.name.localeCompare(b.dataset.name,window.VTTI18n.contentLocale())).forEach(row => list.append(row));
                 });}), 'scSpellSort')),
             ev() && ev().spellcasting.slots ? h('p', null, h('strong', { text: ui("Zauberplätze: ") }), ev().spellcasting.slots.map((n, i) => (n ? `${i + 1}. Grad ×${n}` : null)).filter(Boolean).join(' · ')) : null,
             ev() && ev().spellcasting.pact ? h('p', null, h('strong', { text: ui("Paktmagie: ") }), ui("{p0} Plätze, {p1}. Grad",{p0:(ev().spellcasting.pact.slots),p1:(ev().spellcasting.pact.grade)})) : null);
@@ -785,7 +788,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             const sel = (st().spells || {})[key] || {};
             const prepPool = book ? leveled.filter((id) => (sel.spellbook || []).includes(id)) : leveled;
             wrap.append(panel(
-                h('h3', { text: ui("{p0}: Zauber",{p0:(c.name)}) }),
+                h('h3', { text: ui("{p0}: Zauber",{p0:(SC.ruleName(c))}) }),
                 info ? h('p', { class: 'sc-muted', text: ui("Zauberattribut {p0} · Zauber-SG {p1} · Zauberangriff {p2}",{p0:(SC.abilityName(info.ability)),p1:(info.saveDc),p2:(sign(info.attackBonus))}) }) : null,
                 h('h4', { text: ui("Zaubertricks") }), spellPicker(key, 'cantrips', row.cantrips, cantrips, row.cantrips),
                 book ? [h('h4', { text: ui("Zauberbuch") }), spellPicker(key, 'spellbook', null, leveled, spellbookSize(key, lv[key]))] : null,
@@ -805,7 +808,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             h('h3', { text: ui("Wer ist dein Charakter?") }),
             h('div', { class: 'sc-fields' },
                 input('name', ui("Name")), input('pronouns', ui("Pronomen")),
-                field(ui("Gesinnung"), select('scId-alignment', app.data.alignments.map((a) => [a.id, a.name]), idn.alignment, (v) => SC.mutate((state) => { state.identity = state.identity || {}; if (v) state.identity.alignment = v; else delete state.identity.alignment; }, { render: 'none' }), ui("Keine Angabe")), 'scId-alignment'),
+                field(ui("Gesinnung"), select('scId-alignment', app.data.alignments.map((a) => [a.id, SC.alignmentName(a.id)]), idn.alignment, (v) => SC.mutate((state) => { state.identity = state.identity || {}; if (v) state.identity.alignment = v; else delete state.identity.alignment; }, { render: 'none' }), 'Keine Angabe'), 'scId-alignment'),
                 // "Körpergröße" is a catalog source whose German text is "Größe" (a person's height, not a creature size).
                 input('age', ui("Alter")), input('height', ui("Körpergröße")), input('weight', ui("Gewicht")), input('eyes', ui("Augen")), input('hair', ui("Haare")), input('skin', ui("Haut")), input('faith', ui("Glaube"))),
             area('appearance', ui("Aussehen")), area('traits', ui("Persönlichkeitsmerkmale")), area('ideals', ui("Ideale")), area('bonds', ui("Bindungen")), area('flaws', ui("Makel")), area('backstory', ui("Hintergrundgeschichte")), area('notes', ui("Notizen")));

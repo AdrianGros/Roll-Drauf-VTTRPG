@@ -3,8 +3,8 @@
   'use strict';
   const cache = new Map();
   function node(tag, text) { const n = document.createElement(tag); if (text != null) n.textContent = text; return n; }
-  function entry(id) {
-    const base = '/api/rulesets/srd-5.2.1-de/compendium/entry/';
+  function entry(id, locale='de') {
+    const base = `/api/rulesets/srd-5.2.1-${locale}/compendium/entry/`;
     const url = base + encodeURIComponent(id);
     if (!cache.has(url)) cache.set(url, fetch(url, {credentials:'same-origin'}).then(r => {
       if (!r.ok) throw new Error('rule unavailable'); return r.json();
@@ -31,20 +31,31 @@
     }
     const n=node('aside');if(b.title)n.append(node('strong',b.title));if(b.text)n.append(node('p',b.text));return n;
   }
-  function subclass(id, level, newLevelOnly = false, ui=globalThis.VTTUi) {
+  function subclass(id, level, newLevelOnly = false, ui=globalThis.VTTUi, resolve=id=>({id,locale:'de'})) {
     const wrap=node('section');wrap.className='srd-rule-preview';wrap.dataset.subclassPreview=id;
     wrap.setAttribute('aria-live','polite');wrap.append(node('p',ui('Merkmale werden geladen …')));
     (async () => {
-      const data=await entry(id);
-      const features=await Promise.all((data.entity.features || []).map(entry));
+      let source=resolve(id);
+      const read=async target=>{
+        const data=await entry(target.id,target.locale);
+        const features=await Promise.all((target.featureIds || data.entity.features || []).map(feature=>entry(feature,target.locale)));
+        return {data,features};
+      };
+      let result;
+      try{result=await read(source);}catch(error){
+        if(source.locale!=='en')throw error;
+        source={id,locale:'de',fallback:true};result=await read(source);
+      }
+      const {data,features}=result;
       const reached=features.filter(f => newLevelOnly ? f.entity.level === level : f.entity.level <= level);
       wrap.replaceChildren(node('h4',ui('Unterklasse: {name}',{name:data.entity.name})));
+      if(source.fallback)wrap.append(node('p',ui('Dieser Regeltext ist derzeit nur auf Deutsch verfügbar.')));
       wrap.append(node('p',ui('Merkmale bis Klassenstufe {level}',{level})));
       if (!reached.length) wrap.append(node('p',ui('Auf dieser Stufe kommen keine neuen Unterklassenmerkmale hinzu.')));
       reached.forEach(f => {
         const detail=node('details');detail.open=true;detail.dataset.featureLevel=f.entity.level;
         detail.append(node('summary',ui('Stufe {level}: {name}',{level:f.entity.level,name:f.entity.name})));
-        f.blocks.forEach(b => {if(b.ruleId !== f.entity.id)detail.append(block(b));});wrap.append(detail);
+        f.blocks.forEach(b => {if(b.ruleId !== f.entity.id){const n=block(b);n.lang=source.locale;detail.append(n);}});wrap.append(detail);
       });
       const later=features.filter(f => f.entity.level > level);
       if(later.length){const d=node('details');d.append(node('summary',ui('Spätere Unterklassenmerkmale')));

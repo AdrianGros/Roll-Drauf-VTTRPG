@@ -12,6 +12,10 @@ The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live ap
 
 ## Current packet progress
 
+Owner assignment, 24 November: Claude implements FV07 and FV08 in `/home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124` (branch `feat/mapmaker-fv07-fv08-20261124`). Codex does not start either packet; it integrates, verifies and deploys them after Claude’s handoff.
+
+Asset constraint, 24 November: scan the RD Team Discord for Ducky’s existing assets and permission notes. Generate no new images and use none of her artwork in a generative workflow. Preserve originals and source-specific restrictions; labeling never grants missing rights.
+
 Owner decisions, 24 November: public AI-generated images are allowed with a required AI label and the existing rights confirmation (FV16). The unidentified older 0% report is disregarded at the owner’s instruction; FV17 closes by scope decision, without claiming a technical fix.
 
 FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 now has a [partly delivered creator interface](../DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md): cataloged labels follow the rules language, with safe live switching and unchanged canonical data. Complete English rules presentation, validation and editor coverage remain open. Its reproducible inventory covers 339 spells (310 single candidates, 29 ambiguous, no approved identities). The overall goal remains active.
@@ -38,8 +42,8 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV04 | Layer targets and editor panels | P1 | Delivered live |
 | FV05 | Reference grids snapping and tile transforms | P1 | Partly live |
 | FV06 | Brush controls colors and quick palette | P1 | Partly live |
-| FV07 | Object list and label placement | P1 | Planned |
-| FV08 | Path drawing and editing modes | P1 | Planned |
+| FV07 | Object list and label placement | P1 | Assigned to Claude, in progress |
+| FV08 | Path drawing and editing modes | P1 | Assigned to Claude, in progress |
 | FV09 | Line styles node curves and text geometry | P1 | Plan and inputs needed |
 | FV10 | Own images and tileset packages | P1 | Plan and inputs needed |
 | FV11 | Catalog metadata and personal sets | P1 | Plan and inputs needed |

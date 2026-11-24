@@ -80,7 +80,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             return { ok: false, status: 401, data: {} };
         }
         const data = await response.json().catch(() => ({}));
-        return { ok: response.ok, status: response.status, data };
+        return { ok: response.ok, status: response.status, data, canonicalHash:response.headers.get('X-Creator-Data-SHA256') };
     }
     SC.api = api;
 
@@ -109,6 +109,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         L.items = {};
         [data.equipment.items, data.equipment.weapons, data.equipment.armor].forEach((list) => list.forEach((i) => { L.items[i.id] = i.name; }));
         L.langs = Object.fromEntries(data.languages.map((l) => [l.id, l]));
+        SC.buildDisplayIndex?.(data);
     }
     SC.itemName = (id) => SC.L.items[id] || String(id).split('.').pop().replace(/-/g, ' ');
     SC.skillName = (id) => (SC.L.skills[id] ? SC.L.skills[id].name : id);
@@ -163,8 +164,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     }
     SC.openEntry = async function (id, fallbackTitle) {
         const dialog = $('scDialog');
+        const serial=app.dialogSeq=(app.dialogSeq || 0)+1,localeSeq=app.localeSeq;
+        app.dialogEntry={id,fallbackTitle};
+        const current=()=>dialog.open && serial===app.dialogSeq && localeSeq===app.localeSeq;
+        $('scDialogTitle').removeAttribute('lang');
         $('scDialogTitle').textContent = fallbackTitle || ui("Regeltext");
         const body = $('scDialogBody');
+        body.removeAttribute('lang');
         body.textContent = ui("Wird geladen …");
         if (!dialog.open) dialog.showModal();
         const own = [...app.data.backgrounds,...app.data.feats].find(entry=>entry.id===id && entry.homebrew);
@@ -174,19 +180,33 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             if (own.mechanics) own.mechanics.forEach(grant=>body.append(h('p',{text:grant.kind==='skill_proficiency' ? ui("Übung: {p0}",{p0:(SC.skillName(grant.skill))}) : `${({initiative_pb:ui('Initiative'),initiative:ui('Initiative'),ac:ui('Rüstungsklasse'),speed_meters:ui('Bewegung (m)'),hp_per_level:ui('Trefferpunkte je Stufe')})[grant.kind] || ui('Regelbeitrag')}: +${grant.kind==='initiative_pb'?ui('Übungsbonus'):grant.value}`})));
             $('scDialogTitle').focus();return;
         }
+        let source=SC.entrySource(id);
+        const read=async target=>{
+            const response=await fetch(`/api/rulesets/srd-5.2.1-${target.locale}/compendium/entry/${encodeURIComponent(target.id)}`,{credentials:'same-origin'});
+            if(!response.ok)throw new Error('missing');return response.json();
+        };
         try {
-            const response = await fetch(`${COMP}/entry/${encodeURIComponent(id)}`, { credentials: 'same-origin' });
-            if (!response.ok) throw new Error('missing');
-            const data = await response.json();
+            let data;
+            try { data=await read(source); } catch(error){
+                if(!current())return;
+                if(source.locale==='de')throw error;
+                source={id,locale:'de',fallback:true};data=await read(source);
+            }
+            if(!current())return;
             $('scDialogTitle').textContent = data.entity.name;
+            $('scDialogTitle').lang=source.locale;
             body.textContent = '';
             body.append(h('p', { class: 'sc-muted' }, ui("SRD 5.2.1 · "), h('a', { href: data.entity.url, target: '_blank', rel: 'noopener' }, ui("Im Regelwerk lesen"))));
-            data.blocks.forEach((b) => body.append(renderBlock(b)));
+            if(source.fallback)body.append(h('p',{class:'sc-muted',text:ui('Dieser Regeltext ist derzeit nur auf Deutsch verfügbar.')}));
+            if(source.differences)body.append(h('p',{class:'sc-muted sc-source-difference',text:ui('Die Sprachfassungen unterscheiden sich bei den Komponenten. Für diesen Charakter bleibt die deutsche Regelfassung maßgeblich.')}));
+            data.blocks.forEach((b)=>{const node=renderBlock(b);node.lang=source.locale;body.append(node);});
         } catch (error) {
+            if(!current())return;
             body.textContent = ui("Der Regeltext konnte nicht geladen werden.");
         }
-        $('scDialogTitle').focus();
+        if(current())$('scDialogTitle').focus();
     };
+    SC.refreshOpenEntry=()=>{if($('scDialog').open && app.dialogEntry)SC.openEntry(app.dialogEntry.id,SC.ruleName(app.dialogEntry.id,app.dialogEntry.fallbackTitle));};
     SC.detailButton = (id, label, name) => h('button', { type: 'button', class: 'sc-btn sc-btn-small', onclick: () => SC.openEntry(id, name) }, label || ui("Regeltext"));
 
     // ---------------------------------------------------------------- state & saving
@@ -399,11 +419,11 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         box.textContent = '';
         box.append(h('h2', { text: (app.draft.state.identity && app.draft.state.identity.name) || ui("Unbenannter Charakter") }));
         if (!ev) { box.append(h('p', { class: 'sc-muted', text: ui("Wird berechnet …") })); return; }
-        const classLine = ev.classes.length ? ev.classes.map((c) => `${c.name} ${c.level}${c.subclass ? ` (${SC.subclassName(c.subclass)})` : ''}`).join(' / ') : ui("Noch keine Klasse");
+        const classLine = ev.classes.length ? ev.classes.map((c) => `${SC.className(c.classKey)} ${c.level}${c.subclass ? ` (${SC.subclassName(c.subclass)})` : ''}`).join(' / ') : ui("Noch keine Klasse");
         const state = app.draft.state;
         const species = state.species && SC.L.species[state.species.id];
         const background = state.background && SC.L.backgrounds[state.background.id];
-        box.append(h('p', { class: 'sc-muted', text: [classLine, species && species.name, background && background.name].filter(Boolean).join(' · ') }));
+        box.append(h('p', { class: 'sc-muted', text: [classLine, species && SC.ruleName(species), background && SC.ruleName(background)].filter(Boolean).join(' · ') }));
         const more = h('div', { class: 'sc-summary-more' });
         box.append(h('button', { type: 'button', class: 'sc-btn sc-btn-small sc-summary-toggle', 'aria-expanded': app.summaryOpen ? 'true' : 'false', onclick: () => { app.summaryOpen = !app.summaryOpen; renderSummary(); } }, app.summaryOpen ? ui("Werte ausblenden") : ui("Werte anzeigen")), more);
         box.dataset.collapsed = app.summaryOpen ? 'false' : 'true';
@@ -507,6 +527,13 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             markerTop: (active || marker)?.getBoundingClientRect().top};
     }
 
+    function localeControlKey(node,index,root){
+        if(node.id)return 'id:'+node.id;
+        const section=node.closest('.sc-section') || root,group=node.closest('[role="group"]');
+        const groupIndex=group?Array.from(section.querySelectorAll('[role="group"]')).indexOf(group):-1;
+        return node.dataset.focusKey?`${section.id}:${groupIndex}:${node.tagName}:${node.dataset.focusKey}`:`position:${index}:${node.tagName}:${node.type}`;
+    }
+
     function restoreBuilderView(root, view) {
         root.querySelectorAll('details').forEach(node => {
             if (view.details.has(detailKey(node))) node.open = view.details.get(detailKey(node));
@@ -514,15 +541,16 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         let localeActive=null;
         if(view.localeControls){
             const controls=Array.from(root.querySelectorAll('input,select,textarea,button,a[href]'));
-            view.localeControls.forEach((saved,index)=>{
-                const node=controls[index];
+            const byKey=new Map(controls.map((node,index)=>[localeControlKey(node,index,root),node]));
+            view.localeControls.forEach((saved)=>{
+                const node=byKey.get(saved.key);
                 if(!node || node.tagName!==saved.tag || node.type!==saved.type)return;
                 if(['INPUT','SELECT','TEXTAREA'].includes(saved.tag) && node.type!=='file')node.value=saved.value;
                 if(['checkbox','radio'].includes(node.type))node.checked=saved.checked;
                 if(saved.pending)pendingChanges.add(node);
             });
-            root.querySelectorAll('details').forEach((node,index)=>{if(index<view.localeDetails.length)node.open=view.localeDetails[index];});
-            localeActive=controls[view.localeActive];
+            Array.from(root.querySelectorAll('details')).filter(node=>!node.closest('.srd-rule-preview')).forEach((node,index)=>{if(index<view.localeDetails.length)node.open=view.localeDetails[index];});
+            localeActive=byKey.get(view.localeActive);
         }
         let active = view.id ? document.getElementById(view.id) : (localeActive || keyedControl(root, view.key));
         if (!active && view.path) {
@@ -562,9 +590,9 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         try {
             if(localeOnly){
                 const controls=Array.from(body.querySelectorAll('input,select,textarea,button,a[href]'));
-                view.localeControls=controls.map(node=>({tag:node.tagName,type:node.type,value:node.value,checked:node.checked,pending:pendingChanges.has(node)}));
-                view.localeActive=controls.indexOf(document.activeElement);
-                view.localeDetails=Array.from(body.querySelectorAll('details')).map(node=>node.open);
+                view.localeControls=controls.map((node,index)=>({key:localeControlKey(node,index,body),tag:node.tagName,type:node.type,value:node.value,checked:node.checked,pending:pendingChanges.has(node)}));
+                view.localeActive=active?localeControlKey(active,controls.indexOf(active),body):null;
+                view.localeDetails=Array.from(body.querySelectorAll('details')).filter(node=>!node.closest('.srd-rule-preview')).map(node=>node.open);
             }
             renderBody();
             renderChrome(false);
@@ -775,12 +803,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
         const user = await window.Auth.requireAuth();
         if (!user) return;
         const metaRes = await api('/meta');
-        const dataRes = await api('/creator-data');
+        // Avoid reusing the pre-display API representation, which lacks its version header.
+        const dataRes = await api('/creator-data?displaySchema=1');
         if (!metaRes.ok || !dataRes.ok) {
             setStatusSource("Der Ersteller konnte nicht geladen werden. Bitte lade die Seite neu.");
             return;
         }
         app.data = dataRes.data;
+        app.canonicalHash=dataRes.canonicalHash;
         // Published homebrew Species this account may choose; the server re-checks access on every save.
         const catalogRes = await api('/species-catalog');
         if (catalogRes.ok && Array.isArray(catalogRes.data.species) && catalogRes.data.species.length) {
@@ -792,6 +822,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             feats:[...app.data.feats,...(originRes.data.feats || [])]};
         app.defaultSources = metaRes.data.defaultSources;
         buildLookups(app.data);
+        await SC.loadLocale();
         let savedMode = 'guided';
         try { savedMode = localStorage.getItem('srdCreatorMode') || 'guided'; } catch (error) { /* optional */ }
         app.mode = savedMode === 'quick' ? 'quick' : 'guided';
@@ -821,10 +852,8 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
     let renderedLocale=window.VTTI18n?.contentLocale() || 'de';
     function refreshLocaleNotice(){ $('scLanguageNotice').hidden=renderedLocale!=='en'; }
     refreshLocaleNotice();
-    window.addEventListener('vtt:displaychange',()=>{
-        const next=window.VTTI18n.contentLocale();
-        if(next===renderedLocale)return;
-        renderedLocale=next;refreshLocaleNotice();
+    function refreshLocaleView(){
+        refreshLocaleNotice();SC.refreshLocaleStatus?.();
         SC.refreshFinalizeLabels?.();
         if(app.statusSource)setStatusSource(app.statusSource);
         for(const {node,source,parameters} of homeLabels)if(node.isConnected)node.data=ui(source,parameters);
@@ -834,6 +863,14 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
             SC.localeFinalize=$('scFinalize');
             try { renderAll(true); } finally { SC.localeFinalize=null; }
         }
+    }
+    window.addEventListener('vtt:displaychange',()=>{
+        const next=window.VTTI18n.contentLocale();
+        if(next===renderedLocale)return;
+        renderedLocale=next;
+        const ready=app.data?SC.loadLocale():null;
+        refreshLocaleView();
+        ready?.then(current=>{if(current){refreshLocaleView();SC.refreshOpenEntry?.();}});
     });
 
     document.addEventListener('DOMContentLoaded', () => {

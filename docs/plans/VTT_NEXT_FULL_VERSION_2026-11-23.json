@@ -219,7 +219,7 @@
       "id": "FV07",
       "title": "Object list and label placement",
       "priority": "P1",
-      "status": "planned",
+      "status": "assigned_claude_in_progress",
       "source_refs": [
         "S3",
         "2026-11-23:E16",
@@ -236,13 +236,14 @@
       "depends_on": [
         "FV04"
       ],
-      "decisions_or_inputs": []
+      "decisions_or_inputs": [],
+      "owner_assignment": "Owner assignment 2026-11-24: Claude implements this packet in worktree /home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124 (branch feat/mapmaker-fv07-fv08-20261124). Codex: do not start it; integrate, verify and deploy after Claude's handoff."
     },
     {
       "id": "FV08",
       "title": "Path drawing and editing modes",
       "priority": "P1",
-      "status": "planned",
+      "status": "assigned_claude_in_progress",
       "source_refs": [
         "S6",
         "2026-11-23:E12",
@@ -257,7 +258,8 @@
       "depends_on": [
         "FV04"
       ],
-      "decisions_or_inputs": []
+      "decisions_or_inputs": [],
+      "owner_assignment": "Owner assignment 2026-11-24: Claude implements this packet in worktree /home/admin/projects/roll-drauf-vtt-fv07-fv08-20261124 (branch feat/mapmaker-fv07-fv08-20261124). Codex: do not start it; integrate, verify and deploy after Claude's handoff."
     },
     {
       "id": "FV09",
@@ -1103,6 +1105,22 @@
       "decision": "Disregard the unidentified old 0% report; the owner does not know its origin and no reliable identity was recovered.",
       "source": "Explicit owner instruction: unless its origin is known, disregard it.",
       "closure": "Closed by owner scope decision, not by a technical fix."
+    },
+    {
+      "date": "2026-11-24",
+      "packets": [
+        "FV11",
+        "FV16"
+      ],
+      "decision": "Use the RD Team Discord as a source inventory for Ducky assets. Do not generate new images and do not use Ducky artwork in any generative workflow. Preserve originals, attribution and source-specific usage restrictions.",
+      "source": "Explicit owner instructions, including clarification that the source is the RD Team Discord."
     }
-  ]
+  ],
+  "asset_constraints": {
+    "new_image_generation": false,
+    "ducky_generative_use": false,
+    "source": "RD Team Discord",
+    "preserve_originals": true,
+    "rights_rule": "AI labeling or a generic rights checkbox does not grant generative rights to Ducky artwork."
+  }
 }

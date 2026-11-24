@@ -1,0 +1,2063 @@
+{
+  "schemaVersion": 1,
+  "review": {
+    "status": "approved_identity_pairs",
+    "date": "2026-11-24",
+    "owner": "Codex integration",
+    "basis": "Semantic names/class-level context for all pairs, explicit stale-ID corrections, genuine source entry checks for uncertain cases; independent read-only Claude review. Does not assert full mechanical equivalence of translated source texts.",
+    "audit": "docs/proofs/fv01-creator-content-2026-11-24/identity-review.json"
+  },
+  "sourceHashes": {
+    "vtt/rules_content/srd-5.2.1-de/documents/character-origins.backgrounds.json": "ffd13bfdee56767b4b3ebdd13f1632985476176fff802b86cb5e0d0902b0abe7",
+    "vtt/rules_content/srd-5.2.1-de/documents/character-origins.species.json": "88de1c63cc9ce2be9449f03a8e3a274c318345b2b4bb577f219b84f732cf572f",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.barbarian.json": "70dd164452492787fbe5db8b59bb151f9b7d2dae15f43b95b7aa11694743a718",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.bard.json": "11a3bd73c3f693aa19338e5f12da701f511c9588b389aadd01b3e14732a3f601",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.cleric.json": "ff6641bced32cbc2ff8256bcf9823bf841b11c805c99bd56986354f0dd5913ad",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.druid.json": "d1375fdb3e13e75c1962dc942ce20cdc72bb7dce75aa20fd44e15b6a8f891a65",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.fighter.json": "5eed414dfdc34d0c5ab51d14f47f32942fa2219ed733275c01e0c87aa5d9ee33",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.monk.json": "4245b56702b2c2dda593c1398df8021f8d094ca4c459755274659cb4ec17e5e7",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.paladin.json": "8e1f27d15bd03fd49ad5c6a95a45ec47f1f6ff9273f5102a5280fdb77eb5c0e0",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.ranger.json": "7a4feb2d070b52be86c156a092d741c6ce9112c8fc3955e2ffc64ebdd33cbc07",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.rogue.json": "9b309d2bf8cc03be0a46238ef406569ff2eca1a898b6077968434601d9b2c51b",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.sorcerer.json": "84a693be99bfce2c21420dedf1c9d225e1d13b4a9838a5fc784e519865e52262",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.warlock.json": "4d3200f204ce14f37fe851f466cb4dc5ac9c0fe66421659aa281bb5dda9eb207",
+    "vtt/rules_content/srd-5.2.1-de/documents/classes.wizard.json": "3f203e0176aa2974dd73c49d73b86b3078c29ad3b05acbd1575f3b5adbc61b2a",
+    "vtt/rules_content/srd-5.2.1-de/documents/feats.descriptions.json": "4fc3d65e120dd3dd6d11bfbe2ba392a2e1fcc0dea9ed76d1dee7c27f729a3d14",
+    "vtt/rules_content/srd-5.2.1-de/documents/spells.a-b.json": "b3528f13df848ea093a00b14a985ed53a94c805a12b9526dd7d9bdeb774d28e0",
+    "vtt/rules_content/srd-5.2.1-de/documents/spells.c-e.json": "301c4fa30fed1e4b597463affa1afd2c31ff0bbbb448e4be2fa9a5bcc20241f6",
+    "vtt/rules_content/srd-5.2.1-de/documents/spells.f-g.json": "1c05ba382a87254219f0493bb11d42485bfbee2b1fd62605aa880d8944775a9c",
+    "vtt/rules_content/srd-5.2.1-de/documents/spells.h-l.json": "0f0b7f533bac67e04d2fab5ad3ded652c6d6de41bad6ca69632dcdbbe830342c",
+    "vtt/rules_content/srd-5.2.1-de/documents/spells.m-p.json": "93e33809ae759b14714bd1ca441cc163f0c713a9023293ea0f52bf8e10643f5d",
+    "vtt/rules_content/srd-5.2.1-de/documents/spells.r-s.json": "e643b6037dca4b00343cdef8c48364cc556db0efb8e6f712fc980b5e0353d2ca",
+    "vtt/rules_content/srd-5.2.1-de/documents/spells.t-v.json": "165dc46f4039de9defe7bf1440664a905e86132a6a1025f38cb1cafbe85e6732",
+    "vtt/rules_content/srd-5.2.1-de/documents/spells.w-z.json": "651a12c3656d132325cc4bdfe19669adb236e4e8bc49332644229cb8cfa4383a",
+    "vtt/rules_content/srd-5.2.1-de/generated/compendium.json": "8727829984c539c222b7e9dde793a2f278344a78a9efe06fa7192645cf7d0767",
+    "vtt/rules_content/srd-5.2.1-de/generated/creator-data.json": "bda8334e8eed613357801a0302cf491537f7fb1fd4f36991fb463b453ffa43e1",
+    "vtt/rules_content/srd-5.2.1-en/documents/character-creation.overview.json": "ca0150e846191a1270142d9cb7b54346538ad3de53587031c1b37a3db3a80f12",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.barbarian.json": "719abf1ee147e7a5d48451e7204b8f4ac39aa96e92f6e0650e620f72701d491a",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.bard.json": "25029e2624486d04ded4397d9b5687dc6e7e3d1171886a0e42b06158b1d0dbf1",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.cleric.json": "c2e92ade7cff3beeaec8c53541c22d6e4ccb92af540e781f6ea61d97735a2f3e",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.druid.json": "f8cb31abc9a2a7a612bc05df865a09012bc39617efe77a98a4021debd42c8a74",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.fighter.json": "91f807abbe105ee855e777d5a346ad1ce3b7c5b48425752ed95cd8ae6f484266",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.monk.json": "9a91f8cf01aefa69afbdb63a2edee3099c927da17131923817403aba6e55e034",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.paladin.json": "c3e418904cbdfbf589a1e090e48a7926e94a95bb127f40f4b5105b18274fff58",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.ranger.json": "1740e759b0c1e027e9717c35587fc5a06401d44c8fbcd0c2ae582ab9f9a9b6a7",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.rogue.json": "ee241dafcb13cfeb07d946bd54f1a31714c26ff3eade356f2bca7d4193a78ca9",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.sorcerer.json": "4e1ba6683c63944296fe58b8aac084c137354fa0d8f2dc9f33b4cbb0995394e5",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.warlock.json": "d2b6fb79634fba6a0f7ed497ce7415ba315789a1a95919c740fb0120918fd892",
+    "vtt/rules_content/srd-5.2.1-en/documents/classes.wizard.json": "0e0353bacde711a679b3e4f0f916f9e47dc91c064acc8978fe4c4923bfecae2c",
+    "vtt/rules_content/srd-5.2.1-en/documents/core.proficiency.json": "9f47ec5588a5f103ed134e9fe0c0b01ee18a4c55224278056abe33cab585898e",
+    "vtt/rules_content/srd-5.2.1-en/documents/core.rhythm-and-abilities.json": "2d00e3c15fa3d497f8c14f14a9e4fc1663aa483bef22333a39ec54247c7b949e",
+    "vtt/rules_content/srd-5.2.1-en/documents/feats.json": "9bd198c997176ceb6f4a9b7dd1d80adff28cc682a011c87a8d9b3c8cd7150f5d",
+    "vtt/rules_content/srd-5.2.1-en/documents/origins.backgrounds.json": "e5d8dbbb7f4d3bd606356769e88576750dbaf9f06af0efb2078f5111f8ca42d5",
+    "vtt/rules_content/srd-5.2.1-en/documents/origins.species.json": "15c53e8cce01f961910764f3e09ccf220ec0c1c07b4b409b36b2a3e958db9c17",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.a-b.json": "70a64cae69f65f67e238b9c0a43a8bae18e8302598f61d0913bc9d30a5d69afe",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.c-d.json": "c921605218f64472737efc6ad36279b85591e68e86a63a4045839c86a7f8da5d",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.e-f.json": "6fd11b93f0edeb5564fff6f5a67b26724fd11953e02f77cf33108d24db1ec305",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.g-h.json": "7ec0aa69ef86f9ceba4a99bcdd91255f2de8ff28a182484603ada36d3d11a886",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.i-l.json": "965bbca5ed811c7deee2c94e92a44646680e18b4a19e2edc622254aefb145cf0",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.m-o.json": "30be4b9fb871eb0bb3b1e42b010adb09a28982876b604f0b39071bf24aaeab7a",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.p-r.json": "bf6f3098293353b3223e6d884197dd04a03895388abc654dcd67f2e61cfb426b",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.s.json": "603078f43839d64689d7c0fd677bbc5c49fcef6871ce9a91a0e17fa8561cb129",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.t-v.json": "4c648b95db26ec5dfe44b583663e958e851fb7eb9ce6df70a6ba38c496b38740",
+    "vtt/rules_content/srd-5.2.1-en/documents/spells.w-z.json": "191b484e23066e7d0ef3998b158829e549ac0ec07c5425a95721560b2afb0e13",
+    "vtt/rules_content/srd-5.2.1-en/generated/compendium.json": "c3662ee7f936d6043406403ca20ebddf40b6f8f8d8cb4f8c237691a9fea0f6c1"
+  },
+  "entities": {
+    "character-origins.backgrounds.acolyte": {
+      "enEntityId": "origins.backgrounds.acolyte"
+    },
+    "character-origins.backgrounds.criminal": {
+      "enEntityId": "origins.backgrounds.criminal"
+    },
+    "character-origins.backgrounds.sage": {
+      "enEntityId": "origins.backgrounds.sage"
+    },
+    "character-origins.backgrounds.soldier": {
+      "enEntityId": "origins.backgrounds.soldier"
+    },
+    "character-origins.species.dragonborn": {
+      "enEntityId": "origins.species.dragonborn"
+    },
+    "character-origins.species.dwarf": {
+      "enEntityId": "origins.species.dwarf"
+    },
+    "character-origins.species.elf": {
+      "enEntityId": "origins.species.elf"
+    },
+    "character-origins.species.gnome": {
+      "enEntityId": "origins.species.gnome"
+    },
+    "character-origins.species.goliath": {
+      "enEntityId": "origins.species.goliath"
+    },
+    "character-origins.species.halfling": {
+      "enEntityId": "origins.species.halfling"
+    },
+    "character-origins.species.human": {
+      "enEntityId": "origins.species.human"
+    },
+    "character-origins.species.orc": {
+      "enEntityId": "origins.species.orc"
+    },
+    "character-origins.species.tiefling": {
+      "enEntityId": "origins.species.tiefling"
+    },
+    "classes.barbarian.barbarian": {
+      "enEntityId": "classes.barbarian.barbarian"
+    },
+    "classes.barbarian.level1-rage": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-1-rage"
+    },
+    "classes.barbarian.level1-unarmored-defense": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-1-unarmored-defense"
+    },
+    "classes.barbarian.level1-weapon-mastery": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-1-weapon-mastery"
+    },
+    "classes.barbarian.level11-relentless-rage": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-11-relentless-rage"
+    },
+    "classes.barbarian.level13-improved-brutal-strike": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-13-improved-brutal-strike"
+    },
+    "classes.barbarian.level15-persistent-rage": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-15-persistent-rage"
+    },
+    "classes.barbarian.level17-improved-brutal-strike": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-17-improved-brutal-strike"
+    },
+    "classes.barbarian.level18-indomitable-might": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-18-indomitable-might"
+    },
+    "classes.barbarian.level19-epic-boon": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-19-epic-boon"
+    },
+    "classes.barbarian.level2-danger-sense": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-2-danger-sense"
+    },
+    "classes.barbarian.level2-reckless-attack": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-2-reckless-attack"
+    },
+    "classes.barbarian.level20-primal-champion": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-20-primal-champion"
+    },
+    "classes.barbarian.level3-primal-knowledge": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-3-primal-knowledge"
+    },
+    "classes.barbarian.level3-subclass": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-3-barbarian-subclass"
+    },
+    "classes.barbarian.level4-ability-score-improvement": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-4-ability-score-improvement"
+    },
+    "classes.barbarian.level5-extra-attack": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-5-extra-attack"
+    },
+    "classes.barbarian.level5-fast-movement": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-5-fast-movement"
+    },
+    "classes.barbarian.level7-feral-instinct": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-7-instinctive-pounce"
+    },
+    "classes.barbarian.level7-wild-instincts": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-7-feral-instinct"
+    },
+    "classes.barbarian.level9-brutal-strike": {
+      "enEntityId": "classes.barbarian.barbarian-class-features.level-9-brutal-strike"
+    },
+    "classes.barbarian.subclass-level10-retaliation": {
+      "enEntityId": "classes.barbarian.barbarian-subclass-path-of-the-berserker.level-10-retaliation"
+    },
+    "classes.barbarian.subclass-level14-intimidating-presence": {
+      "enEntityId": "classes.barbarian.barbarian-subclass-path-of-the-berserker.level-14-intimidating-presence"
+    },
+    "classes.barbarian.subclass-level3-frenzy": {
+      "enEntityId": "classes.barbarian.barbarian-subclass-path-of-the-berserker.level-3-frenzy"
+    },
+    "classes.barbarian.subclass-level6-mindless-rage": {
+      "enEntityId": "classes.barbarian.barbarian-subclass-path-of-the-berserker.level-6-mindless-rage"
+    },
+    "classes.barbarian.subclass-path-of-the-berserker": {
+      "enEntityId": "classes.barbarian.barbarian-subclass-path-of-the-berserker"
+    },
+    "classes.bard.bard": {
+      "enEntityId": "classes.bard"
+    },
+    "classes.bard.level1-bardic-inspiration": {
+      "enEntityId": "classes.bard.bard-class-features.level-1-bardic-inspiration"
+    },
+    "classes.bard.level1-spellcasting": {
+      "enEntityId": "classes.bard.bard-class-features.level-1-spellcasting"
+    },
+    "classes.bard.level10-magical-secrets": {
+      "enEntityId": "classes.bard.bard-class-features.level-10-magical-secrets"
+    },
+    "classes.bard.level18-superior-inspiration": {
+      "enEntityId": "classes.bard.bard-class-features.level-18-superior-inspiration"
+    },
+    "classes.bard.level19-epic-boon": {
+      "enEntityId": "classes.bard.bard-class-features.level-19-epic-boon"
+    },
+    "classes.bard.level2-expertise": {
+      "enEntityId": "classes.bard.bard-class-features.level-2-expertise"
+    },
+    "classes.bard.level2-jack-of-all-trades": {
+      "enEntityId": "classes.bard.bard-class-features.level-2-jack-of-all-trades"
+    },
+    "classes.bard.level20-words-of-creation": {
+      "enEntityId": "classes.bard.bard-class-features.level-20-words-of-creation"
+    },
+    "classes.bard.level3-subclass": {
+      "enEntityId": "classes.bard.bard-class-features.level-3-bard-subclass"
+    },
+    "classes.bard.level4-ability-score-improvement": {
+      "enEntityId": "classes.bard.bard-class-features.level-4-ability-score-improvement"
+    },
+    "classes.bard.level5-font-of-inspiration": {
+      "enEntityId": "classes.bard.bard-class-features.level-5-font-of-inspiration"
+    },
+    "classes.bard.level7-countercharm": {
+      "enEntityId": "classes.bard.bard-class-features.level-7-countercharm"
+    },
+    "classes.bard.subclass-college-of-lore": {
+      "enEntityId": "classes.bard.bard-subclass-college-of-lore"
+    },
+    "classes.bard.subclass-level14-peerless-skill": {
+      "enEntityId": "classes.bard.bard-subclass-college-of-lore.level-14-peerless-skill"
+    },
+    "classes.bard.subclass-level3-additional-magical-secrets": {
+      "enEntityId": "classes.bard.bard-subclass-college-of-lore.level-3-bonus-proficiencies"
+    },
+    "classes.bard.subclass-level3-cutting-words": {
+      "enEntityId": "classes.bard.bard-subclass-college-of-lore.level-3-cutting-words"
+    },
+    "classes.bard.subclass-level6-magical-discoveries": {
+      "enEntityId": "classes.bard.bard-subclass-college-of-lore.level-6-magical-discoveries"
+    },
+    "classes.cleric.cleric": {
+      "enEntityId": "classes.cleric"
+    },
+    "classes.cleric.level1-divine-order": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-1-divine-order"
+    },
+    "classes.cleric.level1-spellcasting": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-1-spellcasting"
+    },
+    "classes.cleric.level10-divine-intervention": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-10-divine-intervention"
+    },
+    "classes.cleric.level14-improved-blessed-strikes": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-14-improved-blessed-strikes"
+    },
+    "classes.cleric.level19-epic-boon": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-19-epic-boon"
+    },
+    "classes.cleric.level2-channel-divinity": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-2-channel-divinity"
+    },
+    "classes.cleric.level20-greater-divine-intervention": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-20-greater-divine-intervention"
+    },
+    "classes.cleric.level3-subclass": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-3-cleric-subclass"
+    },
+    "classes.cleric.level4-ability-score-improvement": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-4-ability-score-improvement"
+    },
+    "classes.cleric.level5-destroy-undead": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-5-sear-undead"
+    },
+    "classes.cleric.level7-blessed-strikes": {
+      "enEntityId": "classes.cleric.cleric-class-features.level-7-blessed-strikes"
+    },
+    "classes.cleric.subclass-level17-supreme-healing": {
+      "enEntityId": "classes.cleric.cleric-subclass-life-domain.level-17-supreme-healing"
+    },
+    "classes.cleric.subclass-level3-disciple-of-life": {
+      "enEntityId": "classes.cleric.cleric-subclass-life-domain.level-3-disciple-of-life"
+    },
+    "classes.cleric.subclass-level3-life-domain-spells": {
+      "enEntityId": "classes.cleric.cleric-subclass-life-domain.level-3-life-domain-spells"
+    },
+    "classes.cleric.subclass-level3-preserve-life": {
+      "enEntityId": "classes.cleric.cleric-subclass-life-domain.level-3-preserve-life"
+    },
+    "classes.cleric.subclass-level6-blessed-healer": {
+      "enEntityId": "classes.cleric.cleric-subclass-life-domain.level-6-blessed-healer"
+    },
+    "classes.cleric.subclass-life-domain": {
+      "enEntityId": "classes.cleric.cleric-subclass-life-domain"
+    },
+    "classes.druid.druid": {
+      "enEntityId": "classes.druid"
+    },
+    "classes.druid.level1-druidic": {
+      "enEntityId": "classes.druid.druid-class-features.level-1-druidic"
+    },
+    "classes.druid.level1-primal-order": {
+      "enEntityId": "classes.druid.druid-class-features.level-1-primal-order"
+    },
+    "classes.druid.level1-spellcasting": {
+      "enEntityId": "classes.druid.druid-class-features.level-1-spellcasting"
+    },
+    "classes.druid.level15-improved-elemental-fury": {
+      "enEntityId": "classes.druid.druid-class-features.level-15-improved-elemental-fury"
+    },
+    "classes.druid.level18-beast-spells": {
+      "enEntityId": "classes.druid.druid-class-features.level-18-beast-spells"
+    },
+    "classes.druid.level19-epic-boon": {
+      "enEntityId": "classes.druid.druid-class-features.level-19-epic-boon"
+    },
+    "classes.druid.level2-wild-companion": {
+      "enEntityId": "classes.druid.druid-class-features.level-2-wild-companion"
+    },
+    "classes.druid.level2-wild-shape": {
+      "enEntityId": "classes.druid.druid-class-features.level-2-wild-shape"
+    },
+    "classes.druid.level20-archdruid": {
+      "enEntityId": "classes.druid.druid-class-features.level-20-archdruid"
+    },
+    "classes.druid.level3-subclass": {
+      "enEntityId": "classes.druid.druid-class-features.level-3-druid-subclass"
+    },
+    "classes.druid.level4-ability-score-improvement": {
+      "enEntityId": "classes.druid.druid-class-features.level-4-ability-score-improvement"
+    },
+    "classes.druid.level5-wild-resurgence": {
+      "enEntityId": "classes.druid.druid-class-features.level-5-wild-resurgence"
+    },
+    "classes.druid.level7-elemental-fury": {
+      "enEntityId": "classes.druid.druid-class-features.level-7-elemental-fury"
+    },
+    "classes.druid.subclass-circle-of-the-land": {
+      "enEntityId": "classes.druid.druid-subclass-circle-of-the-land"
+    },
+    "classes.druid.subclass-level10-nature-ward": {
+      "enEntityId": "classes.druid.druid-subclass-circle-of-the-land.level-10-natures-ward"
+    },
+    "classes.druid.subclass-level14-natures-sanctuary": {
+      "enEntityId": "classes.druid.druid-subclass-circle-of-the-land.level-14-natures-sanctuary"
+    },
+    "classes.druid.subclass-level3-circle-spells": {
+      "enEntityId": "classes.druid.druid-subclass-circle-of-the-land.level-3-circle-of-the-land-spells"
+    },
+    "classes.druid.subclass-level3-lands-aid": {
+      "enEntityId": "classes.druid.druid-subclass-circle-of-the-land.level-3-lands-aid"
+    },
+    "classes.druid.subclass-level6-natural-recovery": {
+      "enEntityId": "classes.druid.druid-subclass-circle-of-the-land.level-6-natural-recovery"
+    },
+    "classes.fighter.fighter": {
+      "enEntityId": "classes.fighter"
+    },
+    "classes.fighter.level1-fighting-style": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-1-fighting-style"
+    },
+    "classes.fighter.level1-second-wind": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-1-second-wind"
+    },
+    "classes.fighter.level1-weapon-mastery": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-1-weapon-mastery"
+    },
+    "classes.fighter.level11-extra-attack-2": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-11-two-extra-attacks"
+    },
+    "classes.fighter.level13-studied-attacks": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-13-studied-attacks"
+    },
+    "classes.fighter.level19-epic-boon": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-19-epic-boon"
+    },
+    "classes.fighter.level2-action-surge": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-2-action-surge"
+    },
+    "classes.fighter.level2-tactical-mind": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-2-tactical-mind"
+    },
+    "classes.fighter.level20-extra-attack-3": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-20-three-extra-attacks"
+    },
+    "classes.fighter.level3-subclass": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-3-fighter-subclass"
+    },
+    "classes.fighter.level4-ability-score-improvement": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-4-ability-score-improvement"
+    },
+    "classes.fighter.level5-extra-attack": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-5-extra-attack"
+    },
+    "classes.fighter.level5-tactical-shift": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-5-tactical-shift"
+    },
+    "classes.fighter.level9-indomitable": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-9-indomitable"
+    },
+    "classes.fighter.level9-tactical-master": {
+      "enEntityId": "classes.fighter.fighter-class-features.level-9-tactical-master"
+    },
+    "classes.fighter.subclass-champion": {
+      "enEntityId": "classes.fighter.fighter-subclass-champion"
+    },
+    "classes.fighter.subclass-level10-heroic-warrior": {
+      "enEntityId": "classes.fighter.fighter-subclass-champion.level-10-heroic-warrior"
+    },
+    "classes.fighter.subclass-level15-superior-critical": {
+      "enEntityId": "classes.fighter.fighter-subclass-champion.level-15-superior-critical"
+    },
+    "classes.fighter.subclass-level18-survivor": {
+      "enEntityId": "classes.fighter.fighter-subclass-champion.level-18-survivor"
+    },
+    "classes.fighter.subclass-level3-improved-critical": {
+      "enEntityId": "classes.fighter.fighter-subclass-champion.level-3-improved-critical"
+    },
+    "classes.fighter.subclass-level3-remarkable-athlete": {
+      "enEntityId": "classes.fighter.fighter-subclass-champion.level-3-remarkable-athlete"
+    },
+    "classes.fighter.subclass-level7-additional-fighting-style": {
+      "enEntityId": "classes.fighter.fighter-subclass-champion.level-7-additional-fighting-style"
+    },
+    "classes.monk.level1-martial-arts": {
+      "enEntityId": "classes.monk.monk-class-features.level-1-martial-arts"
+    },
+    "classes.monk.level1-unarmored-defense": {
+      "enEntityId": "classes.monk.monk-class-features.level-1-unarmored-defense"
+    },
+    "classes.monk.level10-heightened-focus": {
+      "enEntityId": "classes.monk.monk-class-features.level-10-heightened-focus"
+    },
+    "classes.monk.level10-self-restoration": {
+      "enEntityId": "classes.monk.monk-class-features.level-10-self-restoration"
+    },
+    "classes.monk.level13-deflect-energy": {
+      "enEntityId": "classes.monk.monk-class-features.level-13-deflect-energy"
+    },
+    "classes.monk.level14-disciplined-survivor": {
+      "enEntityId": "classes.monk.monk-class-features.level-14-disciplined-survivor"
+    },
+    "classes.monk.level15-perfect-focus": {
+      "enEntityId": "classes.monk.monk-class-features.level-15-perfect-focus"
+    },
+    "classes.monk.level18-superior-defense": {
+      "enEntityId": "classes.monk.monk-class-features.level-18-superior-defense"
+    },
+    "classes.monk.level19-epic-boon": {
+      "enEntityId": "classes.monk.monk-class-features.level-19-epic-boon"
+    },
+    "classes.monk.level2-monks-focus": {
+      "enEntityId": "classes.monk.monk-class-features.level-2-monks-focus"
+    },
+    "classes.monk.level2-unarmored-movement": {
+      "enEntityId": "classes.monk.monk-class-features.level-2-unarmored-movement"
+    },
+    "classes.monk.level2-uncanny-metabolism": {
+      "enEntityId": "classes.monk.monk-class-features.level-2-uncanny-metabolism"
+    },
+    "classes.monk.level20-body-and-mind": {
+      "enEntityId": "classes.monk.monk-class-features.level-20-body-and-mind"
+    },
+    "classes.monk.level3-deflect-attacks": {
+      "enEntityId": "classes.monk.monk-class-features.level-3-deflect-attacks"
+    },
+    "classes.monk.level3-subclass": {
+      "enEntityId": "classes.monk.monk-class-features.level-3-monk-subclass"
+    },
+    "classes.monk.level4-ability-score-improvement": {
+      "enEntityId": "classes.monk.monk-class-features.level-4-ability-score-improvement"
+    },
+    "classes.monk.level4-slow-fall": {
+      "enEntityId": "classes.monk.monk-class-features.level-4-slow-fall"
+    },
+    "classes.monk.level5-extra-attack": {
+      "enEntityId": "classes.monk.monk-class-features.level-5-extra-attack"
+    },
+    "classes.monk.level5-stunning-strike": {
+      "enEntityId": "classes.monk.monk-class-features.level-5-stunning-strike"
+    },
+    "classes.monk.level6-empowered-strikes": {
+      "enEntityId": "classes.monk.monk-class-features.level-6-empowered-strikes"
+    },
+    "classes.monk.level7-evasion": {
+      "enEntityId": "classes.monk.monk-class-features.level-7-evasion"
+    },
+    "classes.monk.level9-acrobatic-movement": {
+      "enEntityId": "classes.monk.monk-class-features.level-9-acrobatic-movement"
+    },
+    "classes.monk.monk": {
+      "enEntityId": "classes.monk"
+    },
+    "classes.monk.subclass-level11-fleet-step": {
+      "enEntityId": "classes.monk.monk-subclass-warrior-of-the-open-hand.level-11-fleet-step"
+    },
+    "classes.monk.subclass-level17-quivering-palm": {
+      "enEntityId": "classes.monk.monk-subclass-warrior-of-the-open-hand.level-17-quivering-palm"
+    },
+    "classes.monk.subclass-level3-open-hand-technique": {
+      "enEntityId": "classes.monk.monk-subclass-warrior-of-the-open-hand.level-3-open-hand-technique"
+    },
+    "classes.monk.subclass-level6-wholeness-of-body": {
+      "enEntityId": "classes.monk.monk-subclass-warrior-of-the-open-hand.level-6-wholeness-of-body"
+    },
+    "classes.monk.subclass-open-hand": {
+      "enEntityId": "classes.monk.monk-subclass-warrior-of-the-open-hand"
+    },
+    "classes.paladin.level1-lay-on-hands": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-1-lay-on-hands"
+    },
+    "classes.paladin.level1-spellcasting": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-1-spellcasting"
+    },
+    "classes.paladin.level1-weapon-mastery": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-1-weapon-mastery"
+    },
+    "classes.paladin.level10-aura-of-courage": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-10-aura-of-courage"
+    },
+    "classes.paladin.level11-radiant-strikes": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-11-radiant-strikes"
+    },
+    "classes.paladin.level14-restoring-touch": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-14-restoring-touch"
+    },
+    "classes.paladin.level18-aura-expansion": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-18-aura-expansion"
+    },
+    "classes.paladin.level19-epic-boon": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-19-epic-boon"
+    },
+    "classes.paladin.level2-fighting-style": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-2-fighting-style"
+    },
+    "classes.paladin.level2-paladins-smite": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-2-paladins-smite"
+    },
+    "classes.paladin.level3-channel-divinity": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-3-channel-divinity"
+    },
+    "classes.paladin.level3-subclass": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-3-paladin-subclass"
+    },
+    "classes.paladin.level4-ability-score-improvement": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-4-ability-score-improvement"
+    },
+    "classes.paladin.level5-extra-attack": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-5-extra-attack"
+    },
+    "classes.paladin.level5-faithful-steed": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-5-faithful-steed"
+    },
+    "classes.paladin.level6-aura-of-protection": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-6-aura-of-protection"
+    },
+    "classes.paladin.level9-abjure-foes": {
+      "enEntityId": "classes.paladin.paladin-class-features.level-9-abjure-foes"
+    },
+    "classes.paladin.paladin": {
+      "enEntityId": "classes.paladin"
+    },
+    "classes.paladin.subclass-devotion": {
+      "enEntityId": "classes.paladin.paladin-subclass-oath-of-devotion"
+    },
+    "classes.paladin.subclass-level15-smiting-protection": {
+      "enEntityId": "classes.paladin.paladin-subclass-oath-of-devotion.level-15-smite-of-protection"
+    },
+    "classes.paladin.subclass-level20-holy-nimbus": {
+      "enEntityId": "classes.paladin.paladin-subclass-oath-of-devotion.level-20-holy-nimbus"
+    },
+    "classes.paladin.subclass-level3-oath-spells": {
+      "enEntityId": "classes.paladin.paladin-subclass-oath-of-devotion.level-3-oath-of-devotion-spells"
+    },
+    "classes.paladin.subclass-level3-sacred-weapon": {
+      "enEntityId": "classes.paladin.paladin-subclass-oath-of-devotion.level-3-sacred-weapon"
+    },
+    "classes.paladin.subclass-level7-aura-of-devotion": {
+      "enEntityId": "classes.paladin.paladin-subclass-oath-of-devotion.level-7-aura-of-devotion"
+    },
+    "classes.ranger.level1-favored-enemy": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-1-favored-enemy"
+    },
+    "classes.ranger.level1-spellcasting": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-1-spellcasting"
+    },
+    "classes.ranger.level1-weapon-mastery": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-1-weapon-mastery"
+    },
+    "classes.ranger.level10-tireless": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-10-tireless"
+    },
+    "classes.ranger.level13-relentless-hunter": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-13-relentless-hunter"
+    },
+    "classes.ranger.level14-nature-s-veil": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-14-natures-veil"
+    },
+    "classes.ranger.level17-precise-hunter": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-17-precise-hunter"
+    },
+    "classes.ranger.level18-feral-senses": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-18-feral-senses"
+    },
+    "classes.ranger.level19-epic-boon": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-19-epic-boon"
+    },
+    "classes.ranger.level2-deft-explorer": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-2-deft-explorer"
+    },
+    "classes.ranger.level2-fighting-style": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-2-fighting-style"
+    },
+    "classes.ranger.level20-foe-slayer": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-20-foe-slayer"
+    },
+    "classes.ranger.level3-subclass": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-3-ranger-subclass"
+    },
+    "classes.ranger.level4-ability-score-improvement": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-4-ability-score-improvement"
+    },
+    "classes.ranger.level5-extra-attack": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-5-extra-attack"
+    },
+    "classes.ranger.level6-roving": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-6-roving"
+    },
+    "classes.ranger.level9-expertise": {
+      "enEntityId": "classes.ranger.ranger-class-features.level-9-expertise"
+    },
+    "classes.ranger.ranger": {
+      "enEntityId": "classes.ranger"
+    },
+    "classes.ranger.subclass-hunter": {
+      "enEntityId": "classes.ranger.ranger-subclass-hunter"
+    },
+    "classes.ranger.subclass-level11-superior-hunters-prey": {
+      "enEntityId": "classes.ranger.ranger-subclass-hunter.level-11-superior-hunters-prey"
+    },
+    "classes.ranger.subclass-level15-superior-hunters-defense": {
+      "enEntityId": "classes.ranger.ranger-subclass-hunter.level-15-superior-hunters-defense"
+    },
+    "classes.ranger.subclass-level3-hunters-lore": {
+      "enEntityId": "classes.ranger.ranger-subclass-hunter.level-3-hunters-lore"
+    },
+    "classes.ranger.subclass-level3-hunters-prey": {
+      "enEntityId": "classes.ranger.ranger-subclass-hunter.level-3-hunters-prey"
+    },
+    "classes.ranger.subclass-level7-defensive-tactics": {
+      "enEntityId": "classes.ranger.ranger-subclass-hunter.level-7-defensive-tactics"
+    },
+    "classes.rogue.level1-expertise": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-1-expertise"
+    },
+    "classes.rogue.level1-sneak-attack": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-1-sneak-attack"
+    },
+    "classes.rogue.level1-thieves-cant": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-1-thieves-cant"
+    },
+    "classes.rogue.level1-weapon-mastery": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-1-weapon-mastery"
+    },
+    "classes.rogue.level11-improved-cunning-strike": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-11-improved-cunning-strike"
+    },
+    "classes.rogue.level14-devious-strikes": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-14-devious-strikes"
+    },
+    "classes.rogue.level15-slippery-mind": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-15-slippery-mind"
+    },
+    "classes.rogue.level18-elusive": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-18-elusive"
+    },
+    "classes.rogue.level19-epic-boon": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-19-epic-boon"
+    },
+    "classes.rogue.level2-cunning-action": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-2-cunning-action"
+    },
+    "classes.rogue.level20-stroke-of-luck": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-20-stroke-of-luck"
+    },
+    "classes.rogue.level3-steady-aim": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-3-steady-aim"
+    },
+    "classes.rogue.level3-subclass": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-3-rogue-subclass"
+    },
+    "classes.rogue.level4-ability-score-improvement": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-4-ability-score-improvement"
+    },
+    "classes.rogue.level5-cunning-strike": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-5-cunning-strike"
+    },
+    "classes.rogue.level5-uncanny-dodge": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-5-uncanny-dodge"
+    },
+    "classes.rogue.level7-evasion": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-7-evasion"
+    },
+    "classes.rogue.level7-reliable-talent": {
+      "enEntityId": "classes.rogue.rogue-class-features.level-7-reliable-talent"
+    },
+    "classes.rogue.rogue": {
+      "enEntityId": "classes.rogue"
+    },
+    "classes.rogue.subclass-level13-use-magic-device": {
+      "enEntityId": "classes.rogue.rogue-subclass-thief.level-13-use-magic-device"
+    },
+    "classes.rogue.subclass-level17-thiefs-reflexes": {
+      "enEntityId": "classes.rogue.rogue-subclass-thief.level-17-thiefs-reflexes"
+    },
+    "classes.rogue.subclass-level3-fast-hands": {
+      "enEntityId": "classes.rogue.rogue-subclass-thief.level-3-fast-hands"
+    },
+    "classes.rogue.subclass-level3-second-story-work": {
+      "enEntityId": "classes.rogue.rogue-subclass-thief.level-3-second-story-work"
+    },
+    "classes.rogue.subclass-level9-supreme-sneak": {
+      "enEntityId": "classes.rogue.rogue-subclass-thief.level-9-supreme-sneak"
+    },
+    "classes.rogue.subclass-thief": {
+      "enEntityId": "classes.rogue.rogue-subclass-thief"
+    },
+    "classes.sorcerer.level1-innate-sorcery": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-1-innate-sorcery"
+    },
+    "classes.sorcerer.level1-spellcasting": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-1-spellcasting"
+    },
+    "classes.sorcerer.level19-epic-boon": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-19-epic-boon"
+    },
+    "classes.sorcerer.level2-font-of-magic": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-2-font-of-magic"
+    },
+    "classes.sorcerer.level2-metamagic": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-2-metamagic"
+    },
+    "classes.sorcerer.level20-arcane-apotheosis": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-20-arcane-apotheosis"
+    },
+    "classes.sorcerer.level3-subclass": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-3-sorcerer-subclass"
+    },
+    "classes.sorcerer.level4-ability-score-improvement": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-4-ability-score-improvement"
+    },
+    "classes.sorcerer.level5-sorcerous-restoration": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-5-sorcerous-restoration"
+    },
+    "classes.sorcerer.level7-sorcery-incarnate": {
+      "enEntityId": "classes.sorcerer.sorcerer-class-features.level-7-sorcery-incarnate"
+    },
+    "classes.sorcerer.metamagic-careful-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.careful-spell"
+    },
+    "classes.sorcerer.metamagic-distant-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.distant-spell"
+    },
+    "classes.sorcerer.metamagic-empowered-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.empowered-spell"
+    },
+    "classes.sorcerer.metamagic-extended-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.extended-spell"
+    },
+    "classes.sorcerer.metamagic-heightened-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.heightened-spell"
+    },
+    "classes.sorcerer.metamagic-quickened-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.quickened-spell"
+    },
+    "classes.sorcerer.metamagic-seeking-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.seeking-spell"
+    },
+    "classes.sorcerer.metamagic-subtle-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.subtle-spell"
+    },
+    "classes.sorcerer.metamagic-transmuted-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.transmuted-spell"
+    },
+    "classes.sorcerer.metamagic-twinned-spell": {
+      "enEntityId": "classes.sorcerer.metamagic-options.twinned-spell"
+    },
+    "classes.sorcerer.sorcerer": {
+      "enEntityId": "classes.sorcerer"
+    },
+    "classes.sorcerer.subclass-draconic": {
+      "enEntityId": "classes.sorcerer.sorcerer-subclass-draconic-sorcery"
+    },
+    "classes.sorcerer.subclass-level14-dragon-wings": {
+      "enEntityId": "classes.sorcerer.sorcerer-subclass-draconic-sorcery.level-14-dragon-wings"
+    },
+    "classes.sorcerer.subclass-level18-dragon-companion": {
+      "enEntityId": "classes.sorcerer.sorcerer-subclass-draconic-sorcery.level-18-dragon-companion"
+    },
+    "classes.sorcerer.subclass-level3-draconic-resilience": {
+      "enEntityId": "classes.sorcerer.sorcerer-subclass-draconic-sorcery.level-3-draconic-resilience"
+    },
+    "classes.sorcerer.subclass-level3-draconic-spells": {
+      "enEntityId": "classes.sorcerer.sorcerer-subclass-draconic-sorcery.level-3-draconic-spells"
+    },
+    "classes.sorcerer.subclass-level6-elemental-affinity": {
+      "enEntityId": "classes.sorcerer.sorcerer-subclass-draconic-sorcery.level-6-elemental-affinity"
+    },
+    "classes.warlock.invocation-agonizing-blast": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.agonizing-blast"
+    },
+    "classes.warlock.invocation-armor-of-shadows": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.armor-of-shadows"
+    },
+    "classes.warlock.invocation-ascendant-step": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.ascendant-step"
+    },
+    "classes.warlock.invocation-book-of-shadows": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.pact-of-the-tome"
+    },
+    "classes.warlock.invocation-chains-blessing": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.investment-of-the-chain-master"
+    },
+    "classes.warlock.invocation-devils-sight": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.devils-sight"
+    },
+    "classes.warlock.invocation-eldritch-mind": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.eldritch-mind"
+    },
+    "classes.warlock.invocation-eldritch-smite": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.eldritch-smite"
+    },
+    "classes.warlock.invocation-eldritch-spear": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.eldritch-spear"
+    },
+    "classes.warlock.invocation-far-scribe": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.visions-of-distant-realms"
+    },
+    "classes.warlock.invocation-fiendish-vigor": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.fiendish-vigor"
+    },
+    "classes.warlock.invocation-gift-of-the-depths": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.gift-of-the-depths"
+    },
+    "classes.warlock.invocation-gift-of-the-protectors": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.gift-of-the-protectors"
+    },
+    "classes.warlock.invocation-gravewhispers": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.whispers-of-the-grave"
+    },
+    "classes.warlock.invocation-improved-pact-weapon": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.devouring-blade"
+    },
+    "classes.warlock.invocation-lessons-of-the-first-ones": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.lessons-of-the-first-ones"
+    },
+    "classes.warlock.invocation-lifedrinker": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.lifedrinker"
+    },
+    "classes.warlock.invocation-mask-of-many-faces": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.mask-of-many-faces"
+    },
+    "classes.warlock.invocation-master-of-myriad-forms": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.master-of-myriad-forms"
+    },
+    "classes.warlock.invocation-mind-sight": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.gaze-of-two-minds"
+    },
+    "classes.warlock.invocation-misty-visions": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.misty-visions"
+    },
+    "classes.warlock.invocation-one-with-shadows": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.one-with-shadows"
+    },
+    "classes.warlock.invocation-otherworldly-leap": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.otherworldly-leap"
+    },
+    "classes.warlock.invocation-pact-of-the-blade": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.pact-of-the-blade"
+    },
+    "classes.warlock.invocation-pact-of-the-chain": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.pact-of-the-chain"
+    },
+    "classes.warlock.invocation-repelling-blast": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.repelling-blast"
+    },
+    "classes.warlock.invocation-thirsting-blade": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.thirsting-blade"
+    },
+    "classes.warlock.invocation-witch-sight": {
+      "enEntityId": "classes.warlock.eldritch-invocation-options.witch-sight"
+    },
+    "classes.warlock.level1-eldritch-invocations": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-1-eldritch-invocations"
+    },
+    "classes.warlock.level1-pact-magic": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-1-pact-magic"
+    },
+    "classes.warlock.level11-mystic-arcanum": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-11-mystic-arcanum"
+    },
+    "classes.warlock.level19-epic-boon": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-19-epic-boon"
+    },
+    "classes.warlock.level2-eldritch-mastery": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-2-magical-cunning"
+    },
+    "classes.warlock.level20-eldritch-master": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-20-eldritch-master"
+    },
+    "classes.warlock.level3-subclass": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-3-warlock-subclass"
+    },
+    "classes.warlock.level4-ability-score-improvement": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-4-ability-score-improvement"
+    },
+    "classes.warlock.level9-contact-patron": {
+      "enEntityId": "classes.warlock.warlock-class-features.level-9-contact-patron"
+    },
+    "classes.warlock.subclass-fiend-patron": {
+      "enEntityId": "classes.warlock.warlock-subclass-fiend-patron"
+    },
+    "classes.warlock.subclass-level10-fiendish-resilience": {
+      "enEntityId": "classes.warlock.warlock-subclass-fiend-patron.level-10-fiendish-resilience"
+    },
+    "classes.warlock.subclass-level14-hurl-through-hell": {
+      "enEntityId": "classes.warlock.warlock-subclass-fiend-patron.level-14-hurl-through-hell"
+    },
+    "classes.warlock.subclass-level3-dark-ones-blessing": {
+      "enEntityId": "classes.warlock.warlock-subclass-fiend-patron.level-3-dark-ones-blessing"
+    },
+    "classes.warlock.subclass-level3-fiendish-spells": {
+      "enEntityId": "classes.warlock.warlock-subclass-fiend-patron.level-3-fiend-spells"
+    },
+    "classes.warlock.subclass-level6-dark-ones-own-luck": {
+      "enEntityId": "classes.warlock.warlock-subclass-fiend-patron.level-6-dark-ones-own-luck"
+    },
+    "classes.warlock.warlock": {
+      "enEntityId": "classes.warlock"
+    },
+    "classes.wizard.level1-arcane-recovery": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-1-arcane-recovery"
+    },
+    "classes.wizard.level1-ritual-adept": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-1-ritual-adept"
+    },
+    "classes.wizard.level1-spellcasting": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-1-spellcasting"
+    },
+    "classes.wizard.level18-spell-mastery": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-18-spell-mastery"
+    },
+    "classes.wizard.level19-epic-boon": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-19-epic-boon"
+    },
+    "classes.wizard.level2-scholar": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-2-scholar"
+    },
+    "classes.wizard.level20-signature-spells": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-20-signature-spells"
+    },
+    "classes.wizard.level3-subclass": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-3-wizard-subclass"
+    },
+    "classes.wizard.level4-ability-score-improvement": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-4-ability-score-improvement"
+    },
+    "classes.wizard.level5-memorize-spell": {
+      "enEntityId": "classes.wizard.wizard-class-features.level-5-memorize-spell"
+    },
+    "classes.wizard.subclass-evoker": {
+      "enEntityId": "classes.wizard.wizard-subclass-evoker"
+    },
+    "classes.wizard.subclass-level10-potent-evocation": {
+      "enEntityId": "classes.wizard.wizard-subclass-evoker.level-10-empowered-evocation"
+    },
+    "classes.wizard.subclass-level14-overchannel": {
+      "enEntityId": "classes.wizard.wizard-subclass-evoker.level-14-overchannel"
+    },
+    "classes.wizard.subclass-level3-evocation-savant": {
+      "enEntityId": "classes.wizard.wizard-subclass-evoker.level-3-evocation-savant"
+    },
+    "classes.wizard.subclass-level3-potent-cantrip": {
+      "enEntityId": "classes.wizard.wizard-subclass-evoker.level-3-potent-cantrip"
+    },
+    "classes.wizard.subclass-level6-sculpt-spells": {
+      "enEntityId": "classes.wizard.wizard-subclass-evoker.level-6-sculpt-spells"
+    },
+    "classes.wizard.wizard": {
+      "enEntityId": "classes.wizard"
+    },
+    "feats.descriptions.ability-score-improvement": {
+      "enEntityId": "feats.general-feats.ability-score-improvement"
+    },
+    "feats.descriptions.alert": {
+      "enEntityId": "feats.origin-feats.alert"
+    },
+    "feats.descriptions.archery": {
+      "enEntityId": "feats.fighting-style-feats.archery"
+    },
+    "feats.descriptions.boon-of-combat-prowess": {
+      "enEntityId": "feats.epic-boon-feats.boon-of-combat-prowess"
+    },
+    "feats.descriptions.boon-of-dimensional-travel": {
+      "enEntityId": "feats.epic-boon-feats.boon-of-dimensional-travel"
+    },
+    "feats.descriptions.boon-of-fate": {
+      "enEntityId": "feats.epic-boon-feats.boon-of-fate"
+    },
+    "feats.descriptions.boon-of-irresistible-offense": {
+      "enEntityId": "feats.epic-boon-feats.boon-of-irresistible-offense"
+    },
+    "feats.descriptions.boon-of-spell-recall": {
+      "enEntityId": "feats.epic-boon-feats.boon-of-spell-recall"
+    },
+    "feats.descriptions.boon-of-the-night-spirit": {
+      "enEntityId": "feats.epic-boon-feats.boon-of-the-night-spirit"
+    },
+    "feats.descriptions.boon-of-truesight": {
+      "enEntityId": "feats.epic-boon-feats.boon-of-truesight"
+    },
+    "feats.descriptions.defense": {
+      "enEntityId": "feats.fighting-style-feats.defense"
+    },
+    "feats.descriptions.grappler": {
+      "enEntityId": "feats.general-feats.grappler"
+    },
+    "feats.descriptions.great-weapon-fighting": {
+      "enEntityId": "feats.fighting-style-feats.great-weapon-fighting"
+    },
+    "feats.descriptions.magic-initiate": {
+      "enEntityId": "feats.origin-feats.magic-initiate"
+    },
+    "feats.descriptions.savage-attacker": {
+      "enEntityId": "feats.origin-feats.savage-attacker"
+    },
+    "feats.descriptions.skilled": {
+      "enEntityId": "feats.origin-feats.skilled"
+    },
+    "feats.descriptions.two-weapon-fighting": {
+      "enEntityId": "feats.fighting-style-feats.two-weapon-fighting"
+    },
+    "spells.a-b.ablenkung": {
+      "enEntityId": "spells.m-o.mislead"
+    },
+    "spells.a-b.aetherische-gestalten": {
+      "enEntityId": "spells.e-f.etherealness"
+    },
+    "spells.a-b.aetzkugel": {
+      "enEntityId": "spells.t-v.vitriolic-sphere"
+    },
+    "spells.a-b.aeusserlichkeiten": {
+      "enEntityId": "spells.s.seeming"
+    },
+    "spells.a-b.alarm": {
+      "enEntityId": "spells.a-b.alarm"
+    },
+    "spells.a-b.ansteckung": {
+      "enEntityId": "spells.c-d.contagion"
+    },
+    "spells.a-b.antimagisches-feld": {
+      "enEntityId": "spells.a-b.antimagic-field"
+    },
+    "spells.a-b.antipathie-sympathie": {
+      "enEntityId": "spells.a-b.antipathy-sympathy"
+    },
+    "spells.a-b.arkane-hand": {
+      "enEntityId": "spells.a-b.arcane-hand"
+    },
+    "spells.a-b.arkane-spiegelung": {
+      "enEntityId": "spells.m-o.mirage-arcane"
+    },
+    "spells.a-b.arkanes-auge": {
+      "enEntityId": "spells.a-b.arcane-eye"
+    },
+    "spells.a-b.arkanes-schloss": {
+      "enEntityId": "spells.a-b.arcane-lock"
+    },
+    "spells.a-b.arkanes-schwert": {
+      "enEntityId": "spells.a-b.arcane-sword"
+    },
+    "spells.a-b.astrale-projektion": {
+      "enEntityId": "spells.a-b.astral-projection"
+    },
+    "spells.a-b.attribut-verbessern": {
+      "enEntityId": "spells.e-f.enhance-ability"
+    },
+    "spells.a-b.auferstehung": {
+      "enEntityId": "spells.p-r.resurrection"
+    },
+    "spells.a-b.aufloesung": {
+      "enEntityId": "spells.c-d.disintegrate"
+    },
+    "spells.a-b.aura-des-lebens": {
+      "enEntityId": "spells.a-b.aura-of-life"
+    },
+    "spells.a-b.ausbessern": {
+      "enEntityId": "spells.m-o.mending"
+    },
+    "spells.a-b.ausspaehung": {
+      "enEntityId": "spells.s.scrying"
+    },
+    "spells.a-b.baumwandeln": {
+      "enEntityId": "spells.t-v.tree-stride"
+    },
+    "spells.a-b.befehl": {
+      "enEntityId": "spells.c-d.command"
+    },
+    "spells.a-b.beistand": {
+      "enEntityId": "spells.a-b.aid"
+    },
+    "spells.a-b.bewegungsfreiheit": {
+      "enEntityId": "spells.e-f.freedom-of-movement"
+    },
+    "spells.a-b.bindung-der-ebenen": {
+      "enEntityId": "spells.p-r.planar-binding"
+    },
+    "spells.a-b.blindheit-taubheit": {
+      "enEntityId": "spells.a-b.blindness-deafness"
+    },
+    "spells.a-b.blitz": {
+      "enEntityId": "spells.i-l.lightning-bolt"
+    },
+    "spells.a-b.blitze-herbeirufen": {
+      "enEntityId": "spells.c-d.call-lightning"
+    },
+    "spells.a-b.boeser-blick": {
+      "enEntityId": "spells.e-f.eyebite"
+    },
+    "spells.a-b.botschaft": {
+      "enEntityId": "spells.m-o.message"
+    },
+    "spells.a-b.brennende-haende": {
+      "enEntityId": "spells.a-b.burning-hands"
+    },
+    "spells.c-e.celestisches-wesen-beschwoeren": {
+      "enEntityId": "spells.c-d.conjure-celestial"
+    },
+    "spells.c-e.chromatische-kugel": {
+      "enEntityId": "spells.c-d.chromatic-orb"
+    },
+    "spells.c-e.dauerhafte-flamme": {
+      "enEntityId": "spells.c-d.continual-flame"
+    },
+    "spells.c-e.dimensionstuer": {
+      "enEntityId": "spells.c-d.dimension-door"
+    },
+    "spells.c-e.dissonantes-fluestern": {
+      "enEntityId": "spells.c-d.dissonant-whispers"
+    },
+    "spells.c-e.donnerwoge": {
+      "enEntityId": "spells.t-v.thunderwave"
+    },
+    "spells.c-e.dornenwand": {
+      "enEntityId": "spells.w-z.wall-of-thorns"
+    },
+    "spells.c-e.dornenwuchs": {
+      "enEntityId": "spells.s.spike-growth"
+    },
+    "spells.c-e.drachen-herbeirufen": {
+      "enEntityId": "spells.s.summon-dragon"
+    },
+    "spells.c-e.drachenodem": {
+      "enEntityId": "spells.c-d.dragons-breath"
+    },
+    "spells.c-e.druidenkunst": {
+      "enEntityId": "spells.c-d.druidcraft"
+    },
+    "spells.c-e.duerre": {
+      "enEntityId": "spells.a-b.blight"
+    },
+    "spells.c-e.dunkelheit": {
+      "enEntityId": "spells.c-d.darkness"
+    },
+    "spells.c-e.dunkelsicht": {
+      "enEntityId": "spells.c-d.darkvision"
+    },
+    "spells.c-e.ebenenwechsel": {
+      "enEntityId": "spells.p-r.plane-shift"
+    },
+    "spells.c-e.einfache-illusion": {
+      "enEntityId": "spells.m-o.minor-illusion"
+    },
+    "spells.c-e.einfluesterung": {
+      "enEntityId": "spells.s.suggestion"
+    },
+    "spells.c-e.einkerkerung": {
+      "enEntityId": "spells.i-l.imprisonment"
+    },
+    "spells.c-e.einswerden-mit-der-natur": {
+      "enEntityId": "spells.c-d.commune-with-nature"
+    },
+    "spells.c-e.eismesser": {
+      "enEntityId": "spells.i-l.ice-knife"
+    },
+    "spells.c-e.eissturm": {
+      "enEntityId": "spells.i-l.ice-storm"
+    },
+    "spells.c-e.eiswand": {
+      "enEntityId": "spells.w-z.wall-of-ice"
+    },
+    "spells.c-e.elementalismus": {
+      "enEntityId": "spells.e-f.elementalism"
+    },
+    "spells.c-e.elementar-beschwoeren": {
+      "enEntityId": "spells.c-d.conjure-elemental"
+    },
+    "spells.c-e.energiekaefig": {
+      "enEntityId": "spells.e-f.forcecage"
+    },
+    "spells.c-e.energiewand": {
+      "enEntityId": "spells.w-z.wall-of-force"
+    },
+    "spells.c-e.erdbeben": {
+      "enEntityId": "spells.e-f.earthquake"
+    },
+    "spells.c-e.erde-bewegen": {
+      "enEntityId": "spells.m-o.move-earth"
+    },
+    "spells.c-e.erinnerung-veraendern": {
+      "enEntityId": "spells.m-o.modify-memory"
+    },
+    "spells.c-e.erschaffung": {
+      "enEntityId": "spells.c-d.creation"
+    },
+    "spells.c-e.erwecken": {
+      "enEntityId": "spells.a-b.awaken"
+    },
+    "spells.c-e.explosion-der-zauberei": {
+      "enEntityId": "spells.s.sorcerous-burst"
+    },
+    "spells.f-g.fallen-finden": {
+      "enEntityId": "spells.e-f.find-traps"
+    },
+    "spells.f-g.falsches-leben": {
+      "enEntityId": "spells.e-f.false-life"
+    },
+    "spells.f-g.federfall": {
+      "enEntityId": "spells.e-f.feather-fall"
+    },
+    "spells.f-g.feenfeuer": {
+      "enEntityId": "spells.e-f.faerie-fire"
+    },
+    "spells.f-g.feenwesen-beschwoeren": {
+      "enEntityId": "spells.c-d.conjure-fey"
+    },
+    "spells.f-g.fesseln": {
+      "enEntityId": "spells.e-f.enthrall"
+    },
+    "spells.f-g.fesselnder-schlag": {
+      "enEntityId": "spells.e-f.ensnaring-strike"
+    },
+    "spells.f-g.feuerball": {
+      "enEntityId": "spells.e-f.fireball"
+    },
+    "spells.f-g.feuerpfeil": {
+      "enEntityId": "spells.e-f.fire-bolt"
+    },
+    "spells.f-g.feuerschild": {
+      "enEntityId": "spells.e-f.fire-shield"
+    },
+    "spells.f-g.feuersturm": {
+      "enEntityId": "spells.e-f.fire-storm"
+    },
+    "spells.f-g.feuerwand": {
+      "enEntityId": "spells.w-z.wall-of-fire"
+    },
+    "spells.f-g.finger-des-todes": {
+      "enEntityId": "spells.e-f.finger-of-death"
+    },
+    "spells.f-g.flammen-erzeugen": {
+      "enEntityId": "spells.p-r.produce-flame"
+    },
+    "spells.f-g.flammende-wolke": {
+      "enEntityId": "spells.i-l.incendiary-cloud"
+    },
+    "spells.f-g.flammenklinge": {
+      "enEntityId": "spells.e-f.flame-blade"
+    },
+    "spells.f-g.flammenkugel": {
+      "enEntityId": "spells.e-f.flaming-sphere"
+    },
+    "spells.f-g.flammenschlag": {
+      "enEntityId": "spells.e-f.flame-strike"
+    },
+    "spells.f-g.fleisch-zu-stein": {
+      "enEntityId": "spells.e-f.flesh-to-stone"
+    },
+    "spells.f-g.flimmern": {
+      "enEntityId": "spells.a-b.blink"
+    },
+    "spells.f-g.fluch": {
+      "enEntityId": "spells.a-b.bestow-curse"
+    },
+    "spells.f-g.fluch-brechen": {
+      "enEntityId": "spells.p-r.remove-curse"
+    },
+    "spells.f-g.flug": {
+      "enEntityId": "spells.e-f.fly"
+    },
+    "spells.f-g.frostsphaere": {
+      "enEntityId": "spells.e-f.freezing-sphere"
+    },
+    "spells.f-g.fuerchterlicher-lachanfall": {
+      "enEntityId": "spells.g-h.hideous-laughter"
+    },
+    "spells.f-g.furcht": {
+      "enEntityId": "spells.e-f.fear"
+    },
+    "spells.f-g.gasfoermige-gestalt": {
+      "enEntityId": "spells.g-h.gaseous-form"
+    },
+    "spells.f-g.geas": {
+      "enEntityId": "spells.g-h.geas"
+    },
+    "spells.f-g.gebet-der-heilung": {
+      "enEntityId": "spells.p-r.prayer-of-healing"
+    },
+    "spells.f-g.gedanken-wahrnehmen": {
+      "enEntityId": "spells.c-d.detect-thoughts"
+    },
+    "spells.f-g.gedankendorn": {
+      "enEntityId": "spells.m-o.mind-spike"
+    },
+    "spells.f-g.gedankenleere": {
+      "enEntityId": "spells.m-o.mind-blank"
+    },
+    "spells.f-g.gefuehle-besaenftigen": {
+      "enEntityId": "spells.c-d.calm-emotions"
+    },
+    "spells.f-g.gegenstaende-beleben": {
+      "enEntityId": "spells.a-b.animate-objects"
+    },
+    "spells.f-g.gegenstand-aufspueren": {
+      "enEntityId": "spells.i-l.locate-object"
+    },
+    "spells.f-g.gegenzauber": {
+      "enEntityId": "spells.c-d.counterspell"
+    },
+    "spells.f-g.gehaessiger-spott": {
+      "enEntityId": "spells.t-v.vicious-mockery"
+    },
+    "spells.f-g.geheime-truhe": {
+      "enEntityId": "spells.s.secret-chest"
+    },
+    "spells.f-g.geisterross": {
+      "enEntityId": "spells.p-r.phantom-steed"
+    },
+    "spells.f-g.gestalt-veraendern": {
+      "enEntityId": "spells.a-b.alter-self"
+    },
+    "spells.f-g.gestaltwandel": {
+      "enEntityId": "spells.s.shapechange"
+    },
+    "spells.f-g.gift-und-krankheit-entdecken": {
+      "enEntityId": "spells.c-d.detect-poison-and-disease"
+    },
+    "spells.f-g.gift-verspruehen": {
+      "enEntityId": "spells.p-r.poison-spray"
+    },
+    "spells.f-g.glyphe-des-schutzes": {
+      "enEntityId": "spells.g-h.glyph-of-warding"
+    },
+    "spells.f-g.goettliche-fuehrung": {
+      "enEntityId": "spells.g-h.guidance"
+    },
+    "spells.f-g.goettliche-gunst": {
+      "enEntityId": "spells.c-d.divine-favor"
+    },
+    "spells.f-g.goettliches-niederstrecken": {
+      "enEntityId": "spells.c-d.divine-smite"
+    },
+    "spells.f-g.goettliches-wort": {
+      "enEntityId": "spells.c-d.divine-word"
+    },
+    "spells.f-g.gute-beeren": {
+      "enEntityId": "spells.g-h.goodberry"
+    },
+    "spells.f-g.gutes-und-boeses-bannen": {
+      "enEntityId": "spells.c-d.dispel-evil-and-good"
+    },
+    "spells.f-g.gutes-und-boeses-entdecken": {
+      "enEntityId": "spells.c-d.detect-evil-and-good"
+    },
+    "spells.h-l.halbebene": {
+      "enEntityId": "spells.c-d.demiplane"
+    },
+    "spells.h-l.hast": {
+      "enEntityId": "spells.g-h.haste"
+    },
+    "spells.h-l.heilendes-wort": {
+      "enEntityId": "spells.g-h.healing-word"
+    },
+    "spells.h-l.heilige-aura": {
+      "enEntityId": "spells.g-h.holy-aura"
+    },
+    "spells.h-l.heilige-flamme": {
+      "enEntityId": "spells.s.sacred-flame"
+    },
+    "spells.h-l.heiliges-gespraech": {
+      "enEntityId": "spells.c-d.commune"
+    },
+    "spells.h-l.heiligtum": {
+      "enEntityId": "spells.s.sanctuary"
+    },
+    "spells.h-l.heilung": {
+      "enEntityId": "spells.g-h.heal"
+    },
+    "spells.h-l.heldenmahl": {
+      "enEntityId": "spells.g-h.heroes-feast"
+    },
+    "spells.h-l.heldenmut": {
+      "enEntityId": "spells.g-h.heroism"
+    },
+    "spells.h-l.hellsehen": {
+      "enEntityId": "spells.c-d.clairvoyance"
+    },
+    "spells.h-l.herrliches-herrenhaus": {
+      "enEntityId": "spells.m-o.magnificent-mansion"
+    },
+    "spells.h-l.hoellischer-tadel": {
+      "enEntityId": "spells.g-h.hellish-rebuke"
+    },
+    "spells.h-l.hueter-des-glaubens": {
+      "enEntityId": "spells.g-h.guardian-of-faith"
+    },
+    "spells.h-l.hypnotisches-muster": {
+      "enEntityId": "spells.g-h.hypnotic-pattern",
+      "sourceDifferences": {
+        "components": {
+          "de": "V, G, M (eine Prise Konfetti)",
+          "en": "S, M (a pinch of confetti)"
+        }
+      }
+    },
+    "spells.h-l.identifizieren": {
+      "enEntityId": "spells.i-l.identify"
+    },
+    "spells.h-l.illusionsschrift": {
+      "enEntityId": "spells.i-l.illusory-script"
+    },
+    "spells.h-l.insektenplage": {
+      "enEntityId": "spells.i-l.insect-plague"
+    },
+    "spells.h-l.irrgarten": {
+      "enEntityId": "spells.m-o.maze"
+    },
+    "spells.h-l.kaeltekegel": {
+      "enEntityId": "spells.c-d.cone-of-cold"
+    },
+    "spells.h-l.kaeltestrahl": {
+      "enEntityId": "spells.p-r.ray-of-frost"
+    },
+    "spells.h-l.kalte-hand": {
+      "enEntityId": "spells.c-d.chill-touch"
+    },
+    "spells.h-l.kettenblitz": {
+      "enEntityId": "spells.c-d.chain-lightning"
+    },
+    "spells.h-l.klingenbarriere": {
+      "enEntityId": "spells.a-b.blade-barrier"
+    },
+    "spells.h-l.klon": {
+      "enEntityId": "spells.c-d.clone"
+    },
+    "spells.h-l.klopfen": {
+      "enEntityId": "spells.i-l.knock"
+    },
+    "spells.h-l.kontakt-zu-anderen-ebenen": {
+      "enEntityId": "spells.c-d.contact-other-plane"
+    },
+    "spells.h-l.kreatur-aufspueren": {
+      "enEntityId": "spells.i-l.locate-creature"
+    },
+    "spells.h-l.kreis-der-teleportation": {
+      "enEntityId": "spells.t-v.teleportation-circle"
+    },
+    "spells.h-l.kugel-der-unverwundbarkeit": {
+      "enEntityId": "spells.g-h.globe-of-invulnerability"
+    },
+    "spells.h-l.lange-schritte": {
+      "enEntityId": "spells.i-l.longstrider"
+    },
+    "spells.h-l.lautloses-trugbild": {
+      "enEntityId": "spells.s.silent-image"
+    },
+    "spells.h-l.leicht": {
+      "enEntityId": "spells.i-l.light"
+    },
+    "spells.h-l.leid": {
+      "enEntityId": "spells.g-h.harm"
+    },
+    "spells.h-l.lenkendes-geschoss": {
+      "enEntityId": "spells.g-h.guiding-bolt"
+    },
+    "spells.h-l.leuchtfeuer-der-hoffnung": {
+      "enEntityId": "spells.a-b.beacon-of-hope"
+    },
+    "spells.m-p.macht-der-vorstellungskraft": {
+      "enEntityId": "spells.p-r.phantasmal-force"
+    },
+    "spells.m-p.maechtige-unsichtbarkeit": {
+      "enEntityId": "spells.g-h.greater-invisibility"
+    },
+    "spells.m-p.maechtiges-trugbild": {
+      "enEntityId": "spells.m-o.major-image"
+    },
+    "spells.m-p.magie-bannen": {
+      "enEntityId": "spells.c-d.dispel-magic"
+    },
+    "spells.m-p.magie-entdecken": {
+      "enEntityId": "spells.c-d.detect-magic"
+    },
+    "spells.m-p.magierhand": {
+      "enEntityId": "spells.m-o.mage-hand"
+    },
+    "spells.m-p.magierruestung": {
+      "enEntityId": "spells.m-o.mage-armor"
+    },
+    "spells.m-p.magische-aura-des-arkanisten": {
+      "enEntityId": "spells.a-b.arcanists-magic-aura"
+    },
+    "spells.m-p.magische-waffe": {
+      "enEntityId": "spells.m-o.magic-weapon"
+    },
+    "spells.m-p.magischer-mund": {
+      "enEntityId": "spells.m-o.magic-mouth"
+    },
+    "spells.m-p.magisches-gefaess": {
+      "enEntityId": "spells.m-o.magic-jar"
+    },
+    "spells.m-p.magisches-geschoss": {
+      "enEntityId": "spells.m-o.magic-missile"
+    },
+    "spells.m-p.massen-einfluesterung": {
+      "enEntityId": "spells.m-o.mass-suggestion"
+    },
+    "spells.m-p.massen-heilendes-wort": {
+      "enEntityId": "spells.m-o.mass-healing-word"
+    },
+    "spells.m-p.massen-heilung": {
+      "enEntityId": "spells.m-o.mass-heal"
+    },
+    "spells.m-p.massen-wunden-heilen": {
+      "enEntityId": "spells.m-o.mass-cure-wounds"
+    },
+    "spells.m-p.metall-erhitzen": {
+      "enEntityId": "spells.g-h.heat-metal"
+    },
+    "spells.m-p.meteoritenschwarm": {
+      "enEntityId": "spells.m-o.meteor-swarm"
+    },
+    "spells.m-p.mit-pflanzen-sprechen": {
+      "enEntityId": "spells.s.speak-with-plants"
+    },
+    "spells.m-p.mit-stein-verschmelzen": {
+      "enEntityId": "spells.m-o.meld-into-stone"
+    },
+    "spells.m-p.mit-tieren-sprechen": {
+      "enEntityId": "spells.s.speak-with-animals"
+    },
+    "spells.m-p.mit-toten-sprechen": {
+      "enEntityId": "spells.s.speak-with-dead"
+    },
+    "spells.m-p.mondstrahl": {
+      "enEntityId": "spells.m-o.moonbeam"
+    },
+    "spells.m-p.monster-beherrschen": {
+      "enEntityId": "spells.c-d.dominate-monster"
+    },
+    "spells.m-p.monster-bezaubern": {
+      "enEntityId": "spells.c-d.charm-monster"
+    },
+    "spells.m-p.monster-festhalten": {
+      "enEntityId": "spells.g-h.hold-monster"
+    },
+    "spells.m-p.nahrung-und-wasser-erschaffen": {
+      "enEntityId": "spells.c-d.create-food-and-water"
+    },
+    "spells.m-p.nahrung-und-wasser-reinigen": {
+      "enEntityId": "spells.p-r.purify-food-and-drink"
+    },
+    "spells.m-p.nebelschritt": {
+      "enEntityId": "spells.m-o.misty-step"
+    },
+    "spells.m-p.nebelwolke": {
+      "enEntityId": "spells.e-f.fog-cloud"
+    },
+    "spells.m-p.notfall": {
+      "enEntityId": "spells.c-d.contingency"
+    },
+    "spells.m-p.person-beherrschen": {
+      "enEntityId": "spells.c-d.dominate-person"
+    },
+    "spells.m-p.person-bezaubern": {
+      "enEntityId": "spells.c-d.charm-person"
+    },
+    "spells.m-p.person-festhalten": {
+      "enEntityId": "spells.g-h.hold-person"
+    },
+    "spells.m-p.pflanzentor": {
+      "enEntityId": "spells.t-v.transport-via-plants"
+    },
+    "spells.m-p.pflanzenwachstum": {
+      "enEntityId": "spells.p-r.plant-growth"
+    },
+    "spells.m-p.privates-heiligtum": {
+      "enEntityId": "spells.p-r.private-sanctum"
+    },
+    "spells.r-s.rascher-rueckzug": {
+      "enEntityId": "spells.e-f.expeditious-retreat"
+    },
+    "spells.r-s.redegewandtheit": {
+      "enEntityId": "spells.g-h.glibness"
+    },
+    "spells.r-s.regenbogenspiel": {
+      "enEntityId": "spells.p-r.prismatic-spray"
+    },
+    "spells.r-s.regenbogenwand": {
+      "enEntityId": "spells.p-r.prismatic-wall"
+    },
+    "spells.r-s.regeneration": {
+      "enEntityId": "spells.p-r.regenerate"
+    },
+    "spells.r-s.reittier-finden": {
+      "enEntityId": "spells.e-f.find-steed"
+    },
+    "spells.r-s.rieseninsekt": {
+      "enEntityId": "spells.g-h.giant-insect"
+    },
+    "spells.r-s.rindenhaut": {
+      "enEntityId": "spells.a-b.barkskin"
+    },
+    "spells.r-s.saeurepfeil": {
+      "enEntityId": "spells.a-b.acid-arrow"
+    },
+    "spells.r-s.saeurespritzer": {
+      "enEntityId": "spells.a-b.acid-splash"
+    },
+    "spells.r-s.sagenkunde": {
+      "enEntityId": "spells.i-l.legend-lore"
+    },
+    "spells.r-s.sanfte-ruhe": {
+      "enEntityId": "spells.g-h.gentle-repose"
+    },
+    "spells.r-s.schauriger-strahl": {
+      "enEntityId": "spells.e-f.eldritch-blast"
+    },
+    "spells.r-s.scheingelaende": {
+      "enEntityId": "spells.g-h.hallucinatory-terrain"
+    },
+    "spells.r-s.schild": {
+      "enEntityId": "spells.s.shield"
+    },
+    "spells.r-s.schild-des-glaubens": {
+      "enEntityId": "spells.s.shield-of-faith"
+    },
+    "spells.r-s.schlaf": {
+      "enEntityId": "spells.s.sleep"
+    },
+    "spells.r-s.schmieren": {
+      "enEntityId": "spells.g-h.grease"
+    },
+    "spells.r-s.schneesturm": {
+      "enEntityId": "spells.s.sleet-storm"
+    },
+    "spells.r-s.schockgriff": {
+      "enEntityId": "spells.s.shocking-grasp"
+    },
+    "spells.r-s.schuetzendes-band": {
+      "enEntityId": "spells.w-z.warding-bond"
+    },
+    "spells.r-s.schutz-vor-energie": {
+      "enEntityId": "spells.p-r.protection-from-energy"
+    },
+    "spells.r-s.schutz-vor-gift": {
+      "enEntityId": "spells.p-r.protection-from-poison"
+    },
+    "spells.r-s.schutz-vor-gut-und-boese": {
+      "enEntityId": "spells.p-r.protection-from-evil-and-good"
+    },
+    "spells.r-s.schutzgeister": {
+      "enEntityId": "spells.s.spirit-guardians"
+    },
+    "spells.r-s.schutzhuelle-gegen-lebendes": {
+      "enEntityId": "spells.a-b.antilife-shell"
+    },
+    "spells.r-s.schutzkreis": {
+      "enEntityId": "spells.m-o.magic-circle"
+    },
+    "spells.r-s.schwache-elementare-beschwoeren": {
+      "enEntityId": "spells.c-d.conjure-minor-elementals"
+    },
+    "spells.r-s.schwache-genesung": {
+      "enEntityId": "spells.i-l.lesser-restoration"
+    },
+    "spells.r-s.schwaechestrahl": {
+      "enEntityId": "spells.p-r.ray-of-enfeeblement"
+    },
+    "spells.r-s.schwarze-tentakel": {
+      "enEntityId": "spells.a-b.black-tentacles"
+    },
+    "spells.r-s.schweben": {
+      "enEntityId": "spells.i-l.levitate"
+    },
+    "spells.r-s.schwebende-scheibe": {
+      "enEntityId": "spells.e-f.floating-disk"
+    },
+    "spells.r-s.schwerkraft-umkehren": {
+      "enEntityId": "spells.p-r.reverse-gravity"
+    },
+    "spells.r-s.segnen": {
+      "enEntityId": "spells.a-b.bless"
+    },
+    "spells.r-s.seiltrick": {
+      "enEntityId": "spells.p-r.rope-trick"
+    },
+    "spells.r-s.selbstverkleidung": {
+      "enEntityId": "spells.c-d.disguise-self"
+    },
+    "spells.r-s.sengender-strahl": {
+      "enEntityId": "spells.s.scorching-ray"
+    },
+    "spells.r-s.sengendes-niederstrecken": {
+      "enEntityId": "spells.s.searing-smite"
+    },
+    "spells.r-s.shillelagh": {
+      "enEntityId": "spells.s.shillelagh"
+    },
+    "spells.r-s.simulakrum": {
+      "enEntityId": "spells.s.simulacrum"
+    },
+    "spells.r-s.sofortige-beschwoerung": {
+      "enEntityId": "spells.i-l.instant-summons"
+    },
+    "spells.r-s.sonnenfeuer": {
+      "enEntityId": "spells.s.sunburst"
+    },
+    "spells.r-s.sonnenstrahl": {
+      "enEntityId": "spells.s.sunbeam"
+    },
+    "spells.r-s.spaetzuendender-feuerball": {
+      "enEntityId": "spells.c-d.delayed-blast-fireball"
+    },
+    "spells.r-s.spiegelbilder": {
+      "enEntityId": "spells.m-o.mirror-image"
+    },
+    "spells.r-s.spinnenklettern": {
+      "enEntityId": "spells.s.spider-climb"
+    },
+    "spells.r-s.spinnennetz": {
+      "enEntityId": "spells.w-z.web"
+    },
+    "spells.r-s.sprachen-verstehen": {
+      "enEntityId": "spells.c-d.comprehend-languages"
+    },
+    "spells.r-s.spruehende-farben": {
+      "enEntityId": "spells.c-d.color-spray"
+    },
+    "spells.r-s.sprung": {
+      "enEntityId": "spells.i-l.jump"
+    },
+    "spells.r-s.spurloses-gehen": {
+      "enEntityId": "spells.p-r.pass-without-trace"
+    },
+    "spells.r-s.stein-formen": {
+      "enEntityId": "spells.s.stone-shape"
+    },
+    "spells.r-s.steinhaut": {
+      "enEntityId": "spells.s.stoneskin"
+    },
+    "spells.r-s.steinwand": {
+      "enEntityId": "spells.w-z.wall-of-stone"
+    },
+    "spells.r-s.sternenfunke": {
+      "enEntityId": "spells.s.starry-wisp"
+    },
+    "spells.r-s.stille": {
+      "enEntityId": "spells.s.silence"
+    },
+    "spells.r-s.stinkende-wolke": {
+      "enEntityId": "spells.s.stinking-cloud"
+    },
+    "spells.r-s.strahl-der-uebelkeit": {
+      "enEntityId": "spells.p-r.ray-of-sickness"
+    },
+    "spells.r-s.strahlendes-niederstrecken": {
+      "enEntityId": "spells.s.shining-smite"
+    },
+    "spells.r-s.sturm-der-vergeltung": {
+      "enEntityId": "spells.s.storm-of-vengeance"
+    },
+    "spells.r-s.symbol": {
+      "enEntityId": "spells.s.symbol"
+    },
+    "spells.t-v.tageslicht": {
+      "enEntityId": "spells.c-d.daylight"
+    },
+    "spells.t-v.tanzende-lichter": {
+      "enEntityId": "spells.c-d.dancing-lights"
+    },
+    "spells.t-v.taschenspielerei": {
+      "enEntityId": "spells.p-r.prestidigitation"
+    },
+    "spells.t-v.telekinese": {
+      "enEntityId": "spells.t-v.telekinesis"
+    },
+    "spells.t-v.telepathische-bindung": {
+      "enEntityId": "spells.t-v.telepathic-bond"
+    },
+    "spells.t-v.teleportieren": {
+      "enEntityId": "spells.t-v.teleport"
+    },
+    "spells.t-v.thaumaturgie": {
+      "enEntityId": "spells.t-v.thaumaturgy"
+    },
+    "spells.t-v.tier-beherrschen": {
+      "enEntityId": "spells.c-d.dominate-beast"
+    },
+    "spells.t-v.tierbote": {
+      "enEntityId": "spells.a-b.animal-messenger"
+    },
+    "spells.t-v.tiere-beschwoeren": {
+      "enEntityId": "spells.c-d.conjure-animals"
+    },
+    "spells.t-v.tiere-oder-pflanzen-aufspueren": {
+      "enEntityId": "spells.i-l.locate-animals-or-plants"
+    },
+    "spells.t-v.tierform": {
+      "enEntityId": "spells.a-b.animal-shapes"
+    },
+    "spells.t-v.tierfreundschaft": {
+      "enEntityId": "spells.a-b.animal-friendship"
+    },
+    "spells.t-v.todeskreis": {
+      "enEntityId": "spells.c-d.circle-of-death"
+    },
+    "spells.t-v.todesschutz": {
+      "enEntityId": "spells.c-d.death-ward"
+    },
+    "spells.t-v.todeswolke": {
+      "enEntityId": "spells.c-d.cloudkill"
+    },
+    "spells.t-v.toedliches-phantom": {
+      "enEntityId": "spells.p-r.phantasmal-killer"
+    },
+    "spells.t-v.tor": {
+      "enEntityId": "spells.g-h.gate"
+    },
+    "spells.t-v.tote-beleben": {
+      "enEntityId": "spells.a-b.animate-dead"
+    },
+    "spells.t-v.tote-erwecken": {
+      "enEntityId": "spells.p-r.raise-dead"
+    },
+    "spells.t-v.traum": {
+      "enEntityId": "spells.c-d.dream"
+    },
+    "spells.t-v.treuer-hund": {
+      "enEntityId": "spells.e-f.faithful-hound"
+    },
+    "spells.t-v.trugbild-projizieren": {
+      "enEntityId": "spells.p-r.project-image"
+    },
+    "spells.t-v.tsunami": {
+      "enEntityId": "spells.t-v.tsunami"
+    },
+    "spells.t-v.unauffindbarkeit": {
+      "enEntityId": "spells.m-o.nondetection"
+    },
+    "spells.t-v.unheimliches-schicksal": {
+      "enEntityId": "spells.w-z.weird"
+    },
+    "spells.t-v.unsichtbarer-diener": {
+      "enEntityId": "spells.t-v.unseen-servant"
+    },
+    "spells.t-v.unsichtbares-sehen": {
+      "enEntityId": "spells.s.see-invisibility"
+    },
+    "spells.t-v.unsichtbarkeit": {
+      "enEntityId": "spells.i-l.invisibility"
+    },
+    "spells.t-v.untote-erschaffen": {
+      "enEntityId": "spells.c-d.create-undead"
+    },
+    "spells.t-v.unverwuestliche-sphaere": {
+      "enEntityId": "spells.p-r.resilient-sphere"
+    },
+    "spells.t-v.unwiderstehlicher-tanz": {
+      "enEntityId": "spells.i-l.irresistible-dance"
+    },
+    "spells.t-v.vampirgriff": {
+      "enEntityId": "spells.t-v.vampiric-touch"
+    },
+    "spells.t-v.verarbeitung": {
+      "enEntityId": "spells.e-f.fabricate"
+    },
+    "spells.t-v.verbannung": {
+      "enEntityId": "spells.a-b.banishment"
+    },
+    "spells.t-v.verbergen": {
+      "enEntityId": "spells.s.sequester"
+    },
+    "spells.t-v.verbuendeter-aus-den-ebenen": {
+      "enEntityId": "spells.p-r.planar-ally"
+    },
+    "spells.t-v.verderben": {
+      "enEntityId": "spells.a-b.bane"
+    },
+    "spells.t-v.vergroessern-verkleinern": {
+      "enEntityId": "spells.e-f.enlarge-reduce"
+    },
+    "spells.t-v.verlangsamen": {
+      "enEntityId": "spells.s.slow"
+    },
+    "spells.t-v.verschonung-der-sterbenden": {
+      "enEntityId": "spells.s.spare-the-dying"
+    },
+    "spells.t-v.verschwimmen": {
+      "enEntityId": "spells.a-b.blur"
+    },
+    "spells.t-v.verstaendigung": {
+      "enEntityId": "spells.s.sending"
+    },
+    "spells.t-v.verstricken": {
+      "enEntityId": "spells.e-f.entangle"
+    },
+    "spells.t-v.vertrauten-finden": {
+      "enEntityId": "spells.e-f.find-familiar"
+    },
+    "spells.t-v.verwandlung": {
+      "enEntityId": "spells.p-r.polymorph"
+    },
+    "spells.t-v.verwirrung": {
+      "enEntityId": "spells.c-d.confusion"
+    },
+    "spells.t-v.verwuenschung": {
+      "enEntityId": "spells.g-h.hex"
+    },
+    "spells.t-v.vollstaendige-genesung": {
+      "enEntityId": "spells.g-h.greater-restoration"
+    },
+    "spells.t-v.vorahnung": {
+      "enEntityId": "spells.a-b.augury"
+    },
+    "spells.t-v.voraussicht": {
+      "enEntityId": "spells.e-f.foresight"
+    },
+    "spells.t-v.vorbestimmtes-trugbild": {
+      "enEntityId": "spells.p-r.programmed-illusion"
+    },
+    "spells.w-z.waechter-und-hueter": {
+      "enEntityId": "spells.g-h.guards-and-wards"
+    },
+    "spells.w-z.waende-passieren": {
+      "enEntityId": "spells.p-r.passwall"
+    },
+    "spells.w-z.waffe-des-glaubens": {
+      "enEntityId": "spells.s.spiritual-weapon"
+    },
+    "spells.w-z.wahre-auferstehung": {
+      "enEntityId": "spells.t-v.true-resurrection"
+    },
+    "spells.w-z.wahre-verwandlung": {
+      "enEntityId": "spells.t-v.true-polymorph"
+    },
+    "spells.w-z.wahrer-blick": {
+      "enEntityId": "spells.t-v.true-seeing"
+    },
+    "spells.w-z.wasser-atmen": {
+      "enEntityId": "spells.w-z.water-breathing"
+    },
+    "spells.w-z.wasser-erschaffen-oder-zerstoeren": {
+      "enEntityId": "spells.c-d.create-or-destroy-water"
+    },
+    "spells.w-z.wasser-kontrollieren": {
+      "enEntityId": "spells.c-d.control-water"
+    },
+    "spells.w-z.wasserwandeln": {
+      "enEntityId": "spells.w-z.water-walk"
+    },
+    "spells.w-z.weg-finden": {
+      "enEntityId": "spells.e-f.find-the-path"
+    },
+    "spells.w-z.weihen": {
+      "enEntityId": "spells.g-h.hallow"
+    },
+    "spells.w-z.weissagung": {
+      "enEntityId": "spells.c-d.divination"
+    },
+    "spells.w-z.wesen-des-waldes-beschwoeren": {
+      "enEntityId": "spells.c-d.conjure-woodland-beings"
+    },
+    "spells.w-z.wetterkontrolle": {
+      "enEntityId": "spells.c-d.control-weather"
+    },
+    "spells.w-z.widerstand": {
+      "enEntityId": "spells.p-r.resistance"
+    },
+    "spells.w-z.wiederbeleben": {
+      "enEntityId": "spells.p-r.revivify"
+    },
+    "spells.w-z.wiedergeburt": {
+      "enEntityId": "spells.p-r.reincarnate"
+    },
+    "spells.w-z.windstoss": {
+      "enEntityId": "spells.g-h.gust-of-wind"
+    },
+    "spells.w-z.windwall": {
+      "enEntityId": "spells.w-z.wind-wall"
+    },
+    "spells.w-z.windwandeln": {
+      "enEntityId": "spells.w-z.wind-walk"
+    },
+    "spells.w-z.winzige-huette": {
+      "enEntityId": "spells.t-v.tiny-hut"
+    },
+    "spells.w-z.wirrnis": {
+      "enEntityId": "spells.a-b.befuddlement"
+    },
+    "spells.w-z.wort-der-macht-betaeubung": {
+      "enEntityId": "spells.p-r.power-word-stun"
+    },
+    "spells.w-z.wort-der-macht-heilung": {
+      "enEntityId": "spells.p-r.power-word-heal"
+    },
+    "spells.w-z.wort-der-macht-tod": {
+      "enEntityId": "spells.p-r.power-word-kill"
+    },
+    "spells.w-z.wort-des-rueckrufs": {
+      "enEntityId": "spells.w-z.word-of-recall"
+    },
+    "spells.w-z.wunden-heilen": {
+      "enEntityId": "spells.c-d.cure-wounds"
+    },
+    "spells.w-z.wunden-verursachen": {
+      "enEntityId": "spells.i-l.inflict-wounds"
+    },
+    "spells.w-z.wunsch": {
+      "enEntityId": "spells.w-z.wish"
+    },
+    "spells.w-z.zeichen-des-jaegers": {
+      "enEntityId": "spells.g-h.hunters-mark"
+    },
+    "spells.w-z.zeitstopp": {
+      "enEntityId": "spells.t-v.time-stop"
+    },
+    "spells.w-z.zerbersten": {
+      "enEntityId": "spells.s.shatter"
+    },
+    "spells.w-z.zielsicherer-schlag": {
+      "enEntityId": "spells.t-v.true-strike"
+    },
+    "spells.w-z.zone-der-wahrheit": {
+      "enEntityId": "spells.w-z.zone-of-truth"
+    },
+    "spells.w-z.zungen": {
+      "enEntityId": "spells.t-v.tongues"
+    },
+    "spells.w-z.zutritt-verwehren": {
+      "enEntityId": "spells.e-f.forbiddance"
+    },
+    "spells.w-z.zwang": {
+      "enEntityId": "spells.c-d.compulsion"
+    }
+  }
+}

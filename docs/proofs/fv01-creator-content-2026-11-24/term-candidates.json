@@ -1,0 +1,353 @@
+{
+  "status": "candidate_source_references",
+  "terms": {
+    "abilities:str": {
+      "name": "Strength",
+      "documentId": "core.rhythm-and-abilities",
+      "ruleId": "core.rhythm-and-abilities.the-six-abilities.table-1",
+      "quote": "Strength",
+      "abbreviation": {
+        "value": "Str.",
+        "documentId": "character-creation.overview",
+        "ruleId": "character-creation.overview.create-your-character.assign-ability-scores.table-1",
+        "quote": "Str."
+      }
+    },
+    "abilities:dex": {
+      "name": "Dexterity",
+      "documentId": "core.rhythm-and-abilities",
+      "ruleId": "core.rhythm-and-abilities.the-six-abilities.table-1",
+      "quote": "Dexterity",
+      "abbreviation": {
+        "value": "Dex.",
+        "documentId": "character-creation.overview",
+        "ruleId": "character-creation.overview.create-your-character.assign-ability-scores.table-1",
+        "quote": "Dex."
+      }
+    },
+    "abilities:con": {
+      "name": "Constitution",
+      "documentId": "core.rhythm-and-abilities",
+      "ruleId": "core.rhythm-and-abilities.the-six-abilities.table-1",
+      "quote": "Constitution",
+      "abbreviation": {
+        "value": "Con.",
+        "documentId": "character-creation.overview",
+        "ruleId": "character-creation.overview.create-your-character.assign-ability-scores.table-1",
+        "quote": "Con."
+      }
+    },
+    "abilities:int": {
+      "name": "Intelligence",
+      "documentId": "core.rhythm-and-abilities",
+      "ruleId": "core.rhythm-and-abilities.the-six-abilities.table-1",
+      "quote": "Intelligence",
+      "abbreviation": {
+        "value": "Int.",
+        "documentId": "character-creation.overview",
+        "ruleId": "character-creation.overview.create-your-character.assign-ability-scores.table-1",
+        "quote": "Int."
+      }
+    },
+    "abilities:wis": {
+      "name": "Wisdom",
+      "documentId": "core.rhythm-and-abilities",
+      "ruleId": "core.rhythm-and-abilities.the-six-abilities.table-1",
+      "quote": "Wisdom",
+      "abbreviation": {
+        "value": "Wis.",
+        "documentId": "character-creation.overview",
+        "ruleId": "character-creation.overview.create-your-character.assign-ability-scores.table-1",
+        "quote": "Wis."
+      }
+    },
+    "abilities:cha": {
+      "name": "Charisma",
+      "documentId": "core.rhythm-and-abilities",
+      "ruleId": "core.rhythm-and-abilities.the-six-abilities.table-1",
+      "quote": "Charisma",
+      "abbreviation": {
+        "value": "Cha.",
+        "documentId": "character-creation.overview",
+        "ruleId": "character-creation.overview.create-your-character.assign-ability-scores.table-1",
+        "quote": "Cha."
+      }
+    },
+    "skills:akrobatik": {
+      "name": "Acrobatics",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Acrobatics"
+    },
+    "skills:arkane-kunde": {
+      "name": "Arcana",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Arcana"
+    },
+    "skills:athletik": {
+      "name": "Athletics",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Athletics"
+    },
+    "skills:auftreten": {
+      "name": "Performance",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Performance"
+    },
+    "skills:einschuechtern": {
+      "name": "Intimidation",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Intimidation"
+    },
+    "skills:fingerfertigkeit": {
+      "name": "Sleight of Hand",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Sleight of Hand"
+    },
+    "skills:geschichte": {
+      "name": "History",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "History"
+    },
+    "skills:heilkunde": {
+      "name": "Medicine",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Medicine"
+    },
+    "skills:heimlichkeit": {
+      "name": "Stealth",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Stealth"
+    },
+    "skills:mit-tieren-umgehen": {
+      "name": "Animal Handling",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Animal Handling"
+    },
+    "skills:motiv-erkennen": {
+      "name": "Insight",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Insight"
+    },
+    "skills:nachforschungen": {
+      "name": "Investigation",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Investigation"
+    },
+    "skills:naturkunde": {
+      "name": "Nature",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Nature"
+    },
+    "skills:religion": {
+      "name": "Religion",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Religion"
+    },
+    "skills:taeuschen": {
+      "name": "Deception",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Deception"
+    },
+    "skills:ueberlebenskunst": {
+      "name": "Survival",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Survival"
+    },
+    "skills:ueberzeugen": {
+      "name": "Persuasion",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Persuasion"
+    },
+    "skills:wahrnehmung": {
+      "name": "Perception",
+      "documentId": "core.proficiency",
+      "ruleId": "core.proficiency.skill-proficiencies.table-1",
+      "quote": "Perception"
+    },
+    "languages:gemeinsprache": {
+      "name": "Common",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.choose-languages.table-1",
+      "quote": "Common"
+    },
+    "languages:drakonisch": {
+      "name": "Draconic",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.choose-languages.table-1",
+      "quote": "Draconic"
+    },
+    "languages:elfisch": {
+      "name": "Elvish",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.choose-languages.table-1",
+      "quote": "Elvish"
+    },
+    "languages:gebaerden-gemeinsprache": {
+      "name": "Common Sign Language",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.choose-languages.table-1",
+      "quote": "Common Sign Language"
+    },
+    "languages:gnomisch": {
+      "name": "Gnomish",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.choose-languages.table-1",
+      "quote": "Gnomish"
+    },
+    "languages:goblinisch": {
+      "name": "Goblin",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.choose-languages.table-1",
+      "quote": "Goblin"
+    },
+    "languages:halblingisch": {
+      "name": "Halfling",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling",
+      "quote": "Halfling"
+    },
+    "languages:orkisch": {
+      "name": "Orc",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.p-1",
+      "quote": "Orc"
+    },
+    "languages:riesisch": {
+      "name": "Giant",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.choose-languages.table-1",
+      "quote": "Giant"
+    },
+    "languages:zwergisch": {
+      "name": "Dwarvish",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.choose-languages.table-1",
+      "quote": "Dwarvish"
+    },
+    "languages:abyssisch": {
+      "name": "Abyssal",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.table-1",
+      "quote": "Abyssal"
+    },
+    "languages:celestisch": {
+      "name": "Celestial",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.table-1",
+      "quote": "Celestial"
+    },
+    "languages:diebessprache": {
+      "name": "Thieves’ Cant",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.table-1",
+      "quote": "Thieves’ Cant"
+    },
+    "languages:druidisch": {
+      "name": "Druidic",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.table-1",
+      "quote": "Druidic"
+    },
+    "languages:gemeinsprache-der-unterreiche": {
+      "name": "Undercommon",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.table-1",
+      "quote": "Undercommon"
+    },
+    "languages:infernalisch": {
+      "name": "Infernal",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.p-2",
+      "quote": "Infernal"
+    },
+    "languages:sylvanisch": {
+      "name": "Sylvan",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.table-1",
+      "quote": "Sylvan"
+    },
+    "languages:tiefensprache": {
+      "name": "Deep Speech",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.table-1",
+      "quote": "Deep Speech"
+    },
+    "languages:urtuemlich": {
+      "name": "Primordial",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.1011-halfling.table-1",
+      "quote": "Primordial"
+    },
+    "alignments:rechtschaffen-gut": {
+      "name": "Lawful Good",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-3",
+      "quote": "Lawful Good"
+    },
+    "alignments:neutral-gut": {
+      "name": "Neutral Good",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-4",
+      "quote": "Neutral Good"
+    },
+    "alignments:chaotisch-gut": {
+      "name": "Chaotic Good",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-5",
+      "quote": "Chaotic Good"
+    },
+    "alignments:rechtschaffen-neutral": {
+      "name": "Lawful Neutral",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-6",
+      "quote": "Lawful Neutral"
+    },
+    "alignments:neutral": {
+      "name": "Neutral",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-7",
+      "quote": "Neutral"
+    },
+    "alignments:chaotisch-neutral": {
+      "name": "Chaotic Neutral",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-8",
+      "quote": "Chaotic Neutral"
+    },
+    "alignments:rechtschaffen-boese": {
+      "name": "Lawful Evil",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-9",
+      "quote": "Lawful Evil"
+    },
+    "alignments:neutral-boese": {
+      "name": "Neutral Evil",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-10",
+      "quote": "Neutral Evil"
+    },
+    "alignments:chaotisch-boese": {
+      "name": "Chaotic Evil",
+      "documentId": "character-creation.overview",
+      "ruleId": "character-creation.overview.create-your-character.the-nine-alignments.p-11",
+      "quote": "Chaotic Evil"
+    }
+  }
+}

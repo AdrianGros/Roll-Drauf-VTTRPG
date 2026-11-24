@@ -1,0 +1,68 @@
+{
+  "status": "pass",
+  "scope": "FV01 bounded core/spell names, 52 terms and genuine English details; full packet remains open",
+  "identity_review": "identity-review.json",
+  "entities": 663,
+  "terms": 52,
+  "pinned_rule_sources": 54,
+  "runs": [
+    {
+      "command": "tests/test_creator_display.py",
+      "result": "2 passed; API case failed because the new test used a header while this app uses JWT cookies. Corrected fixture authentication; final API case passed."
+    },
+    {
+      "command": "tests/test_creator_content_browser.py",
+      "result": "Initial 10 browser cases passed; deterministic delayed-response waits were then strengthened and the two affected cases passed again."
+    },
+    {
+      "command": "Focused existing pending-input/finalization/draft + guided/random tests",
+      "result": "5 passed, 11 warnings in84.72s"
+    },
+    {
+      "command": "Combined20-case final check",
+      "result": "Initial collection error from quoting in a new test/live helper was corrected before any release; subsequent run19 passed and exposed missing EN subclass features in1 real browser case."
+    },
+    {
+      "command": "tests/test_creator_display.py + EN subclass normal/fallback cases + DE/EN creator detail case",
+      "result": "6 passed,7 warnings in72.79s after source-backed subclass index and versioned canonical-data request."
+    },
+    {
+      "command": "Final builder source/identity/bounded-kind checks",
+      "result": "2 passed in 2.82s; deterministic source compilation and generated freshness pass."
+    }
+  ],
+  "source_rework": [
+    "Require both compendia and canonical creator-data in approved source hashes; validate non-null model IDs, subclass reference graph and real anchors for3 reading-only core features.",
+    "Caster/list/spell keys explicitly identify checkboxes and details; actual independent role groups already existed.",
+    "Overlay private/no-cache plus conditional ETag and revalidation handle overlay-only corrections.",
+    "Bound term kinds/word matches and supported source-difference fields; complete DE payload; exclude async preview details from positional restore.",
+    "Actual EN subclass records have no features property. Build an EN feature-ID index by subclass/document context, validate exact equality to reviewed counterparts and order by source anchors; preview uses it and has explicit DE fallback."
+  ],
+  "coverage": [
+    "Six UI/rules/auto combinations",
+    "Genuine EN source class/spell detail",
+    "Canonical state/data/evaluation and selected spell IDs across reorder",
+    "Fallback on wrong overlay hash",
+    "Out-of-order locale and dialog responses",
+    "Hypnotic Pattern source-difference notice",
+    "English subclass feature preview and DE fallback",
+    "Pending numeric edit commits only on real blur",
+    "Campaign choice and in-flight finalization result",
+    "Guided and random actual finalization"
+  ],
+  "limits": [
+    "Full rules equality not claimed",
+    "Equipment/subchoices/remaining raw labels, structured findings/API errors and character editor still open",
+    "Async preview own expansion reset is a retained low view issue",
+    "Stale-data failure rehash cost is a retained low rare-path note",
+    "Full repository suite is not claimed green"
+  ],
+  "data_isolation": "Automated browser/API checks use throwaway SQLite, never production or bot lane databases",
+  "static_checks": {
+    "creator_display_freshness": "pass",
+    "catalog_sources": 3777,
+    "catalog_freshness": "pass",
+    "python_and_js_syntax": "pass",
+    "diff_whitespace": "pass"
+  }
+}
