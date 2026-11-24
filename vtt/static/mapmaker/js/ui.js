@@ -6,7 +6,7 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
 import { ASSET_PERSPECTIVES, ASSET_STYLES, LABEL_FAMILIES, LABEL_STYLES, LIMITS, PLACE_KINDS, cleanText, findItem, clamp, referencedAssetIds } from "./document.js";
 import { CUSTOM_PACK } from "./stamps.js";
 import { MATERIALS, StrokeEngine, materialTile } from "./brush.js";
-import { labelBounds, pathBounds, replacedTitleLabel } from "./render.js";
+import { itemBounds, labelBounds, pathBounds, replacedTitleLabel } from "./render.js";
 
 const $ = (id) => document.getElementById(id);
 
@@ -44,6 +44,7 @@ const ICONS = {
     trash: ["M4 7h16", "M9 7V4h6v3", "M6 7l1 13h10l1-13"],
 };
 
+const OBJECT_ROWS_MAX = 250; // the object list stops here and asks for a narrower filter
 const KIND_LABEL = { raster: globalThis.VTTUi("Malen"), paths: globalThis.VTTUi("Wege"), stamps: globalThis.VTTUi("Symbole"), labels: globalThis.VTTUi("Text"), tiles: globalThis.VTTUi("Kacheln") };
 
 /** Thumbnail without object URLs (CSP): catalog images by src, own and built-in images drawn to a canvas. */
@@ -134,6 +135,8 @@ export class UI {
         this.stageLayersExpanded = false;
         this.tileGridOffer = null;
         this.rasterContent = new WeakMap();
+        this.objectsStale = true;
+        this.objectLayerSig = "";
     }
 
     // ---- wiring ------------------------------------------------------------
@@ -250,6 +253,7 @@ export class UI {
         this.bindLabelTool();
         this.bindInspector();
         this.bindLayers();
+        this.bindObjects();
         this.bindReviewControls();
         $("addPlaceBtn").addEventListener("click", () => {
             ed.setTool("label");
@@ -711,6 +715,48 @@ export class UI {
         this.pathWidth = this.range("pathWidth", "pathWidthOut", (v) => `${v} px`, (v) => { ed.pathOpts.width = v; });
         this.pathWidth.set(ed.pathOpts.width);
         $("pathMaterial").addEventListener("change", (event) => { ed.pathOpts.material = event.target.value; });
+        const labels = { pathModeLegend: globalThis.VTTUi("Zeichnen"), pathModeFreehand: globalThis.VTTUi("Freihand ziehen"),
+            pathModeNodes: globalThis.VTTUi("Punkte setzen"),
+            pathNodesHint: globalThis.VTTUi("Klicken setzt Punkte. Enter oder Doppelklick schließt den Weg ab, Rücktaste entfernt den letzten Punkt, Esc bricht ab."),
+            pathDraftFinish: globalThis.VTTUi("Weg fertigstellen"), pathDraftUndo: globalThis.VTTUi("Letzten Punkt entfernen"),
+            pathDraftCancel: globalThis.VTTUi("Abbrechen"), pathEditNodes: globalThis.VTTUi("Wegpunkte bearbeiten (V)"),
+            pathNameHint: globalThis.VTTUi("Namen vergeben: den Weg mit Auswählen (V) oder im Tab „Objekte“ wählen, dann „Name des Wegs“."),
+            selPathDraw: globalThis.VTTUi("Neuen Weg zeichnen (W)"),
+            helpPathNodes: globalThis.VTTUi("„Punkte setzen“: Weg abschließen / letzten Punkt entfernen") };
+        Object.entries(labels).forEach(([id, text]) => { $(id).textContent = text; });
+        document.querySelectorAll('input[name="pathMode"]').forEach((input) => input.addEventListener("change", () => {
+            if (!input.checked) return;
+            ed.input.cancel(); // an unfinished node path is discarded with a notice
+            ed.pathOpts.mode = input.value;
+            this.syncPathMode();
+        }));
+        $("pathDraftFinish").addEventListener("click", () => ed.input.finishDraft());
+        $("pathDraftUndo").addEventListener("click", () => ed.input.removeDraftNode());
+        $("pathDraftCancel").addEventListener("click", () => ed.input.discardDraft());
+        // Explicit draw → edit switch: the delivered select tool with node mode.
+        $("pathEditNodes").addEventListener("click", () => {
+            ed.editPathNodes = true;
+            ed.setTool("select");
+            this.toast(globalThis.VTTUi("Auswählen (V): Wegpunkte ziehen. Ohne Haken verschiebt Ziehen den ganzen Weg."));
+            this.refreshInspector();
+            ed.requestFrame();
+        });
+        $("selPathDraw").addEventListener("click", () => ed.setTool("path"));
+        this.syncPathMode();
+    }
+
+    syncPathMode() {
+        const nodes = this.ed.pathOpts.mode === "nodes";
+        document.querySelectorAll('input[name="pathMode"]').forEach((input) => { input.checked = input.value === this.ed.pathOpts.mode; });
+        $("pathFreehandHint").hidden = nodes;
+        $("pathNodesHint").hidden = !nodes;
+    }
+
+    /** Draft bar of the node-by-node path: shown while nodes are placed. */
+    syncPathDraft(count) {
+        $("pathDraftBar").hidden = !count;
+        $("pathDraftStatus").textContent = globalThis.VTTUi("Punkte gesetzt: {count}", { count });
+        $("pathDraftFinish").disabled = count < 2;
     }
 
     buildPalette() {
@@ -1121,6 +1167,15 @@ export class UI {
             ed.liveEdit({ place: { kind: found.item.place.kind, lore } });
             $("selLoreCount").textContent = `${lore.length}/${LIMITS.lore}`;
         });
+        // Rotation presets write the same rot as the slider: one undo step per click.
+        document.querySelectorAll(".mm-rot-presets").forEach((group) => {
+            group.setAttribute("aria-label", globalThis.VTTUi("Drehung voreinstellen"));
+            group.querySelectorAll("button[data-rot]").forEach((button) => button.addEventListener("click", () => {
+                ed.liveEdit({ rot: Number(button.dataset.rot) });
+                ed.commitEdit();
+                this.refreshInspector();
+            }));
+        });
         $("selDelete").addEventListener("click", () => ed.deleteSelection());
         $("selDeselect").addEventListener("click", () => ed.select(null));
         $("showMapBtn").addEventListener("click", () => {
@@ -1190,6 +1245,7 @@ export class UI {
                 ? globalThis.VTTUi("Im Wege-Werkzeug zeichnet Ziehen immer einen neuen Weg. „Wegpunkte bearbeiten“ wechselt zu Auswählen (V).")
                 : globalThis.VTTUi("Wegpunkte bearbeiten einschalten und einen sichtbaren Punkt ziehen. Umschalt + Ziehen funktioniert ebenfalls.");
             if (!editing("selPathWidth") && !editing("selPathWidthNumber")) this.selPathWidth.set(item.width);
+            $("selPathDraw").hidden = ed.tool === "path";
         } else {
             $("inspectorTitle").textContent = item.place ? globalThis.VTTUi("Ort") : globalThis.VTTUi("Beschriftung");
             if (!editing("selText")) $("selText").value = item.text;
@@ -1462,6 +1518,7 @@ export class UI {
     refreshPlaces() {
         const ed = this.ed;
         if (!ed.doc) return;
+        this.refreshObjects();
         const list = $("placeList");
         list.replaceChildren();
         const places = ed.doc.layers.filter((l) => l.kind === "labels").flatMap((l) => l.items.filter((i) => i.place).map((i) => ({ layer: l, item: i })));
@@ -1489,6 +1546,134 @@ export class UI {
         }
     }
 
+    // ---- object list -------------------------------------------------------
+
+    bindObjects() {
+        const ed = this.ed;
+        const labels = { tabObjectsLabel: globalThis.VTTUi("Objekte"),
+            objectsHint: globalThis.VTTUi("Alle Wege, Symbole, Kacheln und Beschriftungen. Antippen wählt das Objekt auf der Karte aus; Umschalt-Klick erweitert die Auswahl."),
+            objectKindLabel: globalThis.VTTUi("Art"), objectLayerLabel: globalThis.VTTUi("Ebene"),
+            objectSearchLabel: globalThis.VTTUi("Objekte suchen"), objectEdit: globalThis.VTTUi("Auswahl bearbeiten") };
+        Object.entries(labels).forEach(([id, text]) => { $(id).textContent = text; });
+        const kinds = { "": globalThis.VTTUi("Alle Arten"), paths: KIND_LABEL.paths, stamps: KIND_LABEL.stamps, tiles: KIND_LABEL.tiles, labels: KIND_LABEL.labels };
+        for (const [value, text] of Object.entries(kinds)) $("objectKind").appendChild(el("option", { value }, text));
+        $("objectKind").addEventListener("change", () => this.refreshObjects());
+        $("objectLayer").addEventListener("change", () => this.refreshObjects());
+        $("objectSearch").addEventListener("input", () => this.refreshObjects());
+        $("objectEdit").addEventListener("click", () => {
+            this.openPane("tool");
+            const found = ed.selection && findItem(ed.doc, ed.selection);
+            const field = found && ("points" in found.item ? $("selPathName") : "text" in found.item ? $("selText") : null);
+            if (field && ed.selectionSet.count === 1) requestAnimationFrame(() => { field.focus(); field.select(); });
+        });
+    }
+
+    objectName(item) {
+        if ("points" in item) return item.name || (item.material === "river" ? globalThis.VTTUi("Fluss ohne Namen") : globalThis.VTTUi("Weg ohne Namen"));
+        if ("asset" in item) return this.ed.palette.stamps.get(item.asset)?.label || item.asset;
+        return item.text || globalThis.VTTUi("Symbol ohne Namen");
+    }
+
+    /** Every selectable map object, top layer and topmost item first (the hit-test order). */
+    objectRows() {
+        const ed = this.ed;
+        const title = replacedTitleLabel(ed.doc);
+        const rows = [];
+        for (const layer of [...ed.doc.layers].reverse()) {
+            if (layer.kind === "tiles") {
+                const groups = new Map();
+                for (const [key, asset] of layer.cells) {
+                    if (!groups.has(asset)) groups.set(asset, []);
+                    groups.get(asset).push(key);
+                }
+                for (const [asset, keys] of groups) {
+                    rows.push({ key: `tiles:${layer.id}:${asset}`, kind: "tiles", layer, asset, keys,
+                        name: ed.palette.stamps.get(asset)?.label || asset, chip: globalThis.VTTUi("Kacheln: {count}", { count: keys.length }) });
+                }
+            } else if (layer.items) {
+                for (const item of [...layer.items].reverse()) {
+                    if (item === title) continue;
+                    const chip = "points" in item ? (item.material === "river" ? globalThis.VTTUi("Fluss") : globalThis.VTTUi("Weg"))
+                        : "asset" in item ? globalThis.VTTUi("Symbol") : item.place ? globalThis.VTTUi("Ort") : globalThis.VTTUi("Beschriftung");
+                    rows.push({ key: item.id, kind: layer.kind, layer, item, name: this.objectName(item), chip });
+                }
+            }
+        }
+        return rows;
+    }
+
+    /** Rebuilt only while the pane is visible; map and list share the selection. */
+    refreshObjects() {
+        const ed = this.ed;
+        if (!ed.doc) return;
+        $("objectEdit").disabled = !ed.selectionSet.count;
+        if ($("pane-objects").hidden) {
+            this.objectsStale = true;
+            return;
+        }
+        this.objectsStale = false;
+        const layerSelect = $("objectLayer");
+        const layers = [...ed.doc.layers].reverse().filter((layer) => layer.kind !== "raster");
+        const signature = layers.map((layer) => `${layer.id}:${layer.name}`).join("|");
+        if (signature !== this.objectLayerSig) {
+            const value = layerSelect.value;
+            this.objectLayerSig = signature;
+            layerSelect.replaceChildren(el("option", { value: "" }, globalThis.VTTUi("Alle Ebenen")), ...layers.map((layer) => el("option", { value: layer.id }, layer.name)));
+            layerSelect.value = layers.some((layer) => layer.id === value) ? value : "";
+        }
+        const kind = $("objectKind").value;
+        const layerId = layerSelect.value;
+        const term = $("objectSearch").value.trim().toLocaleLowerCase();
+        const rows = this.objectRows();
+        const shown = rows.filter((row) => (!kind || row.kind === kind) && (!layerId || row.layer.id === layerId)
+            && (!term || row.name.toLocaleLowerCase().includes(term)));
+        $("objectCount").textContent = globalThis.VTTUi("{shown} von {total} Objekten", { shown: shown.length, total: rows.length });
+        $("objectMore").hidden = shown.length <= OBJECT_ROWS_MAX;
+        $("objectMore").textContent = globalThis.VTTUi("Die ersten {limit} Treffer werden gezeigt – Filter oder Suche eingrenzen.", { limit: OBJECT_ROWS_MAX });
+        const list = $("objectList");
+        const focused = document.activeElement?.closest?.("#objectList .mm-object")?.dataset.key;
+        list.replaceChildren();
+        if (!shown.length) {
+            list.appendChild(el("li", { class: "mm-empty" }, rows.length ? globalThis.VTTUi("Keine Objekte für diesen Filter.") : globalThis.VTTUi("Noch keine Objekte auf der Karte.")));
+            return;
+        }
+        const { ids, tiles } = ed.selectionSet;
+        const tileKeys = new Set(tiles ? tiles.keys : []);
+        for (const row of shown.slice(0, OBJECT_ROWS_MAX)) {
+            const selected = row.item ? ids.includes(row.item.id)
+                : !!tiles && tiles.layerId === row.layer.id && tiles.keys.length === row.keys.length && row.keys.every((key) => tileKeys.has(key));
+            const button = el("button", { type: "button", class: `mm-place mm-object${selected ? " is-selected" : ""}`,
+                "aria-pressed": String(selected), disabled: !row.layer.visible, dataset: { key: row.key, kind: row.kind } });
+            const head = el("span", { class: "mm-place-head" });
+            head.append(el("strong", { class: "mm-place-name" }, row.name), el("span", { class: "mm-place-kind" }, row.chip));
+            button.append(head, el("span", { class: "mm-object-layer" }, row.layer.visible ? row.layer.name
+                : globalThis.VTTUi("{name} · Ebene ausgeblendet", { name: row.layer.name })));
+            button.addEventListener("click", (event) => this.chooseObject(row, event.shiftKey || event.ctrlKey || event.metaKey));
+            const li = el("li");
+            li.appendChild(button);
+            list.appendChild(li);
+        }
+        if (focused) list.querySelector(`.mm-object[data-key="${CSS.escape(focused)}"]`)?.focus();
+    }
+
+    chooseObject(row, add) {
+        const ed = this.ed;
+        if (!ed.layerById(row.layer.id) || !row.layer.visible) return;
+        if (ed.tool !== "select") ed.setTool("select");
+        if (row.item) {
+            ed.select(row.item.id, add && !ed.selectionSet.tiles && ed.selectionSet.count > 0);
+            const bounds = itemBounds(row.item, ed.palette);
+            ed.centerOn(bounds.x + bounds.w / 2, bounds.y + bounds.h / 2);
+        } else {
+            ed.commitEdit();
+            ed.setActiveLayer(row.layer.id);
+            ed.selectionSet.chooseTiles(row.layer.id, row.keys);
+            const bounds = ed.selectionSet.bounds();
+            if (bounds) ed.centerOn(bounds.x + bounds.w / 2, bounds.y + bounds.h / 2);
+        }
+        this.openPane("objects"); // setTool shows the tool pane on wide screens; stay in the list
+    }
+
     // ---- panes, tools, status ----------------------------------------------
 
     isNarrow() {
@@ -1512,7 +1697,8 @@ export class UI {
             tab.setAttribute("aria-selected", String(on));
             tab.tabIndex = on ? 0 : -1;
         });
-        for (const name of ["tool", "layers", "places"]) $(`pane-${name}`).hidden = name !== pane;
+        for (const name of ["tool", "layers", "places", "objects"]) $(`pane-${name}`).hidden = name !== pane;
+        if (pane === "objects" && this.objectsStale) this.refreshObjects();
     }
 
     tabKeys(event) {

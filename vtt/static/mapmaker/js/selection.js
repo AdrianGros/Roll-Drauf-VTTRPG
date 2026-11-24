@@ -37,6 +37,8 @@ export class Selection {
         else if(id)this.ids.push(id);
         this.sync();
     }
+    /** Explicit tile selection (object list): exactly these occupied cells of one layer. */
+    chooseTiles(layerId,keys) { this.ids=[];this.tiles={layerId,keys:keys.slice()};this.sync(); }
     tileAt(p,add=false) {
         const layer=this.ed.doc.layers.find(l=>l.id===this.ed.activeLayerId && l.kind==='tiles' && l.visible);
         if(!layer)return false;

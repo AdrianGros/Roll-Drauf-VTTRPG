@@ -625,3 +625,17 @@ img.mm-pixel { image-rendering: pixelated; }
     .mm-own-grid, .mm-crop-compare { grid-template-columns: minmax(0, 1fr); }
     .mm-own-dialog { padding: 14px; }
 }
+
+/* FV07 object list, rotation presets; FV08 path draw modes */
+.mm-modes { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; padding: 0; border: 0; }
+.mm-modes legend { width: 100%; padding: 0; margin-bottom: 2px; font-size: 13px; color: var(--ink-soft); }
+.mm-path-draft { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 10px; border: 1px solid var(--gold); border-radius: 8px; }
+.mm-path-draft[hidden] { display: none; }
+.mm-path-draft .mm-target { flex-basis: 100%; }
+.mm-rot-presets { display: flex; flex-wrap: wrap; gap: 4px; margin: 2px 0 6px; }
+.mm-rot-presets .mm-btn-small { min-width: 44px; padding: 4px 6px; }
+.mm-object-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-top: 8px; }
+.mm-object { text-align: left; }
+.mm-object .mm-place-name { font-family: var(--font-body); font-size: 14px; font-weight: 600; }
+.mm-object-layer { font-size: 12px; color: var(--ink-soft); overflow-wrap: anywhere; }
+.mm-object:disabled { opacity: 0.6; cursor: not-allowed; }
