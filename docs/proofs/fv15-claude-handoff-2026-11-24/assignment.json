@@ -1,0 +1,42 @@
+{
+  "status": "reviewed_tested_pending_integration",
+  "base": "1f9179d5b5f4f747c1f6fa9ff4da2150956bafb0",
+  "worktree": "/home/admin/projects/roll-drauf-vtt-fv15-quota-20261124",
+  "branch": "feat/campaign-quota-fv15-20261124",
+  "actual_executor": "Claude Code 2.1.312; existing claude.ai Pro subscription",
+  "tool_calls": 83,
+  "tools_used": [
+    "Edit",
+    "Glob",
+    "Grep",
+    "Read",
+    "Write"
+  ],
+  "extra_usage_used": false,
+  "worker_final": {
+    "is_error": false,
+    "subtype": "success"
+  },
+  "tests_executed_by_worker": false,
+  "integration_and_live_delivery": "pending Codex review and verification",
+  "root_review_open": [
+    "Finish quota panel-failure browser retry, then integrate/rebuild catalog/commit/push and deliver through ordinary profile journeys. No quota workflow is live yet.",
+    "Existing startup/nav DOM replacement timing and creator autosave/click timing remain FV18 stability follow-ups."
+  ],
+  "root_corrections": [
+    "Pending-key DB CHECK now explicitly requires non-NULL for pending; corrected a proposed invalid fixture that actually used the valid requester key.",
+    "Error helper HTTP status argument renamed: stale/terminal conflict payload status no longer raises TypeError. Five affected API cases and the stale browser case pass on correction.",
+    "Scoped hidden attribute CSS preserves the manual approval confirmation/actions visibility; browser assertions added.",
+    "PostgreSQL fixture now refuses arbitrary URLs, uses explicit isolated port/database confirmation, and resets only its disposable public schema because existing unnamed moderation FKs prevent metadata.drop_all sorting.",
+    "Added PostgreSQL submit/cancel rate-cap churn and terminal-state/audit assertions.",
+    "Existing exact own-profile test now expects additive authenticated user_id."
+  ],
+  "verification_so_far": {
+    "sqlite_api": "Initial81pass5fail; all5 affected cases pass after helper fix.86 distinct API cases covered.",
+    "quota_browser": "Initial8pass2fail616.01s; stale conflict helper fixed,1pass71.34s. Profile-entry click detached/exceeded8s before quota request; exact unchanged retry1pass56.94s.10 distinct browser cases have passing results.",
+    "isolated_postgres": "4pass114.28s; port55495 own disposable DB/container; credentials and container removed.",
+    "existing_profile_regressions": "14pass157.34s",
+    "catalog": "Worker-only3898 sources fresh; regenerate against coordinator after integration to retain newer FV01 message."
+  },
+  "distinct_passing_cases": 114
+}

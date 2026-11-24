@@ -47,7 +47,7 @@
       "apply": "docs/DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md",
       "candidate_inventory": "docs/proofs/full-version-layers-2026-11-23/fv01-spell-candidates.json",
       "delivery": {
-        "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md",
+        "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_SPECIES_LABELS_2026-11-24.md",
         "delivered": [
           "Creator explicitly cataloged interface labels follow resolved rules locale, separately from the site UI",
           "Live switching preserves draft identity/state/data/evaluation, focus, selected import file, pending user input and final campaign/in-flight result",
@@ -55,17 +55,19 @@
           "663 reviewed core/spell names and52 source-backed terms with immutable canonical mechanics",
           "Genuine mapped EN class/spell/subclass details, actual source-difference notice, explicit DE fallback and stale response guards",
           "Stable caster/list/spell keys preserve checked canonical IDs after localized sorting; normal DM/Player source/selection/settings/reload verified",
-          "184 reviewed equipment identities plus mastery/property/coin source terms:847 total names and74 terms; canonical worn armor/mastery selections, pack/currency labels and live DM/Player settings/reload verified"
+          "184 reviewed equipment identities plus mastery/property/coin source terms:847 total names and74 terms; canonical worn armor/mastery selections, pack/currency labels and live DM/Player settings/reload verified",
+          "73 source-backed species trait/ancestry/size/type/damage labels:847 total identities/147 terms. Both mixed-language DM/Player normal journeys pass with saved-state waits, exact canonical draft invariance and scoped cleanup; rapid autosave click timing remains FV18 work."
         ],
         "remaining": [
-          "Species subchoices and remaining rule-derived labels/formulas/variants/prerequisites; unused trinket data has no current UI consumer",
+          "Species option descriptions and remaining rule-derived labels/formulas/variants/prerequisites; unused trinket data has no current UI consumer",
           "Structured validation and API errors",
           "Character sheet, inventory, progression and shared character views",
           "Remaining dynamic status text, async preview own expansion reset and retained low view issues"
         ]
       },
       "content_apply": "docs/DADM_APPLY_FV01_CREATOR_CONTENT_2026-11-24.md",
-      "equipment_apply": "docs/DADM_APPLY_FV01_CREATOR_EQUIPMENT_2026-11-24.md"
+      "equipment_apply": "docs/DADM_APPLY_FV01_CREATOR_EQUIPMENT_2026-11-24.md",
+      "species_apply": "docs/DADM_APPLY_FV01_SPECIES_LABELS_2026-11-24.md"
     },
     {
       "id": "FV02",
@@ -439,7 +441,7 @@
       "id": "FV15",
       "title": "Campaign quota extension request",
       "priority": "P2",
-      "status": "implementation_ready_unverified",
+      "status": "reviewed_tested_pending_integration",
       "source_refs": [
         "2026-11-13:S15",
         "B10"
@@ -464,7 +466,8 @@
         "tools": "Read,Write,Edit,Grep,Glob only; no code execution, MCP, nested agents or billing fallback",
         "verification": "Worker ran no tests/catalog/git/schema/live actions. Proposed SQLite/browser/PostgreSQL tests require Codex execution; exact own-profile assertion needs additive user_id expectation. SQLite ignores row locks; rolling-rate serialization must be verified on isolated PostgreSQL."
       },
-      "implementation_handoff": "docs/DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md"
+      "implementation_handoff": "docs/DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md",
+      "root_verification": "114 distinct cases have passing results on final affected source across overlapping worker-worktree runs (86 API,10 quota browser,4 isolated PG concurrency,14 existing profile). Corrections/timing failures recorded in docs/proofs/fv15-claude-handoff-2026-11-24/assignment.json. Integration/catalog regeneration and live delivery remain pending."
     },
     {
       "id": "FV16",
@@ -560,7 +563,9 @@
         "Five obsolete map test assertions reconciled with delivered FV04/FV05 contracts; all affected cases pass. Full integrated release and remaining baseline work stay open."
       ],
       "remaining_observations": [
-        "One creator DE-site/EN-rules home-startup test exceeded the5-second assertion and passed unchanged on retry; retain timing/stability follow-up before full release."
+        "One creator DE-site/EN-rules home-startup test exceeded the5-second assertion and passed unchanged on retry; retain timing/stability follow-up before full release.",
+        "Firefox390 live creator rapid mutations were followed by a source click with no modal and a card click with no selection. Settled native label acceptance passes; investigate autosave/full-render interaction timing before full release; cause/fix not claimed.",
+        "Quota browser profile-entry click detached during initial dashboard/nav composition and exceeded8s; exact unchanged retry passed. Preserve startup/nav timing follow-up rather than calling this an app fix."
       ]
     }
   ],
@@ -1120,11 +1125,11 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Finish Codex FV01 species-label verification/delivery; then review, test, integrate and deliver Claude FV15 implementation from the preserved isolated worktree. All retained technical packets remain in scope; unavailable rules content is owner-deferred.",
+  "next_step": "FV01 species-label slice delivered/cleaned. Integrate, rebuild catalog and deliver reviewed/tested Claude FV15 with additive schema, ordinary synthetic profile/request/review journeys and cleanup. Continue retained packets and FV18 timing findings; unavailable rules additions remain owner-deferred.",
   "current_delivery": {
-    "source": "14e9d528ac8d423458e251a3f3c579723da45f44",
-    "image": "sha256:5ecdfd5242e224508ec16365f5df7627845f9fea2c410cd4298ab70c90762eae",
-    "monitor": "docs/DADM_DEPLOY_MONITOR_FV06_BRUSH_CONTROLS_2026-11-24.md"
+    "source": "e7e8f20d9ff4714e7d0e098d75e1afad3a2977e6",
+    "image": "sha256:b9d690f7967903d4e9061fb6de7bd1378f22f66e6188dfc087db54a8021c4748",
+    "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_SPECIES_LABELS_2026-11-24.md"
   },
   "last_updated": "2026-11-24",
   "delivery_history": [

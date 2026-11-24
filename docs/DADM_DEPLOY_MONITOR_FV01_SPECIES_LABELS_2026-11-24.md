@@ -1,6 +1,6 @@
 # FV01 species labels: Deploy and Monitor
 
-Status: implementation and targeted verification in progress; not yet delivered. Permanent. Contract: [completed Apply](DADM_APPLY_FV01_SPECIES_LABELS_2026-11-24.md). Canonical full version remains in progress, with independent FV15 implementation assigned to Claude.
+Status: bounded species-label slice delivered and live verified; FV01 and the full version remain incomplete. Permanent. Contract: [completed Apply](DADM_APPLY_FV01_SPECIES_LABELS_2026-11-24.md). Canonical full version remains in progress, with independent FV15 implementation assigned to Claude.
 
 ## Implementation
 
@@ -10,4 +10,10 @@ User journey: authenticated dashboard → Characters → Create character → gu
 
 ## Verification and delivery evidence
 
-22 targeted cases pass:7 source/compiler/API/new species/browser cases in182.66s and15 equipment/pending-input/source/overlay/dialog/subclass regressions in416.77s. Only existing mapper warnings were emitted. Both generators are fresh (847 identities/147 terms;3843 UI sources), changed JS/proof scripts parse, canonical model/64 pins remain unchanged and diff whitespace passes. No full-suite claim. Commit/push, image/source baseline checks, DB archive, protected rollback, app-only release, normal DM1440/Player390 mixed-language journeys and scoped QA cleanup remain pending.
+22 targeted cases pass:7 source/compiler/API/new species/browser cases in182.66s and15 equipment/pending-input/source/overlay/dialog/subclass regressions in416.77s. Only existing mapper warnings were emitted. Both generators are fresh (847 identities/147 terms;3843 UI sources), changed JS/proof scripts parse, canonical model/64 pins remain unchanged and diff whitespace passes. No full-suite claim. Source `e7e8f20d9ff4714e7d0e098d75e1afad3a2977e6` is committed/pushed and live on image `sha256:b9d690f7967903d4e9061fb6de7bd1378f22f66e6188dfc087db54a8021c4748`. All401 baseline/built source-data hashes and70 runtime hashes match. Health passes and other VTT services retain their identities/start times. DB archive539344 bytes is readable by pg_restore --list; restore was not exercised. Rollback `/srv/migration/2026-11-24/fv01-species-labels/e7e8f20d9/rollback.sh` is syntax checked, not executed.
+
+[Both normal live journeys pass](proofs/fv01-species-labels-2026-11-24/live.json): Chromium DM1440 DE-site/EN-rules/night and Firefox Player390 EN-site/DE-rules/paper, with actual settings language changes and reload. Class/species sources, ancestry/damage/size/trait labels, canonical selections, draft identity/version/state/data/evaluation, authored name and independent units remain intact. No browser errors. The Player run had two earlier missed interactions during rapid autosaving changes (source modal did not open, then a species card did not select); final label acceptance waits for actual save completion before each card action and asserts selection. This pacing verifies the labels but does not fix or establish the cause of the rapid-click behavior. Retain that timing finding in FV18 alongside the known startup/nav timing observations.
+
+[QA cleanup passes](proofs/fv01-species-labels-2026-11-24/qa-cleanup.json): synthetic users162/163, three owned campaigns105/106/107, four drafts and their scoped dependencies removed. Host/container credentials removed. No real account changes. No schema or other-service change. Proof directory contains delivery, runtime/live/cleanup receipts, source-label inventory and both screenshots.
+
+Next: review/integrate/deliver Claude FV15 (verification has begun independently), then continue all retained packets. Remaining descriptions/structured findings/sheet/inventory/progression/shared view language keep FV01 partial.

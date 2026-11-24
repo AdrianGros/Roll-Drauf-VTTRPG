@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "origin": "https://vtt.roll-drauf.de",
+  "journeys": [
+    {
+      "engine": "chromium",
+      "role": "dm",
+      "width": 1440,
+      "ui_language": "de",
+      "initial_rules_language": "en",
+      "switched_rules_language": "de",
+      "normal_navigation": true,
+      "localized_class_name_and_source": true,
+      "localized_species_traits_ancestry_size_damage_labels": true,
+      "canonical_species_ancestry_size_values_preserved": true,
+      "draft_id_version_state_data_evaluation_preserved": true,
+      "saved_draft_reload": true,
+      "german_option_description_truthfully_marked": true,
+      "name_and_unit_preference_preserved": true,
+      "state_sha256": "63c74552e40a1f599372f4fd3b0b6b25e880d3cb565aa99bd8e50ec751c618cd",
+      "browser_errors": []
+    },
+    {
+      "engine": "firefox",
+      "role": "player",
+      "width": 390,
+      "ui_language": "en",
+      "initial_rules_language": "de",
+      "switched_rules_language": "en",
+      "normal_navigation": true,
+      "localized_class_name_and_source": true,
+      "localized_species_traits_ancestry_size_damage_labels": true,
+      "canonical_species_ancestry_size_values_preserved": true,
+      "draft_id_version_state_data_evaluation_preserved": true,
+      "saved_draft_reload": true,
+      "german_option_description_truthfully_marked": true,
+      "name_and_unit_preference_preserved": true,
+      "state_sha256": "63c74552e40a1f599372f4fd3b0b6b25e880d3cb565aa99bd8e50ec751c618cd",
+      "browser_errors": []
+    }
+  ],
+  "real_oauth_tested": false
+}

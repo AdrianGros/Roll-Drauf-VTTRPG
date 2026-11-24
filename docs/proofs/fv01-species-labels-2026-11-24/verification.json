@@ -1,5 +1,5 @@
 {
-  "status": "targeted_pass_pending_live",
+  "status": "delivered_live_verified",
   "distinct_cases": 22,
   "runs": [
     {
@@ -22,8 +22,26 @@
     "git diff --check"
   ],
   "limits": [
-    "No full repository suite claim",
-    "Descriptions/validation/editor remain FV01 work",
-    "Live acceptance and cleanup pending"
+    "No full repository suite, physical keyboard/touch or real OAuth claim",
+    "German option descriptions and validation/editor language remain FV01 work",
+    "Rapid creator autosave/click timing remains an explicit FV18 follow-up, not fixed by pacing the label acceptance journey"
+  ],
+  "live_attempts": [
+    {
+      "scope": "Chromium DM1440",
+      "result": "pass on initial journey"
+    },
+    {
+      "scope": "Firefox Player390 first attempt",
+      "result": "Species-text click did not open its modal after rapid autosaving selections; old class title remained. No cause or product fix claimed."
+    },
+    {
+      "scope": "Firefox Player390 second attempt",
+      "result": "A card click after rapid mutations left Goliath selected; next Dragonborn control absent. Waiting only before source-button click did not address this earlier interaction."
+    },
+    {
+      "scope": "Firefox Player390 settled native journey",
+      "result": "Pass after waiting for actual saved state before every species-card action and asserting its selected state. No forced clicks or injected app state."
+    }
   ]
 }

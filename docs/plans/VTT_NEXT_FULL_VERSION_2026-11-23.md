@@ -8,7 +8,7 @@ Complete, integrate, deploy and verify all retained outstanding packets below as
 
 All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.
 
-The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `14e9d528a`, image `sha256:5ecdfd5242e224508ec16365f5df7627845f9fea2c410cd4298ab70c90762eae`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
+The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `e7e8f20d9`, image `sha256:b9d690f7967903d4e9061fb6de7bd1378f22f66e6188dfc087db54a8021c4748`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
 
 ## Current packet progress
 
@@ -20,7 +20,7 @@ Owner content decision, 24 November: defer unavailable rules additions (includin
 
 Owner decisions, 24 November: public AI-generated images are allowed with a required AI label and the existing rights confirmation (FV16). The unidentified older 0% report is disregarded at the owner’s instruction; FV17 closes by scope decision, without claiming a technical fix.
 
-FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 now has a [partly delivered creator interface](../DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md): cataloged labels follow the rules language, with safe live switching and unchanged canonical data. The [next content slice](../DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md) adds 663 reviewed core/spell names,52 terms and genuine English details, with stable spell checks and live DM/Player proof. The [equipment slice](../DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md) adds 184 reviewed equipment identities and mastery/property/coin terms (847 names/74 terms total), with live canonical armor/mastery/settings/reload proof. Species subchoices, remaining labels, validation and editor coverage stay open. Unused trinket data has no current UI consumer; this does not add a trinket feature. The earlier 339-spell facet inventory remains candidate-only; actual core/spell identities now have separate reviewed source pins. [Ducky source discovery](../DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md) preserves50 original graphics candidates without image processing or generative use. The overall goal remains active.
+FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 now has a [partly delivered creator interface](../DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md): cataloged labels follow the rules language, with safe live switching and unchanged canonical data. The [next content slice](../DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md) adds 663 reviewed core/spell names,52 terms and genuine English details, with stable spell checks and live DM/Player proof. The [equipment slice](../DADM_DEPLOY_MONITOR_FV01_CREATOR_EQUIPMENT_2026-11-24.md) adds 184 reviewed equipment identities and mastery/property/coin terms (847 names/74 terms total), with live canonical armor/mastery/settings/reload proof. The [species-label slice](../DADM_DEPLOY_MONITOR_FV01_SPECIES_LABELS_2026-11-24.md) adds73 source-backed traits/options/size/type/damage labels (147 terms total), with DM/Player settings/reload proof and scoped cleanup. Option descriptions, remaining labels, validation and editor coverage stay open. Rapid autosave/click timing remains an FV18 follow-up. Unused trinket data has no current UI consumer; this does not add a trinket feature. The earlier 339-spell facet inventory remains candidate-only; actual core/spell identities now have separate reviewed source pins. [Ducky source discovery](../DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md) preserves50 original graphics candidates without image processing or generative use. The overall goal remains active.
 
 FV02 [creator view clarity is delivered](../DADM_DEPLOY_MONITOR_FV02_CREATOR_VIEWS_2026-11-24.md): both starting views, same-draft switching/reload and independent language settings pass normal DM/Player journeys. Controls fit at390px; unavailable additional rules/background content closes by owner deferral, not by invented content. FV18 retains the recorded startup-timing observation.
 
@@ -56,7 +56,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV12 | Land fill and coastline tools | P2 | Planned |
 | FV13 | World campaign and map place relationships | P2 | Plan and inputs needed |
 | FV14 | Campaign homebrew approvals | P2 | Planned |
-| FV15 | Campaign quota extension request | P2 | Claude implementation returned; unverified |
+| FV15 | Campaign quota extension request | P2 | Reviewed/tested; integration and live delivery pending |
 | FV16 | Content provenance and publication policy | P2 | Plan and inputs needed |
 | FV17 | Identify the deferred zero percent control | P2 | Closed by owner scope decision |
 | FV18 | Integrated verification and full version release | release gate | In progress; five obsolete map assertions reconciled |
@@ -297,7 +297,7 @@ Acceptance:
 - Keep approval and actual quota changes under the existing authorized administration contract; a request cannot grant itself slots.
 - Do not automatically alter real users, add a Donutarian test slot or introduce a payment system.
 
-Implementation assignment: [completed Apply](../DADM_APPLY_FV15_CAMPAIGN_QUOTA_2026-11-24.md), [exclusive Claude handoff](../CLAUDE_HANDOFF_FV15_2026-11-24.md). Finite existing quota/creator eligibility, one pending request, bounded submission history, explicit owner/admin review and stale/account guards are specified. Submission never grants slots. No default entitlement or billing change. Claude has returned [implementation/proposed tests and a precise handoff](../DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md) in the isolated worktree. Codex review, SQLite/browser/isolated-PostgreSQL testing, catalog build, integration and live delivery remain pending. No FV15 tests or live acceptance claimed yet.
+Implementation assignment: [completed Apply](../DADM_APPLY_FV15_CAMPAIGN_QUOTA_2026-11-24.md), [exclusive Claude handoff](../CLAUDE_HANDOFF_FV15_2026-11-24.md). Finite existing quota/creator eligibility, one pending request, bounded submission history, explicit owner/admin review and stale/account guards are specified. Submission never grants slots. No default entitlement or billing change. Claude has returned [implementation/proposed tests and a precise handoff](../DADM_DEPLOY_FV15_CAMPAIGN_QUOTA_2026-11-24.md) in the isolated worktree. Codex corrected the DB pending-key check, conflict response helper and native hidden-state CSS, and verified114 distinct cases across overlapping API/browser/isolated-PostgreSQL/existing-profile runs. See [actual handoff/root review evidence](../proofs/fv15-claude-handoff-2026-11-24/assignment.json). Integration, catalog regeneration and live delivery remain pending; no FV15 live completion claim.
 
 ### FV16 Content provenance and publication policy
 
@@ -336,6 +336,8 @@ Acceptance:
 - Repeat complete normal UI journeys across campaigns/session entry, Player/DM, character creation/editing, map editing/library/Atlas, chat, calendar, companions and floors.
 - For each functional slice commit/push, reconcile the running source/image, preserve unrelated live work, record backup/migrations/rollback, deploy only the app when appropriate, verify live and remove QA data.
 - Resolve blocking findings, record owner acceptance for the new full version and keep the previously accepted playtable baseline intact.
+
+FV18 timing follow-ups: rapid Firefox390 creator autosave/card/source clicks sometimes did not apply; settled label journeys pass without a cause/fix claim. One quota profile-entry/nav composition click exceeded8s after DOM replacement, then passed unchanged on retry. Retain these with the existing creator startup observation.
 
 Dependencies: FV01, FV02, FV03, FV04, FV05, FV06, FV07, FV08, FV09, FV10, FV11, FV12, FV13, FV14, FV15, FV16, FV17.
 

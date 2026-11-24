@@ -9,7 +9,8 @@ from playwright.sync_api import expect,sync_playwright
 root=Path(os.environ['PROOF_ROOT'])
 fixture=json.loads((root/'private-live-credentials.json').read_text())
 origin='https://vtt.roll-drauf.de'
-proof={'status':'running','origin':origin,'journeys':[],'real_oauth_tested':False}
+proof=json.loads((root/'live.json').read_text()) if os.environ.get('LIVE_RESUME') else {'origin':origin,'journeys':[],'real_oauth_tested':False}
+proof['status']='running';proof.pop('error',None)
 expect.set_options(timeout=30000)
 
 def save(): (root/'live.json').write_text(json.dumps(proof,indent=2)+'\n')
@@ -20,6 +21,7 @@ def snapshot(page):
 with sync_playwright() as p:
     for engine,role,width,ui,content,theme in [
         ('chromium','dm',1440,'de','en','night'),('firefox','player',390,'en','de','paper')]:
+        if os.environ.get('LIVE_ROLE') and role!=os.environ['LIVE_ROLE']:continue
         browser=getattr(p,engine).launch(headless=True,**({'args':['--no-sandbox']} if engine=='chromium' else {}))
         context=browser.new_context(viewport={'width':width,'height':1000},reduced_motion='reduce')
         prefs={'language':ui,'contentLanguage':content,'unit':'ft','theme':theme,'accent':'teal'}
@@ -41,7 +43,11 @@ with sync_playwright() as p:
             expect(page.locator('#scDialogTitle')).to_have_attribute('lang',content)
             page.locator('#scDialogClose').click()
             page.locator('#scSteps button').nth(1).click()
-            def species(name):page.get_by_role('button',name=name,exact=False).first.click()
+            def species(name):
+                page.wait_for_function('() => !SrdCreator.app.dirty && !SrdCreator.app.saving')
+                button=page.get_by_role('button',name=name,exact=False).first
+                button.click();expect(button).to_have_attribute('aria-pressed','true')
+                page.wait_for_function('() => !SrdCreator.app.dirty && !SrdCreator.app.saving')
             species('Elf')
             page.locator('#scSpc-lineage').select_option('hochelf')
             expect(page.locator('#scSpc-lineage option:checked')).to_have_text('High Elf' if content=='en' else 'Hochelf')
@@ -60,7 +66,9 @@ with sync_playwright() as p:
             page.locator('#scSpc-draconic-ancestry').select_option('blau')
             expect(page.locator('#scSpc-draconic-ancestry option:checked')).to_have_text('Blue (Lightning)' if content=='en' else 'Blau (Blitz)')
             expect(page.locator('.sc-detail').first).to_contain_text('Darkvision 18 m' if content=='en' else 'Dunkelsicht 18 m')
+            page.wait_for_function('() => !SrdCreator.app.dirty && !SrdCreator.app.saving')
             page.get_by_role('button',name='Read species text' if content=='en' else 'Spezies-Text lesen',exact=True).click()
+            expect(page.locator('#scDialog')).to_be_visible()
             expect(page.locator('#scDialogTitle')).to_have_text('Dragonborn' if content=='en' else 'Drachenblütiger')
             expect(page.locator('#scDialogTitle')).to_have_attribute('lang',content)
             page.locator('#scDialogClose').click()
