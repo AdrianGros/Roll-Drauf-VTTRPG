@@ -53,11 +53,11 @@ def payload(**changes):
 
 
 def test_profile_only_counts_own_objects(site):
-    call, _ = site
+    call, ids = site
     own = call(0, 'profile?user_id=2')
     assert own.status_code == 200
     assert own.headers['Cache-Control'] == 'private, no-store'
-    assert own.json == dict(username='review-user-0', avatar_url=None,
+    assert own.json == dict(user_id=ids[0], username='review-user-0', avatar_url=None,
                             characters=1, owned_campaigns=1, memberships=1)
     assert call(1, 'profile').json['memberships'] == 0
     assert 'Secret figure' not in own.get_data(as_text=True)

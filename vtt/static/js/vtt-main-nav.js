@@ -249,7 +249,28 @@ globalThis.VTTUiHTML ||= source => globalThis.VTTUi(source).replace(/[&<>"']/g,c
                 term.textContent=VTTUi(label);value.textContent=String(data[key] ?? 0);list.append(term,value);
             }
             content.replaceChildren(list);
+            mountQuota(dialog, close, data.user_id);
         } catch (_) { if(dialog.isConnected)content.textContent=VTTUi('Profil konnte nicht geladen werden.'); }
+    }
+
+    // FV15: the campaign-quota panel loads on demand below the counts, bound to the profile's
+    // account. A failed module or request removes only its own panel, never the counts.
+    let quotaModule;
+    function mountQuota(dialog, before, accountId) {
+        if (!Number.isInteger(accountId) || accountId <= 0) return;
+        const host = document.createElement('section');
+        host.className = 'cq-panel'; host.hidden = true;
+        dialog.insertBefore(host, before);
+        quotaModule ||= new Promise((resolve, reject) => {
+            if (window.VTTCampaignQuota) { resolve(window.VTTCampaignQuota); return; }
+            const script = document.createElement('script');
+            script.src = '/static/js/campaign-quota-ui.js';
+            script.onload = () => window.VTTCampaignQuota ? resolve(window.VTTCampaignQuota) : reject(new Error('campaign quota'));
+            script.onerror = () => reject(new Error('campaign quota'));
+            document.head.appendChild(script);
+        }).catch((error) => { quotaModule = null; throw error; });
+        quotaModule.then((module) => { if (host.isConnected) module.mount(host, accountId); })
+            .catch(() => host.remove());
     }
 
     async function buildAccount(nav) {

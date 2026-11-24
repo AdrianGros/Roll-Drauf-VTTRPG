@@ -287,6 +287,8 @@ def create_app(config_name=None):
     app.register_blueprint(review_domain_bp)
     from vtt.calendar_notes import calendar_notes_bp
     app.register_blueprint(calendar_notes_bp)
+    from vtt.campaign_quota import campaign_quota_bp  # FV15
+    app.register_blueprint(campaign_quota_bp)
     app.register_blueprint(profile_m18_bp)
     app.register_blueprint(admin_m18_bp)
     app.register_blueprint(registration_keys_bp)

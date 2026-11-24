@@ -1,0 +1,29 @@
+/* FV15: campaign-quota panel inside the own profile dialog (.review-dialog). */
+.cq-panel [hidden] { display: none !important; }
+.cq-panel { margin: 1rem 0 .5rem; padding-top: .75rem; border-top: 1px solid var(--review-line, #0003); min-width: 0; }
+.cq-title { margin: 0 0 .5rem; font-size: 1.1rem; }
+.cq-subtitle { margin: .75rem 0 .4rem; font-size: 1rem; }
+.cq-facts { display: grid; gap: .35rem; }
+.cq-fact { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 1.5rem; margin: 0; }
+.cq-fact-label { font-weight: 600; }
+.cq-muted { margin: .4rem 0; opacity: .8; }
+.cq-status:empty { display: none; }
+.cq-status, .cq-error { margin: .5rem 0; }
+.cq-error { font-weight: 600; }
+.cq-form { display: grid; gap: .25rem; min-width: 0; }
+.cq-field { display: grid; gap: .2rem; margin: .25rem 0; min-width: 0; }
+.cq-field input, .cq-field textarea, .cq-field select { box-sizing: border-box; width: 100%; max-width: 100%; min-height: 2.25rem; font: inherit; }
+.cq-field textarea { resize: vertical; }
+.cq-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.cq-item { padding: .5rem .6rem; border: 1px solid var(--review-line, #0003); border-radius: .4rem; min-width: 0; }
+.cq-item p { margin: .2rem 0; overflow-wrap: anywhere; }
+.cq-item-head { font-weight: 600; }
+.cq-literal { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cq-pending { border-left-width: 4px; }
+.cq-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; margin: .25rem 0; }
+.cq-confirm-text { flex: 1 1 100%; font-weight: 600; }
+.cq-review { margin-top: .75rem; }
+.cq-review-body { margin-top: .5rem; }
+.cq-review-controls { display: flex; flex-wrap: wrap; align-items: end; gap: .5rem; }
+.cq-review-controls .cq-field { flex: 1 1 12rem; }
+.cq-primary { font-weight: 600; }

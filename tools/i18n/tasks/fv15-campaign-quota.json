@@ -1,0 +1,226 @@
+{
+  "Anfrage offen": {
+    "de": "Anfrage offen",
+    "en": "Request open"
+  },
+  "Anfrage genehmigt": {
+    "de": "Anfrage genehmigt",
+    "en": "Request approved"
+  },
+  "Anfrage abgelehnt": {
+    "de": "Anfrage abgelehnt",
+    "en": "Request rejected"
+  },
+  "Anfrage zurückgezogen": {
+    "de": "Anfrage zurückgezogen",
+    "en": "Request withdrawn"
+  },
+  "Die Anfrage oder das Limit hat sich inzwischen geändert. Es wurde nichts gespeichert. Bitte neu laden.": {
+    "de": "Die Anfrage oder das Limit hat sich inzwischen geändert. Es wurde nichts gespeichert. Bitte neu laden.",
+    "en": "The request or the limit has changed in the meantime. Nothing was saved. Please reload."
+  },
+  "Das angemeldete Konto hat sich geändert. Bitte öffne dein Profil neu.": {
+    "de": "Das angemeldete Konto hat sich geändert. Bitte öffne dein Profil neu.",
+    "en": "The signed-in account has changed. Please open your profile again."
+  },
+  "Bitte melde dich erneut an.": {
+    "de": "Bitte melde dich erneut an.",
+    "en": "Please sign in again."
+  },
+  "Bitte eine ganze Zahl über deinem aktuellen Limit eingeben.": {
+    "de": "Bitte eine ganze Zahl über deinem aktuellen Limit eingeben.",
+    "en": "Please enter a whole number above your current limit."
+  },
+  "Bitte eine Begründung mit höchstens 500 Zeichen angeben.": {
+    "de": "Bitte eine Begründung mit höchstens 500 Zeichen angeben.",
+    "en": "Please give a reason of at most 500 characters."
+  },
+  "Du hast bereits eine offene Anfrage.": {
+    "de": "Du hast bereits eine offene Anfrage.",
+    "en": "You already have an open request."
+  },
+  "Höchstens 5 Anfragen in 24 Stunden. Bitte versuche es später erneut.": {
+    "de": "Höchstens 5 Anfragen in 24 Stunden. Bitte versuche es später erneut.",
+    "en": "At most 5 requests in 24 hours. Please try again later."
+  },
+  "Anfragen sind nur für Konten möglich, die Kampagnen erstellen dürfen.": {
+    "de": "Anfragen sind nur für Konten möglich, die Kampagnen erstellen dürfen.",
+    "en": "Only accounts that may create campaigns can send requests."
+  },
+  "Deinem Konto ist kein Kampagnenlimit zugewiesen; eine Anfrage ist deshalb nicht möglich.": {
+    "de": "Deinem Konto ist kein Kampagnenlimit zugewiesen; eine Anfrage ist deshalb nicht möglich.",
+    "en": "No campaign limit is assigned to your account, so a request is not possible."
+  },
+  "Dein Kampagnenlimit ist nicht positiv; eine Anfrage ist deshalb nicht möglich.": {
+    "de": "Dein Kampagnenlimit ist nicht positiv; eine Anfrage ist deshalb nicht möglich.",
+    "en": "Your campaign limit is not positive, so a request is not possible."
+  },
+  "Dein Kampagnenlimit hat bereits den höchstmöglichen Wert.": {
+    "de": "Dein Kampagnenlimit hat bereits den höchstmöglichen Wert.",
+    "en": "Your campaign limit already has the highest possible value."
+  },
+  "Diese Anfrage wurde nicht gefunden.": {
+    "de": "Diese Anfrage wurde nicht gefunden.",
+    "en": "This request was not found."
+  },
+  "Das neue Gesamtlimit muss über dem aktuellen Limit liegen.": {
+    "de": "Das neue Gesamtlimit muss über dem aktuellen Limit liegen.",
+    "en": "The new total limit must be above the current limit."
+  },
+  "Das neue Gesamtlimit darf nicht unter der Zahl aktiver Kampagnen liegen.": {
+    "de": "Das neue Gesamtlimit darf nicht unter der Zahl aktiver Kampagnen liegen.",
+    "en": "The new total limit must not be below the number of active campaigns."
+  },
+  "Bitte ein ganzzahliges neues Gesamtlimit eingeben.": {
+    "de": "Bitte ein ganzzahliges neues Gesamtlimit eingeben.",
+    "en": "Please enter a whole-number new total limit."
+  },
+  "Die Notiz darf höchstens 500 Zeichen haben.": {
+    "de": "Die Notiz darf höchstens 500 Zeichen haben.",
+    "en": "The note may have at most 500 characters."
+  },
+  "nicht zugewiesen": {
+    "de": "nicht zugewiesen",
+    "en": "not assigned"
+  },
+  "ungültig": {
+    "de": "ungültig",
+    "en": "invalid"
+  },
+  "Kampagnenlimit wird geladen …": {
+    "de": "Kampagnenlimit wird geladen …",
+    "en": "Loading campaign limit …"
+  },
+  "Kampagnenlimit": {
+    "de": "Kampagnenlimit",
+    "en": "Campaign limit"
+  },
+  "Aktuelles Limit": {
+    "de": "Aktuelles Limit",
+    "en": "Current limit"
+  },
+  "Aktive Kampagnen": {
+    "de": "Aktive Kampagnen",
+    "en": "Active campaigns"
+  },
+  "Eine Anfrage ändert dein Limit nicht. Ein Owner oder Admin prüft sie und legt das Gesamtlimit selbst fest.": {
+    "de": "Eine Anfrage ändert dein Limit nicht. Ein Owner oder Admin prüft sie und legt das Gesamtlimit selbst fest.",
+    "en": "A request does not change your limit. An owner or admin reviews it and sets the total limit themselves."
+  },
+  "{used} von {limit} Anfragen in den letzten 24 Stunden": {
+    "de": "{used} von {limit} Anfragen in den letzten 24 Stunden",
+    "en": "{used} of {limit} requests in the last 24 hours"
+  },
+  "Anfrage senden": {
+    "de": "Anfrage senden",
+    "en": "Send request"
+  },
+  "Höheres Limit anfragen": {
+    "de": "Höheres Limit anfragen",
+    "en": "Request a higher limit"
+  },
+  "Gewünschtes Gesamtlimit": {
+    "de": "Gewünschtes Gesamtlimit",
+    "en": "Desired total limit"
+  },
+  "Begründung": {
+    "de": "Begründung",
+    "en": "Reason"
+  },
+  "Anfrage gesendet. Dein Limit bleibt unverändert, bis ein Owner oder Admin entscheidet.": {
+    "de": "Anfrage gesendet. Dein Limit bleibt unverändert, bis ein Owner oder Admin entscheidet.",
+    "en": "Request sent. Your limit stays unchanged until an owner or admin decides."
+  },
+  "Deine Anfragen": {
+    "de": "Deine Anfragen",
+    "en": "Your requests"
+  },
+  "Gewünscht: {desired} (Limit bei Anfrage: {submitted})": {
+    "de": "Gewünscht: {desired} (Limit bei Anfrage: {submitted})",
+    "en": "Requested: {desired} (limit when requested: {submitted})"
+  },
+  "Neues Gesamtlimit: {total}": {
+    "de": "Neues Gesamtlimit: {total}",
+    "en": "New total limit: {total}"
+  },
+  "Notiz der Prüfung:": {
+    "de": "Notiz der Prüfung:",
+    "en": "Review note:"
+  },
+  "Anfrage zurückziehen": {
+    "de": "Anfrage zurückziehen",
+    "en": "Withdraw request"
+  },
+  "Anfrage zurückgezogen. Dein Limit ist unverändert.": {
+    "de": "Anfrage zurückgezogen. Dein Limit ist unverändert.",
+    "en": "Request withdrawn. Your limit is unchanged."
+  },
+  "Anfragen prüfen": {
+    "de": "Anfragen prüfen",
+    "en": "Review requests"
+  },
+  "Anfragen werden geladen …": {
+    "de": "Anfragen werden geladen …",
+    "en": "Loading requests …"
+  },
+  "Offene Anfragen": {
+    "de": "Offene Anfragen",
+    "en": "Open requests"
+  },
+  "Abgeschlossene Anfragen": {
+    "de": "Abgeschlossene Anfragen",
+    "en": "Closed requests"
+  },
+  "Liste neu laden": {
+    "de": "Liste neu laden",
+    "en": "Reload list"
+  },
+  "Keine offenen Anfragen.": {
+    "de": "Keine offenen Anfragen.",
+    "en": "No open requests."
+  },
+  "Keine abgeschlossenen Anfragen.": {
+    "de": "Keine abgeschlossenen Anfragen.",
+    "en": "No closed requests."
+  },
+  "Es werden höchstens {limit} Anfragen angezeigt.": {
+    "de": "Es werden höchstens {limit} Anfragen angezeigt.",
+    "en": "At most {limit} requests are shown."
+  },
+  "Gewünscht: {desired} · Limit bei Anfrage: {submitted} · Aktuelles Limit: {current} · Aktive Kampagnen: {active}": {
+    "de": "Gewünscht: {desired} · Limit bei Anfrage: {submitted} · Aktuelles Limit: {current} · Aktive Kampagnen: {active}",
+    "en": "Requested: {desired} · Limit when requested: {submitted} · Current limit: {current} · Active campaigns: {active}"
+  },
+  "Genehmigen …": {
+    "de": "Genehmigen …",
+    "en": "Approve …"
+  },
+  "Gesamtlimit bestätigen": {
+    "de": "Gesamtlimit bestätigen",
+    "en": "Confirm total limit"
+  },
+  "Zurück zur Eingabe": {
+    "de": "Zurück zur Eingabe",
+    "en": "Back to input"
+  },
+  "Neues Gesamtlimit (manuell festlegen)": {
+    "de": "Neues Gesamtlimit (manuell festlegen)",
+    "en": "New total limit (set manually)"
+  },
+  "Notiz (optional, für die anfragende Person sichtbar)": {
+    "de": "Notiz (optional, für die anfragende Person sichtbar)",
+    "en": "Note (optional, visible to the requester)"
+  },
+  "Genehmigt: {user} hat jetzt ein Gesamtlimit von {total}.": {
+    "de": "Genehmigt: {user} hat jetzt ein Gesamtlimit von {total}.",
+    "en": "Approved: {user} now has a total limit of {total}."
+  },
+  "Abgelehnt: Das Limit von {user} bleibt unverändert.": {
+    "de": "Abgelehnt: Das Limit von {user} bleibt unverändert.",
+    "en": "Rejected: the limit of {user} stays unchanged."
+  },
+  "Limit von {user} von {current} auf {total} setzen?": {
+    "de": "Limit von {user} von {current} auf {total} setzen?",
+    "en": "Change the limit of {user} from {current} to {total}?"
+  }
+}

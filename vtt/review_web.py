@@ -45,6 +45,7 @@ def own_profile():
     link = user.discord_identity_link
     avatar = link.avatar_url() if link and link.is_active() else None
     return jsonify(
+        user_id=user.id,
         username=user.username,
         avatar_url=avatar,
         characters=Character.query.filter_by(user_id=user.id, deleted_at=None).count(),

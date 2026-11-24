@@ -81,3 +81,4 @@ from vtt.models.review_domain import ReviewThread, ReviewThreadMessage, AtlasCam
 from vtt.models.map_floor import MapFloorDeck, MapFloorImage
 from vtt.models.calendar_note import CalendarNote, CalendarOneShot
 from vtt.models.table_companion import TableCompanionBinding
+from vtt.models.campaign_quota_request import CampaignQuotaRequest  # FV15
