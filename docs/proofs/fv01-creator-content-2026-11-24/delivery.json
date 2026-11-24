@@ -1,0 +1,80 @@
+{
+  "commit": "842f57e58965c182e46ee6c4f81ad404373bd6d9",
+  "base_source": "a28afce53838d73abfc2d5602f02f7fb50996e45",
+  "running_revision_label": "a28afce53838d73abfc2d5602f02f7fb50996e45",
+  "image": "roll-drauf-vtt-app:fv01-creator-content-20261124-842f57e58",
+  "base_image_id": "sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0",
+  "prior_image": "roll-drauf-vtt-app:fv01-creator-content-rollback-4221b9772405",
+  "overlay_manifest": {
+    "vtt/characters/srd_creator.py": "a168da8b5f2816cf794fb53b5364744eb2d3c02c24efb980857a45a16f112572",
+    "vtt/rules_content/creator_locale.py": "b813c58bc9a234de1a1d7597af0eb194099e1ee53b6a76adb8280a56a2301e50",
+    "vtt/rules_content/srd-5.2.1-en/generated/creator-display.json": "def465e7b334ec0a4bfbc26367a4f0f59616256f97060a93b7ee1d9b997aa537",
+    "vtt/static/i18n/ui.de.json": "036690f08cbd8a2dc51390a94e7563829aac7a368941690ea38fb3059f2f5465",
+    "vtt/static/i18n/ui.en.json": "9d36284cda41e4e2243c652f824db1507707ade021e995c947865de2f28a570a",
+    "vtt/static/js/srd-creator-locale.js": "98257308aa1bbb1392b4fa2b24be0427066bfa84bced42d413b2033798295773",
+    "vtt/static/js/srd-creator-steps.js": "59e5d8886154cde3df972acfaaef5182a81c6db654290859816330e9b7fa0de1",
+    "vtt/static/js/srd-creator.js": "e42c05d919e07267d3415ac2d6f905a98635a9e35e32f7cafb7d8110d76e389e",
+    "vtt/static/js/srd-rule-preview.js": "336cfa3fa2b241af580429569fe0a0a56ee47964c6300518047fd1f247334dac",
+    "vtt/static/js/ui-catalog.js": "ec1f088edda697e303606ca760962340344b287c53164d1bfae18e4e4237ec5e",
+    "vtt/templates/srd-creator.html": "42084cfa666656cc5d700a4ca5101e5a72c1dbdb2db2835972a7b002612a59dc"
+  },
+  "compose_project": "migration-production",
+  "compose_files": [
+    "/srv/migration/2026-10-07/setup/production.compose.json",
+    "/srv/migration/2026-10-07/setup/production.duck-species.override.yml"
+  ],
+  "other_services_before": {
+    "/roll-drauf-vtt-mailserver-1": {
+      "id": "d17377aeced889c1b8f7179bac736196c8985f3440036ea09568b8c7db088743",
+      "started_at": "2026-11-10T16:17:34.845940374Z"
+    },
+    "/roll-drauf-vtt-db-1": {
+      "id": "75d0b239cd1d6a8f2f791e78028aa6c42142a55f679cf663a49c0a731be62a49",
+      "started_at": "2026-11-10T16:17:34.827250527Z"
+    },
+    "/roll-drauf-vtt-redis-1": {
+      "id": "37ac298892f547099b3844172945475c17e206996b6596d68a3189fd240ead4c",
+      "started_at": "2026-11-10T16:17:34.8087529Z"
+    }
+  },
+  "prepared_at": "2026-11-24T06:00:29.200215+00:00",
+  "verification_scope": "all shipped Python/JS/CSS/HTML, app.py, requirements.txt and changed JSON; 54 reviewed rule-data files; unchanged artwork inherited from the checked image",
+  "baseline_source_verification": {
+    "checked": 388,
+    "mismatches": []
+  },
+  "image_id": "sha256:d04f4ee8fce80226544116f51a73cc3791d7cedb69f351bb9b9906e729761a18",
+  "built_source_verification": {
+    "checked": 391,
+    "mismatches": []
+  },
+  "database_backup": {
+    "path": "/srv/migration/2026-11-24/fv01-creator-content/842f57e58/database-before.dump",
+    "bytes": 539343,
+    "archive_readable": true,
+    "restore_exercised": false
+  },
+  "schema_migration": {
+    "status": "pass",
+    "tables": [],
+    "previously_present": [],
+    "columns_verified": true
+  },
+  "deployed_at": "2026-11-24T06:05:07.870125853Z",
+  "health": {
+    "now": "2026-11-24T06:05:17.729997",
+    "service": "roll_drauf_vtt",
+    "started_at": "2026-11-24T06:05:14.262418",
+    "status": "ok"
+  },
+  "other_services_unchanged": true,
+  "rollback": "/srv/migration/2026-11-24/fv01-creator-content/842f57e58/rollback.sh",
+  "rollback_syntax_checked": true,
+  "rollback_executed": false,
+  "live_acceptance": {
+    "status": "pass",
+    "journeys": 2,
+    "qa_cleanup": "pass",
+    "credentials_removed": true
+  }
+}

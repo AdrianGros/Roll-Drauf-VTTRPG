@@ -8,7 +8,7 @@ Complete, integrate, deploy and verify all retained outstanding packets below as
 
 All retained outstanding packets from the two 2026-11-23 reviews, the older explicitly open feedback items, and current release-quality findings. Formerly lower-priority terrain, radial palette and curved-text requests remain in this version goal.
 
-The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `a28afce53`, image `sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
+The goal baseline is `7e0a3c859`, with evidence `8a4dca5ed`. The current live application is `842f57e58`, image `sha256:d04f4ee8fce80226544116f51a73cc3791d7cedb69f351bb9b9906e729761a18`. The working release name is **next full version**; no version number or deadline has been assigned. Each functional slice is delivered separately; this register preserves the full release goal.
 
 ## Current packet progress
 
@@ -18,7 +18,7 @@ Asset constraint, 24 November: scan the RD Team Discord for Ducky’s existing a
 
 Owner decisions, 24 November: public AI-generated images are allowed with a required AI label and the existing rights confirmation (FV16). The unidentified older 0% report is disregarded at the owner’s instruction; FV17 closes by scope decision, without claiming a technical fix.
 
-FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 now has a [partly delivered creator interface](../DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md): cataloged labels follow the rules language, with safe live switching and unchanged canonical data. Complete English rules presentation, validation and editor coverage remain open. Its reproducible inventory covers 339 spells (310 single candidates, 29 ambiguous, no approved identities). The overall goal remains active.
+FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md). FV05's occupied-grid safety/new-layer workflow and reference grid, plus FV06's File-menu Escape fix, are also live; the remaining features of both packets stay open. FV01 now has a [partly delivered creator interface](../DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md): cataloged labels follow the rules language, with safe live switching and unchanged canonical data. The [next content slice](../DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md) adds 663 reviewed core/spell names,52 terms and genuine English details, with stable spell checks and live DM/Player proof. Equipment/subchoices, remaining labels, validation and editor coverage stay open. The earlier 339-spell facet inventory remains candidate-only; actual core/spell identities now have separate reviewed source pins. [Ducky source discovery](../DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md) preserves50 original graphics candidates without image processing or generative use. The overall goal remains active.
 
 ## Already delivered
 

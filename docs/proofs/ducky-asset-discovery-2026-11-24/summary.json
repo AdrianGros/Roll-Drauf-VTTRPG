@@ -1,0 +1,58 @@
+{
+  "status": "discovered_originals_preserved",
+  "source": "RD Team Discord; repository maps RD_TEAM to Speck of Holding",
+  "source_verified_by": "Canonical bot server-instance map and Ducky artist membership; bot REST GET only",
+  "artist_thread_count": 9,
+  "attachment_records_discovered": 77,
+  "graphics_candidate_records_preserved": 51,
+  "unique_original_files": 50,
+  "downloaded_attachment_bytes": 44467887,
+  "preserved_groups": [
+    {
+      "name": "Backgrounds",
+      "attachments": 3
+    },
+    {
+      "name": "Banner und Co Kg",
+      "attachments": 13
+    },
+    {
+      "name": "Dices",
+      "attachments": 17
+    },
+    {
+      "name": "QR-Code",
+      "attachments": 1
+    },
+    {
+      "name": "Rollen-Icons",
+      "attachments": 12
+    },
+    {
+      "name": "Visitenkarte",
+      "attachments": 4
+    },
+    {
+      "name": "Vorlagen",
+      "attachments": 1
+    }
+  ],
+  "source_attribution_exception": {
+    "group": "QR-Code",
+    "creator_credit": "Anne",
+    "uploaded_by": "Ducky"
+  },
+  "source_restrictions": {
+    "new_image_generation": false,
+    "generative_use": false,
+    "original_bytes_unchanged": true,
+    "ai_image_processing": false
+  },
+  "original_hash_and_readonly_checks": "pass",
+  "discord_writes": false,
+  "bot_code_config_service_or_database_changes": false,
+  "raw_messages_and_cdn_urls": "Protected private archive only; not in Git",
+  "private_archive": "/srv/migration/2026-11-24/rd-team-ducky-asset-audit",
+  "publication_status": "Inventory, not a public asset release; source context and exact integration stay in FV11/FV16 Apply",
+  "remaining_rule_sources": "No English Oglan/additional character-background mechanics/additional-system text identified in these nine art threads"
+}

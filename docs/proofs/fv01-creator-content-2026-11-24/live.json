@@ -1,0 +1,41 @@
+{
+  "status": "pass",
+  "origin": "https://vtt.roll-drauf.de",
+  "journeys": [
+    {
+      "engine": "chromium",
+      "role": "dm",
+      "width": 1440,
+      "ui_language": "de",
+      "initial_rules_language": "en",
+      "switched_rules_language": "de",
+      "normal_navigation": true,
+      "localized_class_name_and_source": true,
+      "localized_spell_source": true,
+      "selected_canonical_spell_ids_preserved": true,
+      "draft_id_version_state_data_evaluation_preserved": true,
+      "saved_draft_reload": true,
+      "name_and_unit_preference_preserved": true,
+      "state_sha256": "7605201709b91275a4cd705321485d7f8b2c3ba0a17c0582ff7d445e535155bb",
+      "browser_errors": []
+    },
+    {
+      "engine": "firefox",
+      "role": "player",
+      "width": 390,
+      "ui_language": "en",
+      "initial_rules_language": "de",
+      "switched_rules_language": "en",
+      "normal_navigation": true,
+      "localized_class_name_and_source": true,
+      "localized_spell_source": true,
+      "selected_canonical_spell_ids_preserved": true,
+      "draft_id_version_state_data_evaluation_preserved": true,
+      "saved_draft_reload": true,
+      "name_and_unit_preference_preserved": true,
+      "state_sha256": "1415402b6e4283d7a72b7fa68030590a48494580f4a87b325565a05c1681df73",
+      "browser_errors": []
+    }
+  ],
+  "real_oauth_tested": false
+}

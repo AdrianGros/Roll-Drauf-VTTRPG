@@ -47,19 +47,23 @@
       "apply": "docs/DADM_APPLY_FV01_CHARACTER_LANGUAGE_2026-11-23.md",
       "candidate_inventory": "docs/proofs/full-version-layers-2026-11-23/fv01-spell-candidates.json",
       "delivery": {
-        "monitor": "docs/DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md",
+        "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md",
         "delivered": [
           "Creator explicitly cataloged interface labels follow resolved rules locale, separately from the site UI",
           "Live switching preserves draft identity/state/data/evaluation, focus, selected import file, pending user input and final campaign/in-flight result",
-          "Six locale combinations and normal DM/Player settings/reload journeys verified"
+          "Six locale combinations and normal DM/Player settings/reload journeys verified",
+          "663 reviewed core/spell names and52 source-backed terms with immutable canonical mechanics",
+          "Genuine mapped EN class/spell/subclass details, actual source-difference notice, explicit DE fallback and stale response guards",
+          "Stable caster/list/spell keys preserve checked canonical IDs after localized sorting; normal DM/Player source/selection/settings/reload verified"
         ],
         "remaining": [
-          "Reviewed canonical-ID display mapping and complete English rules content",
+          "Equipment, species subchoices/trinkets and remaining rule-derived labels",
           "Structured validation and API errors",
           "Character sheet, inventory, progression and shared character views",
-          "Remaining dynamic status text and asynchronous subclass disclosure expansion"
+          "Remaining dynamic status text, async preview own expansion reset and retained low view issues"
         ]
-      }
+      },
+      "content_apply": "docs/DADM_APPLY_FV01_CREATOR_CONTENT_2026-11-24.md"
     },
     {
       "id": "FV02",
@@ -342,7 +346,8 @@
       ],
       "decisions_or_inputs": [
         "Choose account or local persistence for sets; supply the clipped tree asset ID; additional artwork needs approved content tracked in FV16."
-      ]
+      ],
+      "asset_source_inventory": "docs/DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md"
     },
     {
       "id": "FV12",
@@ -453,7 +458,8 @@
       "decisions_or_inputs": [
         "Owner decision on public AI labeling/publication; actual approved English Oglan material, additional backgrounds/artwork and any additional-system sources."
       ],
-      "publication_policy": "AI-generated images may be public with a required AI label and existing rights confirmation; implement and verify this policy."
+      "publication_policy": "AI-generated images may be public with a required AI label and existing rights confirmation; implement and verify this policy.",
+      "asset_source_inventory": "docs/DADM_DISCOVER_DUCKY_ASSETS_2026-11-24.md"
     },
     {
       "id": "FV17",
@@ -1078,11 +1084,11 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "Continue FV01 with semantically reviewed canonical-ID presentation mappings and remaining module/editor coverage. Preserve delivered FV01 labels and FV04. Complete all remaining FV05/FV06 and other retained packets; The AI publication policy is now decided and FV17 is closed by owner scope decision; remaining content/source inputs gate only dependent work.",
+  "next_step": "Continue retained FV01 language coverage, then all remaining technical packets through FV18. Preserve delivered source842f57e58. FV17 is closed by owner scope decision. Ducky originals are inventoried under a strict no-generation/no-generative-use constraint; select actual integrations in FV11/FV16 Apply. Missing rules/text inputs remain visible.",
   "current_delivery": {
-    "source": "a28afce53838d73abfc2d5602f02f7fb50996e45",
-    "image": "sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0",
-    "monitor": "docs/DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md"
+    "source": "842f57e58965c182e46ee6c4f81ad404373bd6d9",
+    "image": "sha256:d04f4ee8fce80226544116f51a73cc3791d7cedb69f351bb9b9906e729761a18",
+    "monitor": "docs/DADM_DEPLOY_MONITOR_FV01_CREATOR_CONTENT_2026-11-24.md"
   },
   "last_updated": "2026-11-24",
   "delivery_history": [
@@ -1090,6 +1096,11 @@
       "source": "207c8e9fc8a465168c23d5528836ae3c95f3a619",
       "image": "sha256:384ab8657919735f893eaa2dad1e249c5ead23ad03108494778103ec1851146c",
       "monitor": "docs/DADM_MONITOR_FULL_VERSION_LAYERS_2026-11-23.md"
+    },
+    {
+      "source": "a28afce53838d73abfc2d5602f02f7fb50996e45",
+      "image": "sha256:4221b9772405bbc0be4d25ffdacea07047148277d2ed89bc2f95cf849e901dd0",
+      "monitor": "docs/DADM_MONITOR_FV01_CREATOR_LABELS_2026-11-24.md"
     }
   ],
   "owner_decisions": [
