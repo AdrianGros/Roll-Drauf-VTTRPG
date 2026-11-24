@@ -24,7 +24,7 @@ FV04 is [delivered and live verified](../DADM_MONITOR_FULL_VERSION_LAYERS_2026-1
 
 FV02 [creator view clarity is delivered](../DADM_DEPLOY_MONITOR_FV02_CREATOR_VIEWS_2026-11-24.md): both starting views, same-draft switching/reload and independent language settings pass normal DM/Player journeys. Controls fit at390px; unavailable additional rules/background content closes by owner deferral, not by invented content. FV18 retains the recorded startup-timing observation.
 
-FV06 [brush controls and quick palette are delivered](../DADM_DEPLOY_MONITOR_FV06_BRUSH_CONTROLS_2026-11-24.md): recent colors, opacity/size/material shortcuts and the temporary tools/colors palette pass DM/Player live journeys and scoped cleanup. Owner now asks for independent Claude work after this step; FV15 is the bounded handoff, with Codex retaining integration/testing/deployment.
+FV06 [brush controls and quick palette are delivered](../DADM_DEPLOY_MONITOR_FV06_BRUSH_CONTROLS_2026-11-24.md): recent colors, opacity/size/material shortcuts and the temporary tools/colors palette pass DM/Player live journeys and scoped cleanup. FV15 is now [assigned to actual Claude Code](../CLAUDE_HANDOFF_FV15_2026-11-24.md) in an isolated worktree at base `1f9179d5b`, using the existing subscription and file tools only. Codex continues FV01 and retains all testing/integration/deployment. Assignment is not delivery.
 
 ## Already delivered
 
@@ -56,7 +56,7 @@ All eighteen packets below belong to the next full version. FV04 is delivered; o
 | FV12 | Land fill and coastline tools | P2 | Planned |
 | FV13 | World campaign and map place relationships | P2 | Plan and inputs needed |
 | FV14 | Campaign homebrew approvals | P2 | Planned |
-| FV15 | Campaign quota extension request | P2 | Plan and inputs needed |
+| FV15 | Campaign quota extension request | P2 | Implementation assigned to Claude |
 | FV16 | Content provenance and publication policy | P2 | Plan and inputs needed |
 | FV17 | Identify the deferred zero percent control | P2 | Closed by owner scope decision |
 | FV18 | Integrated verification and full version release | release gate | In progress; five obsolete map assertions reconciled |
@@ -297,9 +297,7 @@ Acceptance:
 - Keep approval and actual quota changes under the existing authorized administration contract; a request cannot grant itself slots.
 - Do not automatically alter real users, add a Donutarian test slot or introduce a payment system.
 
-Decisions or inputs:
-
-- Confirm the existing request/approval path and product limits in Apply; no new slot count has been decided.
+Implementation assignment: [completed Apply](../DADM_APPLY_FV15_CAMPAIGN_QUOTA_2026-11-24.md), [exclusive Claude handoff](../CLAUDE_HANDOFF_FV15_2026-11-24.md). Finite existing quota/creator eligibility, one pending request, bounded submission history, explicit owner/admin review and stale/account guards are specified. Submission never grants slots. No default entitlement or billing change. Worker writes implementation/proposed tests; Codex executes verification and delivery. No FV15 tests or live acceptance claimed yet.
 
 ### FV16 Content provenance and publication policy
 

@@ -439,7 +439,7 @@
       "id": "FV15",
       "title": "Campaign quota extension request",
       "priority": "P2",
-      "status": "planned_input_needed",
+      "status": "implementation_assigned",
       "source_refs": [
         "2026-11-13:S15",
         "B10"
@@ -451,9 +451,19 @@
         "Do not automatically alter real users, add a Donutarian test slot or introduce a payment system."
       ],
       "depends_on": [],
-      "decisions_or_inputs": [
-        "Confirm the existing request/approval path and product limits in Apply; no new slot count has been decided."
-      ]
+      "decisions_or_inputs": [],
+      "apply": "docs/DADM_APPLY_FV15_CAMPAIGN_QUOTA_2026-11-24.md",
+      "handoff": "docs/CLAUDE_HANDOFF_FV15_2026-11-24.md",
+      "owner_assignment": {
+        "implementer": "Claude Code, existing claude.ai Pro subscription",
+        "worktree": "/home/admin/projects/roll-drauf-vtt-fv15-quota-20261124",
+        "branch": "feat/campaign-quota-fv15-20261124",
+        "base": "1f9179d5b5f4f747c1f6fa9ff4da2150956bafb0",
+        "phase": "Deploy implementation only",
+        "root_responsibilities": "Review, test execution, catalog generation, integration/commit/push, schema application, production deployment/live acceptance/cleanup",
+        "tools": "Read,Write,Edit,Grep,Glob only; no code execution, MCP, nested agents or billing fallback",
+        "verification": "not yet run; assignment is not delivery"
+      }
     },
     {
       "id": "FV16",
@@ -1109,7 +1119,7 @@
     "A new billing system or automatic quota increases"
   ],
   "artifacts_retention": "permanent repository planning artifacts",
-  "next_step": "FV06 complete. Per new owner instruction, hand Claude the independent FV15 request/review workflow in an isolated worktree; Codex continues FV01 language/editor work and retains all integration/testing/deployment responsibilities. All other retained technical packets remain in the full-version goal.",
+  "next_step": "Claude implements isolated FV15 under exclusive file ownership; Codex continues FV01 language/editor work, then reviews/tests/integrates/delivers the quota workflow. All retained technical packets remain in scope; unavailable rules content is owner-deferred.",
   "current_delivery": {
     "source": "14e9d528ac8d423458e251a3f3c579723da45f44",
     "image": "sha256:5ecdfd5242e224508ec16365f5df7627845f9fea2c410cd4298ab70c90762eae",
